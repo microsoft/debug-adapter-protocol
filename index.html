@@ -1,0 +1,84 @@
+---
+layout: default
+---
+
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<div class="header-container bg-primary jumbotron">
+    <div class="container">
+        <div class="intro">
+            <h1>Debug Adapter Protocol</h1>
+        </div>
+        <p class="intro-text">
+            The Debug Adapter Protocol (DAP) defines the protocol used between an editor or IDE and a debugger....
+        </p>
+
+        <br />
+        <div class="intro-text">
+            <a class="github-button" href="https://github.com/Microsoft/debug-adapter-protocol" data-size="large" data-icon="octicon-star" data-show-count="true"
+                aria-label="Star Microsoft/debug-adapter-protocol on GitHub">Star</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row align-items-center">
+        <div class="col-lg-7">
+            <h2 class="header-light regular-pad">What is the Debug Adapter Protocol?</h2>
+
+            <p>Curabitur blandit tempus porttitor.</p>
+            <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec ullamcorper nulla non metus auctor fringilla.</p>
+            <p>Etiam porta sem malesuada magna mollis euismod. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cras mattis consectetur purus sit amet fermentum.</p>
+        </div>
+        <div class="col-lg-5">
+            <div id="carouselOne" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row align-items-center">
+                            <div class="col-lg-12">
+                                <img src="img/vscode-css-code-complete.png" class="img-fluid rounded"/>
+                                <p class="text-left"><i>foo bar in VS Code powered by the Node.js Debug Adapter</i></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row align-items-center">
+                            <div class="col-lg-12">
+                                <img src="img/atom-css-code-complete.png" class="img-fluid rounded"/>
+                                <p class="text-left"><i>bla bla in VS Code powered by the Java Debug Adapter</i></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row more-info">
+        <div class="col-lg-4">
+            <h1 class="text-center"><i class="fa fa-cogs" aria-hidden="true"></i></h1>
+            <a href='{{ "/overview" | prepend: site.baseurl }}'><h3 class="text-center">Overview</h3></a>
+            <p>
+                The protocol defines the format of the messages sent using JSON between the development tool and the debug adapter.
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <h1 class="text-center"><i class="fas fa-book" aria-hidden="true"></i></h1>
+            <a href='{{ "/specification" | prepend: site.baseurl }}'><h3 class="text-center">Specification</h3></a>
+            <p>
+                The latest version of the protocol specification is version 1.29.
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <h1 class="text-center"><i class="fas fa-code-branch" aria-hidden="true"></i></h1>
+            {% assign sorted = site.implementors | sort: 'index' %}
+            <a href = "{{ sorted.first.url | prepend: site.baseurl }}"><h3 class="text-center">Implementations</h3></a>
+            <p>
+                The DAP has been implemented for many debuggers or runtimes and some development tools are integrating these debug adapters.
+            </p>
+        </div>
+    </div>
+</div>
