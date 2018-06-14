@@ -1,0 +1,25 @@
+{
+	"name": "spec-generator",
+	"version": "0.0.1",
+	"description": "Generator",
+	"author": {
+		"name": "Microsoft Corporation",
+		"email": "aweinand@microsoft.com"
+	},
+	"private": true,
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Microsoft/debug-adapter-protocol.git"
+	},
+	"bugs": {
+		"url": "https://github.com/Microsoft/debug-adapter-protocol/issues"
+	},
+	"devDependencies": {
+		"@types/node": "8.9.2",
+		"typescript": "2.9.2"
+	},
+	"scripts": {
+		"compile": "tsc -p .",
+		"watch": "tsc -w -p ."
+	}
+}

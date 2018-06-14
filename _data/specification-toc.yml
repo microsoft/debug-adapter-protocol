@@ -1,141 +1,240 @@
-- title: Message Overview
+- title: Debug Adapter Protocol Specification
+  anchor: 2
   children:
-  - title: General
-    anchor: general
+  - title: Base Protocol
+    anchor: 3
     children:
-    - title: initialize
-      anchor: initialize
-    - title: initalized
-      anchor: initialized
-    - title: shutdown
-      anchor: shutdown
-    - title: exit
-      anchor: exit
-    - title: $/cancelRequest
-      anchor: cancelRequest
-  - title: Window
-    anchor: window
+    - title: ProtocolMessage
+      anchor: 4
+      children:
+    - title: Request
+      anchor: 5
+      children:
+    - title: Event
+      anchor: 6
+      children:
+    - title: Response
+      anchor: 7
+      children:
+    - title: ErrorResponse
+      anchor: 8
+      children:
+  - title: Events
+    anchor: 9
     children:
-    - title: showMessage
-      anchor: window_showMessage
-    - title: showMessageRequest
-      anchor: window_showMessageRequest
-    - title: logMessage
-      anchor: window_logMessage
-  - title: Telemetry
-    anchor: telemetry
+    - title: Initialized Notification
+      anchor: 10
+      children:
+    - title: Stopped Notification
+      anchor: 11
+      children:
+    - title: Continued Notification
+      anchor: 12
+      children:
+    - title: Exited Notification
+      anchor: 13
+      children:
+    - title: Terminated Notification
+      anchor: 14
+      children:
+    - title: Thread Notification
+      anchor: 15
+      children:
+    - title: Output Notification
+      anchor: 16
+      children:
+    - title: Breakpoint Notification
+      anchor: 17
+      children:
+    - title: Module Notification
+      anchor: 18
+      children:
+    - title: LoadedSource Notification
+      anchor: 19
+      children:
+    - title: Process Notification
+      anchor: 20
+      children:
+    - title: Capabilities Notification
+      anchor: 21
+      children:
+  - title: Requests
+    anchor: 22
     children:
-    - title: event
-      anchor: telemetry_event
-  - title: Client
-    anchor: client
+    - title: RunInTerminal Request
+      anchor: 23
+      children:
+    - title: Initialize Request
+      anchor: 24
+      children:
+    - title: ConfigurationDone Request
+      anchor: 25
+      children:
+    - title: Launch Request
+      anchor: 26
+      children:
+    - title: Attach Request
+      anchor: 27
+      children:
+    - title: Restart Request
+      anchor: 28
+      children:
+    - title: Disconnect Request
+      anchor: 29
+      children:
+    - title: SetBreakpoints Request
+      anchor: 30
+      children:
+    - title: SetFunctionBreakpoints Request
+      anchor: 31
+      children:
+    - title: SetExceptionBreakpoints Request
+      anchor: 32
+      children:
+    - title: Continue Request
+      anchor: 33
+      children:
+    - title: Next Request
+      anchor: 34
+      children:
+    - title: StepIn Request
+      anchor: 35
+      children:
+    - title: StepOut Request
+      anchor: 36
+      children:
+    - title: StepBack Request
+      anchor: 37
+      children:
+    - title: ReverseContinue Request
+      anchor: 38
+      children:
+    - title: RestartFrame Request
+      anchor: 39
+      children:
+    - title: Goto Request
+      anchor: 40
+      children:
+    - title: Pause Request
+      anchor: 41
+      children:
+    - title: StackTrace Request
+      anchor: 42
+      children:
+    - title: Scopes Request
+      anchor: 43
+      children:
+    - title: Variables Request
+      anchor: 44
+      children:
+    - title: SetVariable Request
+      anchor: 45
+      children:
+    - title: Source Request
+      anchor: 46
+      children:
+    - title: Threads Request
+      anchor: 47
+      children:
+    - title: TerminateThreads Request
+      anchor: 48
+      children:
+    - title: Modules Request
+      anchor: 49
+      children:
+    - title: LoadedSources Request
+      anchor: 50
+      children:
+    - title: Evaluate Request
+      anchor: 51
+      children:
+    - title: SetExpression Request
+      anchor: 52
+      children:
+    - title: StepInTargets Request
+      anchor: 53
+      children:
+    - title: GotoTargets Request
+      anchor: 54
+      children:
+    - title: Completions Request
+      anchor: 55
+      children:
+    - title: ExceptionInfo Request
+      anchor: 56
+      children:
+  - title: Types
+    anchor: 57
     children:
-    - title: registerCapability
-      anchor: client_registerCapability
-    - title: unregisterCapability
-      anchor: client_unregisterCapability
-  - title: Workspace
-    anchor: workspace
-    children:
-    - title: workspaceFolders
-      anchor: workspace_workspaceFolders
-    - title: didChangeWorkspaceFolders
-      anchor: workspace_didChangeWorkspaceFolders
-    - title: didChangeConfiguration
-      anchor: workspace_didChangeConfiguration
-    - title: configuration
-      anchor: workspace_configuration
-    - title: didChangeWatchedFiles
-      anchor: workspace_didChangeWatchedFiles
-    - title: symbol
-      anchor: workspace_symbol
-    - title: executeCommand
-      anchor: workspace_executeCommand
-    - title: applyEdit
-      anchor: workspace_applyEdit
-  - title: Text Synchronization
-    anchor: textSynchronization
-    children:
-    - title: didOpen
-      anchor: textDocument_didOpen
-    - title: didChange
-      anchor: textDocument_didChange
-    - title: willSave
-      anchor: textDocument_willSave
-    - title: willSaveWaitUntil
-      anchor: textDocument_willSaveWaitUntil
-    - title: didSave
-      anchor: textDocument_didSave
-    - title: didClose
-      anchor: textDocument_didClose
-  - title: Diagnostics
-    anchor: diagnostics
-    children:
-    - title: publishDiagnostics
-      anchor: textDocument_publishDiagnostics
-  - title: Language Features
-    anchor: languageFeatures
-    children:
-    - title: completion
-      anchor: textDocument_completion
-    - title: completion resolve
-      anchor: completionItem_resolve
-    - title: hover
-      anchor: textDocument_hover
-    - title: signatureHelp
-      anchor: textDocument_signatureHelp
-    - title: definition
-      anchor: textDocument_definition
-    - title: typeDefinition
-      anchor: textDocument_typeDefinition
-    - title: implementation
-      anchor: textDocument_implementation
-    - title: references
-      anchor: textDocument_references
-    - title: documentHighlight
-      anchor: textDocument_documentHighlight
-    - title: documentSymbol
-      anchor: textDocument_documentSymbol
-    - title: codeAction
-      anchor: textDocument_codeAction
-    - title: codeLens
-      anchor: textDocument_codeLens
-    - title: codeLens resolve
-      anchor: codeLens_resolve
-    - title: documentLink
-      anchor: textDocument_documentLink
-    - title: documentLink resolve
-      anchor: documentLink_resolve
-    - title: documentColor
-      anchor: textDocument_documentColor
-    - title: colorPresentation
-      anchor: textDocument_colorPresentation
-    - title: formatting
-      anchor: textDocument_formatting
-    - title: rangeFormatting
-      anchor: textDocument_rangeFormatting
-    - title: onTypeFormatting
-      anchor: textDocument_onTypeFormatting
-    - title: rename
-      anchor: textDocument_rename
-  - title: Change Log
-    anchor: changeLog
-    children:
-    - title: 3.8.0
-      anchor: version_3_8_0
-    - title: 3.7.0
-      anchor: version_3_7_0
-    - title: 3.6.0
-      anchor: version_3_6_0
-    - title: 3.5.0
-      anchor: version_3_5_0
-    - title: 3.4.0
-      anchor: version_3_4_0
-    - title: 3.3.0
-      anchor: version_3_3_0
-    - title: 3.2.0
-      anchor: version_3_2_0
-    - title: 3.1.0
-      anchor: version_3_1_0
-    - title: 3.0
-      anchor: version_3_0_0
+    - title: Capabilities
+      anchor: 58
+      children:
+    - title: ExceptionBreakpointsFilter
+      anchor: 59
+      children:
+    - title: Message
+      anchor: 60
+      children:
+    - title: Module
+      anchor: 61
+      children:
+    - title: ColumnDescriptor
+      anchor: 62
+      children:
+    - title: ModulesViewDescriptor
+      anchor: 63
+      children:
+    - title: Thread
+      anchor: 64
+      children:
+    - title: Source
+      anchor: 65
+      children:
+    - title: StackFrame
+      anchor: 66
+      children:
+    - title: Scope
+      anchor: 67
+      children:
+    - title: Variable
+      anchor: 68
+      children:
+    - title: VariablePresentationHint
+      anchor: 69
+      children:
+    - title: SourceBreakpoint
+      anchor: 70
+      children:
+    - title: FunctionBreakpoint
+      anchor: 71
+      children:
+    - title: Breakpoint
+      anchor: 72
+      children:
+    - title: StepInTarget
+      anchor: 73
+      children:
+    - title: GotoTarget
+      anchor: 74
+      children:
+    - title: CompletionItem
+      anchor: 75
+      children:
+    - title: Checksum
+      anchor: 76
+      children:
+    - title: ValueFormat
+      anchor: 77
+      children:
+    - title: StackFrameFormat
+      anchor: 78
+      children:
+    - title: ExceptionOptions
+      anchor: 79
+      children:
+    - title: ExceptionPathSegment
+      anchor: 80
+      children:
+    - title: ExceptionDetails
+      anchor: 81
+      children:
