@@ -15,17 +15,54 @@ let outline = '';
 
 let anchor = 1;
 
-function Header(level: number, text: string): string {
+class Node {
+	private children: Node[] = [];
+	constructor(
+		private parent: Node,
+		private title: string,
+		private anchor: number
+	 ) {
+		if (parent) {
+			 parent.children.push(this);
+		}
+	}
+	dump(level = 0) {
+		const indent = '  '.repeat(level);
+		outline += `${indent}- title: ${this.title}\n`;
+		outline += `${indent}  anchor: ${String(this.anchor)}\n`;
+		if (this.children.length > 0) {
+			this.children = this.children.sort((a, b) => a.title.localeCompare(b.title));
+			outline += `${indent}  children:\n`;
+			for (let c of this.children) {
+				c.dump(level+1);
+			}
+		}
+	}
+}
+
+let root: Node;
+let root2: Node;
+
+function Header(level: number, text: string, short?: string): string {
 
 	anchor++;
 
-	const t = text.replace(/:.+: /, '');
+	const t = short ? camelCase(short) : text.replace(/:.+: /, '');
 
+	if (!root) {
+		root = new Node(null, t, anchor);
+	} else if (level === 2) {
+		root2= new Node(root, t, anchor);
+	} else if (level === 3) {
+		new Node(root2, t, anchor);
+	}
+
+/*
 	const indent = '  '.repeat(level-1);
 	outline += `${indent}- title: ${t}\n`;
 	outline += `${indent}  anchor: ${String(anchor)}\n`;
 	outline += `${indent}  children:\n`;
-
+*/
 	return `${'#'.repeat(level)} <a name="${String(anchor)}" class="anchor"></a>${text}\n`;
 }
 
@@ -79,14 +116,17 @@ function Module(moduleName: string, schema: IProtocol): string {
 function Interface(interfaceName: string, definition: P.Definition, superType?: string): string {
 
 	let header = `${interfaceName}`;
+	let shortHeader = interfaceName;
 	let type = 'Types';
 
 	if (definition.properties && definition.properties.event && definition.properties.event['enum']) {
 		const eventName = `${definition.properties.event['enum'][0]}`;
+		shortHeader = eventName;
 		header = `:arrow_left: ${camelCase(eventName)} Notification`;
 		type = 'Events';
 	} else if (definition.properties && definition.properties.command && definition.properties.command['enum']) {
 		const requestName = `${definition.properties.command['enum'][0]}`;
+		shortHeader = requestName;
 		const arrow = requestName === 'runInTerminal' ? ':arrow_right_hook:' : ':leftwards_arrow_with_hook:';
 		header = `${arrow} ${camelCase(requestName)} Request`;
 		type = 'Requests';
@@ -104,7 +144,7 @@ function Interface(interfaceName: string, definition: P.Definition, superType?: 
 			s += Header(2, `${section}`);
 		}
 
-		s += Header(3, `${header}`);
+		s += Header(3, `${header}`, shortHeader);
 	}
 
 	s += comment({ description : definition.description });
@@ -315,5 +355,6 @@ const emitStr = Module('DebugProtocol', debugProtocolSchema);
 
 fs.writeFileSync(`specification.md`, emitStr, { encoding: 'utf-8'});
 
+root.dump();
 fs.writeFileSync(`_data/specification-toc.yml`, outline, { encoding: 'utf-8'});
 
