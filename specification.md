@@ -5,16 +5,16 @@ sectionid: specification
 toc: true
 ---
 
-<!--- Auto-generated from json schema. Do not edit manually! -->
+<!--- Auto-generated from json schema. Do not edit! -->
 
-# <a name="a0" class="anchor"></a>Debug Adapter Protocol
+# Debug Adapter Protocol
 
 The Debug Adapter Protocol defines the protocol used between an editor or IDE and a debugger or runtime.
 
 
-## <a name="a1" class="anchor"></a>Base Protocol
+## <a name="Base_Protocol" class="anchor"></a>Base Protocol
 
-### <a name="a2" class="anchor"></a>ProtocolMessage
+### <a name="Base_Protocol_ProtocolMessage" class="anchor"></a>ProtocolMessage
 
 Base class of requests, responses, and events.
 
@@ -32,7 +32,7 @@ interface ProtocolMessage {
 }
 ```
 
-### <a name="a3" class="anchor"></a>Request
+### <a name="Base_Protocol_Request" class="anchor"></a>Request
 
 A client or debug adapter initiated request.
 
@@ -52,7 +52,7 @@ interface Request extends ProtocolMessage {
 }
 ```
 
-### <a name="a4" class="anchor"></a>Event
+### <a name="Base_Protocol_Event" class="anchor"></a>Event
 
 A debug adapter initiated event.
 
@@ -72,7 +72,7 @@ interface Event extends ProtocolMessage {
 }
 ```
 
-### <a name="a5" class="anchor"></a>Response
+### <a name="Base_Protocol_Response" class="anchor"></a>Response
 
 Response for a request.
 
@@ -107,7 +107,7 @@ interface Response extends ProtocolMessage {
 }
 ```
 
-### <a name="a6" class="anchor"></a>ErrorResponse
+### <a name="Base_Protocol_ErrorResponse" class="anchor"></a>ErrorResponse
 
 On error (whenever 'success' is false), the body can provide more details.
 
@@ -122,9 +122,9 @@ interface ErrorResponse extends Response {
 }
 ```
 
-## <a name="a7" class="anchor"></a>Events
+## <a name="Events" class="anchor"></a>Events
 
-### <a name="a8" class="anchor"></a>:arrow_left: Initialized Event
+### <a name="Events_Initialized" class="anchor"></a>:arrow_left: Initialized Event
 
 This event indicates that the debug adapter is ready to accept configuration requests (e.g. SetBreakpointsRequest, SetExceptionBreakpointsRequest).
 
@@ -144,7 +144,7 @@ interface InitializedEvent extends Event {
 }
 ```
 
-### <a name="a9" class="anchor"></a>:arrow_left: Stopped Event
+### <a name="Events_Stopped" class="anchor"></a>:arrow_left: Stopped Event
 
 The event indicates that the execution of the debuggee has stopped due to some condition.
 
@@ -192,7 +192,7 @@ interface StoppedEvent extends Event {
 }
 ```
 
-### <a name="a10" class="anchor"></a>:arrow_left: Continued Event
+### <a name="Events_Continued" class="anchor"></a>:arrow_left: Continued Event
 
 The event indicates that the execution of the debuggee has continued.
 
@@ -218,7 +218,7 @@ interface ContinuedEvent extends Event {
 }
 ```
 
-### <a name="a11" class="anchor"></a>:arrow_left: Exited Event
+### <a name="Events_Exited" class="anchor"></a>:arrow_left: Exited Event
 
 The event indicates that the debuggee has exited and returns its exit code.
 
@@ -235,7 +235,7 @@ interface ExitedEvent extends Event {
 }
 ```
 
-### <a name="a12" class="anchor"></a>:arrow_left: Terminated Event
+### <a name="Events_Terminated" class="anchor"></a>:arrow_left: Terminated Event
 
 The event indicates that debugging of the debuggee has terminated. This does **not** mean that the debuggee itself has exited.
 
@@ -253,7 +253,7 @@ interface TerminatedEvent extends Event {
 }
 ```
 
-### <a name="a13" class="anchor"></a>:arrow_left: Thread Event
+### <a name="Events_Thread" class="anchor"></a>:arrow_left: Thread Event
 
 The event indicates that a thread has started or exited.
 
@@ -276,7 +276,7 @@ interface ThreadEvent extends Event {
 }
 ```
 
-### <a name="a14" class="anchor"></a>:arrow_left: Output Event
+### <a name="Events_Output" class="anchor"></a>:arrow_left: Output Event
 
 The event indicates that the target has produced some output.
 
@@ -324,7 +324,7 @@ interface OutputEvent extends Event {
 }
 ```
 
-### <a name="a15" class="anchor"></a>:arrow_left: Breakpoint Event
+### <a name="Events_Breakpoint" class="anchor"></a>:arrow_left: Breakpoint Event
 
 The event indicates that some information about a breakpoint has changed.
 
@@ -347,7 +347,7 @@ interface BreakpointEvent extends Event {
 }
 ```
 
-### <a name="a16" class="anchor"></a>:arrow_left: Module Event
+### <a name="Events_Module" class="anchor"></a>:arrow_left: Module Event
 
 The event indicates that some information about a module has changed.
 
@@ -369,7 +369,7 @@ interface ModuleEvent extends Event {
 }
 ```
 
-### <a name="a17" class="anchor"></a>:arrow_left: LoadedSource Event
+### <a name="Events_LoadedSource" class="anchor"></a>:arrow_left: LoadedSource Event
 
 The event indicates that some source has been added, changed, or removed from the set of all loaded sources.
 
@@ -391,7 +391,7 @@ interface LoadedSourceEvent extends Event {
 }
 ```
 
-### <a name="a18" class="anchor"></a>:arrow_left: Process Event
+### <a name="Events_Process" class="anchor"></a>:arrow_left: Process Event
 
 The event indicates that the debugger has begun debugging a new process. Either one that it has launched, or one that it has attached to.
 
@@ -426,7 +426,7 @@ interface ProcessEvent extends Event {
 }
 ```
 
-### <a name="a19" class="anchor"></a>:arrow_left: Capabilities Event
+### <a name="Events_Capabilities" class="anchor"></a>:arrow_left: Capabilities Event
 
 The event indicates that one or more capabilities have changed.
 
@@ -449,9 +449,9 @@ interface CapabilitiesEvent extends Event {
 }
 ```
 
-## <a name="a20" class="anchor"></a>Reverse Requests
+## <a name="Reverse_Requests" class="anchor"></a>Reverse Requests
 
-### <a name="a21" class="anchor"></a>:arrow_right_hook: RunInTerminal Request
+### <a name="Reverse_Requests_RunInTerminal" class="anchor"></a>:arrow_right_hook: RunInTerminal Request
 
 This request is sent from the debug adapter to the client to run a command in a terminal. This is typically used to launch the debuggee in a terminal provided by the client.
 
@@ -507,9 +507,9 @@ interface RunInTerminalResponse extends Response {
 }
 ```
 
-## <a name="a22" class="anchor"></a>Requests
+## <a name="Requests" class="anchor"></a>Requests
 
-### <a name="a23" class="anchor"></a>:leftwards_arrow_with_hook: Initialize Request
+### <a name="Requests_Initialize" class="anchor"></a>:leftwards_arrow_with_hook: Initialize Request
 
 The 'initialize' request is sent as the first request from the client to the debug adapter in order to configure it with client capabilities and to retrieve capabilities from the debug adapter.
 
@@ -593,7 +593,7 @@ interface InitializeResponse extends Response {
 }
 ```
 
-### <a name="a24" class="anchor"></a>:leftwards_arrow_with_hook: ConfigurationDone Request
+### <a name="Requests_ConfigurationDone" class="anchor"></a>:leftwards_arrow_with_hook: ConfigurationDone Request
 
 The client of the debug protocol must send this request at the end of the sequence of configuration requests (which was started by the 'initialized' event).
 
@@ -619,7 +619,7 @@ interface ConfigurationDoneResponse extends Response {
 }
 ```
 
-### <a name="a25" class="anchor"></a>:leftwards_arrow_with_hook: Launch Request
+### <a name="Requests_Launch" class="anchor"></a>:leftwards_arrow_with_hook: Launch Request
 
 The launch request is sent from the client to the debug adapter to start the debuggee with or without debugging (if 'noDebug' is true). Since launching is debugger/runtime specific, the arguments for this request are not part of this specification.
 
@@ -656,7 +656,7 @@ interface LaunchResponse extends Response {
 }
 ```
 
-### <a name="a26" class="anchor"></a>:leftwards_arrow_with_hook: Attach Request
+### <a name="Requests_Attach" class="anchor"></a>:leftwards_arrow_with_hook: Attach Request
 
 The attach request is sent from the client to the debug adapter to attach to a debuggee that is already running. Since attaching is debugger/runtime specific, the arguments for this request are not part of this specification.
 
@@ -688,7 +688,7 @@ interface AttachResponse extends Response {
 }
 ```
 
-### <a name="a27" class="anchor"></a>:leftwards_arrow_with_hook: Restart Request
+### <a name="Requests_Restart" class="anchor"></a>:leftwards_arrow_with_hook: Restart Request
 
 Restarts a debug session. If the capability 'supportsRestartRequest' is missing or has the value false,
 
@@ -720,7 +720,7 @@ interface RestartResponse extends Response {
 }
 ```
 
-### <a name="a28" class="anchor"></a>:leftwards_arrow_with_hook: Disconnect Request
+### <a name="Requests_Disconnect" class="anchor"></a>:leftwards_arrow_with_hook: Disconnect Request
 
 The 'disconnect' request is sent from the client to the debug adapter in order to stop debugging. It asks the debug adapter to disconnect from the debuggee and to terminate the debug adapter. If the debuggee has been started with the 'launch' request, the 'disconnect' request terminates the debuggee. If the 'attach' request was used to connect to the debuggee, 'disconnect' does not terminate the debuggee. This behavior can be controlled with the 'terminateDebuggee' (if supported by the debug adapter).
 
@@ -752,7 +752,7 @@ interface DisconnectResponse extends Response {
 }
 ```
 
-### <a name="a29" class="anchor"></a>:leftwards_arrow_with_hook: SetBreakpoints Request
+### <a name="Requests_SetBreakpoints" class="anchor"></a>:leftwards_arrow_with_hook: SetBreakpoints Request
 
 Sets multiple breakpoints for a single source and clears all previous breakpoints in that source.
 
@@ -815,7 +815,7 @@ interface SetBreakpointsResponse extends Response {
 }
 ```
 
-### <a name="a30" class="anchor"></a>:leftwards_arrow_with_hook: SetFunctionBreakpoints Request
+### <a name="Requests_SetFunctionBreakpoints" class="anchor"></a>:leftwards_arrow_with_hook: SetFunctionBreakpoints Request
 
 Sets multiple function breakpoints and clears all previous function breakpoints.
 
@@ -857,7 +857,7 @@ interface SetFunctionBreakpointsResponse extends Response {
 }
 ```
 
-### <a name="a31" class="anchor"></a>:leftwards_arrow_with_hook: SetExceptionBreakpoints Request
+### <a name="Requests_SetExceptionBreakpoints" class="anchor"></a>:leftwards_arrow_with_hook: SetExceptionBreakpoints Request
 
 The request configures the debuggers response to thrown exceptions. If an exception is configured to break, a 'stopped' event is fired (with reason 'exception').
 
@@ -892,7 +892,7 @@ interface SetExceptionBreakpointsResponse extends Response {
 }
 ```
 
-### <a name="a32" class="anchor"></a>:leftwards_arrow_with_hook: Continue Request
+### <a name="Requests_Continue" class="anchor"></a>:leftwards_arrow_with_hook: Continue Request
 
 The request starts the debuggee to run again.
 
@@ -928,7 +928,7 @@ interface ContinueResponse extends Response {
 }
 ```
 
-### <a name="a33" class="anchor"></a>:leftwards_arrow_with_hook: Next Request
+### <a name="Requests_Next" class="anchor"></a>:leftwards_arrow_with_hook: Next Request
 
 The request starts the debuggee to run again for one step.
 
@@ -960,7 +960,7 @@ interface NextResponse extends Response {
 }
 ```
 
-### <a name="a34" class="anchor"></a>:leftwards_arrow_with_hook: StepIn Request
+### <a name="Requests_StepIn" class="anchor"></a>:leftwards_arrow_with_hook: StepIn Request
 
 The request starts the debuggee to step into a function/method if possible.
 
@@ -1005,7 +1005,7 @@ interface StepInResponse extends Response {
 }
 ```
 
-### <a name="a35" class="anchor"></a>:leftwards_arrow_with_hook: StepOut Request
+### <a name="Requests_StepOut" class="anchor"></a>:leftwards_arrow_with_hook: StepOut Request
 
 The request starts the debuggee to run again for one step.
 
@@ -1037,7 +1037,7 @@ interface StepOutResponse extends Response {
 }
 ```
 
-### <a name="a36" class="anchor"></a>:leftwards_arrow_with_hook: StepBack Request
+### <a name="Requests_StepBack" class="anchor"></a>:leftwards_arrow_with_hook: StepBack Request
 
 The request starts the debuggee to run one step backwards.
 
@@ -1069,7 +1069,7 @@ interface StepBackResponse extends Response {
 }
 ```
 
-### <a name="a37" class="anchor"></a>:leftwards_arrow_with_hook: ReverseContinue Request
+### <a name="Requests_ReverseContinue" class="anchor"></a>:leftwards_arrow_with_hook: ReverseContinue Request
 
 The request starts the debuggee to run backward. Clients should only call this request if the capability 'supportsStepBack' is true.
 
@@ -1099,7 +1099,7 @@ interface ReverseContinueResponse extends Response {
 }
 ```
 
-### <a name="a38" class="anchor"></a>:leftwards_arrow_with_hook: RestartFrame Request
+### <a name="Requests_RestartFrame" class="anchor"></a>:leftwards_arrow_with_hook: RestartFrame Request
 
 The request restarts execution of the specified stackframe.
 
@@ -1131,7 +1131,7 @@ interface RestartFrameResponse extends Response {
 }
 ```
 
-### <a name="a39" class="anchor"></a>:leftwards_arrow_with_hook: Goto Request
+### <a name="Requests_Goto" class="anchor"></a>:leftwards_arrow_with_hook: Goto Request
 
 The request sets the location where the debuggee will continue to run.
 
@@ -1172,7 +1172,7 @@ interface GotoResponse extends Response {
 }
 ```
 
-### <a name="a40" class="anchor"></a>:leftwards_arrow_with_hook: Pause Request
+### <a name="Requests_Pause" class="anchor"></a>:leftwards_arrow_with_hook: Pause Request
 
 The request suspenses the debuggee.
 
@@ -1204,7 +1204,7 @@ interface PauseResponse extends Response {
 }
 ```
 
-### <a name="a41" class="anchor"></a>:leftwards_arrow_with_hook: StackTrace Request
+### <a name="Requests_StackTrace" class="anchor"></a>:leftwards_arrow_with_hook: StackTrace Request
 
 The request returns a stacktrace from the current execution state.
 
@@ -1261,7 +1261,7 @@ interface StackTraceResponse extends Response {
 }
 ```
 
-### <a name="a42" class="anchor"></a>:leftwards_arrow_with_hook: Scopes Request
+### <a name="Requests_Scopes" class="anchor"></a>:leftwards_arrow_with_hook: Scopes Request
 
 The request returns the variable scopes for a given stackframe ID.
 
@@ -1297,7 +1297,7 @@ interface ScopesResponse extends Response {
 }
 ```
 
-### <a name="a43" class="anchor"></a>:leftwards_arrow_with_hook: Variables Request
+### <a name="Requests_Variables" class="anchor"></a>:leftwards_arrow_with_hook: Variables Request
 
 Retrieves all child variables for the given variable reference.
 
@@ -1355,7 +1355,7 @@ interface VariablesResponse extends Response {
 }
 ```
 
-### <a name="a44" class="anchor"></a>:leftwards_arrow_with_hook: SetVariable Request
+### <a name="Requests_SetVariable" class="anchor"></a>:leftwards_arrow_with_hook: SetVariable Request
 
 Set the variable with the given name in the variable container to a new value.
 
@@ -1428,7 +1428,7 @@ interface SetVariableResponse extends Response {
 }
 ```
 
-### <a name="a45" class="anchor"></a>:leftwards_arrow_with_hook: Source Request
+### <a name="Requests_Source" class="anchor"></a>:leftwards_arrow_with_hook: Source Request
 
 The request retrieves the source code for a given source reference.
 
@@ -1474,7 +1474,7 @@ interface SourceResponse extends Response {
 }
 ```
 
-### <a name="a46" class="anchor"></a>:leftwards_arrow_with_hook: Threads Request
+### <a name="Requests_Threads" class="anchor"></a>:leftwards_arrow_with_hook: Threads Request
 
 The request retrieves a list of all threads.
 
@@ -1497,7 +1497,7 @@ interface ThreadsResponse extends Response {
 }
 ```
 
-### <a name="a47" class="anchor"></a>:leftwards_arrow_with_hook: TerminateThreads Request
+### <a name="Requests_TerminateThreads" class="anchor"></a>:leftwards_arrow_with_hook: TerminateThreads Request
 
 The request terminates the threads with the given ids.
 
@@ -1527,7 +1527,7 @@ interface TerminateThreadsResponse extends Response {
 }
 ```
 
-### <a name="a48" class="anchor"></a>:leftwards_arrow_with_hook: Modules Request
+### <a name="Requests_Modules" class="anchor"></a>:leftwards_arrow_with_hook: Modules Request
 
 Modules can be retrieved from the debug adapter with the ModulesRequest which can either return all modules or a range of modules to support paging.
 
@@ -1573,7 +1573,7 @@ interface ModulesResponse extends Response {
 }
 ```
 
-### <a name="a49" class="anchor"></a>:leftwards_arrow_with_hook: LoadedSources Request
+### <a name="Requests_LoadedSources" class="anchor"></a>:leftwards_arrow_with_hook: LoadedSources Request
 
 Retrieves the set of all sources currently loaded by the debugged process.
 
@@ -1605,7 +1605,7 @@ interface LoadedSourcesResponse extends Response {
 }
 ```
 
-### <a name="a50" class="anchor"></a>:leftwards_arrow_with_hook: Evaluate Request
+### <a name="Requests_Evaluate" class="anchor"></a>:leftwards_arrow_with_hook: Evaluate Request
 
 Evaluates the given expression in the context of the top most stack frame.
 
@@ -1690,7 +1690,7 @@ interface EvaluateResponse extends Response {
 }
 ```
 
-### <a name="a51" class="anchor"></a>:leftwards_arrow_with_hook: SetExpression Request
+### <a name="Requests_SetExpression" class="anchor"></a>:leftwards_arrow_with_hook: SetExpression Request
 
 Evaluates the given 'value' expression and assigns it to the 'expression' which must be a modifiable l-value.
 
@@ -1770,7 +1770,7 @@ interface SetExpressionResponse extends Response {
 }
 ```
 
-### <a name="a52" class="anchor"></a>:leftwards_arrow_with_hook: StepInTargets Request
+### <a name="Requests_StepInTargets" class="anchor"></a>:leftwards_arrow_with_hook: StepInTargets Request
 
 This request retrieves the possible stepIn targets for the specified stack frame.
 
@@ -1810,7 +1810,7 @@ interface StepInTargetsResponse extends Response {
 }
 ```
 
-### <a name="a53" class="anchor"></a>:leftwards_arrow_with_hook: GotoTargets Request
+### <a name="Requests_GotoTargets" class="anchor"></a>:leftwards_arrow_with_hook: GotoTargets Request
 
 This request retrieves the possible goto targets for the specified source location.
 
@@ -1860,7 +1860,7 @@ interface GotoTargetsResponse extends Response {
 }
 ```
 
-### <a name="a54" class="anchor"></a>:leftwards_arrow_with_hook: Completions Request
+### <a name="Requests_Completions" class="anchor"></a>:leftwards_arrow_with_hook: Completions Request
 
 Returns a list of possible completions for a given caret position and text.
 
@@ -1913,7 +1913,7 @@ interface CompletionsResponse extends Response {
 }
 ```
 
-### <a name="a55" class="anchor"></a>:leftwards_arrow_with_hook: ExceptionInfo Request
+### <a name="Requests_ExceptionInfo" class="anchor"></a>:leftwards_arrow_with_hook: ExceptionInfo Request
 
 Retrieves the details of the exception that caused this event to be raised.
 
@@ -1964,9 +1964,9 @@ interface ExceptionInfoResponse extends Response {
 }
 ```
 
-## <a name="a56" class="anchor"></a>Types
+## <a name="Types" class="anchor"></a>Types
 
-### <a name="a57" class="anchor"></a>Capabilities
+### <a name="Types_Capabilities" class="anchor"></a>Capabilities
 
 Information about the capabilities of a debug adapter.
 
@@ -2099,7 +2099,7 @@ interface Capabilities {
 }
 ```
 
-### <a name="a58" class="anchor"></a>ExceptionBreakpointsFilter
+### <a name="Types_ExceptionBreakpointsFilter" class="anchor"></a>ExceptionBreakpointsFilter
 
 An ExceptionBreakpointsFilter is shown in the UI as an option for configuring how exceptions are dealt with.
 
@@ -2122,7 +2122,7 @@ interface ExceptionBreakpointsFilter {
 }
 ```
 
-### <a name="a59" class="anchor"></a>Message
+### <a name="Types_Message" class="anchor"></a>Message
 
 A structured message object. Used to return errors from requests.
 
@@ -2166,7 +2166,7 @@ interface Message {
 }
 ```
 
-### <a name="a60" class="anchor"></a>Module
+### <a name="Types_Module" class="anchor"></a>Module
 
 A Module object represents a row in the modules view.
 
@@ -2241,7 +2241,7 @@ interface Module {
 }
 ```
 
-### <a name="a61" class="anchor"></a>ColumnDescriptor
+### <a name="Types_ColumnDescriptor" class="anchor"></a>ColumnDescriptor
 
 A ColumnDescriptor specifies what module attribute to show in a column of the ModulesView, how to format it, and what the column's label should be.
 
@@ -2276,7 +2276,7 @@ interface ColumnDescriptor {
 }
 ```
 
-### <a name="a62" class="anchor"></a>ModulesViewDescriptor
+### <a name="Types_ModulesViewDescriptor" class="anchor"></a>ModulesViewDescriptor
 
 The ModulesViewDescriptor is the container for all declarative configuration options of a ModuleView.
 
@@ -2288,7 +2288,7 @@ interface ModulesViewDescriptor {
 }
 ```
 
-### <a name="a63" class="anchor"></a>Thread
+### <a name="Types_Thread" class="anchor"></a>Thread
 
 A Thread
 
@@ -2306,7 +2306,7 @@ interface Thread {
 }
 ```
 
-### <a name="a64" class="anchor"></a>Source
+### <a name="Types_Source" class="anchor"></a>Source
 
 A Source is a descriptor for source code. It is returned from the debug adapter as part of a StackFrame and it is used by clients when specifying breakpoints.
 
@@ -2354,7 +2354,7 @@ interface Source {
 }
 ```
 
-### <a name="a65" class="anchor"></a>StackFrame
+### <a name="Types_StackFrame" class="anchor"></a>StackFrame
 
 A Stackframe contains the source location.
 
@@ -2407,7 +2407,7 @@ interface StackFrame {
 }
 ```
 
-### <a name="a66" class="anchor"></a>Scope
+### <a name="Types_Scope" class="anchor"></a>Scope
 
 A Scope is a named container for variables. Optionally a scope can map to a source or a range within a source.
 
@@ -2467,7 +2467,7 @@ interface Scope {
 }
 ```
 
-### <a name="a67" class="anchor"></a>Variable
+### <a name="Types_Variable" class="anchor"></a>Variable
 
 A Variable is a name/value pair.
 
@@ -2527,7 +2527,7 @@ interface Variable {
 }
 ```
 
-### <a name="a68" class="anchor"></a>VariablePresentationHint
+### <a name="Types_VariablePresentationHint" class="anchor"></a>VariablePresentationHint
 
 Optional properties of a variable that can be used to determine how to render the variable in the UI.
 
@@ -2572,7 +2572,7 @@ interface VariablePresentationHint {
 }
 ```
 
-### <a name="a69" class="anchor"></a>SourceBreakpoint
+### <a name="Types_SourceBreakpoint" class="anchor"></a>SourceBreakpoint
 
 Properties of a breakpoint or logpoint passed to the setBreakpoints request.
 
@@ -2605,7 +2605,7 @@ interface SourceBreakpoint {
 }
 ```
 
-### <a name="a70" class="anchor"></a>FunctionBreakpoint
+### <a name="Types_FunctionBreakpoint" class="anchor"></a>FunctionBreakpoint
 
 Properties of a breakpoint passed to the setFunctionBreakpoints request.
 
@@ -2628,7 +2628,7 @@ interface FunctionBreakpoint {
 }
 ```
 
-### <a name="a71" class="anchor"></a>Breakpoint
+### <a name="Types_Breakpoint" class="anchor"></a>Breakpoint
 
 Information about a Breakpoint created in setBreakpoints or setFunctionBreakpoints.
 
@@ -2676,7 +2676,7 @@ interface Breakpoint {
 }
 ```
 
-### <a name="a72" class="anchor"></a>StepInTarget
+### <a name="Types_StepInTarget" class="anchor"></a>StepInTarget
 
 A StepInTarget can be used in the 'stepIn' request and determines into which single target the stepIn request should step.
 
@@ -2694,7 +2694,7 @@ interface StepInTarget {
 }
 ```
 
-### <a name="a73" class="anchor"></a>GotoTarget
+### <a name="Types_GotoTarget" class="anchor"></a>GotoTarget
 
 A GotoTarget describes a code location that can be used as a target in the 'goto' request.
 
@@ -2734,7 +2734,7 @@ interface GotoTarget {
 }
 ```
 
-### <a name="a74" class="anchor"></a>CompletionItem
+### <a name="Types_CompletionItem" class="anchor"></a>CompletionItem
 
 CompletionItems are the suggestions returned from the CompletionsRequest.
 
@@ -2769,7 +2769,7 @@ interface CompletionItem {
 }
 ```
 
-### <a name="a75" class="anchor"></a>CompletionItemType
+### <a name="Types_CompletionItemType" class="anchor"></a>CompletionItemType
 
 Some predefined types for the CompletionItem. Please note that not all clients have specific icons for all of them.
 
@@ -2777,7 +2777,7 @@ Some predefined types for the CompletionItem. Please note that not all clients h
 type CompletionItemType = 'method' | 'function' | 'constructor' | 'field' | 'variable' | 'class' | 'interface' | 'module' | 'property' | 'unit' | 'value' | 'enum' | 'keyword' | 'snippet' | 'text' | 'color' | 'file' | 'reference' | 'customcolor';
 ```
 
-### <a name="a76" class="anchor"></a>ChecksumAlgorithm
+### <a name="Types_ChecksumAlgorithm" class="anchor"></a>ChecksumAlgorithm
 
 Names of checksum algorithms that may be supported by a debug adapter.
 
@@ -2785,7 +2785,7 @@ Names of checksum algorithms that may be supported by a debug adapter.
 type ChecksumAlgorithm = 'MD5' | 'SHA1' | 'SHA256' | 'timestamp';
 ```
 
-### <a name="a77" class="anchor"></a>Checksum
+### <a name="Types_Checksum" class="anchor"></a>Checksum
 
 The checksum of an item calculated by the specified algorithm.
 
@@ -2803,7 +2803,7 @@ interface Checksum {
 }
 ```
 
-### <a name="a78" class="anchor"></a>ValueFormat
+### <a name="Types_ValueFormat" class="anchor"></a>ValueFormat
 
 Provides formatting information for a value.
 
@@ -2816,7 +2816,7 @@ interface ValueFormat {
 }
 ```
 
-### <a name="a79" class="anchor"></a>StackFrameFormat
+### <a name="Types_StackFrameFormat" class="anchor"></a>StackFrameFormat
 
 Provides formatting information for a stack frame.
 
@@ -2859,7 +2859,7 @@ interface StackFrameFormat extends ValueFormat {
 }
 ```
 
-### <a name="a80" class="anchor"></a>ExceptionOptions
+### <a name="Types_ExceptionOptions" class="anchor"></a>ExceptionOptions
 
 An ExceptionOptions assigns configuration options to a set of exceptions.
 
@@ -2877,7 +2877,7 @@ interface ExceptionOptions {
 }
 ```
 
-### <a name="a81" class="anchor"></a>ExceptionBreakMode
+### <a name="Types_ExceptionBreakMode" class="anchor"></a>ExceptionBreakMode
 
 This enumeration defines all possible conditions when a thrown exception should result in a break.
 
@@ -2893,7 +2893,7 @@ userUnhandled: breaks if the exception is not handled by user code.
 type ExceptionBreakMode = 'never' | 'always' | 'unhandled' | 'userUnhandled';
 ```
 
-### <a name="a82" class="anchor"></a>ExceptionPathSegment
+### <a name="Types_ExceptionPathSegment" class="anchor"></a>ExceptionPathSegment
 
 An ExceptionPathSegment represents a segment in a path that is used to match leafs or nodes in a tree of exceptions. If a segment consists of more than one name, it matches the names provided if 'negate' is false or missing or it matches anything except the names provided if 'negate' is true.
 
@@ -2911,7 +2911,7 @@ interface ExceptionPathSegment {
 }
 ```
 
-### <a name="a83" class="anchor"></a>ExceptionDetails
+### <a name="Types_ExceptionDetails" class="anchor"></a>ExceptionDetails
 
 Detailed information about an exception that has occurred.
 

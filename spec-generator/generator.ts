@@ -10,19 +10,22 @@ import {IProtocol, Protocol as P} from './json_schema';
 let numIndents = 0;
 let lastRequestType = '';
 
-let anchorId = 0;
-
 class OutlineNode {
 
 	private children: OutlineNode[] = [];
+	public readonly anchor: string;
 
 	constructor(
 		parent: OutlineNode,
-		private title: string,
-		private anchor: string
+		private title: string
 	 ) {
 		if (parent) {
 			 parent.children.push(this);
+			 let a = title;
+			 if (parent.anchor) {
+				 a = `${parent.anchor}_${title}`;
+			 }
+			 this.anchor = a.replace(/ /g, '_');
 		}
 	}
 
@@ -30,7 +33,9 @@ class OutlineNode {
 		let outline = '';
 		const indent = '  '.repeat(level);
 		outline += `${indent}- title: ${this.title}\n`;
-		outline += `${indent}  anchor: ${this.anchor}\n`;
+		if (this.anchor) {
+			outline += `${indent}  anchor: ${this.anchor}\n`;
+		}
 		if (this.children.length > 0) {
 			this.children = this.children.sort((a, b) => a.title.localeCompare(b.title));
 			outline += `${indent}  children:\n`;
@@ -141,20 +146,25 @@ function Header(level: number, text: string, short?: string, arrow?: string): st
 
 	const t = short ? camelCase(short) : text;
 
-	const anchor = `a${anchorId++}`;
+	let x: OutlineNode;
 	if (!outline) {
-		outline = new OutlineNode(null, t, anchor);
+		x= outline = new OutlineNode(null, t);
 	} else if (level === 2) {
-		root2= new OutlineNode(outline, t, anchor);
+		x= root2= new OutlineNode(outline, t);
 	} else if (level === 3) {
-		new OutlineNode(root2, t, anchor);
+		x= new OutlineNode(root2, t);
 	}
 
-	let h = text;
+	let header = text;
 	if (arrow) {
-		h = `${arrow} ${text}`;
+		header = `${arrow} ${text}`;
 	}
-	return `${'#'.repeat(level)} <a name="${anchor}" class="anchor"></a>${h}\n\n`;
+
+	let anchorElement = '';
+	if (x.anchor) {
+		anchorElement = `<a name="${x.anchor}" class="anchor"></a>`;
+	}
+	return `${'#'.repeat(level)} ${anchorElement}${header}\n\n`;
 }
 
 function description(c: P.Commentable): string {
