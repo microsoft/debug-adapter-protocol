@@ -1,23 +1,24 @@
 {
 	"$schema": "http://json-schema.org/draft-04/schema#",
-	"title": "VS Code Debug Protocol",
-	"description": "A json schema for the VS Code Debug Protocol",
+	"title": "Debug Adapter Protocol",
+	"description": "The Debug Adapter Protocol defines the protocol used between an editor or IDE and a debugger or runtime.",
 	"type": "object",
 
 	"definitions": {
 
 		"ProtocolMessage": {
 			"type": "object",
+			"title": "Base Protocol",
 			"description": "Base class of requests, responses, and events.",
 			"properties": {
-				"seq": {
-					"type": "integer",
-					"description": "Sequence number."
-				},
 				"type": {
 					"type": "string",
 					"description": "Message type.",
-					"_enum": [ "request", "response", "event" ]
+					"enum": [ "request", "response", "event" ]
+				},
+				"seq": {
+					"type": "integer",
+					"description": "Sequence number."
 				}
 			},
 			"required": [ "seq", "type" ]
@@ -123,6 +124,7 @@
 		"InitializedEvent": {
 			"allOf": [ { "$ref": "#/definitions/Event" }, {
 				"type": "object",
+				"title": "Events",
 				"description": "This event indicates that the debug adapter is ready to accept configuration requests (e.g. SetBreakpointsRequest, SetExceptionBreakpointsRequest).\nA debug adapter is expected to send this event when it is ready to accept configuration requests (but not before the 'initialize' request has finished).\nThe sequence of events/requests is as follows:\n- adapters sends 'initialized' event (after the 'initialize' request has returned)\n- frontend sends zero or more 'setBreakpoints' requests\n- frontend sends one 'setFunctionBreakpoints' request\n- frontend sends a 'setExceptionBreakpoints' request if one or more 'exceptionBreakpointFilters' have been defined (or if 'supportsConfigurationDoneRequest' is not defined or false)\n- frontend sends other future configuration requests\n- frontend sends one 'configurationDone' request to indicate the end of the configuration.",
 				"properties": {
 					"event": {
@@ -169,7 +171,7 @@
 							},
 							"allThreadsStopped": {
 								"type": "boolean",
-								"description": "If 'allThreadsStopped' is true, a debug adapter can announce that all threads have stopped.\n*  The client should use this information to enable that all threads can be expanded to access their stacktraces.\n*  If the attribute is missing or false, only the thread with the given threadId can be expanded."
+								"description": "If 'allThreadsStopped' is true, a debug adapter can announce that all threads have stopped.\n- The client should use this information to enable that all threads can be expanded to access their stacktraces.\n- If the attribute is missing or false, only the thread with the given threadId can be expanded."
 							}
 						},
 						"required": [ "reason" ]
@@ -182,7 +184,7 @@
 		"ContinuedEvent": {
 			"allOf": [ { "$ref": "#/definitions/Event" }, {
 				"type": "object",
-				"description": "The event indicates that the execution of the debuggee has continued.\nPlease note: a debug adapter is not expected to send this event in response to a request that implies that execution continues, e.g. 'launch' or 'continue'.\nIt is only necessary to send a ContinuedEvent if there was no previous request that implied this.",
+				"description": "The event indicates that the execution of the debuggee has continued.\nPlease note: a debug adapter is not expected to send this event in response to a request that implies that execution continues, e.g. 'launch' or 'continue'.\nIt is only necessary to send a 'continued' event if there was no previous request that implied this.",
 				"properties": {
 					"event": {
 						"type": "string",
@@ -210,7 +212,7 @@
 		"ExitedEvent": {
 			"allOf": [ { "$ref": "#/definitions/Event" }, {
 				"type": "object",
-				"description": "The event indicates that the debuggee has exited.",
+				"description": "The event indicates that the debuggee has exited and returns its exit code.",
 				"properties": {
 					"event": {
 						"type": "string",
@@ -234,7 +236,7 @@
 		"TerminatedEvent": {
 			"allOf": [ { "$ref": "#/definitions/Event" }, {
 				"type": "object",
-				"description": "The event indicates that debugging of the debuggee has terminated. It does **not** mean that the debuggee has exited.",
+				"description": "The event indicates that debugging of the debuggee has terminated. This does **not** mean that the debuggee itself has exited.",
 				"properties": {
 					"event": {
 						"type": "string",
@@ -266,14 +268,14 @@
 					"body": {
 						"type": "object",
 						"properties": {
+							"threadId": {
+								"type": "integer",
+								"description": "The identifier of the thread."
+							},
 							"reason": {
 								"type": "string",
 								"description": "The reason for the event.",
 								"_enum": [ "started", "exited" ]
-							},
-							"threadId": {
-								"type": "integer",
-								"description": "The identifier of the thread."
 							}
 						},
 						"required": ["reason", "threadId"]
@@ -491,6 +493,7 @@
 		"RunInTerminalRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
+				"title": "Reverse Requests",
 				"description": "This request is sent from the debug adapter to the client to run a command in a terminal. This is typically used to launch the debuggee in a terminal provided by the client.",
 				"properties": {
 					"command": {
@@ -561,7 +564,8 @@
 		"InitializeRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The 'initialize' request is sent as the first request from the client to the debug adapter in order to configure it with client capabilities.\nUntil the debug adapter has responded to with an 'initialize' response, the client must not send any additional requests or events to the debug adapter. In addition the debug adapter is not allowed to send any requests or events to the client until it has responded with an 'initialize' response.\nThe 'initialize' request may only be sent once.",
+				"title": "Requests",
+				"description": "The 'initialize' request is sent as the first request from the client to the debug adapter in order to configure it with client capabilities and to retrieve capabilities from the debug adapter.\nUntil the debug adapter has responded to with an 'initialize' response, the client must not send any additional requests or events to the debug adapter. In addition the debug adapter is not allowed to send any requests or events to the client until it has responded with an 'initialize' response.\nThe 'initialize' request may only be sent once.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -638,7 +642,7 @@
 		"ConfigurationDoneRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The client of the debug protocol must send this request at the end of the sequence of configuration requests (which was started by the InitializedEvent).",
+				"description": "The client of the debug protocol must send this request at the end of the sequence of configuration requests (which was started by the 'initialized' event).",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -653,7 +657,7 @@
 		},
 		"ConfigurationDoneArguments": {
 			"type": "object",
-			"description": "Arguments for 'configurationDone' request.\nThe configurationDone request has no standardized attributes."
+			"description": "Arguments for 'configurationDone' request."
 		},
 		"ConfigurationDoneResponse": {
 			"allOf": [ { "$ref": "#/definitions/Response" }, {
@@ -750,7 +754,7 @@
 		},
 		"RestartArguments": {
 			"type": "object",
-			"description": "Arguments for 'restart' request.\nThe restart request has no standardized attributes."
+			"description": "Arguments for 'restart' request."
 		},
 		"RestartResponse": {
 			"allOf": [ { "$ref": "#/definitions/Response" }, {
@@ -795,7 +799,7 @@
 		"SetBreakpointsRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "Sets multiple breakpoints for a single source and clears all previous breakpoints in that source.\nTo clear all breakpoint for a source, specify an empty array.\nWhen a breakpoint is hit, a StoppedEvent (event type 'breakpoint') is generated.",
+				"description": "Sets multiple breakpoints for a single source and clears all previous breakpoints in that source.\nTo clear all breakpoint for a source, specify an empty array.\nWhen a breakpoint is hit, a 'stopped' event (with reason 'breakpoint') is generated.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -814,7 +818,7 @@
 			"properties": {
 				"source": {
 					"$ref": "#/definitions/Source",
-					"description": "The source location of the breakpoints; either source.path or source.reference must be specified."
+					"description": "The source location of the breakpoints; either 'source.path' or 'source.reference' must be specified."
 				},
 				"breakpoints": {
 					"type": "array",
@@ -840,7 +844,7 @@
 		"SetBreakpointsResponse": {
 			"allOf": [ { "$ref": "#/definitions/Response" }, {
 				"type": "object",
-				"description": "Response to 'setBreakpoints' request.\nReturned is information about each breakpoint created by this request.\nThis includes the actual code location and whether the breakpoint could be verified.\nThe breakpoints returned are in the same order as the elements of the 'breakpoints'\n(or the deprecated 'lines') in the SetBreakpointsArguments.",
+				"description": "Response to 'setBreakpoints' request.\nReturned is information about each breakpoint created by this request.\nThis includes the actual code location and whether the breakpoint could be verified.\nThe breakpoints returned are in the same order as the elements of the 'breakpoints'\n(or the deprecated 'lines') array in the arguments.",
 				"properties": {
 					"body": {
 						"type": "object",
@@ -850,7 +854,7 @@
 								"items": {
 									"$ref": "#/definitions/Breakpoint"
 								},
-								"description": "Information about the breakpoints. The array elements are in the same order as the elements of the 'breakpoints' (or the deprecated 'lines') in the SetBreakpointsArguments."
+								"description": "Information about the breakpoints. The array elements are in the same order as the elements of the 'breakpoints' (or the deprecated 'lines') array in the arguments."
 							}
 						},
 						"required": [ "breakpoints" ]
@@ -863,7 +867,7 @@
 		"SetFunctionBreakpointsRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "Sets multiple function breakpoints and clears all previous function breakpoints.\nTo clear all function breakpoint, specify an empty array.\nWhen a function breakpoint is hit, a StoppedEvent (event type 'function breakpoint') is generated.",
+				"description": "Sets multiple function breakpoints and clears all previous function breakpoints.\nTo clear all function breakpoint, specify an empty array.\nWhen a function breakpoint is hit, a 'stopped' event (event type 'function breakpoint') is generated.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -916,7 +920,7 @@
 		"SetExceptionBreakpointsRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The request configures the debuggers response to thrown exceptions. If an exception is configured to break, a StoppedEvent is fired (event type 'exception').",
+				"description": "The request configures the debuggers response to thrown exceptions. If an exception is configured to break, a 'stopped' event is fired (with reason 'exception').",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -979,7 +983,7 @@
 			"properties": {
 				"threadId": {
 					"type": "integer",
-					"description": "Continue execution for the specified thread (if possible). If the backend cannot continue on a single thread but will continue on all threads, it should set the allThreadsContinued attribute in the response to true."
+					"description": "Continue execution for the specified thread (if possible). If the backend cannot continue on a single thread but will continue on all threads, it should set the 'allThreadsContinued' attribute in the response to true."
 				}
 			},
 			"required": [ "threadId" ]
@@ -994,7 +998,7 @@
 						"properties": {
 							"allThreadsContinued": {
 								"type": "boolean",
-								"description": "If true, the continue request has ignored the specified thread and continued all threads instead. If this attribute is missing a value of 'true' is assumed for backward compatibility."
+								"description": "If true, the 'continue' request has ignored the specified thread and continued all threads instead. If this attribute is missing a value of 'true' is assumed for backward compatibility."
 							}
 						}
 					}
@@ -1006,7 +1010,7 @@
 		"NextRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The request starts the debuggee to run again for one step.\nThe debug adapter first sends the NextResponse and then a StoppedEvent (event type 'step') after the step has completed.",
+				"description": "The request starts the debuggee to run again for one step.\nThe debug adapter first sends the response and then a 'stopped' event (with reason 'step') after the step has completed.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -1040,7 +1044,7 @@
 		"StepInRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The request starts the debuggee to step into a function/method if possible.\nIf it cannot step into a target, 'stepIn' behaves like 'next'.\nThe debug adapter first sends the StepInResponse and then a StoppedEvent (event type 'step') after the step has completed.\nIf there are multiple function/method calls (or other targets) on the source line,\nthe optional argument 'targetId' can be used to control into which target the 'stepIn' should occur.\nThe list of possible targets for a given source line can be retrieved via the 'stepInTargets' request.",
+				"description": "The request starts the debuggee to step into a function/method if possible.\nIf it cannot step into a target, 'stepIn' behaves like 'next'.\nThe debug adapter first sends the response and then a 'stopped' event (with reason 'step') after the step has completed.\nIf there are multiple function/method calls (or other targets) on the source line,\nthe optional argument 'targetId' can be used to control into which target the 'stepIn' should occur.\nThe list of possible targets for a given source line can be retrieved via the 'stepInTargets' request.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -1078,7 +1082,7 @@
 		"StepOutRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The request starts the debuggee to run again for one step.\nThe debug adapter first sends the StepOutResponse and then a StoppedEvent (event type 'step') after the step has completed.",
+				"description": "The request starts the debuggee to run again for one step.\nThe debug adapter first sends the response and then a 'stopped' event (with reason 'step') after the step has completed.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -1112,7 +1116,7 @@
 		"StepBackRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The request starts the debuggee to run one step backwards.\nThe debug adapter first sends the StepBackResponse and then a StoppedEvent (event type 'step') after the step has completed. Clients should only call this request if the capability supportsStepBack is true.",
+				"description": "The request starts the debuggee to run one step backwards.\nThe debug adapter first sends the response and then a 'stopped' event (with reason 'step') after the step has completed. Clients should only call this request if the capability 'supportsStepBack' is true.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -1146,7 +1150,7 @@
 		"ReverseContinueRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The request starts the debuggee to run backward. Clients should only call this request if the capability supportsStepBack is true.",
+				"description": "The request starts the debuggee to run backward. Clients should only call this request if the capability 'supportsStepBack' is true.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -1180,7 +1184,7 @@
 		"RestartFrameRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The request restarts execution of the specified stackframe.\nThe debug adapter first sends the RestartFrameResponse and then a StoppedEvent (event type 'restart') after the restart has completed.",
+				"description": "The request restarts execution of the specified stackframe.\nThe debug adapter first sends the response and then a 'stopped' event (with reason 'restart') after the restart has completed.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -1214,7 +1218,7 @@
 		"GotoRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The request sets the location where the debuggee will continue to run.\nThis makes it possible to skip the execution of code or to executed code again.\nThe code between the current location and the goto target is not executed but skipped.\nThe debug adapter first sends the GotoResponse and then a StoppedEvent with reason 'goto'.",
+				"description": "The request sets the location where the debuggee will continue to run.\nThis makes it possible to skip the execution of code or to executed code again.\nThe code between the current location and the goto target is not executed but skipped.\nThe debug adapter first sends the response and then a 'stopped' event with reason 'goto'.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -1252,7 +1256,7 @@
 		"PauseRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The request suspenses the debuggee.\nThe debug adapter first sends the PauseResponse and then a StoppedEvent (event type 'pause') after the thread has been paused successfully.",
+				"description": "The request suspenses the debuggee.\nThe debug adapter first sends the response and then a 'stopped' event (with reason 'pause') after the thread has been paused successfully.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -1743,7 +1747,7 @@
 		},
 		"LoadedSourcesArguments": {
 			"type": "object",
-			"description": "Arguments for 'loadedSources' request.\nThe 'loadedSources' request has no standardized arguments."
+			"description": "Arguments for 'loadedSources' request."
 		},
 		"LoadedSourcesResponse": {
 			"allOf": [ { "$ref": "#/definitions/Response" }, {
@@ -2105,7 +2109,7 @@
 		"ExceptionInfoRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "Retrieves the details of the exception that caused the StoppedEvent to be raised.",
+				"description": "Retrieves the details of the exception that caused this event to be raised.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -2163,6 +2167,7 @@
 
 		"Capabilities": {
 			"type": "object",
+			"title": "Types",
 			"description": "Information about the capabilities of a debug adapter.",
 			"properties": {
 				"supportsConfigurationDoneRequest": {

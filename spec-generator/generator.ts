@@ -8,65 +8,44 @@ import * as fs from 'fs';
 import {IProtocol, Protocol as P} from './json_schema';
 
 let numIndents = 0;
-let section = 'Types';
 let lastRequestType = '';
 
-let outline = '';
+let anchorId = 0;
 
-let anchor = 1;
+class OutlineNode {
 
-class Node {
-	private children: Node[] = [];
+	private children: OutlineNode[] = [];
+
 	constructor(
-		private parent: Node,
+		parent: OutlineNode,
 		private title: string,
-		private anchor: number
+		private anchor: string
 	 ) {
 		if (parent) {
 			 parent.children.push(this);
 		}
 	}
-	dump(level = 0) {
+
+	dump(level = 0): string {
+		let outline = '';
 		const indent = '  '.repeat(level);
 		outline += `${indent}- title: ${this.title}\n`;
-		outline += `${indent}  anchor: ${String(this.anchor)}\n`;
+		outline += `${indent}  anchor: ${this.anchor}\n`;
 		if (this.children.length > 0) {
 			this.children = this.children.sort((a, b) => a.title.localeCompare(b.title));
 			outline += `${indent}  children:\n`;
 			for (let c of this.children) {
-				c.dump(level+1);
+				outline += c.dump(level+1);
 			}
 		}
+		return outline;
 	}
 }
 
-let root: Node;
-let root2: Node;
+//---- Markdown ------------------------------------------------------------------------------------
 
-function Header(level: number, text: string, short?: string): string {
 
-	anchor++;
-
-	const t = short ? camelCase(short) : text.replace(/:.+: /, '');
-
-	if (!root) {
-		root = new Node(null, t, anchor);
-	} else if (level === 2) {
-		root2= new Node(root, t, anchor);
-	} else if (level === 3) {
-		new Node(root2, t, anchor);
-	}
-
-/*
-	const indent = '  '.repeat(level-1);
-	outline += `${indent}- title: ${t}\n`;
-	outline += `${indent}  anchor: ${String(anchor)}\n`;
-	outline += `${indent}  children:\n`;
-*/
-	return `${'#'.repeat(level)} <a name="${String(anchor)}" class="anchor"></a>${text}\n`;
-}
-
-function Module(moduleName: string, schema: IProtocol): string {
+function MarkDown(schema: IProtocol): string {
 
 	let s = '';
 
@@ -75,15 +54,12 @@ function Module(moduleName: string, schema: IProtocol): string {
 	s += 'layout: specification\n';
 	s += 'sectionid: specification\n';
 	s += 'toc: true\n';
-	s += '---\n';
-	//s += comment({ description : 'Auto-generated from json schema. Do not edit manually!'});
-	s += '\n';
-	s += Header(1, 'Debug Adapter Protocol Specification');
-	s += '\n';
+	s += '---\n\n';
 
-	s += Header(2, 'Base Protocol');
+	s += '<!--- Auto-generated from json schema. Do not edit! -->\n\n';
 
-	s += '\n';
+	s += Header(1, schema.title);
+	s += description(schema);
 
 	for (let typeName in schema.definitions) {
 
@@ -96,15 +72,11 @@ function Module(moduleName: string, schema: IProtocol): string {
 				if ((<P.RefType>d).$ref) {
 					supertype = getRef((<P.RefType>d).$ref);
 				} else {
-					s += Interface(typeName, <P.Definition> d, supertype);
+					s+= Type(typeName, <P.Definition> d, supertype);
 				}
 			}
 		} else {
-			if ((<P.StringType>d2).enum) {
-				s += Enum(typeName, <P.StringType> d2);
-			} else {
-				s += Interface(typeName, <P.Definition> d2);
-			}
+			s+= Type(typeName, <P.Definition | P.StringType> d2);
 		}
 	}
 
@@ -113,68 +85,113 @@ function Module(moduleName: string, schema: IProtocol): string {
 	return s;
 }
 
-function Interface(interfaceName: string, definition: P.Definition, superType?: string): string {
+function Type(typeName: string, definition: P.Definition | P.StringType, supertype?: string): string {
 
-	let header = `${interfaceName}`;
-	let shortHeader = interfaceName;
-	let type = 'Types';
+	let heading = typeName;
+	let shortHeading = typeName;
+	let arrow: string;
 
-	if (definition.properties && definition.properties.event && definition.properties.event['enum']) {
-		const eventName = `${definition.properties.event['enum'][0]}`;
-		shortHeader = eventName;
-		header = `:arrow_left: ${camelCase(eventName)} Notification`;
-		type = 'Events';
-	} else if (definition.properties && definition.properties.command && definition.properties.command['enum']) {
-		const requestName = `${definition.properties.command['enum'][0]}`;
-		shortHeader = requestName;
-		const arrow = requestName === 'runInTerminal' ? ':arrow_right_hook:' : ':leftwards_arrow_with_hook:';
-		header = `${arrow} ${camelCase(requestName)} Request`;
-		type = 'Requests';
-		lastRequestType = interfaceName.replace('Request', '');
+	const properties = (<P.ObjectType>definition).properties;
+	if (properties) {
+		if (properties.event && properties.event['enum']) {
+			const eventName = `${properties.event['enum'][0]}`;
+			shortHeading = eventName;
+			arrow = ':arrow_left:';
+			heading = `${camelCase(eventName)} Event`;
+		} else if (properties.command && properties.command['enum']) {
+			const requestName = `${properties.command['enum'][0]}`;
+			shortHeading = requestName;
+			const isReserve = requestName === 'runInTerminal';
+			arrow = isReserve ? ':arrow_right_hook:' : ':leftwards_arrow_with_hook:';
+			heading = `${camelCase(requestName)} Request`;
+			lastRequestType = typeName.replace('Request', '');
+		}
 	}
 
 	let s = line();
 
-	if (lastRequestType.length > 0 && interfaceName.startsWith(lastRequestType) && interfaceName !== `${lastRequestType}Request`) {
-		// skip header
+	if (definition['title']) {
+		s += Header(2, definition['title']);
+	}
+
+	if (lastRequestType.length > 0 && typeName.startsWith(lastRequestType) && typeName !== `${lastRequestType}Request`) {
 	} else {
-
-		if (section !== type) {
-			section = type;
-			s += Header(2, `${section}`);
-		}
-
-		s += Header(3, `${header}`, shortHeader);
+		s += Header(3, heading, shortHeading, arrow);
 	}
 
-	s += comment({ description : definition.description });
+	s += description(definition);
 
-	s += '\n```typescript\n';
+	s += '```typescript\n';
 
-	let x = `interface ${interfaceName}`;
-	if (superType) {
-		x += ` extends ${superType}`;
+	if ((<P.StringType>definition).enum) {
+		s += Enum(typeName, <P.StringType> definition);
+	} else {
+		s += Interface(typeName, <P.Definition> definition, supertype);
 	}
-	s += openBlock(x);
-
-	for (let propName in definition.properties) {
-		const required = definition.required ? definition.required.indexOf(propName) >= 0 : false;
-		s += property(propName, !required, definition.properties[propName]);
-	}
-
-	s += closeBlock();
 
 	s += '```\n';
 
 	return s;
 }
 
-function Enum(typeName: string, definition: P.StringType): string {
-	let s = line();
-	s += comment(definition);
-	const x = enumAsOrType(definition.enum);
-	s += line(`export type ${typeName} = ${x};`);
+let outline: OutlineNode;
+let root2: OutlineNode;
+
+function Header(level: number, text: string, short?: string, arrow?: string): string {
+
+	const t = short ? camelCase(short) : text;
+
+	const anchor = `a${anchorId++}`;
+	if (!outline) {
+		outline = new OutlineNode(null, t, anchor);
+	} else if (level === 2) {
+		root2= new OutlineNode(outline, t, anchor);
+	} else if (level === 3) {
+		new OutlineNode(root2, t, anchor);
+	}
+
+	let h = text;
+	if (arrow) {
+		h = `${arrow} ${text}`;
+	}
+	return `${'#'.repeat(level)} <a name="${anchor}" class="anchor"></a>${h}\n\n`;
+}
+
+function description(c: P.Commentable): string {
+
+	if (c.description) {
+		return c.description.replace(/\n/g, '\n\n').replace(/\n\n- /g, '\n- ') + '\n\n';
+	}
+	return '';
+}
+
+//---- TypeScript ------------------------------------------------------------------------------------
+
+function Interface(interfaceName: string, definition: P.Definition, superType?: string): string {
+
+	let x = `interface ${interfaceName}`;
+	if (superType) {
+		x += ` extends ${superType}`;
+	}
+	let s = openBlock(x);
+
+	let i = 0;
+	for (let propName in definition.properties) {
+		if (i++ > 0) {
+			s += '\n';
+		}
+		const required = definition.required ? definition.required.indexOf(propName) >= 0 : false;
+		s += property(propName, !required, definition.properties[propName]);
+	}
+
+	s += closeBlock();
+
 	return s;
+}
+
+function Enum(typeName: string, definition: P.StringType): string {
+	const x = enumAsOrType(definition.enum);
+	return line(`type ${typeName} = ${x};`);
 }
 
 function enumAsOrType(enm: string[]) {
@@ -185,7 +202,8 @@ function comment(c: P.Commentable): string {
 
 	let description = c.description || '';
 
-	if ((<any>c).items) {	// array
+	// array
+	if ((<any>c).items) {
 		c = (<any>c).items;
 	}
 
@@ -210,19 +228,15 @@ function comment(c: P.Commentable): string {
 	}
 
 	if (description) {
-		description = description.replace(/<code>(.*)<\/code>/g, "'$1'");
-		numIndents++;
-		description = description.replace(/\n/g, '\n' + indent());
-		numIndents--;
-
 		if (numIndents === 0) {
+			// in markdown
+			description = description.replace(/\n/g, '\n');
 			return description + '\n';
 		} else {
-			if (description.indexOf('\n') >= 0) {
-				return line(`/** ${description}\n${indent()}*/`);
-			} else {
-				return line(`/** ${description} */`);
-			}
+			// in code
+			description = description.replace(/<code>(.*)<\/code>/g, "'$1'");
+			const ind = indent();
+			return `${ind}/**\n${ind} * ` + description.replace(/\n/g, `\n${ind} * `) + `\n${ind} */\n`;
 		}
 	}
 	return '';
@@ -278,7 +292,11 @@ function objectType(prop: any): string {
 	if (prop.properties) {
 		let s = openBlock('', '{', false);
 
+		let i = 0;
 		for (let propName in prop.properties) {
+			if (i++ > 0) {
+				s += '\n';
+			}
 			const required = prop.required ? prop.required.indexOf(propName) >= 0 : false;
 			s += property(propName, !required, prop.properties[propName]);
 		}
@@ -349,12 +367,8 @@ function camelCase(s: string) {
 
 /// Main
 
-const debugProtocolSchema = JSON.parse(fs.readFileSync('./debugProtocol.json').toString());
+const debugProtocolSchema = JSON.parse(fs.readFileSync('./debugAdapterProtocol.json').toString());
 
-const emitStr = Module('DebugProtocol', debugProtocolSchema);
+fs.writeFileSync(`specification.md`, MarkDown(debugProtocolSchema), { encoding: 'utf-8'});
 
-fs.writeFileSync(`specification.md`, emitStr, { encoding: 'utf-8'});
-
-root.dump();
-fs.writeFileSync(`_data/specification-toc.yml`, outline, { encoding: 'utf-8'});
-
+fs.writeFileSync(`_data/specification-toc.yml`, outline.dump(), { encoding: 'utf-8'});
