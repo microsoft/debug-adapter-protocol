@@ -7,9 +7,6 @@
 import * as fs from 'fs';
 import {IProtocol, Protocol as P} from './json_schema';
 
-let numIndents = 0;
-let lastRequestType = '';
-
 class OutlineNode {
 
 	private children: OutlineNode[] = [];
@@ -48,7 +45,6 @@ class OutlineNode {
 }
 
 //---- Markdown ------------------------------------------------------------------------------------
-
 
 function MarkDown(schema: IProtocol): string {
 
@@ -90,25 +86,24 @@ function MarkDown(schema: IProtocol): string {
 	return s;
 }
 
+let lastRequestType = '';
+
 function Type(typeName: string, definition: P.Definition | P.StringType, supertype?: string): string {
 
 	let heading = typeName;
 	let shortHeading = typeName;
-	let arrow: string;
 
 	const properties = (<P.ObjectType>definition).properties;
 	if (properties) {
 		if (properties.event && properties.event['enum']) {
 			const eventName = `${properties.event['enum'][0]}`;
 			shortHeading = eventName;
-			arrow = ':arrow_left:';
-			heading = `${camelCase(eventName)} Event`;
+			heading = `:arrow_left: ${camelCase(eventName)} Event`;
 		} else if (properties.command && properties.command['enum']) {
 			const requestName = `${properties.command['enum'][0]}`;
 			shortHeading = requestName;
-			const isReserve = requestName === 'runInTerminal';
-			arrow = isReserve ? ':arrow_right_hook:' : ':leftwards_arrow_with_hook:';
-			heading = `${camelCase(requestName)} Request`;
+			const arrow = requestName === 'runInTerminal' ? ':arrow_right_hook:' : ':leftwards_arrow_with_hook:';
+			heading = `${arrow} ${camelCase(requestName)} Request`;
 			lastRequestType = typeName.replace('Request', '');
 		}
 	}
@@ -120,8 +115,9 @@ function Type(typeName: string, definition: P.Definition | P.StringType, superty
 	}
 
 	if (lastRequestType.length > 0 && typeName.startsWith(lastRequestType) && typeName !== `${lastRequestType}Request`) {
+		// this definition belongs to the previous request: don't add header
 	} else {
-		s += Header(3, heading, shortHeading, arrow);
+		s += Header(3, heading, shortHeading);
 	}
 
 	s += description(definition);
@@ -139,32 +135,23 @@ function Type(typeName: string, definition: P.Definition | P.StringType, superty
 	return s;
 }
 
-let outline: OutlineNode;
-let root2: OutlineNode;
+let outline, outline2: OutlineNode;
 
-function Header(level: number, text: string, short?: string, arrow?: string): string {
+function Header(level: number, text: string, short?: string): string {
 
-	const t = short ? camelCase(short) : text;
+	const label = short ? camelCase(short) : text;
 
-	let x: OutlineNode;
+	let node: OutlineNode;
 	if (!outline) {
-		x= outline = new OutlineNode(null, t);
+		node= outline = new OutlineNode(null, label);
 	} else if (level === 2) {
-		x= root2= new OutlineNode(outline, t);
+		node= outline2= new OutlineNode(outline, label);
 	} else if (level === 3) {
-		x= new OutlineNode(root2, t);
+		node= new OutlineNode(outline2, label);
 	}
 
-	let header = text;
-	if (arrow) {
-		header = `${arrow} ${text}`;
-	}
-
-	let anchorElement = '';
-	if (x.anchor) {
-		anchorElement = `<a name="${x.anchor}" class="anchor"></a>`;
-	}
-	return `${'#'.repeat(level)} ${anchorElement}${header}\n\n`;
+	let anchor = node.anchor ? `<a name="${node.anchor}" class="anchor"></a>` : '';
+	return `${'#'.repeat(level)} ${anchor}${text}\n\n`;
 }
 
 function description(c: P.Commentable): string {
@@ -175,7 +162,13 @@ function description(c: P.Commentable): string {
 	return '';
 }
 
+function camelCase(s: string) {
+	return s[0].toUpperCase() + s.substr(1);
+}
+
 //---- TypeScript ------------------------------------------------------------------------------------
+
+let numIndents = 0;
 
 function Interface(interfaceName: string, definition: P.Definition, superType?: string): string {
 
@@ -369,10 +362,6 @@ function line(str?: string, newline?: boolean, indnt?: boolean): string {
 		s += '\n';
 	}
 	return s;
-}
-
-function camelCase(s: string) {
-	return s[0].toUpperCase() + s.substr(1);
 }
 
 /// Main
