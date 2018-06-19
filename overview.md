@@ -45,24 +45,24 @@ DAP is a win for both debugger/runtime providers and tooling vendors!
 
 ## How it works
 
-In this section we give a high-level overview of the interaction between a frontend (IDE, editor) and a debug adapter.
+In this section we give an overview of the interaction between a frontend (IDE, editor) and a debug adapter.
 This should not only help when implementing the Debug Adapter Protocol in a debug adapter, but also when implementing a frontend (client) that uses the protocol.
 
 ### Debug Session Start
 
-When a debug session starts, the frontend needs a way to communicate with some entity (debug adapter) that implements the Debug Adapter Protocol.
-How this "entity" comes to live is not really part of the protocol specification, but it is still an important detail in order to allow for using debug adapters in different frontends.
+When a debug session starts, the frontend needs a way to communicate with some "entity" (i.e. the debug adapter) that implements the Debug Adapter Protocol.
+How the debug adapter comes to live is not really part of the protocol specification, but it is still an important detail in order to allow for using debug adapters in different frontends.
 
 There are two ways of communicating with a debug adapter:
 - **single session mode**: in this mode the frontend starts a debug adapter as a standalone process and communicates with it through *stdin* and *stdout*. At the end of the debug session the debug adapter is terminated. For concurrrent debug sessions the frontend starts multiple concurrrent debug adapters.
 - **multi session mode**: in this mode the frontend does not start the debug adapter but assumes that it is already running and that it listens on a specific port for connections attempts. For every debug session the frontend initiates a new communication session on the specific port and disconnects at the end of the session.
 
+After establishing a connection to the debug adapter, the frontend starts communicating via the _base protocol_.
+
 ### Base protocol
 
-For historical reasons does not use JSON RPC.
-
-The base protocol consists of a header and a content part (comparable to HTTP). The header and content part are
-separated by a `\r\n`.
+The base protocol exchanges messages that consist of a header and a content part (comparable to HTTP).
+The header and content part are separated by a `\r\n` (carriage return, line feed).
 
 #### Header Part
 
@@ -70,7 +70,7 @@ The header part consists of header fields. Each header field is comprised of a n
 Each header field is terminated by `\r\n`.
 
 Considering that the last header field and the overall header itself are each terminated with `\r\n`,
-and that the header is mandatory, this means that two `\r\n` sequences always immediately precede the content part of a message.
+and that the header is mandatory, this means that two `\r\n` sequences always precede the content part of a message.
 
 Currently only a single header field is supported and required:
 
@@ -89,6 +89,8 @@ The content part is encoded using `utf-8`.
 
 #### Example:
 
+The example shows the JSON for the [next](./specification#Requests_Next) request:
+
 ```
 Content-Length: 119\r\n
 \r\n
@@ -104,6 +106,7 @@ Content-Length: 119\r\n
 
 ### Initialization
 
+The first DAP request
 Then the frontend sends an [**initialize**](./specification#Requests_Initialize) request to configure the adapter with client information about the path format (native or URI) and whether line and column values are 0 or 1 based.
 
 
