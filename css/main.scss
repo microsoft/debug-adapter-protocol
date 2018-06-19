@@ -3,6 +3,9 @@
 ---
 @charset "utf-8";
 
+img[alt=without_DAP] { width: 60%; height: 60%; }
+img[alt=with_DAP] { width: 75%; height: 75%; }
+
 html {
 	position: relative;
 	min-height: 100%;
