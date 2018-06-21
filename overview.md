@@ -6,7 +6,7 @@ sectionid: overview
 
 ## What is the Debug Adapter Protocol?
 
-It is a significant effort to implement the UI for a new debugger for features like:
+It takes a significant effort to implement the UI for a new debugger for features like:
 - source-, function-, conditional-, and inline breakpoints,
 - variable values shown in hovers or inlined in the source,
 - multi-process and  multi-thread support,
@@ -25,8 +25,8 @@ So all the features from the list above (and many more) ....
 
 Since it is unrealistic to assume that existing debuggers or runtimes adopt this protocol any time soon,
 we rather assume that an _intermediary_ component takes over the role of adapting an existing debugger or runtime API to the Debug Adapter Protocol.
-This intermediary becomes the _Debug Adapter_ which explains the name of the protocol: _Debug Adpater Protocol_.
-The follwing pictures shows the resulting architecture:
+This intermediary becomes the _Debug Adapter_ which explains the name of the protocol: _Debug Adapter Protocol_.
+The following pictures shows the resulting architecture:
 
 ![with_DAP](./img/with-DAP.png)
 
