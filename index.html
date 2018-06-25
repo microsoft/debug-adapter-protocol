@@ -27,35 +27,35 @@ layout: default
         <div class="col-lg-7">
             <h2 class="header-light regular-pad">What is the Debug Adapter Protocol?</h2>
 
-            <p>Adding debugging support for a new language to an IDE or editor is not only a significant effort,
+            <p>Adding a debugger for a new language to an IDE or editor is not only a significant effort,
             but it is also frustrating that this effort can not be easily amortized over multiple development tools,
-            as each tool provides different APIs for implementing the same feature.</p>
+            as each tool uses different APIs for implementing the same feature.</p>
 
-            <p>The idea behind the <i>Debug Adapter Protocol</i> (DAP) is to first abstract and then standardize the protocol for how the debugging support of development tools
-            communicates with debuggers or runtimes. Since it is unrealistic to assume that existing debuggers or runtimes adopt this protocol any time soon,
+            <p>The idea behind the <i>Debug Adapter Protocol</i> (DAP) is to abstract the way how the debugging support of development tools
+            communicates with debuggers or runtimes into a protocol. Since it is unrealistic to assume that existing debuggers or runtimes adopt this protocol any time soon,
             we rather assume that an intermediary component - a so called <i>Debug Adapter</i> - adapts an existing debugger or runtime to the Debug Adapter Protocol.</p>
 
             <p>The Debug Adapter Protocol makes it possible to implement a generic debugger for a development tool that can communicate with different debuggers via Debug Adapters.
             And Debug Adapters can be re-used across multiple development tools which significantly reduces the effort to support a new debugger in different tools.</p>
 
-            <p>DAP is a win for both debugger providers and tooling vendors!</p>
+            <p>The <i>Debug Adapter Protocol</i> is a win for both debugger providers and tooling vendors!</p>
         </div>
         <div class="col-lg-5">
             <div id="carouselOne" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="row align-items-center">
-                            <div class="col-lg-12">
-                                <img src="img/vscode-css-code-complete.png" class="img-fluid rounded"/>
-                                <p class="text-left"><i>foo bar in VS Code powered by the Node.js Debug Adapter</i></p>
-                            </div>
-                        </div>
-                    </div>
                     <div class="carousel-item">
                         <div class="row align-items-center">
                             <div class="col-lg-12">
-                                <img src="img/atom-css-code-complete.png" class="img-fluid rounded"/>
-                                <p class="text-left"><i>bla bla in VS Code powered by the Java Debug Adapter</i></p>
+                                <img src="img/java-threads.png" class="img-fluid rounded"/>
+                                <p class="text-left"><i>Multi-thread debugging powered by the Java Debug Adapter</i></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item active">
+                        <div class="row align-items-center">
+                            <div class="col-lg-12">
+                                <img src="img/node-repl.gif" class="img-fluid rounded"/>
+                                <p class="text-left"><i>REPL console powered by the Node.js Debug Adapter</i></p>
                             </div>
                         </div>
                     </div>
