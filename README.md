@@ -13,5 +13,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 
 See the [Web site](https://microsoft.github.io/debug-adapter-protocol/specification)
 
+## Running the web site locally
+
+```
+bundle exec jekyll serve
+```
+
 ## License
 [Creative Commons Attribution / MIT](License.txt)
