@@ -15,13 +15,12 @@ It takes a significant effort to implement the UI for a new debugger for feature
 - debug console for interactive evaluation with autocomplete (aka REPL),
 - log points.
 
-Typically this work must be repeated for each development tool, as each provides different APIs for implementing UI features.
-This results in lots of duplicated debugger functionality (and implementation) as indicated by the blue boxes in the following picture:
+Typically this work must be repeated for each development tool, as each uses different APIs for implementing its user interface.
+This results in lots of duplicated functionality (and implementation) as indicated by the blue boxes in the following picture:
 
 ![without_DAP](./img/without-DAP.png)
 
-The idea behind a _Debug Adapter Protocol_ is to standardize the protocol for how a development tool communicates with debuggers.
-So all the features from the list above (and many more) ....
+The idea behind the _Debug Adapter Protocol_ is to standardize an abstract protocol for how a development tool communicates with concrete debuggers.
 
 Since it is unrealistic to assume that existing debuggers or runtimes adopt this protocol any time soon,
 we rather assume that an _intermediary_ component takes over the role of adapting an existing debugger or runtime API to the Debug Adapter Protocol.
@@ -31,30 +30,30 @@ The following pictures shows the resulting architecture:
 ![with_DAP](./img/with-DAP.png)
 
 The diagram shows that the Debug Adapter Protocol makes it possible to implement a single generic debugger UI per development tool
-and that Debug Adapters can be re-used across different development tools. This reduces the effort to support a new debugger significantly.
+and that Debug Adapters can be re-used across these tools. This reduces the effort to support a new debugger significantly.
 
-Standardizing on the wire-protocol instead of an API has the advantage that a debug adapter can be implemented in the language most suitable for the given debugger or runtime.
+Standardizing on a wire-protocol instead of an API and a client library has the advantage that a debug adapter can be implemented in the language most suitable for the given debugger or runtime.
 
 Since the _Debug Adapter Protocol_ was designed for supporting the debugging UI in a language agnostic way,
 it is fairly high-level and does not have to surface all the fine details of the underlying language and low-level debugger API.
 The most important data type used in the protocol are strings, because that's what the end user will see in the UI.
-So Debug Adapters typically aggregate information received via debugger APIs into high-level, string-based data-structures that are directly consumed in the UI of the frontend tool.
-Since this mapping is mostly straightforward and has little complexity, Debug adapters can be developed with minimal effort and in a piecemeal way.
+So Debug Adapters typically aggregate information received via debugger APIs into high-level, string-based data-structures that are directly consumed in the UI of the development tool.
+Since this mapping is mostly straightforward and has little complexity, Debug adapters can be developed with minimal effort.
 
-DAP is a win for both debugger/runtime providers and tooling vendors!
+The _Debug Adapter Protocol_ is a win for both debugger/runtime providers and tooling vendors!
 
 ## How it works
 
-In this section we give an overview of the interaction between a frontend (IDE, editor) and a debug adapter.
-This should not only help when implementing the Debug Adapter Protocol in a debug adapter, but also when implementing a frontend (client) that uses the protocol.
+The following sections explain in detail the interaction between a development tool (e.g. IDE or editor) and a debug adapter.
+This should not only help when implementing the Debug Adapter Protocol in a debug adapter, but also when hosting the protocol in a development tool (client or frontend).
 
 ### Debug Session Start
 
-When a debug session starts, the frontend needs a way to communicate with some "entity" (i.e. the debug adapter) that implements the Debug Adapter Protocol.
-How the debug adapter comes to live is not really part of the protocol specification, but it is still an important detail in order to allow for using debug adapters in different frontends.
+When a debug session starts, the frontend needs a way to communicate with some "entity" (the debug adapter) that implements the Debug Adapter Protocol.
+How the debug adapter comes to life is not really part of the protocol specification, but it is still an important detail if debug adapters should work across different development tools.
 
-There are two ways of communicating with a debug adapter:
-- **single session mode**: in this mode the frontend starts a debug adapter as a standalone process and communicates with it through *stdin* and *stdout*. At the end of the debug session the debug adapter is terminated. For concurrrent debug sessions the frontend starts multiple concurrrent debug adapters.
+A development tool has basically two ways of dealing with a debug adapter:
+- **single session mode**: in this mode the frontend starts a debug adapter as a standalone process and communicates with it through *stdin* and *stdout*. At the end of the debug session the debug adapter is terminated. For concurrrent debug sessions the frontend starts multiple debug adapters.
 - **multi session mode**: in this mode the frontend does not start the debug adapter but assumes that it is already running and that it listens on a specific port for connections attempts. For every debug session the frontend initiates a new communication session on the specific port and disconnects at the end of the session.
 
 After establishing a connection to the debug adapter, the frontend starts communicating via the _base protocol_.
@@ -66,11 +65,11 @@ The header and content part are separated by a `\r\n` (carriage return, line fee
 
 #### Header Part
 
-The header part consists of header fields. Each header field is comprised of a name and a value, separated by ': ' (a colon and a space).
+The header part consists of header fields. Each header field is comprised of a key and a value, separated by ': ' (a colon and a space).
 Each header field is terminated by `\r\n`.
 
-Considering that the last header field and the overall header itself are each terminated with `\r\n`,
-and that the header is mandatory, this means that two `\r\n` sequences always precede the content part of a message.
+Since both the last header field and the overall header itself are each terminated with `\r\n`,
+and since the header is mandatory, the content part of a message is always preceded (and clearly identified) by two `\r\n` sequences.
 
 Currently only a single header field is supported and required:
 
@@ -89,7 +88,7 @@ The content part is encoded using `utf-8`.
 
 #### Example:
 
-The example shows the JSON for the [next](./specification#Requests_Next) request:
+This example shows the JSON for the DAP [next](./specification#Requests_Next) request:
 
 ```
 Content-Length: 119\r\n
@@ -106,15 +105,28 @@ Content-Length: 119\r\n
 
 ### Initialization
 
-The first DAP request
-Then the frontend sends an [**initialize**](./specification#Requests_Initialize) request to configure the adapter with client information about the path format (native or URI) and whether line and column values are 0 or 1 based.
+The Debug Adapter Protocol defines many features (and this number is still growing, albeit slowly).
+But the protocol is still at its first version because it was an explicit design goal to support new feature in a completely backward compatible way.
+Making this possible without version numbers requires that every new feature gets a corresponding flag that lets a host know whether a debug adapter supports the feature or not.
+And the absense of the flag always means that the feature is not supported.
 
+A single feature and its corresponding flag is called "capability" in the Debug Adapter Protocol. The open-ended set of all features flags is called "capabilities".
 
-Not every debug adapter can support all features defined by the protocol. DAP therefore provides  'capabilities'. A capability groups a set of language features. A development tool and the language server announce their supported features using capabilities. As an example, a debug adapter announces that it can handle the 'textDocument/definition' request, but it might not handle the 'workspace/symbol' request. Similarly, a debugger frontend announces its ability to provide 'about to save' notifications before a document is saved, so that a server can compute textual edits to format the edited document before it is saved.
+When starting a debug session the frontend/host sends an [**initialize**](./specification#Requests_Initialize) request to the adapter in order to exchange capabilities between the host and the debug adapter.
 
-**Notice** the actual integration of a debug adapter into a particular tool is not defined by the language server protocol and is left to the tool implementors.
+The host capabilities are provided in the `InitializeRequestArguments` structure of the [**initialize**](./specification#Requests_Initialize) and typically start with the prefix `supports`.
+Other information passed from the host to the debug adapter are:
+- the name of the host,
+- the format of file paths, native or URI,
+- whether line and column values are 0 or 1 based,
+- the locale used by the host, a DA is expected to return error message that honor the locale.
+
+The debug adapter returns the supported capabilities in the [**Capabilities**](./specification#Types_Capabilities) type.
+It is not necessary to return an explicit `false` for unsupported capabilities.
 
 ### Launching and attaching to debuggees
+
+After the debug adapter has been initialized it is ready to accept 
 
 Depending on the `request` attribute used in the launch configuration created by the user, the frontend either sends a *launch* or an *attach* request.
 
@@ -161,6 +173,13 @@ Threads
 Whenever the frontend receives a [**stopped**](./specification#Events_Stopped) or a [**thread**](./specification#Events_Thread) event, frontend requests all [`threads`](./specification#Types_Thread) that exist at that point in time. [**Thread**](./specification#Events_Thread) events are optional but a debug adapter can send them to force the frontend to update the threads UI dynamically even when not in a stopped state.
 
 After a successful *launch* or *attach* the frontend requests the baseline of currently existing threads with the [**threads**](./specification#Requests_Threads) request and then starts to listen for [**thread**](./specification#Events_Thread) events to detect new or terminated threads. Even if your debug adapter does not support multiple threads, it must implement the [**threads**](./specification#Requests_Threads) request and return a single (dummy) thread. The id of this thread must be used in all requests where a thread id is required, e.g. [**stacktrace**](./specification#Requests_Stacktrace), [**pause**](./specification#Requests_Pause), [**continue**](./specification#Requests_Continue), [**next**](./specification#Requests_Next), [**stepIn**](./specification#Requests_StepIn), and [**stepOut**](./specification#Requests_StepOut).
+
+This diagram summarizes the sequence of request and events for a hypothetical debug adapter for _gdb_:
+![DAP_launch_sequence](./img/DAP_Launch_Sequence.png)
+
+This diagram summarizes the sequence of request and events for a hypothetical debug adapter for _gdb_:
+![DAP_end_sequence](./img/DAP-end.png)
+
 
 ### Session End
 
