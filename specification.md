@@ -21,14 +21,15 @@ Base class of requests, responses, and events.
 ```typescript
 interface ProtocolMessage {
   /**
-   * Message type.
-   */
-  type: 'request' | 'response' | 'event';
-
-  /**
    * Sequence number.
    */
   seq: number;
+
+  /**
+   * Message type.
+   * Values: 'request', 'response', 'event', etc.
+   */
+  type: string;
 }
 ```
 
@@ -263,15 +264,15 @@ interface ThreadEvent extends Event {
 
   body: {
     /**
-     * The identifier of the thread.
-     */
-    threadId: number;
-
-    /**
      * The reason for the event.
      * Values: 'started', 'exited', etc.
      */
     reason: string;
+
+    /**
+     * The identifier of the thread.
+     */
+    threadId: number;
   };
 }
 ```

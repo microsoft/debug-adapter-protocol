@@ -4,6 +4,7 @@
 	"description": "The Debug Adapter Protocol defines the protocol used between an editor or IDE and a debugger or runtime.",
 	"type": "object",
 
+
 	"definitions": {
 
 		"ProtocolMessage": {
@@ -11,14 +12,14 @@
 			"title": "Base Protocol",
 			"description": "Base class of requests, responses, and events.",
 			"properties": {
-				"type": {
-					"type": "string",
-					"description": "Message type.",
-					"enum": [ "request", "response", "event" ]
-				},
 				"seq": {
 					"type": "integer",
 					"description": "Sequence number."
+				},
+				"type": {
+					"type": "string",
+					"description": "Message type.",
+					"_enum": [ "request", "response", "event" ]
 				}
 			},
 			"required": [ "seq", "type" ]
@@ -268,14 +269,14 @@
 					"body": {
 						"type": "object",
 						"properties": {
-							"threadId": {
-								"type": "integer",
-								"description": "The identifier of the thread."
-							},
 							"reason": {
 								"type": "string",
 								"description": "The reason for the event.",
 								"_enum": [ "started", "exited" ]
+							},
+							"threadId": {
+								"type": "integer",
+								"description": "The identifier of the thread."
 							}
 						},
 						"required": ["reason", "threadId"]
