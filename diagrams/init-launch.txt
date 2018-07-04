@@ -1,0 +1,40 @@
+participant User
+participant Development Tool as Host
+participant Debug Adapter as DA
+participant Debugger
+
+User->Host: start debugging
+activate Host
+
+Host->*DA: start debug adapter
+Host->DA: initialise request
+activate DA
+DA->*Debugger: start gdb
+DA->Host: response: capabilities
+DA-->Host: initialized event
+deactivate DA
+
+activate Host
+
+Host->DA: setBreakpoints request
+activate DA
+DA->Debugger: break 'hello.c:main:4'
+DA->Host: response: breakpoints
+deactivate DA
+
+Host->DA: setExceptionBreakpoints request
+activate DA
+DA->Debugger: catch
+DA->Host: response: status
+deactivate DA
+
+Host->DA: configurationDone request
+activate DA
+DA->Host: response: status
+deactivate DA
+deactivate Host
+
+Host->+DA: launch request
+DA->Debugger: file 'a.out'
+DA->Debugger: run
+DA->-Host: response: status
