@@ -15,9 +15,11 @@ See the [Web site](https://microsoft.github.io/debug-adapter-protocol/specificat
 
 ## Running the web site locally
 
+In the project's root directory start a server with this command:
 ```
 bundle exec jekyll serve
 ```
+and then open `http://127.0.0.1:4000/debug-adapter-protocol/` in a browser.
 
 ## License
 [Creative Commons Attribution / MIT](License.txt)
