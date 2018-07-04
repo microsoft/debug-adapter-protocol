@@ -466,6 +466,7 @@ interface RunInTerminalRequest extends Request {
 
 Arguments for 'runInTerminal' request.
 
+<a name="Types_RunInTerminalRequestArguments" class="anchor"></a>
 ```typescript
 interface RunInTerminalRequestArguments {
   /**
@@ -497,6 +498,7 @@ interface RunInTerminalRequestArguments {
 
 Response to 'runInTerminal' request.
 
+<a name="Types_RunInTerminalResponse" class="anchor"></a>
 ```typescript
 interface RunInTerminalResponse extends Response {
   body: {
@@ -528,6 +530,7 @@ interface InitializeRequest extends Request {
 
 Arguments for 'initialize' request.
 
+<a name="Types_InitializeRequestArguments" class="anchor"></a>
 ```typescript
 interface InitializeRequestArguments {
   /**
@@ -585,6 +588,7 @@ interface InitializeRequestArguments {
 
 Response to 'initialize' request.
 
+<a name="Types_InitializeResponse" class="anchor"></a>
 ```typescript
 interface InitializeResponse extends Response {
   /**
@@ -608,6 +612,7 @@ interface ConfigurationDoneRequest extends Request {
 
 Arguments for 'configurationDone' request.
 
+<a name="Types_ConfigurationDoneArguments" class="anchor"></a>
 ```typescript
 interface ConfigurationDoneArguments {
 }
@@ -615,6 +620,7 @@ interface ConfigurationDoneArguments {
 
 Response to 'configurationDone' request. This is just an acknowledgement, so no body field is required.
 
+<a name="Types_ConfigurationDoneResponse" class="anchor"></a>
 ```typescript
 interface ConfigurationDoneResponse extends Response {
 }
@@ -634,6 +640,7 @@ interface LaunchRequest extends Request {
 
 Arguments for 'launch' request. Additional attributes are implementation specific.
 
+<a name="Types_LaunchRequestArguments" class="anchor"></a>
 ```typescript
 interface LaunchRequestArguments {
   /**
@@ -652,6 +659,7 @@ interface LaunchRequestArguments {
 
 Response to 'launch' request. This is just an acknowledgement, so no body field is required.
 
+<a name="Types_LaunchResponse" class="anchor"></a>
 ```typescript
 interface LaunchResponse extends Response {
 }
@@ -671,6 +679,7 @@ interface AttachRequest extends Request {
 
 Arguments for 'attach' request. Additional attributes are implementation specific.
 
+<a name="Types_AttachRequestArguments" class="anchor"></a>
 ```typescript
 interface AttachRequestArguments {
   /**
@@ -684,6 +693,7 @@ interface AttachRequestArguments {
 
 Response to 'attach' request. This is just an acknowledgement, so no body field is required.
 
+<a name="Types_AttachResponse" class="anchor"></a>
 ```typescript
 interface AttachResponse extends Response {
 }
@@ -709,6 +719,7 @@ interface RestartRequest extends Request {
 
 Arguments for 'restart' request.
 
+<a name="Types_RestartArguments" class="anchor"></a>
 ```typescript
 interface RestartArguments {
 }
@@ -716,6 +727,7 @@ interface RestartArguments {
 
 Response to 'restart' request. This is just an acknowledgement, so no body field is required.
 
+<a name="Types_RestartResponse" class="anchor"></a>
 ```typescript
 interface RestartResponse extends Response {
 }
@@ -735,6 +747,7 @@ interface DisconnectRequest extends Request {
 
 Arguments for 'disconnect' request.
 
+<a name="Types_DisconnectArguments" class="anchor"></a>
 ```typescript
 interface DisconnectArguments {
   /**
@@ -748,6 +761,7 @@ interface DisconnectArguments {
 
 Response to 'disconnect' request. This is just an acknowledgement, so no body field is required.
 
+<a name="Types_DisconnectResponse" class="anchor"></a>
 ```typescript
 interface DisconnectResponse extends Response {
 }
@@ -771,6 +785,7 @@ interface SetBreakpointsRequest extends Request {
 
 Arguments for 'setBreakpoints' request.
 
+<a name="Types_SetBreakpointsArguments" class="anchor"></a>
 ```typescript
 interface SetBreakpointsArguments {
   /**
@@ -805,6 +820,7 @@ The breakpoints returned are in the same order as the elements of the 'breakpoin
 
 (or the deprecated 'lines') array in the arguments.
 
+<a name="Types_SetBreakpointsResponse" class="anchor"></a>
 ```typescript
 interface SetBreakpointsResponse extends Response {
   body: {
@@ -834,6 +850,7 @@ interface SetFunctionBreakpointsRequest extends Request {
 
 Arguments for 'setFunctionBreakpoints' request.
 
+<a name="Types_SetFunctionBreakpointsArguments" class="anchor"></a>
 ```typescript
 interface SetFunctionBreakpointsArguments {
   /**
@@ -847,6 +864,7 @@ Response to 'setFunctionBreakpoints' request.
 
 Returned is information about each breakpoint created by this request.
 
+<a name="Types_SetFunctionBreakpointsResponse" class="anchor"></a>
 ```typescript
 interface SetFunctionBreakpointsResponse extends Response {
   body: {
@@ -872,6 +890,7 @@ interface SetExceptionBreakpointsRequest extends Request {
 
 Arguments for 'setExceptionBreakpoints' request.
 
+<a name="Types_SetExceptionBreakpointsArguments" class="anchor"></a>
 ```typescript
 interface SetExceptionBreakpointsArguments {
   /**
@@ -888,6 +907,7 @@ interface SetExceptionBreakpointsArguments {
 
 Response to 'setExceptionBreakpoints' request. This is just an acknowledgement, so no body field is required.
 
+<a name="Types_SetExceptionBreakpointsResponse" class="anchor"></a>
 ```typescript
 interface SetExceptionBreakpointsResponse extends Response {
 }
@@ -907,6 +927,7 @@ interface ContinueRequest extends Request {
 
 Arguments for 'continue' request.
 
+<a name="Types_ContinueArguments" class="anchor"></a>
 ```typescript
 interface ContinueArguments {
   /**
@@ -918,6 +939,7 @@ interface ContinueArguments {
 
 Response to 'continue' request.
 
+<a name="Types_ContinueResponse" class="anchor"></a>
 ```typescript
 interface ContinueResponse extends Response {
   body: {
@@ -945,6 +967,7 @@ interface NextRequest extends Request {
 
 Arguments for 'next' request.
 
+<a name="Types_NextArguments" class="anchor"></a>
 ```typescript
 interface NextArguments {
   /**
@@ -956,6 +979,7 @@ interface NextArguments {
 
 Response to 'next' request. This is just an acknowledgement, so no body field is required.
 
+<a name="Types_NextResponse" class="anchor"></a>
 ```typescript
 interface NextResponse extends Response {
 }
@@ -985,6 +1009,7 @@ interface StepInRequest extends Request {
 
 Arguments for 'stepIn' request.
 
+<a name="Types_StepInArguments" class="anchor"></a>
 ```typescript
 interface StepInArguments {
   /**
@@ -1001,6 +1026,7 @@ interface StepInArguments {
 
 Response to 'stepIn' request. This is just an acknowledgement, so no body field is required.
 
+<a name="Types_StepInResponse" class="anchor"></a>
 ```typescript
 interface StepInResponse extends Response {
 }
@@ -1022,6 +1048,7 @@ interface StepOutRequest extends Request {
 
 Arguments for 'stepOut' request.
 
+<a name="Types_StepOutArguments" class="anchor"></a>
 ```typescript
 interface StepOutArguments {
   /**
@@ -1033,6 +1060,7 @@ interface StepOutArguments {
 
 Response to 'stepOut' request. This is just an acknowledgement, so no body field is required.
 
+<a name="Types_StepOutResponse" class="anchor"></a>
 ```typescript
 interface StepOutResponse extends Response {
 }
@@ -1054,6 +1082,7 @@ interface StepBackRequest extends Request {
 
 Arguments for 'stepBack' request.
 
+<a name="Types_StepBackArguments" class="anchor"></a>
 ```typescript
 interface StepBackArguments {
   /**
@@ -1065,6 +1094,7 @@ interface StepBackArguments {
 
 Response to 'stepBack' request. This is just an acknowledgement, so no body field is required.
 
+<a name="Types_StepBackResponse" class="anchor"></a>
 ```typescript
 interface StepBackResponse extends Response {
 }
@@ -1084,6 +1114,7 @@ interface ReverseContinueRequest extends Request {
 
 Arguments for 'reverseContinue' request.
 
+<a name="Types_ReverseContinueArguments" class="anchor"></a>
 ```typescript
 interface ReverseContinueArguments {
   /**
@@ -1095,6 +1126,7 @@ interface ReverseContinueArguments {
 
 Response to 'reverseContinue' request. This is just an acknowledgement, so no body field is required.
 
+<a name="Types_ReverseContinueResponse" class="anchor"></a>
 ```typescript
 interface ReverseContinueResponse extends Response {
 }
@@ -1116,6 +1148,7 @@ interface RestartFrameRequest extends Request {
 
 Arguments for 'restartFrame' request.
 
+<a name="Types_RestartFrameArguments" class="anchor"></a>
 ```typescript
 interface RestartFrameArguments {
   /**
@@ -1127,6 +1160,7 @@ interface RestartFrameArguments {
 
 Response to 'restartFrame' request. This is just an acknowledgement, so no body field is required.
 
+<a name="Types_RestartFrameResponse" class="anchor"></a>
 ```typescript
 interface RestartFrameResponse extends Response {
 }
@@ -1152,6 +1186,7 @@ interface GotoRequest extends Request {
 
 Arguments for 'goto' request.
 
+<a name="Types_GotoArguments" class="anchor"></a>
 ```typescript
 interface GotoArguments {
   /**
@@ -1168,6 +1203,7 @@ interface GotoArguments {
 
 Response to 'goto' request. This is just an acknowledgement, so no body field is required.
 
+<a name="Types_GotoResponse" class="anchor"></a>
 ```typescript
 interface GotoResponse extends Response {
 }
@@ -1189,6 +1225,7 @@ interface PauseRequest extends Request {
 
 Arguments for 'pause' request.
 
+<a name="Types_PauseArguments" class="anchor"></a>
 ```typescript
 interface PauseArguments {
   /**
@@ -1200,6 +1237,7 @@ interface PauseArguments {
 
 Response to 'pause' request. This is just an acknowledgement, so no body field is required.
 
+<a name="Types_PauseResponse" class="anchor"></a>
 ```typescript
 interface PauseResponse extends Response {
 }
@@ -1219,6 +1257,7 @@ interface StackTraceRequest extends Request {
 
 Arguments for 'stackTrace' request.
 
+<a name="Types_StackTraceArguments" class="anchor"></a>
 ```typescript
 interface StackTraceArguments {
   /**
@@ -1245,6 +1284,7 @@ interface StackTraceArguments {
 
 Response to 'stackTrace' request.
 
+<a name="Types_StackTraceResponse" class="anchor"></a>
 ```typescript
 interface StackTraceResponse extends Response {
   body: {
@@ -1276,6 +1316,7 @@ interface ScopesRequest extends Request {
 
 Arguments for 'scopes' request.
 
+<a name="Types_ScopesArguments" class="anchor"></a>
 ```typescript
 interface ScopesArguments {
   /**
@@ -1287,6 +1328,7 @@ interface ScopesArguments {
 
 Response to 'scopes' request.
 
+<a name="Types_ScopesResponse" class="anchor"></a>
 ```typescript
 interface ScopesResponse extends Response {
   body: {
@@ -1314,6 +1356,7 @@ interface VariablesRequest extends Request {
 
 Arguments for 'variables' request.
 
+<a name="Types_VariablesArguments" class="anchor"></a>
 ```typescript
 interface VariablesArguments {
   /**
@@ -1345,6 +1388,7 @@ interface VariablesArguments {
 
 Response to 'variables' request.
 
+<a name="Types_VariablesResponse" class="anchor"></a>
 ```typescript
 interface VariablesResponse extends Response {
   body: {
@@ -1370,6 +1414,7 @@ interface SetVariableRequest extends Request {
 
 Arguments for 'setVariable' request.
 
+<a name="Types_SetVariableArguments" class="anchor"></a>
 ```typescript
 interface SetVariableArguments {
   /**
@@ -1396,6 +1441,7 @@ interface SetVariableArguments {
 
 Response to 'setVariable' request.
 
+<a name="Types_SetVariableResponse" class="anchor"></a>
 ```typescript
 interface SetVariableResponse extends Response {
   body: {
@@ -1443,6 +1489,7 @@ interface SourceRequest extends Request {
 
 Arguments for 'source' request.
 
+<a name="Types_SourceArguments" class="anchor"></a>
 ```typescript
 interface SourceArguments {
   /**
@@ -1459,6 +1506,7 @@ interface SourceArguments {
 
 Response to 'source' request.
 
+<a name="Types_SourceResponse" class="anchor"></a>
 ```typescript
 interface SourceResponse extends Response {
   body: {
@@ -1487,6 +1535,7 @@ interface ThreadsRequest extends Request {
 
 Response to 'threads' request.
 
+<a name="Types_ThreadsResponse" class="anchor"></a>
 ```typescript
 interface ThreadsResponse extends Response {
   body: {
@@ -1512,6 +1561,7 @@ interface TerminateThreadsRequest extends Request {
 
 Arguments for 'terminateThreads' request.
 
+<a name="Types_TerminateThreadsArguments" class="anchor"></a>
 ```typescript
 interface TerminateThreadsArguments {
   /**
@@ -1523,6 +1573,7 @@ interface TerminateThreadsArguments {
 
 Response to 'terminateThreads' request. This is just an acknowledgement, so no body field is required.
 
+<a name="Types_TerminateThreadsResponse" class="anchor"></a>
 ```typescript
 interface TerminateThreadsResponse extends Response {
 }
@@ -1542,6 +1593,7 @@ interface ModulesRequest extends Request {
 
 Arguments for 'modules' request.
 
+<a name="Types_ModulesArguments" class="anchor"></a>
 ```typescript
 interface ModulesArguments {
   /**
@@ -1558,6 +1610,7 @@ interface ModulesArguments {
 
 Response to 'modules' request.
 
+<a name="Types_ModulesResponse" class="anchor"></a>
 ```typescript
 interface ModulesResponse extends Response {
   body: {
@@ -1588,6 +1641,7 @@ interface LoadedSourcesRequest extends Request {
 
 Arguments for 'loadedSources' request.
 
+<a name="Types_LoadedSourcesArguments" class="anchor"></a>
 ```typescript
 interface LoadedSourcesArguments {
 }
@@ -1595,6 +1649,7 @@ interface LoadedSourcesArguments {
 
 Response to 'loadedSources' request.
 
+<a name="Types_LoadedSourcesResponse" class="anchor"></a>
 ```typescript
 interface LoadedSourcesResponse extends Response {
   body: {
@@ -1622,6 +1677,7 @@ interface EvaluateRequest extends Request {
 
 Arguments for 'evaluate' request.
 
+<a name="Types_EvaluateArguments" class="anchor"></a>
 ```typescript
 interface EvaluateArguments {
   /**
@@ -1653,6 +1709,7 @@ interface EvaluateArguments {
 
 Response to 'evaluate' request.
 
+<a name="Types_EvaluateResponse" class="anchor"></a>
 ```typescript
 interface EvaluateResponse extends Response {
   body: {
@@ -1707,6 +1764,7 @@ interface SetExpressionRequest extends Request {
 
 Arguments for 'setExpression' request.
 
+<a name="Types_SetExpressionArguments" class="anchor"></a>
 ```typescript
 interface SetExpressionArguments {
   /**
@@ -1733,6 +1791,7 @@ interface SetExpressionArguments {
 
 Response to 'setExpression' request.
 
+<a name="Types_SetExpressionResponse" class="anchor"></a>
 ```typescript
 interface SetExpressionResponse extends Response {
   body: {
@@ -1789,6 +1848,7 @@ interface StepInTargetsRequest extends Request {
 
 Arguments for 'stepInTargets' request.
 
+<a name="Types_StepInTargetsArguments" class="anchor"></a>
 ```typescript
 interface StepInTargetsArguments {
   /**
@@ -1800,6 +1860,7 @@ interface StepInTargetsArguments {
 
 Response to 'stepInTargets' request.
 
+<a name="Types_StepInTargetsResponse" class="anchor"></a>
 ```typescript
 interface StepInTargetsResponse extends Response {
   body: {
@@ -1829,6 +1890,7 @@ interface GotoTargetsRequest extends Request {
 
 Arguments for 'gotoTargets' request.
 
+<a name="Types_GotoTargetsArguments" class="anchor"></a>
 ```typescript
 interface GotoTargetsArguments {
   /**
@@ -1850,6 +1912,7 @@ interface GotoTargetsArguments {
 
 Response to 'gotoTargets' request.
 
+<a name="Types_GotoTargetsResponse" class="anchor"></a>
 ```typescript
 interface GotoTargetsResponse extends Response {
   body: {
@@ -1877,6 +1940,7 @@ interface CompletionsRequest extends Request {
 
 Arguments for 'completions' request.
 
+<a name="Types_CompletionsArguments" class="anchor"></a>
 ```typescript
 interface CompletionsArguments {
   /**
@@ -1903,6 +1967,7 @@ interface CompletionsArguments {
 
 Response to 'completions' request.
 
+<a name="Types_CompletionsResponse" class="anchor"></a>
 ```typescript
 interface CompletionsResponse extends Response {
   body: {
@@ -1928,6 +1993,7 @@ interface ExceptionInfoRequest extends Request {
 
 Arguments for 'exceptionInfo' request.
 
+<a name="Types_ExceptionInfoArguments" class="anchor"></a>
 ```typescript
 interface ExceptionInfoArguments {
   /**
@@ -1939,6 +2005,7 @@ interface ExceptionInfoArguments {
 
 Response to 'exceptionInfo' request.
 
+<a name="Types_ExceptionInfoResponse" class="anchor"></a>
 ```typescript
 interface ExceptionInfoResponse extends Response {
   body: {
