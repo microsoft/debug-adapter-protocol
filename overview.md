@@ -123,15 +123,17 @@ Other information passed from the tool to the debug adapter is:
 The debug adapter returns the supported capabilities in the [**InitializeResponse**](./specification#Types_InitializeResponse) via the [**Capabilities**](./specification#Types_Capabilities) type.
 It is not necessary to return an explicit `false` for unsupported capabilities.
 
-### Launching and attaching to debuggees
+### Launching and attaching
 
 After the debug adapter has been initialized it is ready to accept requests for starting debugging.
 Two requests exist for this:
-- [**launch**](./specification#Requests_Launch): the debug adapter launches the program in debug mode and then starts to communicate with it.
-Since the debug adapter is responsible for the debuggee, it must ensure that the program is launched from an interactive terminal so that the user
-can interact with it via stdin/stdout and that the program is terminated properly at the end of the debug session.
-
-- [**attach**](./specification#Requests_Attach): the debug adapter connects to an already running program. Here the end user is responsible for launching and terminating the program.
+- [**launch**](./specification#Requests_Launch) request: the debug adapter launches the program ("debuggee") in debug mode and then starts to communicate with it.
+Since the debug adapter is responsible for the debuggee, it should provide options for the end user to interact with the debuggee.
+Basically there are three options how the debuggee can be launched. Two of the options are available to the debug adapter via the [**RunInTerminal**](./specification#Reverse_Requests_RunInTerminal) request.
+  - the **_debug console_**: this is an interactive REPL environment which allows the user to evaluate expressions in the context of the debuggee. Program output shows up in the debug console too, but the program cannot read input through it (because of the REPL functionality).
+  - an **_integrated terminal_**: this is a terminal emulator integrated in the development tool. It supports the usual terminal control codes and supports reading program input.
+  - in an **_external terminal_**: similar as the integrated terminal but the terminal runs outside of the development tool.
+- [**attach**](./specification#Requests_Attach) request: the debug adapter connects to an already running program. Here the end user is responsible for launching and terminating the program.
 
 Since arguments for both requests are highly dependent on a specific debugger and debug adapter implementation, the Debug Adapter Protocol does not specify any arguments for these requests.
 Instead the development tool is expected to get information about debugger specific arguments from elsewhere (e.g. contributed by some plugin or extension mechanism)
@@ -162,39 +164,48 @@ The following sequence diagram summarizes the sequence of requests and events fo
 
 ![init-launch](./img/init-launch.png)
 
-### Stopping and resuming
+### Stopping and accessing debuggee state
 
 Whenever the program stops (on program entry, because a breakpoint was hit, an exception occurred, or the user requested execution to be paused),
 the debug adapter sends a [**stopped**](./specification#Events_Stopped) event with the appropriate reason and thread id.
 
 Upon receipt the development tool first requests the [`threads`](./specification#Types_Thread) (see below), and then the *stacktrace* (a list of [`stack frames`](./specification#Types_StackFrame)) for the thread mentioned in the stopped event.
-If the user then drills into the stack frame, frontend first requests the [`scopes`](./specification#Types_Scope) for a stack frame, and then the [`variables`](./specification#Types_Variable) for a scope.
-If a variable is itself structured, frontend requests its properties through additional *variables* requests.
-This leads to the following hierarchy:
+If the user then drills into the stack frame, the development tool first requests the [`scopes`](./specification#Types_Scope) for a stack frame, and then the [`variables`](./specification#Types_Variable) for a scope.
+If a variable is itself structured, the development tool requests its properties through additional *variables* requests.
+This leads to the following request waterfall:
 
 ```
 Threads
-   Stackframes
+   StackTrace
       Scopes
          Variables
             ...
                Variables
 ```
 
-Whenever the frontend receives a [**stopped**](./specification#Events_Stopped) or a [**thread**](./specification#Events_Thread) event, frontend requests all [`threads`](./specification#Types_Thread) that exist at that point in time. [**Thread**](./specification#Events_Thread) events are optional but a debug adapter can send them to force the frontend to update the threads UI dynamically even when not in a stopped state.
+The value of variables can be modified through the [**setVariable**](./specification#Requests_SetVariable) request.
 
-After a successful *launch* or *attach* the frontend requests the baseline of currently existing threads with the [**threads**](./specification#Requests_Threads) request and then starts to listen for [**thread**](./specification#Events_Thread) events to detect new or terminated threads. Even if your debug adapter does not support multiple threads, it must implement the [**threads**](./specification#Requests_Threads) request and return a single (dummy) thread. The id of this thread must be used in all requests where a thread id is required, e.g. [**stacktrace**](./specification#Requests_Stacktrace), [**pause**](./specification#Requests_Pause), [**continue**](./specification#Requests_Continue), [**next**](./specification#Requests_Next), [**stepIn**](./specification#Requests_StepIn), and [**stepOut**](./specification#Requests_StepOut).
+### Supporting threads
 
-This diagram summarizes the sequence of request and events for a hypothetical debug adapter for _gdb_:
-![stop-continue-terminate](./img/stop-continue-terminate.png)
+Whenever the frontend receives a [**stopped**](./specification#Events_Stopped) or a [**thread**](./specification#Events_Thread) event, the development tool requests all [`threads`](./specification#Types_Thread) that exist at that point in time. [**Thread**](./specification#Events_Thread) events are optional but a debug adapter can send them to force the development tool to update the threads UI dynamically even when not in a stopped state. If a debug adapter decides not to emit [**Thread**](./specification#Events_Thread) events, the thread UI in the development tool will only update if a [**stopped**](./specification#Events_Stopped) event is received.
+
+After a successful *launch* or *attach* the development tool requests the baseline of currently existing threads with the [**threads**](./specification#Requests_Threads) request and then starts to listen for [**thread**](./specification#Events_Thread) events to detect new or terminated threads. Even if a debug adapter does not support multiple threads, it must implement the [**threads**](./specification#Requests_Threads) request and return a single (dummy) thread. The thread id must be used in all requests which refer to a thread, e.g. [**stacktrace**](./specification#Requests_Stacktrace), [**pause**](./specification#Requests_Pause), [**continue**](./specification#Requests_Continue), [**next**](./specification#Requests_Next), [**stepIn**](./specification#Requests_StepIn), and [**stepOut**](./specification#Requests_StepOut).
 
 ### Debug session end
 
-The development tool terminates a debug session with the [**disconnect**](./specification#Requests_Disconnect) request.
-If the debug target was 'launched' *disconnect* is expected to terminate the target program (forcefully if necessary).
-If the debug target has been 'attached' initially, *disconnect* should detach it from the target (so that it will continue to run).
-In both cases and in the case that the target terminated normally or crashed the debug adapter must fire a [**terminated**](./specification#Events_Terminated) event.
-After receiving a response from the *disconnect* request, the frontend terminates the debug adapter.
+When the development tool ends a debug session, the sequence of events is slightly different based on whether the session has been initially "launched" or "attached":
+
+- Debuggee **_launched_**:
+if a debug adapter supports the [**terminate**](./specification#Requests_Terminate) request, the development tool uses it to terminate the debuggee gracefully, i.e. it gives the debuggee a chance to cleanup everything before terminating. If the debuggee does not terminate but continues to run (or hits a breakpoint), the debug session will continue but if the development tool tries again to terminate the debuggee, it will then use the [**disconnect**](./specification#Requests_Disconnect) request to end the debug session unconditionally. The *disconnect* request is expected to terminate the debuggee (and any child processes) forcefully.
+- Debuggee **_attached_**:
+If the debuggee has been "attached" initially, the development tool issues a [**disconnect**](./specification#Requests_Disconnect) request. This should detach the debugger from the debuggee but will allow it to continue.
+
+In all situation where a debug adapter wants to end the debug session, a [**terminated**](./specification#Events_Terminated) event must be fired.
+
+If the debuggee has ended (and the debug adapter is able to detect this), an optional [**exited**](./specification#Events_Exited) event can be issued to return the exit code to the development tool.
+
+This diagram summarizes the sequence of request and events for a hypothetical debug adapter for _gdb_:
+![stop-continue-terminate](./img/stop-continue-terminate.png)
 
 ## Libraries (SDKs) for DAP providers and consumers
 
