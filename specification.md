@@ -767,6 +767,34 @@ interface DisconnectResponse extends Response {
 }
 ```
 
+### <a name="Requests_Terminate" class="anchor"></a>:leftwards_arrow_with_hook: Terminate Request
+
+The 'terminate' request is sent from the client to the debug adapter in order to give the debuggee a chance for terminating itself.
+
+```typescript
+interface TerminateRequest extends Request {
+  command: 'terminate';
+
+  arguments?: TerminateArguments;
+}
+```
+
+Arguments for 'terminate' request.
+
+<a name="Types_TerminateArguments" class="anchor"></a>
+```typescript
+interface TerminateArguments {
+}
+```
+
+Response to 'terminate' request. This is just an acknowledgement, so no body field is required.
+
+<a name="Types_TerminateResponse" class="anchor"></a>
+```typescript
+interface TerminateResponse extends Response {
+}
+```
+
 ### <a name="Requests_SetBreakpoints" class="anchor"></a>:leftwards_arrow_with_hook: SetBreakpoints Request
 
 Sets multiple breakpoints for a single source and clears all previous breakpoints in that source.
@@ -2164,6 +2192,11 @@ interface Capabilities {
    * The debug adapter supports the 'setExpression' request.
    */
   supportsSetExpression?: boolean;
+
+  /**
+   * The debug adapter supports the 'terminate' request.
+   */
+  supportsTerminateRequest?: boolean;
 }
 ```
 

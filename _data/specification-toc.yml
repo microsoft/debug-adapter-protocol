@@ -103,6 +103,8 @@
       anchor: Requests_StepInTargets
     - title: StepOut
       anchor: Requests_StepOut
+    - title: Terminate
+      anchor: Requests_Terminate
     - title: TerminateThreads
       anchor: Requests_TerminateThreads
     - title: Threads
