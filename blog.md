@@ -86,17 +86,17 @@ These characteristics are similar to those of the **_Language Server Protocol_**
 Now we have followed suit for the _Debug Adapter Protocol_ by breaking the DAP specification out of its [old repository](https://github.com/Microsoft/vscode-debugadapter-node) and moving it to a new [web site](http://weinand.ch:4000/debug-adapter-protocol/).
 
 This move should emphasize that the _Debug Adapter Protocol_ in not specific to Visual Studio Code.
-For example, Visual Studio is now also [supporting this protocol](https://blogs.msdn.microsoft.com/visualstudio/2018/03/26/adding-support-for-debug-adapters-to-visual-studio-ide/). You can find a list of supporting tools refer to ./implementors/adapters/.
+For example, Visual Studio is now also [supporting this protocol](https://blogs.msdn.microsoft.com/visualstudio/2018/03/26/adding-support-for-debug-adapters-to-visual-studio-ide/).
 
 In the new location we provide:
 - an [overview and introduction](./overview) to the protocol,
 - the [protocol specification](./debugAdapterProtocol.json) as a machine-processable [JSON-schema](http://json-schema.org),
 - a [detailed documentation](./specification) automatically generated from the protocol specification,
-- [_Debug Adapters_](./implementors/adapters/) implementing the protocol, and
-- [development tools](./implementors/tools/) supporting the protocol, and
+- [_Debug Adapters_](./implementors/adapters/) implementing the protocol,
+- [development tools](./implementors/tools/) hosting the protocol,
 - [SDKs](./implementors/sdks/) supporting the protocol.
 
-The [old location](https://github.com/Microsoft/vscode-debugadapter-node) will continue to host the source for the npm modules ([vscode-debugprotocol](https://www.npmjs.com/package/vscode-debugprotocol), [vscode-debugadapter](https://www.npmjs.com/package/vscode-debugadapter), [vscode-debugadapter-testsupport](https://www.npmjs.com/package/vscode-debugadapter-testsupport)) supporting DAP.
+The [old location](https://github.com/Microsoft/vscode-debugadapter-node) will continue to host the source for the three npm modules for DAP: ([vscode-debugprotocol](https://www.npmjs.com/package/vscode-debugprotocol), [vscode-debugadapter](https://www.npmjs.com/package/vscode-debugadapter), [vscode-debugadapter-testsupport](https://www.npmjs.com/package/vscode-debugadapter-testsupport)).
 
 ## What's Next?
 
