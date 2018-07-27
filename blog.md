@@ -71,7 +71,7 @@ We assume that the user has already started a debug session, but is currently st
 
 For [historical reasons](https://github.com/Microsoft/vscode-debugadapter-node/issues/58) DAP uses a JSON-based wire-format inpired by the (now obsolete) [V8 Debugging Protocol](https://github.com/dtretyakov/node-tools/wiki/Debugging-Protocol). Please note that this format is similar to but not compatible with the JSON-RPC used in LSP.
 
-After this short excursion into DAP comunication, let's recapitulate the characteristics of the DAP approach:
+After this short excursion into DAP communication, let's recapitulate the characteristics of the DAP approach:
 
 ![with_DAP](./img/with-DAP.png)
 
