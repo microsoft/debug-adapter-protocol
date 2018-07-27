@@ -18,7 +18,7 @@ From another [blog](https://code.visualstudio.com/blogs/2016/06/27/common-langua
 
 This promise is based on (at least) two pillars:
 - an extensible tool platform and ecosystem where everyone can easily contribute, and
-- technology that make it easy to add great tool support for new programming languages.
+- technology that make it easy to add great tool support for any programming language.
 
 Supporting a programming language from a development tool means:
 - rich editing support based on a deep understanding of a language (aka "language smartness"), and
@@ -83,7 +83,7 @@ These characteristics are similar to those of the **_Language Server Protocol_**
 
 ## A new home for the DAP
 
-Now we have followed suit for the _Debug Adapter Protocol_ by breaking the DAP specification out of its [old repository](https://github.com/Microsoft/vscode-debugadapter-node) and moving it to a new [web site](http://weinand.ch:4000/debug-adapter-protocol/).
+Now we have followed suit for the _Debug Adapter Protocol_ by breaking the DAP specification out of its [old repository](https://github.com/Microsoft/vscode-debugadapter-node) and moving it to a new web site [https://microsoft.github.io/debug-adapter-protocol](http://weinand.ch:4000/debug-adapter-protocol/) and a corresponding repository [https://github.com/Microsoft/debug-adapter-protocol](https://github.com/Microsoft/debug-adapter-protocol).
 
 This move should emphasize that the _Debug Adapter Protocol_ in not specific to Visual Studio Code.
 For example, Visual Studio is now also [supporting this protocol](https://blogs.msdn.microsoft.com/visualstudio/2018/03/26/adding-support-for-debug-adapters-to-visual-studio-ide/).
@@ -95,6 +95,7 @@ In the new location we provide:
 - [_Debug Adapters_](./implementors/adapters/) implementing the protocol,
 - [development tools](./implementors/tools/) hosting the protocol,
 - [SDKs](./implementors/sdks/) supporting the protocol.
+- bugs, feature requests, and pull requests can be created under the ["issues"](https://github.com/Microsoft/debug-adapter-protocol/issues) section of the new repository.
 
 The [old location](https://github.com/Microsoft/vscode-debugadapter-node) will continue to host the source for the three npm modules for DAP: ([vscode-debugprotocol](https://www.npmjs.com/package/vscode-debugprotocol), [vscode-debugadapter](https://www.npmjs.com/package/vscode-debugadapter), [vscode-debugadapter-testsupport](https://www.npmjs.com/package/vscode-debugadapter-testsupport)).
 
