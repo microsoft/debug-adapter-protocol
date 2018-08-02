@@ -1,4 +1,4 @@
-participant User
+participant User
 participant Development Tool as Host
 participant Debug Adapter as DA
 participant Debugger
@@ -7,7 +7,7 @@ User->Host: start debugging
 activate Host
 
 Host->*DA: start debug adapter
-Host->DA: initialise request
+Host->DA: initialize request
 activate DA
 DA->*Debugger: start gdb
 DA->Host: response: capabilities
