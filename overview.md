@@ -21,7 +21,8 @@ This results in lots of duplicated functionality (and implementation) as visuali
 ![without_DAP](./img/without-DAP.png)
 
 The idea behind the _Debug Adapter Protocol_ is to standardize an abstract protocol for how a development tool communicates with concrete debuggers.
-A similar approach was already [introduced in 2016](https://code.visualstudio.com/blogs/2016/06/27/common-language-protocol) with the [_Language Server Protocol_](https://microsoft.github.io/language-server-protocol/) which standardized an abstract protocol between an editor or IDE and a server providing "language smartness".
+
+A similar approach was already [introduced in 2016](https://code.visualstudio.com/blogs/2016/06/27/common-language-protocol) with the [_Language Server Protocol_](https://microsoft.github.io/language-server-protocol/) which standardized an abstract protocol between an editor or IDE and a server providing "language smartness."
 
 Since it is unrealistic to assume that existing debuggers or runtimes adopt this protocol any time soon,
 we rather assume that an _intermediary_ component takes over the role of adapting an existing debugger or runtime API to the Debug Adapter Protocol.
