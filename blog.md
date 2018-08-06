@@ -10,7 +10,7 @@ One goal of the July milestone was to move the _Debug Adapter Protocol_ -- which
 
 This blog provides some background about protocols, the Debug Adapter Protocol, and the motivation behind the move.
 
-## Why Protocols?
+## Why the need for decoupling with protocols?
 
 From another [blog](https://code.visualstudio.com/blogs/2016/06/27/common-language-protocol):
 
@@ -24,7 +24,7 @@ Supporting a programming language from a development tool means:
 - rich editing support based on a deep understanding of a language (aka "language smartness"), and
 - debugging support for the language integrated into the editing tool.
 
-The latter might come as a suprise to some, but it was always our firm belief that debugging is an integral part of where the source code is written: the editor. So debugging is an important part of the "inner loop".
+The latter might come as a suprise to some, but it was always our firm belief that debugging is an integral part of where the source code is written: the editor. So debugging is an important part of the "inner loop."
 
 But adding a debugger for a new language to an IDE or editor is a significant effort as the list of standard debugging features is not small:
 - source-, function-, conditional-, inline breakpoints, and [logpoints](https://code.visualstudio.com/blogs/2018/07/12/introducing-logpoints-and-auto-attach),
@@ -83,7 +83,7 @@ These characteristics are similar to those of the **_Language Server Protocol_**
 
 ## A new home for the DAP
 
-Now we have followed suit for the _Debug Adapter Protocol_ by breaking the DAP specification out of its [old repository](https://github.com/Microsoft/vscode-debugadapter-node) and moving it to a new web site [https://microsoft.github.io/debug-adapter-protocol](http://weinand.ch:4000/debug-adapter-protocol/) and a corresponding repository [https://github.com/Microsoft/debug-adapter-protocol](https://github.com/Microsoft/debug-adapter-protocol).
+Now we have followed suit for the _Debug Adapter Protocol_ by moving the DAP specification from its [old location](https://github.com/Microsoft/vscode-debugadapter-node) to a new web site [https://microsoft.github.io/debug-adapter-protocol](http://weinand.ch:4000/debug-adapter-protocol/) and a corresponding repository [https://github.com/Microsoft/debug-adapter-protocol](https://github.com/Microsoft/debug-adapter-protocol).
 
 This move should emphasize that the _Debug Adapter Protocol_ in not specific to Visual Studio Code.
 For example, Visual Studio is now also [supporting this protocol](https://blogs.msdn.microsoft.com/visualstudio/2018/03/26/adding-support-for-debug-adapters-to-visual-studio-ide/).
