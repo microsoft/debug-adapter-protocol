@@ -47,7 +47,7 @@ layout: default
                         <div class="row align-items-center">
                             <div class="col-lg-12">
                                 <img src="img/python-inline-values.gif" class="img-fluid rounded"/>
-                                <p class="text-left"><i>Inline values powered by the Python Debug Adapter</i></p>
+                                <p class="text-left"><i>VS Code showing inline values powered by the Python Debug Adapter</i></p>
                             </div>
                         </div>
                     </div>
@@ -55,7 +55,7 @@ layout: default
                         <div class="row align-items-center">
                             <div class="col-lg-12">
                                 <img src="img/java-threads.png" class="img-fluid rounded"/>
-                                <p class="text-left"><i>Multi-thread debugging powered by the Java Debug Adapter</i></p>
+                                <p class="text-left"><i>VS Code's multi-thread debugging powered by the Java Debug Adapter</i></p>
                             </div>
                         </div>
                     </div>
@@ -63,7 +63,7 @@ layout: default
                         <div class="row align-items-center">
                             <div class="col-lg-12">
                                 <img src="img/node-repl.gif" class="img-fluid rounded"/>
-                                <p class="text-left"><i>REPL console powered by the Node.js Debug Adapter</i></p>
+                                <p class="text-left"><i>REPL console in VS Code powered by the Node.js Debug Adapter</i></p>
                             </div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@ layout: default
             <h1 class="text-center"><i class="fas fa-book" aria-hidden="true"></i></h1>
             <a href='{{ "/specification" | prepend: site.baseurl }}'><h3 class="text-center">Specification</h3></a>
             <p>
-                The latest version of the protocol specification is version 1.29.
+                The latest version of the protocol specification is version 1.31.
             </p>
         </div>
         <div class="col-lg-4">
@@ -94,7 +94,7 @@ layout: default
             {% assign sorted = site.implementors | sort: 'index' %}
             <a href = "{{ sorted.first.url | prepend: site.baseurl }}"><h3 class="text-center">Implementations</h3></a>
             <p>
-                The DAP has been implemented for many debuggers or runtimes and some development tools are integrating these debug adapters.
+                The DAP has been implemented for many debuggers or runtimes and some development tools are hosting these debug adapters.
             </p>
         </div>
     </div>
