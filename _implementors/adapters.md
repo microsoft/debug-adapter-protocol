@@ -33,6 +33,7 @@ The following table lists the known debug adapters that implement the Debug Adap
 [Mono Debug](https://marketplace.visualstudio.com/items?itemName=ms-vscode.mono-debug)|[@weinand](https://github.com/weinand)|[Microsoft/vscode-mono-debug](https://github.com/Microsoft/vscode-mono-debug)
 [NativeScript](https://marketplace.visualstudio.com/items?itemName=Telerik.nativescript)|[@ivanbuhov](https://github.com/ivanbuhov)|[NativeScript/nativescript-vscode-extension](https://github.com/NativeScript/nativescript-vscode-extension/)
 [Node Debug](https://github.com/Microsoft/vscode-node-debug)|[@weinand](https://github.com/weinand)|[Microsoft/vscode-node-debug](https://github.com/Microsoft/vscode-node-debug)
+[Perl Debug](https://marketplace.visualstudio.com/items?itemName=mortenhenriksen.perl-debug)|[@raix](https://github.com/raix)|[raix/vscode-perl-debug](https://github.com/raix/vscode-perl-debug)
 [Php](https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-debug)|[@felixfbecker](https://github.com/felixfbecker)|[felixfbecker/vscode-php-debug](https://github.com/felixfbecker/vscode-php-debug)
 [PowerShell](https://marketplace.visualstudio.com/items?itemName=ms-vscode.PowerShell)|[@daviwil](https://github.com/daviwil) [@rkeithhill](https://github.com/rkeithhill)|[PowerShell/vscode-powershell](https://github.com/PowerShell/vscode-powershell)
 [Puppet](https://marketplace.visualstudio.com/items?itemName=jpogran.puppet-vscode)|[@glennsarti](https://github.com/glennsarti) [@jpogran](https://github.com/jpogran)|[lingua-pupuli/puppet-editor-services](https://github.com/lingua-pupuli/puppet-editor-services)
@@ -40,7 +41,6 @@ The following table lists the known debug adapters that implement the Debug Adap
 [React Native Tools](https://marketplace.visualstudio.com/items?itemName=vsmobile.vscode-react-native)|[@MSLaguana](https://github.com/MSLaguana)|[Microsoft/vscode-react-native](https://github.com/Microsoft/vscode-react-native/issues)
 [Ruby](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby)|[@rebornix](https://github.com/rebornix)|[rubyide/vscode-ruby](https://github.com/rubyide/vscode-ruby)
 [SWF](https://marketplace.visualstudio.com/items?itemName=bowlerhatllc.vscode-nextgenas)|[@joshtynjala](https://github.com/joshtynjala)|[BowlerHatLLC/vscode-nextgenas](https://github.com/BowlerHatLLC/vscode-nextgenas)
-[Perl Debug](https://marketplace.visualstudio.com/items?itemName=mortenhenriksen.perl-debug)|[@raix](https://github.com/raix)|[raix/vscode-perl-debug](https://github.com/raix/vscode-perl-debug)
 {: .table .table-bordered .table-responsive}
 
 *If you are missing a debug adapter implementation please create a pull request in GitHub against this markdown [document](https://github.com/Microsoft/debug-adapter-protocol/blob/gh-pages/_implementors/adapters.md)*
