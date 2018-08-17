@@ -62,6 +62,8 @@ function MarkDown(schema: IProtocol): string {
 	s += Header(1, schema.title);
 	s += description(schema);
 
+	s += 'The change history of the specification can be found [here](./changelog).';
+
 	for (let typeName in schema.definitions) {
 
 		const d2 = schema.definitions[typeName];
