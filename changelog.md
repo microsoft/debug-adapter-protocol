@@ -8,7 +8,8 @@ sectionid: changelog
 
 
 * 1.32.x:
-  * move specification to DAP web site
+  * Adds an optional boolean argument `restart` to the `terminate` and `disconnect` requests. The value `true` indicates that the `terminate` or `disconnect` request is part of a restart sequence.
+  * Move specification to DAP web site.
 
 * 1.31.x:
   * Adds a new optional `terminate` request which can be used to give a debuggee the chance to shutdown gracefully. A corresponding `supportsTerminateRequest` capability announces that an adapter implements the request.
