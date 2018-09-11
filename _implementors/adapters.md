@@ -24,6 +24,7 @@ The following table lists the known debug adapters that implement the Debug Adap
 [Duktape Debugger](https://marketplace.visualstudio.com/items?itemName=HaroldBrenes.duk-debug)|[@svaarala](https://github.com/svaarala)|[svaarala/duktape](https://github.com/svaarala/duktape)
 [Firefox Remote Debug](https://marketplace.visualstudio.com/items?itemName=yurydelendik.firefox-debug)|[@yurydelendik](https://github.com/yurydelendik)|[yurydelendik/vscode-ff-debug](https://github.com/yurydelendik/vscode-ff-debug)
 [Go](https://marketplace.visualstudio.com/items?itemName=lukehoban.Go)|[@ramya-rao-a](https://github.com/ramya-rao-a)|[Microsoft/vscode-go](https://github.com/Microsoft/vscode-go)
+[Harbour](https://marketplace.visualstudio.com/items?itemName=aperricone.harbour)|[@APerricone](https://github.com/APerricone)|[APerricone/harbourCodeExtension](https://github.com/APerricone/harbourCodeExtension)
 [Haskell GHCi debug viewer Phoityne](https://marketplace.visualstudio.com/items?itemName=phoityne.phoityne-vscode)|[@phoityne](https://github.com/phoityne)|[phoityne/phoityne-vscode](https://github.com/phoityne/phoityne-vscode)
 [Java Debugger](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-debug)|[@akaroml](https://github.com/akaroml)|[Microsoft/vscode-java-debug](https://github.com/Microsoft/vscode-java-debug)
 [JSIRDebugger](https://marketplace.visualstudio.com/items?itemName=muji.jsirdebugger)|muji
