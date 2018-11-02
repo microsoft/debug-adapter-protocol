@@ -19,6 +19,7 @@ The following table lists the known debug adapters that implement the Debug Adap
 [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome)|[@roblourens](https://github.com/roblourens)|[Microsoft/vscode-chrome-debug](https://github.com/microsoft/vscode-chrome-debug)
 [Debugger for Edge](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-edge)|[@andysterland](https://github.com/andysterland)|[Microsoft/vscode-edge-debug2](https://github.com/Microsoft/vscode-edge-debug2)
 [Debugger for Firefox](https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-firefox-debug)|[@hbenl](https://github.com/hbenl)|[hbenl/vscode-firefox-debug](https://github.com/hbenl/vscode-firefox-debug)
+[Debugger for .NET Core](https://github.com/Samsung/netcoredbg)|[@ayuckhulk](https://github.com/ayuckhulk)|[Samsung/netcoredbg](https://github.com/Samsung/netcoredbg)
 [Debugger for PhantomJS](https://marketplace.visualstudio.com/items?itemName=iradul.debugger-for-phantomjs)|[@iradul](https://github.com/iradul)|[iradul/vscode-phantomjs-debug](https://github.com/iradul/vscode-phantomjs-debug)
 [Debugger for Unity](https://marketplace.visualstudio.com/items?itemName=Unity.unity-debug)|[@lukaszunity](https://github.com/lukaszunity)|[Unity-Technologies/vscode-unity-debug](https://github.com/Unity-Technologies/vscode-unity-debug)
 [Duktape Debugger](https://marketplace.visualstudio.com/items?itemName=HaroldBrenes.duk-debug)|[@svaarala](https://github.com/svaarala)|[svaarala/duktape](https://github.com/svaarala/duktape)
@@ -42,7 +43,6 @@ The following table lists the known debug adapters that implement the Debug Adap
 [React Native Tools](https://marketplace.visualstudio.com/items?itemName=vsmobile.vscode-react-native)|[@MSLaguana](https://github.com/MSLaguana)|[Microsoft/vscode-react-native](https://github.com/Microsoft/vscode-react-native/issues)
 [Ruby](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby)|[@rebornix](https://github.com/rebornix)|[rubyide/vscode-ruby](https://github.com/rubyide/vscode-ruby)
 [SWF](https://marketplace.visualstudio.com/items?itemName=bowlerhatllc.vscode-nextgenas)|[@joshtynjala](https://github.com/joshtynjala)|[BowlerHatLLC/vscode-nextgenas](https://github.com/BowlerHatLLC/vscode-nextgenas)
-[Debugger for .NET Core](https://github.com/Samsung/netcoredbg)|[@ayuckhulk](https://github.com/ayuckhulk)|[Samsung/netcoredbg](https://github.com/Samsung/netcoredbg)
 {: .table .table-bordered .table-responsive}
 
 *If you are missing a debug adapter implementation please create a pull request in GitHub against this markdown [document](https://github.com/Microsoft/debug-adapter-protocol/blob/gh-pages/_implementors/adapters.md)*
