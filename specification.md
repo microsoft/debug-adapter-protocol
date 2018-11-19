@@ -341,7 +341,7 @@ interface BreakpointEvent extends Event {
     reason: string;
 
     /**
-     * The breakpoint.
+     * The 'id' attribute is used to find the target breakpoint and the other attributes are used as the new values.
      */
     breakpoint: Breakpoint;
   };
@@ -506,6 +506,11 @@ interface RunInTerminalResponse extends Response {
      * The process ID.
      */
     processId?: number;
+
+    /**
+     * The process ID of the terminal shell.
+     */
+    shellProcessId?: number;
   };
 }
 ```
@@ -2745,7 +2750,7 @@ Information about a Breakpoint created in setBreakpoints or setFunctionBreakpoin
 ```typescript
 interface Breakpoint {
   /**
-   * An optional unique identifier for the breakpoint.
+   * An optional identifier for the breakpoint. It is needed if breakpoint events are used to update or remove breakpoints.
    */
   id?: number;
 

@@ -554,6 +554,10 @@
 							"processId": {
 								"type": "number",
 								"description": "The process ID."
+							},
+							"shellProcessId": {
+								"type": "number",
+								"description": "The process ID of the terminal shell."
 							}
 						}
 					}

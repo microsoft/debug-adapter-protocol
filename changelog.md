@@ -7,7 +7,8 @@ sectionid: changelog
 #### All notable changes to the specification will be documented in this file.
 
 * 1.33.x:
-  * Point out that the breakpoint's 'id' attribute is mandatory when 'breakpoint' events are used.
+  * Point out that the breakpoint's `id` attribute is mandatory when `breakpoint` events are used.
+  * Return a new attribute `shellProcessId` from the `runInTerminal` request.
 
 * 1.32.x:
   * Adds an optional boolean argument `restart` to the `terminate` and `disconnect` requests. The value `true` indicates that the `terminate` or `disconnect` request is part of a restart sequence.
