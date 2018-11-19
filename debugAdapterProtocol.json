@@ -354,7 +354,7 @@
 							},
 							"breakpoint": {
 								"$ref": "#/definitions/Breakpoint",
-								"description": "The breakpoint."
+								"description": "The 'id' attribute is used to find the target breakpoint and the other attributes are used as the new values."
 							}
 						},
 						"required": [ "reason", "breakpoint" ]
@@ -2770,7 +2770,7 @@
 			"properties": {
 				"id": {
 					"type": "integer",
-					"description": "An optional unique identifier for the breakpoint."
+					"description": "An optional identifier for the breakpoint. It is needed if breakpoint events are used to update or remove breakpoints."
 				},
 				"verified": {
 					"type": "boolean",
