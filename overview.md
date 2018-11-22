@@ -44,7 +44,7 @@ Since this mapping is mostly straightforward and has little complexity, Debug ad
 
 The _Debug Adapter Protocol_ is a win for both debugger/runtime providers and tooling vendors!
 
-## How it works
+## <a name="How_it_works" class="anchor"></a>How it works
 
 The following sections explains the interaction between a development tool (e.g. IDE or editor) and a debug adapter.
 This should not only help when implementing the Debug Adapter Protocol in a debug adapter, but also when _hosting_ the protocol in a development tool (sometimes also called "host" or "client").
