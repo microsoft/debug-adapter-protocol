@@ -3,7 +3,7 @@
 The Debug Adapter Protocol is now available through its own [Web site](https://microsoft.github.io/debug-adapter-protocol/). The Web site contains information about how the protocol [works](https://microsoft.github.io/debug-adapter-protocol/overview), a more readable [specification](https://microsoft.github.io/debug-adapter-protocol/specification), and documents listing protocol [implementations](https://microsoft.github.io/debug-adapter-protocol/implementors/adapters/).
 
 ## Contributing
-If you are interested in fixing issues like typos you can either [file an issue](https://github.com/Microsoft/debug-adapter-protocol/issues/new) or provide a pull request containing the changes to the [specification file](https://github.com/Microsoft/debug-adapter-protocol/blob/gh-pages/debugProtocol.json).
+If you are interested in fixing issues like typos you can either [file an issue](https://github.com/Microsoft/debug-adapter-protocol/issues/new) or provide a pull request containing the changes to the [specification file](https://github.com/Microsoft/debug-adapter-protocol/blob/gh-pages/debugAdapterProtocol.json).
 
 When proposing an addition to the protocol, then please refer to the [How to Contribute to the Debug Adapter Protocol](contributing.md) document.
 
