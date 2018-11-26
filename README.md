@@ -11,7 +11,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 
 ## The Debug Adapter Protocol
 
-See the [Web site](https://microsoft.github.io/debug-adapter-protocol/specification)
+See the [Web site](https://microsoft.github.io/debug-adapter-protocol/)
 
 ## License
 [Creative Commons Attribution / MIT](License.txt)
