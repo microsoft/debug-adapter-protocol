@@ -152,7 +152,7 @@
 							"reason": {
 								"type": "string",
 								"description": "The reason for the event.\nFor backward compatibility this string is shown in the UI if the 'description' attribute is missing (but it must not be translated).",
-								"_enum": [ "step", "breakpoint", "exception", "pause", "entry", "goto" ]
+								"_enum": [ "step", "breakpoint", "exception", "pause", "entry", "goto", "function breakpoint" ]
 							},
 							"description": {
 								"type": "string",
@@ -909,7 +909,7 @@
 		"SetFunctionBreakpointsRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "Sets multiple function breakpoints and clears all previous function breakpoints.\nTo clear all function breakpoint, specify an empty array.\nWhen a function breakpoint is hit, a 'stopped' event (event type 'function breakpoint') is generated.",
+				"description": "Replaces all existing function breakpoints with new function breakpoints.\nTo clear all function breakpoints, specify an empty array.\nWhen a function breakpoint is hit, a 'stopped' event (with reason 'function breakpoint') is generated.",
 				"properties": {
 					"command": {
 						"type": "string",
