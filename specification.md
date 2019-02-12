@@ -159,7 +159,7 @@ interface StoppedEvent extends Event {
     /**
      * The reason for the event.
      * For backward compatibility this string is shown in the UI if the 'description' attribute is missing (but it must not be translated).
-     * Values: 'step', 'breakpoint', 'exception', 'pause', 'entry', 'goto', etc.
+     * Values: 'step', 'breakpoint', 'exception', 'pause', 'entry', 'goto', 'function breakpoint', etc.
      */
     reason: string;
 
@@ -515,6 +515,38 @@ interface RunInTerminalResponse extends Response {
 }
 ```
 
+### <a name="Reverse_Requests_OpenExternal" class="anchor"></a>:leftwards_arrow_with_hook: OpenExternal Request
+
+This request is sent from the debug adapter to the client to open a url in an external program, e.g. a http(s) or mailto-link, using the default application.
+
+```typescript
+interface OpenExternalRequest extends Request {
+  command: 'openExternal';
+
+  arguments: OpenExternalArguments;
+}
+```
+
+Arguments for 'openExternal' request.
+
+<a name="Types_OpenExternalArguments" class="anchor"></a>
+```typescript
+interface OpenExternalArguments {
+  /**
+   * The uri that should be opened.
+   */
+  url: string;
+}
+```
+
+Response to 'openExternal' request. This is just an acknowledgement, so no body field is required.
+
+<a name="Types_OpenExternalResponse" class="anchor"></a>
+```typescript
+interface OpenExternalResponse extends Response {
+}
+```
+
 ## <a name="Requests" class="anchor"></a>Requests
 
 ### <a name="Requests_Initialize" class="anchor"></a>:leftwards_arrow_with_hook: Initialize Request
@@ -588,6 +620,11 @@ interface InitializeRequestArguments {
    * Client supports the runInTerminal request.
    */
   supportsRunInTerminalRequest?: boolean;
+
+  /**
+   * Client supports the openExternal request.
+   */
+  supportsOpenExternalRequest?: boolean;
 }
 ```
 
@@ -876,11 +913,11 @@ interface SetBreakpointsResponse extends Response {
 
 ### <a name="Requests_SetFunctionBreakpoints" class="anchor"></a>:leftwards_arrow_with_hook: SetFunctionBreakpoints Request
 
-Sets multiple function breakpoints and clears all previous function breakpoints.
+Replaces all existing function breakpoints with new function breakpoints.
 
-To clear all function breakpoint, specify an empty array.
+To clear all function breakpoints, specify an empty array.
 
-When a function breakpoint is hit, a 'stopped' event (event type 'function breakpoint') is generated.
+When a function breakpoint is hit, a 'stopped' event (with reason 'function breakpoint') is generated.
 
 ```typescript
 interface SetFunctionBreakpointsRequest extends Request {
@@ -1465,7 +1502,7 @@ interface SetVariableArguments {
   variablesReference: number;
 
   /**
-   * The name of the variable.
+   * The name of the variable in the container.
    */
   name: string;
 

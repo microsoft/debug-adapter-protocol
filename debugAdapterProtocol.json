@@ -566,6 +566,40 @@
 			}]
 		},
 
+		"OpenExternalRequest": {
+			"allOf": [ { "$ref": "#/definitions/Request" }, {
+				"type": "object",
+				"description": "This request is sent from the debug adapter to the client to open a url in an external program, e.g. a http(s) or mailto-link, using the default application.",
+				"properties": {
+					"command": {
+						"type": "string",
+						"enum": [ "openExternal" ]
+					},
+					"arguments": {
+						"$ref": "#/definitions/OpenExternalArguments"
+					}
+				},
+				"required": [ "command", "arguments" ]
+			}]
+		},
+		"OpenExternalArguments": {
+			"type": "object",
+			"description": "Arguments for 'openExternal' request.",
+			"properties": {
+				"url": {
+					"type": "string",
+					"description": "The uri that should be opened."
+				}
+			},
+			"required": [ "url" ]
+		},
+		"OpenExternalResponse": {
+			"allOf": [ { "$ref": "#/definitions/Response" }, {
+				"type": "object",
+				"description": "Response to 'openExternal' request. This is just an acknowledgement, so no body field is required."
+			}]
+		},
+
 		"InitializeRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
@@ -627,6 +661,10 @@
 				"supportsRunInTerminalRequest": {
 					"type": "boolean",
 					"description": "Client supports the runInTerminal request."
+				},
+				"supportsOpenExternalRequest": {
+					"type": "boolean",
+					"description": "Client supports the openExternal request."
 				}
 			},
 			"required": [ "adapterID" ]

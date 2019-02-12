@@ -114,6 +114,8 @@
   - title: Reverse Requests
     anchor: Reverse_Requests
     children:
+    - title: OpenExternal
+      anchor: Reverse_Requests_OpenExternal
     - title: RunInTerminal
       anchor: Reverse_Requests_RunInTerminal
   - title: Types
