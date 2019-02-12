@@ -51,6 +51,8 @@
       anchor: Requests_ConfigurationDone
     - title: Continue
       anchor: Requests_Continue
+    - title: DataBreakpointInfo
+      anchor: Requests_DataBreakpointInfo
     - title: Disconnect
       anchor: Requests_Disconnect
     - title: Evaluate
@@ -83,6 +85,8 @@
       anchor: Requests_Scopes
     - title: SetBreakpoints
       anchor: Requests_SetBreakpoints
+    - title: SetDataBreakpoints
+      anchor: Requests_SetDataBreakpoints
     - title: SetExceptionBreakpoints
       anchor: Requests_SetExceptionBreakpoints
     - title: SetExpression
@@ -133,6 +137,10 @@
       anchor: Types_CompletionItem
     - title: CompletionItemType
       anchor: Types_CompletionItemType
+    - title: DataBreakpoint
+      anchor: Types_DataBreakpoint
+    - title: DataBreakpointAccessType
+      anchor: Types_DataBreakpointAccessType
     - title: ExceptionBreakMode
       anchor: Types_ExceptionBreakMode
     - title: ExceptionBreakpointsFilter
