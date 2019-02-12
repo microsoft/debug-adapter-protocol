@@ -55,8 +55,8 @@ When a debug session starts, the development tool needs a way to communicate wit
 How the debug adapter comes to life is not part of the protocol specification, but it is still an important detail if debug adapters should work across different development tools.
 
 A development tool has basically two ways of interacting with a debug adapter:
-- **single session mode**: in this mode the development tool starts a debug adapter as a standalone process and communicates with it through *stdin* and *stdout*. At the end of the debug session the debug adapter is terminated. For concurrrent debug sessions the development tool starts multiple debug adapters.
-- **multi session mode**: in this mode the development tool does not start the debug adapter but assumes that it is already running and that it listens on a specific port for connections attempts. For every debug session the development tool initiates a new communication session on the specific port and disconnects at the end of the session.
+- **single session mode**: in this mode, the development tool starts a debug adapter as a standalone process and communicates with it through *stdin* and *stdout*. At the end of the debug session the debug adapter is terminated. For concurrent debug sessions, the development tool starts multiple debug adapters.
+- **multi session mode**: in this mode, the development tool does not start the debug adapter but assumes that it is already running and that it listens on a specific port for connections attempts. For every debug session, the development tool initiates a new communication session on a specific port and disconnects at the end of the session.
 
 After establishing a connection to the debug adapter, the development tool starts communicating with the adapter via the _base protocol_.
 
@@ -109,14 +109,14 @@ Content-Length: 119\r\n
 
 The Debug Adapter Protocol defines many features and this number is still growing, albeit slowly.
 However, the protocol is still at its first version because it was an explicit design goal to support new feature in a completely backward compatible way.
-Making this possible without version numbers requires that every new feature gets a corresponding flag that lets a development tool know whether a debug adapter supports the feature or not. And the absense of the flag always means that the feature is not supported.
+Making this possible without version numbers requires that every new feature gets a corresponding flag that lets a development tool know whether a debug adapter supports the feature or not. The absence of the flag always means that the feature is not supported.
 
-A single feature and its corresponding flag is called "capability" in the Debug Adapter Protocol. The open-ended set of all features flags is called "capabilities."
+A single feature and its corresponding flag is called a "capability" in the Debug Adapter Protocol. The open-ended set of all features flags is called DAP's "capabilities."
 
-When starting a debug session the development tool sends an [**initialize**](./specification#Requests_Initialize) request to the adapter in order to exchange capabilities between the development tool and the debug adapter.
+When starting a debug session, the development tool sends an [**initialize**](./specification#Requests_Initialize) request to the adapter in order to exchange capabilities between the development tool and the debug adapter.
 
-The development tool capabilities are provided in the [**InitializeRequestArguments**](./specification#Types_InitializeRequestArguments) structure of the [**initialize**](./specification#Requests_Initialize) request and typically start with the prefix "supports."
-Other information passed from the tool to the debug adapter is:
+The development tool capabilities are provided in the [**InitializeRequestArguments**](./specification#Types_InitializeRequestArguments) structure of the [**initialize**](./specification#Requests_Initialize) request and typically start with the prefix `supports`.
+Other pieces of information passed from the tool to the debug adapter are:
 - the name of the development tool,
 - the format of file paths, `native` or `uri`,
 - whether line and column values are 0 or 1 based,
@@ -127,18 +127,18 @@ It is not necessary to return an explicit `false` for unsupported capabilities.
 
 ### Launching and attaching
 
-After the debug adapter has been initialized it is ready to accept requests for starting debugging.
+After the debug adapter has been initialized, it is ready to accept requests for starting debugging.
 Two requests exist for this:
 - [**launch**](./specification#Requests_Launch) request: the debug adapter launches the program ("debuggee") in debug mode and then starts to communicate with it.
 Since the debug adapter is responsible for the debuggee, it should provide options for the end user to interact with the debuggee.
 Basically there are three options how the debuggee can be launched. Two of the options are available to the debug adapter via the [**RunInTerminal**](./specification#Reverse_Requests_RunInTerminal) request.
   - the **_debug console_**: this is an interactive REPL environment which allows the user to evaluate expressions in the context of the debuggee. Program output shows up in the debug console too, but the program cannot read input through it (because of the REPL functionality).
   - an **_integrated terminal_**: this is a terminal emulator integrated in the development tool. It supports the usual terminal control codes and supports reading program input.
-  - in an **_external terminal_**: similar as the integrated terminal but the terminal runs outside of the development tool.
+  - in an **_external terminal_**: similar to the integrated terminal, but the terminal runs outside of the development tool.
 - [**attach**](./specification#Requests_Attach) request: the debug adapter connects to an already running program. Here the end user is responsible for launching and terminating the program.
 
 Since arguments for both requests are highly dependent on a specific debugger and debug adapter implementation, the Debug Adapter Protocol does not specify any arguments for these requests.
-Instead the development tool is expected to get information about debugger specific arguments from elsewhere (e.g. contributed by some plugin or extension mechanism)
+Instead, the development tool is expected to get information about debugger specific arguments from elsewhere (e.g. contributed by some plugin or extension mechanism)
 and to build a UI and validation mechanism on top of that.
 
 ### Configuring breakpoint and exception behavior
@@ -152,15 +152,15 @@ the debug adapter is expected to send an [**initialized**](./specification#Event
 to announce that it is ready to accept configuration requests.
 With this approach a debug adapter does not have to implement a buffering strategy for configuration information.
 
-In response to the *initialized* event the development tool sends the configuration information by calling these requests:
+In response to the *initialized* event, the development tool sends the configuration information using these requests:
 * [**setBreakpoints**](./specification#Requests_SetBreakpoints) one request for all breakpoints in a single source,
 * [**setFunctionBreakpoints**](./specification#Requests_SetFunctionBreakpoints) if the debug adapter supports function breakpoints,
 * [**setExceptionBreakpoints**](./specification#Requests_SetExceptionBreakpoints) if the debug adapter supports any exception options,
 * [**configurationDoneRequest**](./specification#Requests_ConfigurationDone) to indicate the end of the configuration sequence.
 
 The *setBreakpoints* request registers all breakpoints that exist for a single source (so it is not incremental).
-A simple implementation of this semantics in the debug adapter is to clear all previous breakpoints for the source and then set the breakpoints specified in the request.
-*setBreakpoints* and *setFunctionBreakpoints* are expected to return the 'actual' breakpoints and the frontend updates the UI dynamically if a breakpoint could not be set at the requested position and was moved by the debugger.
+A simple implementation of these semantics in the debug adapter is to clear all previous breakpoints for the source and then set the breakpoints specified in the request.
+*setBreakpoints* and *setFunctionBreakpoints* are expected to return the 'actual' breakpoints and the generic debugger updates the UI dynamically if a breakpoint could not be set at the requested position or was moved by the debugger.
 
 The following sequence diagram summarizes the sequence of requests and events for a hypothetical _gdb_ debug adapter:
 
@@ -171,7 +171,7 @@ The following sequence diagram summarizes the sequence of requests and events fo
 Whenever the program stops (on program entry, because a breakpoint was hit, an exception occurred, or the user requested execution to be paused),
 the debug adapter sends a [**stopped**](./specification#Events_Stopped) event with the appropriate reason and thread id.
 
-Upon receipt the development tool first requests the [`threads`](./specification#Types_Thread) (see below), and then the *stacktrace* (a list of [`stack frames`](./specification#Types_StackFrame)) for the thread mentioned in the stopped event.
+Upon receipt, the development tool first requests the [`threads`](./specification#Types_Thread) (see below) and then the *stacktrace* (a list of [`stack frames`](./specification#Types_StackFrame)) for the thread mentioned in the stopped event.
 If the user then drills into the stack frame, the development tool first requests the [`scopes`](./specification#Types_Scope) for a stack frame, and then the [`variables`](./specification#Types_Variable) for a scope.
 If a variable is itself structured, the development tool requests its properties through additional *variables* requests.
 This leads to the following request waterfall:
@@ -189,20 +189,20 @@ The value of variables can be modified through the [**setVariable**](./specifica
 
 ### Supporting threads
 
-Whenever the frontend receives a [**stopped**](./specification#Events_Stopped) or a [**thread**](./specification#Events_Thread) event, the development tool requests all [`threads`](./specification#Types_Thread) that exist at that point in time. [**Thread**](./specification#Events_Thread) events are optional but a debug adapter can send them to force the development tool to update the threads UI dynamically even when not in a stopped state. If a debug adapter decides not to emit [**Thread**](./specification#Events_Thread) events, the thread UI in the development tool will only update if a [**stopped**](./specification#Events_Stopped) event is received.
+Whenever the generic debugger receives a [**stopped**](./specification#Events_Stopped) or a [**thread**](./specification#Events_Thread) event, the development tool requests all [`threads`](./specification#Types_Thread) that exist at that point in time. [**Thread**](./specification#Events_Thread) events are optional, but a debug adapter can send them to force the development tool to update the threads UI dynamically even when not in a stopped state. If a debug adapter decides not to emit [**Thread**](./specification#Events_Thread) events, the thread UI in the development tool will only update if a [**stopped**](./specification#Events_Stopped) event is received.
 
-After a successful *launch* or *attach* the development tool requests the baseline of currently existing threads with the [**threads**](./specification#Requests_Threads) request and then starts to listen for [**thread**](./specification#Events_Thread) events to detect new or terminated threads. Even if a debug adapter does not support multiple threads, it must implement the [**threads**](./specification#Requests_Threads) request and return a single (dummy) thread. The thread id must be used in all requests which refer to a thread, e.g. [**stacktrace**](./specification#Requests_Stacktrace), [**pause**](./specification#Requests_Pause), [**continue**](./specification#Requests_Continue), [**next**](./specification#Requests_Next), [**stepIn**](./specification#Requests_StepIn), and [**stepOut**](./specification#Requests_StepOut).
+After a successful *launch* or *attach*, the development tool requests the baseline of currently existing threads with the [**threads**](./specification#Requests_Threads) request and then starts to listen for [**thread**](./specification#Events_Thread) events to detect new or terminated threads. Even if a debug adapter does not support multiple threads, it must implement the [**threads**](./specification#Requests_Threads) request and return a single (dummy) thread. The thread id must be used in all requests which refer to a thread, e.g. [**stacktrace**](./specification#Requests_Stacktrace), [**pause**](./specification#Requests_Pause), [**continue**](./specification#Requests_Continue), [**next**](./specification#Requests_Next), [**stepIn**](./specification#Requests_StepIn), and [**stepOut**](./specification#Requests_StepOut).
 
 ### Debug session end
 
 When the development tool ends a debug session, the sequence of events is slightly different based on whether the session has been initially "launched" or "attached":
 
 - Debuggee **_launched_**:
-if a debug adapter supports the [**terminate**](./specification#Requests_Terminate) request, the development tool uses it to terminate the debuggee gracefully, i.e. it gives the debuggee a chance to cleanup everything before terminating. If the debuggee does not terminate but continues to run (or hits a breakpoint), the debug session will continue but if the development tool tries again to terminate the debuggee, it will then use the [**disconnect**](./specification#Requests_Disconnect) request to end the debug session unconditionally. The *disconnect* request is expected to terminate the debuggee (and any child processes) forcefully.
+if a debug adapter supports the [**terminate**](./specification#Requests_Terminate) request, the development tool uses it to terminate the debuggee gracefully, i.e. it gives the debuggee a chance to cleanup everything before terminating. If the debuggee does not terminate but continues to run (or hits a breakpoint), the debug session will continue, but if the development tool tries again to terminate the debuggee, it will then use the [**disconnect**](./specification#Requests_Disconnect) request to end the debug session unconditionally. The *disconnect* request is expected to terminate the debuggee (and any child processes) forcefully.
 - Debuggee **_attached_**:
 If the debuggee has been "attached" initially, the development tool issues a [**disconnect**](./specification#Requests_Disconnect) request. This should detach the debugger from the debuggee but will allow it to continue.
 
-In all situation where a debug adapter wants to end the debug session, a [**terminated**](./specification#Events_Terminated) event must be fired.
+In all situations where a debug adapter wants to end the debug session, a [**terminated**](./specification#Events_Terminated) event must be fired.
 
 If the debuggee has ended (and the debug adapter is able to detect this), an optional [**exited**](./specification#Events_Exited) event can be issued to return the exit code to the development tool.
 
@@ -211,6 +211,6 @@ This diagram summarizes the sequence of request and events for a hypothetical de
 
 ## Libraries (SDKs) for DAP providers and consumers
 
-To simplify the implementation of debug adapters there are libraries or SDKs:
+To simplify the implementation of debug adapters, there are libraries or SDKs:
 
 - *Debug Adapter SDKs* for the different implementation languages there is an SDK to implement a debug adapter in a particular language. For example, to implement a debug adapter using Node.js there is the [debug adapter npm module](https://www.npmjs.com/package/vscode-debugadapter).
