@@ -6,6 +6,10 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.34.x:
+  * Added support for data breakpoints via the 'dataBreakpointInfo' and 'setDataBreakpoints' requests and the 'supportsDataBreakpoints' capability.
+  * Improved some comments.
+
 * 1.33.x:
   * Point out that the breakpoint's `id` attribute is mandatory when `breakpoint` events are used.
   * Return a new attribute `shellProcessId` from the `runInTerminal` request.
