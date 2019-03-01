@@ -1201,6 +1201,56 @@
 				"description": "Response to 'next' request. This is just an acknowledgement, so no body field is required."
 			}]
 		},
+		
+		"SetStepGranularityRequest": {
+			"allOf": [ { "$ref": "#/definitions/Request" }, {
+				"type": "object",
+				"description": "The request asks for debuger to change granularity of it's step operations.",
+				"properties": {
+					"command": {
+						"type": "string",
+						"enum": [ "setStepGranularity" ]
+					},
+					"arguments": {
+						"$ref": "#/definitions/SetStepGranularityArguments"
+					}
+				},
+				"required": [ "command", "arguments"  ]
+			}]	
+		},
+		"SetStepGranularityArguments": {
+			"type": "object",
+			"description": "Arguments for 'setStepGranularity' request.",
+			"properties": {
+				"granularity": {
+					"type": "string",
+					"enum": [ "line", "logical", "finest" ],
+					"description": "Sets the granularity for step operations. Line granularity means that step operations should move by lines in source code. Logical granularity means that step operations should move by some language defined logical steps (such as statements). Finest granularity means that step operations should step in finest, most atomic operations and use subsource for that."
+				}
+			},
+			"required": [ "granularity" ]
+		},
+		"SetStepGranularityResponse": {
+			"allOf": [ { "$ref": "#/definitions/Response" }, {
+				"type": "object",
+				"description": "Response to 'setStepGranularity' request. Debugger might return other granularity if some granularity is not possible.",
+				"properties": {
+					"body": {
+						"type": "object",
+						"properties": {
+							"granularity": {
+								"type": "string",
+								"enum": [ "line", "logical", "finest" ],
+								"description": "Actual granularity that will be used by debugger."
+							}
+						},
+				  		"required": [ "granularity" ]
+					}
+				},
+				"required": [ "body" ]
+			}]
+		},
+		
 
 		"StepInRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
@@ -2663,6 +2713,41 @@
 				}
 			}
 		},
+		
+		"Subsource": {
+			"type": "object",
+			"description": "Subsource is the actual representation of source at finest possible granularity. It can be used to send decompiled or bytecode information.",
+			"properties": {
+				"sources": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/SubsourceElement"
+					},
+					"description": "List of finest possible step elements."
+				}
+			},
+			"required": [ "elements" ]
+		},
+		
+		"SubsourceElement": {
+			"type": "object",
+			"description": "Represents single finest possible step for step operation.",
+			"properties": {
+				"text": {
+					"type": "string",
+					"description": "Textual representation of this subsource element."
+				},
+				"line": {
+					"type": "number",
+					"description": "Optional matching line number in source."
+				},
+				"Source": {
+					"$ref": "#/definitions/Source",
+					"description": "Source code from which this subsource element was generated."
+				}
+			},
+			"required": [ "text" ]
+		},
 
 		"StackFrame": {
 			"type": "object",
@@ -2679,6 +2764,10 @@
 				"source": {
 					"$ref": "#/definitions/Source",
 					"description": "The optional source of the frame."
+				},
+				"subsource": {
+					"$ref": "#/definitions/Subsource",
+					"description": "The optional subsource of the frame."
 				},
 				"line": {
 					"type": "integer",
@@ -2699,6 +2788,10 @@
 				"moduleId": {
 					"type": ["integer", "string"],
 					"description": "The module associated with this frame, if any."
+				},
+				"subsourceElement": {
+					"type": "integer",
+					"description": "Pointer to which subsource element is being executed."
 				},
 				"presentationHint": {
 					"type": "string",

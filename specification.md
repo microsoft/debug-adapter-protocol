@@ -1129,6 +1129,44 @@ interface NextResponse extends Response {
 }
 ```
 
+### <a name="Requests_SetStepGranularity" class="anchor"></a>:leftwards_arrow_with_hook: SetStepGranularity Request
+
+The request asks for debuger to change granularity of it's step operations.
+
+```typescript
+interface SetStepGranularityRequest extends Request {
+  command: 'setStepGranularity';
+
+  arguments: SetStepGranularityArguments;
+}
+```
+
+Arguments for 'setStepGranularity' request.
+
+<a name="Types_SetStepGranularityArguments" class="anchor"></a>
+```typescript
+interface SetStepGranularityArguments {
+  /**
+   * Sets the granularity for step operations. Line granularity means that step operations should move by lines in source code. Logical granularity means that step operations should move by some language defined logical steps (such as statements). Finest granularity means that step operations should step in finest, most atomic operations and use subsource for that.
+   */
+  granularity: 'line' | 'logical' | 'finest';
+}
+```
+
+Response to 'setStepGranularity' request. Debugger might return other granularity if some granularity is not possible.
+
+<a name="Types_SetStepGranularityResponse" class="anchor"></a>
+```typescript
+interface SetStepGranularityResponse extends Response {
+  body: {
+    /**
+     * Actual granularity that will be used by debugger.
+     */
+    granularity: 'line' | 'logical' | 'finest';
+  };
+}
+```
+
 ### <a name="Requests_StepIn" class="anchor"></a>:leftwards_arrow_with_hook: StepIn Request
 
 The request starts the debuggee to step into a function/method if possible.
@@ -2576,6 +2614,42 @@ interface Source {
 }
 ```
 
+### <a name="Types_Subsource" class="anchor"></a>Subsource
+
+Subsource is the actual representation of source at finest possible granularity. It can be used to send decompiled or bytecode information.
+
+```typescript
+interface Subsource {
+  /**
+   * List of finest possible step elements.
+   */
+  sources?: SubsourceElement[];
+}
+```
+
+### <a name="Types_SubsourceElement" class="anchor"></a>SubsourceElement
+
+Represents single finest possible step for step operation.
+
+```typescript
+interface SubsourceElement {
+  /**
+   * Textual representation of this subsource element.
+   */
+  text: string;
+
+  /**
+   * Optional matching line number in source.
+   */
+  line?: number;
+
+  /**
+   * Source code from which this subsource element was generated.
+   */
+  Source?: Source;
+}
+```
+
 ### <a name="Types_StackFrame" class="anchor"></a>StackFrame
 
 A Stackframe contains the source location.
@@ -2596,6 +2670,11 @@ interface StackFrame {
    * The optional source of the frame.
    */
   source?: Source;
+
+  /**
+   * The optional subsource of the frame.
+   */
+  subsource?: Subsource;
 
   /**
    * The line within the file of the frame. If source is null or doesn't exist, line is 0 and must be ignored.
@@ -2621,6 +2700,11 @@ interface StackFrame {
    * The module associated with this frame, if any.
    */
   moduleId?: number | string;
+
+  /**
+   * Pointer to which subsource element is being executed.
+   */
+  subsourceElement?: number;
 
   /**
    * An optional hint for how to present this frame in the UI. A value of 'label' can be used to indicate that the frame is an artificial frame that is used as a visual label or separator. A value of 'subtle' can be used to change the appearance of a frame in a 'subtle' way.
