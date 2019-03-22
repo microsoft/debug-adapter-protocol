@@ -11,7 +11,7 @@ The following table lists the known development tools (IDEs) that implement the 
 | Development Tool              | Client ID    | Maintainer | Repository                                |
 |-------------------------------|--------------|--------------------------------------------------------|
 | Visual Studio Code            | vscode       | Microsoft  | [vscode](https://github.com/Microsoft/vscode)
-| Visual Studio                 | visualstudio | Microsoft  |
+| Visual Studio                 | visualstudio | Microsoft  | [Visual Studio Debug Adapter Host](https://github.com/Microsoft/VSDebugAdapterHost)
 | Visual Studio for Mac         | vsformac     | Microsoft  |
 | Eclipse IDE (LSP4E connector) | lsp4e.debug  | Eclipse    | [Eclipse community](https://projects.eclipse.org/projects/technology.lsp4e/who), [Eclipse LSP4E](https://projects.eclipse.org/projects/technology.lsp4e)
 | Emacs                         | emacs.dap-mode | [@yyoncho](https://github.com/yyoncho) | [dap-mode](https://github.com/yyoncho/dap-mode)
