@@ -18,6 +18,7 @@ The following table lists the known debug adapters that implement the Debug Adap
 [Debug](https://marketplace.visualstudio.com/items?itemName=webfreak.debug)|[@WebFreak001](https://github.com/WebFreak001)|[WebFreak001/code-debug](https://github.com/WebFreak001/code-debug)
 [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome)|[@roblourens](https://github.com/roblourens)|[Microsoft/vscode-chrome-debug](https://github.com/microsoft/vscode-chrome-debug)
 [Debugger for Edge](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-edge)|[@andysterland](https://github.com/andysterland)|[Microsoft/vscode-edge-debug2](https://github.com/Microsoft/vscode-edge-debug2)
+[Debugger for Electron](https://marketplace.visualstudio.com/items?itemName=kodetech.electron-debug)|[@Kode](https://github.com/Kode)|[Kode/vscode-electron-debug](https://github.com/Kode/vscode-electron-debug)
 [Debugger for Firefox](https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-firefox-debug)|[@hbenl](https://github.com/hbenl)|[hbenl/vscode-firefox-debug](https://github.com/hbenl/vscode-firefox-debug)
 [Debugger for Krom](https://marketplace.visualstudio.com/items?itemName=kodetech.krom-debug)|[@Kode](https://github.com/Kode)|[Kode/vscode-krom-debug](https://github.com/Kode/vscode-krom-debug)
 [Debugger for .NET Core](https://github.com/Samsung/netcoredbg)|[@ayuckhulk](https://github.com/ayuckhulk)|[Samsung/netcoredbg](https://github.com/Samsung/netcoredbg)
