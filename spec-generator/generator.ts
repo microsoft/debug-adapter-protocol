@@ -116,7 +116,7 @@ function Type(typeName: string, definition: P.Definition | P.StringType, superty
 		s += Header(2, definition['title']);
 	}
 
-	if (lastRequestType.length > 0 && typeName.startsWith(lastRequestType) && typeName !== `${lastRequestType}Request`) {
+	if (lastRequestType.length > 0 && typeName.startsWith(lastRequestType) && typeName !== `${lastRequestType}Request` && typeName !== 'DisassembledInstruction') {
 		// this definition belongs to the previous request: don't add header but add an anchor so that we can link to it
 		s += description(definition);
 		s += `<a name="Types_${shortHeading}" class="anchor"></a>\n`;
