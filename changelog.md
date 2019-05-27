@@ -6,6 +6,9 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.35.x:
+  * Adds an optional `presentationHint` attribute to the `Scope` type which can be used to add semantic to the scope's contents. An example is to mark a scope as a "registers" scope that contains "registers" instead of variables.
+
 * 1.34.x:
   * Added support for data breakpoints via the 'dataBreakpointInfo' and 'setDataBreakpoints' requests and the 'supportsDataBreakpoints' capability.
   * Improved some comments.
