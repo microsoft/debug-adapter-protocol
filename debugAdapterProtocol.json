@@ -2454,7 +2454,7 @@
 							"instructions": {
 								"type": "array",
 								"items": {
-									"$ref": "#/definitions/DisassembledInstruction2"
+									"$ref": "#/definitions/DisassembledInstruction"
 								},
 								"description": "The list of disassembled instructions."
 							}
