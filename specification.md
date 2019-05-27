@@ -423,6 +423,11 @@ interface ProcessEvent extends Event {
      * 'attachForSuspendedLaunch': A project launcher component has launched a new process in a suspended state and then asked the debugger to attach.
      */
     startMethod?: 'launch' | 'attach' | 'attachForSuspendedLaunch';
+
+    /**
+     * The size of a pointer or address for this process, in bits. This value may be used by clients when formatting addresses for display.
+     */
+    pointerSize?: number;
   };
 }
 ```
@@ -588,6 +593,11 @@ interface InitializeRequestArguments {
    * Client supports the runInTerminal request.
    */
   supportsRunInTerminalRequest?: boolean;
+
+  /**
+   * Client supports memory references.
+   */
+  supportsMemoryReferences?: boolean;
 }
 ```
 
@@ -1888,6 +1898,11 @@ interface EvaluateResponse extends Response {
      * The client can use this optional information to present the variables in a paged UI and fetch them in chunks.
      */
     indexedVariables?: number;
+
+    /**
+     * Memory reference to a location appropriate for this result. For pointer type eval results, this is generally a reference to the memory address contained in the pointer.
+     */
+    memoryReference?: string;
   };
 }
 ```
@@ -2176,6 +2191,122 @@ interface ExceptionInfoResponse extends Response {
 }
 ```
 
+### <a name="Requests_ReadMemory" class="anchor"></a>:leftwards_arrow_with_hook: ReadMemory Request
+
+Reads bytes from memory at the provided location.
+
+```typescript
+interface ReadMemoryRequest extends Request {
+  command: 'readMemory';
+
+  arguments: ReadMemoryArguments;
+}
+```
+
+Arguments for 'readMemory' request.
+
+<a name="Types_ReadMemoryArguments" class="anchor"></a>
+```typescript
+interface ReadMemoryArguments {
+  /**
+   * Memory reference to the base location from which data should be read.
+   */
+  memoryReference: string;
+
+  /**
+   * Optional offset (in bytes) to be applied to the reference location before reading data. Can be negative.
+   */
+  offset?: number;
+
+  /**
+   * Number of bytes to read at the specified location and offset.
+   */
+  count: number;
+}
+```
+
+Response to 'readMemory' request.
+
+<a name="Types_ReadMemoryResponse" class="anchor"></a>
+```typescript
+interface ReadMemoryResponse extends Response {
+  body?: {
+    /**
+     * The address of the first byte of data returned. Treated as a hex value if prefixed with '0x', or as a decimal value otherwise.
+     */
+    address: string;
+
+    /**
+     * The number of unreadable bytes encountered after the last successfully read byte. This can be used to determine the number of bytes that must be skipped before a subsequent 'readMemory' request will succeed.
+     */
+    unreadableBytes?: number;
+
+    /**
+     * The bytes read from memory, encoded using base64.
+     */
+    data?: string;
+  };
+}
+```
+
+### <a name="Requests_Disassemble" class="anchor"></a>:leftwards_arrow_with_hook: Disassemble Request
+
+Disassembles code stored at the provided location.
+
+```typescript
+interface DisassembleRequest extends Request {
+  command: 'disassemble';
+
+  arguments: DisassembleArguments;
+}
+```
+
+Arguments for 'disassemble' request.
+
+<a name="Types_DisassembleArguments" class="anchor"></a>
+```typescript
+interface DisassembleArguments {
+  /**
+   * Memory reference to the base location containing the instructions to disassemble.
+   */
+  memoryReference: string;
+
+  /**
+   * Optional offset (in bytes) to be applied to the reference location before disassembling. Can be negative.
+   */
+  offset?: number;
+
+  /**
+   * Optional offset (in instructions) to be applied after the byte offset (if any) before disassembling. Can be negative.
+   */
+  instructionOffset?: number;
+
+  /**
+   * Number of instructions to disassemble starting at the specified location and offset. An adapter must return exactly this number of instructions - any unavailable instructions should be replaced with an implementation-defined 'invalid instruction' value.
+   */
+  instructionCount: number;
+
+  /**
+   * If true, the adapter should attempt to resolve memory addresses and other values to symbolic names.
+   */
+  resolveSymbols?: boolean;
+}
+```
+
+Response to 'disassemble' request.
+
+<a name="Types_DisassembleResponse" class="anchor"></a>
+```typescript
+interface DisassembleResponse extends Response {
+  body?: {
+    /**
+     * The list of disassembled instructions.
+     */
+    instructions: DisassembledInstruction2[];
+  };
+}
+```
+
 ## <a name="Types" class="anchor"></a>Types
 
 ### <a name="Types_Capabilities" class="anchor"></a>Capabilities
@@ -2318,6 +2449,16 @@ interface Capabilities {
    * The debug adapter supports data breakpoints.
    */
   supportsDataBreakpoints?: boolean;
+
+  /**
+   * The debug adapter supports the 'readMemory' request.
+   */
+  supportsReadMemoryRequest?: boolean;
+
+  /**
+   * The debug adapter supports the 'disassemble' request.
+   */
+  supportsDisassembleRequest?: boolean;
 }
 ```
 
@@ -2618,6 +2759,11 @@ interface StackFrame {
   endColumn?: number;
 
   /**
+   * Optional memory reference for the current instruction pointer in this frame.
+   */
+  instructionPointerReference?: string;
+
+  /**
    * The module associated with this frame, if any.
    */
   moduleId?: number | string;
@@ -2746,6 +2892,11 @@ interface Variable {
    * The client can use this optional information to present the children in a paged UI and fetch them in chunks.
    */
   indexedVariables?: number;
+
+  /**
+   * Optional memory reference for the variable if the variable represents executable code, such as a function pointer.
+   */
+  memoryReference?: string;
 }
 ```
 
@@ -2990,6 +3141,11 @@ interface GotoTarget {
    * An optional end column of the range covered by the goto target.
    */
   endColumn?: number;
+
+  /**
+   * Optional memory reference for the instruction pointer value represented by this target.
+   */
+  instructionPointerReference?: string;
 }
 ```
 
@@ -3205,6 +3361,59 @@ interface ExceptionDetails {
    * Details of the exception contained by this exception, if any.
    */
   innerException?: ExceptionDetails[];
+}
+```
+
+### <a name="Types_DisassembledInstruction" class="anchor"></a>DisassembledInstruction
+
+Represents a single disassembled instruction.
+
+```typescript
+interface DisassembledInstruction {
+  /**
+   * The address of the instruction. Treated as a hex value if prefixed with '0x', or as a decimal value otherwise.
+   */
+  address: string;
+
+  /**
+   * Optional raw bytes representing the instruction and its operands, in an implementation-defined format.
+   */
+  instructionBytes?: string;
+
+  /**
+   * Text representing the instruction and its operands, in an implementation-defined format.
+   */
+  instruction: string;
+
+  /**
+   * Name of the symbol that correponds with the location of this instruction, if any.
+   */
+  symbol?: string;
+
+  /**
+   * Source location that corresponds to this instruction, if any. Should always be set (if available) on the first instruction returned, but can be omitted afterwards if this instruction maps to the same source file as the previous instruction.
+   */
+  location?: Source;
+
+  /**
+   * The line within the source location that corresponds to this instruction, if any.
+   */
+  line?: number;
+
+  /**
+   * The column within the line that corresponds to this instruction, if any.
+   */
+  column?: number;
+
+  /**
+   * The end line of the range that corresponds to this instruction, if any.
+   */
+  endLine?: number;
+
+  /**
+   * The end column of the range that corresponds to this instruction, if any.
+   */
+  endColumn?: number;
 }
 ```
 
