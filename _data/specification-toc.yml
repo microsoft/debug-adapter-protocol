@@ -53,6 +53,8 @@
       anchor: Requests_Continue
     - title: DataBreakpointInfo
       anchor: Requests_DataBreakpointInfo
+    - title: Disassemble
+      anchor: Requests_Disassemble
     - title: Disconnect
       anchor: Requests_Disconnect
     - title: Evaluate
@@ -75,6 +77,8 @@
       anchor: Requests_Next
     - title: Pause
       anchor: Requests_Pause
+    - title: ReadMemory
+      anchor: Requests_ReadMemory
     - title: Restart
       anchor: Requests_Restart
     - title: RestartFrame
@@ -141,6 +145,8 @@
       anchor: Types_DataBreakpoint
     - title: DataBreakpointAccessType
       anchor: Types_DataBreakpointAccessType
+    - title: DisassembledInstruction
+      anchor: Types_DisassembledInstruction
     - title: ExceptionBreakMode
       anchor: Types_ExceptionBreakMode
     - title: ExceptionBreakpointsFilter
