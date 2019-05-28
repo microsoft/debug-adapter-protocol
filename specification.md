@@ -2302,7 +2302,7 @@ interface DisassembleResponse extends Response {
     /**
      * The list of disassembled instructions.
      */
-    instructions: DisassembledInstruction2[];
+    instructions: DisassembledInstruction[];
   };
 }
 ```
