@@ -7,6 +7,7 @@ sectionid: changelog
 #### All notable changes to the specification will be documented in this file.
 
 * 1.35.x:
+  * Adds an optional `presentationHint` attribute to the `Scope` type which can be used to add semantic to the scope's contents. An example is to mark a scope as a "registers" scope that contains "registers" instead of variables.
   * Add experimental support for memory access via a new `readMemory` request and a corresponding `supportsReadMemoryRequest` capability.
   * Add experimental support for memory disassembly via a new `disassemble` request and a corresponding `supportsDisassembleRequest` capability.
 

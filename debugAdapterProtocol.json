@@ -2866,7 +2866,17 @@
 			"properties": {
 				"name": {
 					"type": "string",
-					"description": "Name of the scope such as 'Arguments', 'Locals'."
+					"description": "Name of the scope such as 'Arguments', 'Locals', or 'Registers'. This string is shown in the UI as is and can be translated."
+				},
+				"presentationHint": {
+					"type": "string",
+					"description": "An optional hint for how to present this scope in the UI. If this attribute is missing, the scope is shown with a generic UI.",
+					"_enum": [ "arguments", "locals", "registers" ],
+					"enumDescriptions": [
+						"Scope contains method arguments.",
+						"Scope contains local variables.",
+						"Scope contains registers. Only a single 'registers' scope should be returned from a 'scopes' request."
+					]
 				},
 				"variablesReference": {
 					"type": "integer",

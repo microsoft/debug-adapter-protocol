@@ -2782,9 +2782,19 @@ A Scope is a named container for variables. Optionally a scope can map to a sour
 ```typescript
 interface Scope {
   /**
-   * Name of the scope such as 'Arguments', 'Locals'.
+   * Name of the scope such as 'Arguments', 'Locals', or 'Registers'. This string is shown in the UI as is and can be translated.
    */
   name: string;
+
+  /**
+   * An optional hint for how to present this scope in the UI. If this attribute is missing, the scope is shown with a generic UI.
+   * Values: 
+   * 'arguments': Scope contains method arguments.
+   * 'locals': Scope contains local variables.
+   * 'registers': Scope contains registers. Only a single 'registers' scope should be returned from a 'scopes' request.
+   * etc.
+   */
+  presentationHint?: string;
 
   /**
    * The variables of this scope can be retrieved by passing the value of variablesReference to the VariablesRequest.
