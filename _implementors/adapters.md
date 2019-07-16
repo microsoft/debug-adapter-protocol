@@ -11,7 +11,7 @@ The following table lists the known debug adapters that implement the Debug Adap
 | Adapter | Maintainer | Repository |
 |---------|------------|------------|
 [Apex](https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode-apex-debugger)|[@ntotten](https://github.com/ntotten)| [forcedotcom/salesforcedx-vscode](https://github.com/forcedotcom/salesforcedx-vscode)
-[C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)|[@delmyers](https://github.com/delmyers)| [Microsoft/vscppsamples](https://github.com/Microsoft/vscppsamples)
+[C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)|[@pieandcakes](https://github.com/pieandcakes)| [Microsoft/vscode-cpptools](https://github.com/Microsoft/vscode-cpptools)
 [C#](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp)|[@gregg-miskelly](https://github.com/gregg-miskelly)|[OmniSharp/omnisharp-vscode](https://github.com/OmniSharp/omnisharp-vscode)
 [Cordova Tools](https://marketplace.visualstudio.com/items?itemName=vsmobile.cordova-tools)|[@MSLaguana](https://github.com/MSLaguana)|[Microsoft/vscode-cordova](https://github.com/Microsoft/vscode-cordova)
 [Dart](https://marketplace.visualstudio.com/items?itemName=Dart-Code.dart-code)|[@DanTup](https://github.com/DanTup) [@devoncarew](https://github.com/devoncarew)|[Dart-Code/Dart-Code](https://github.com/Dart-Code/Dart-Code)
