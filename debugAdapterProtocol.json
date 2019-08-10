@@ -1599,7 +1599,7 @@
 				"filter": {
 					"type": "string",
 					"enum": [ "indexed", "named" ],
-					"description": "Optional filter to limit the child variables to either named or indexed. If ommited, both types are fetched."
+					"description": "Optional filter to limit the child variables to either named or indexed. If omitted, both types are fetched."
 				},
 				"start": {
 					"type": "integer",
@@ -3304,7 +3304,7 @@
 
 		"ExceptionBreakMode": {
 			"type": "string",
-			"description": "This enumeration defines all possible conditions when a thrown exception should result in a break.\nnever: never breaks,\nalways: always breaks,\nunhandled: breaks when excpetion unhandled,\nuserUnhandled: breaks if the exception is not handled by user code.",
+			"description": "This enumeration defines all possible conditions when a thrown exception should result in a break.\nnever: never breaks,\nalways: always breaks,\nunhandled: breaks when exception unhandled,\nuserUnhandled: breaks if the exception is not handled by user code.",
 			"enum": [ "never", "always", "unhandled", "userUnhandled" ]
 		},
 
@@ -3379,7 +3379,7 @@
 				},
 				"symbol": {
 					"type": "string",
-					"description": "Name of the symbol that correponds with the location of this instruction, if any."
+					"description": "Name of the symbol that corresponds with the location of this instruction, if any."
 				},
 				"location": {
 					"$ref": "#/definitions/Source",
