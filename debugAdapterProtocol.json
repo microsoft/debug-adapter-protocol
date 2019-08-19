@@ -308,8 +308,8 @@
 								"description": "The output to report."
 							},
 							"variablesReference": {
-								"type": "number",
-								"description": "If an attribute 'variablesReference' exists and its value is > 0, the output contains objects which can be retrieved by passing 'variablesReference' to the 'variables' request."
+								"type": "integer",
+								"description": "If an attribute 'variablesReference' exists and its value is > 0, the output contains objects which can be retrieved by passing 'variablesReference' to the 'variables' request. The value should be less than or equal to 2147483647 (2^31 - 1)."
 							},
 							"source": {
 								"$ref": "#/definitions/Source",
@@ -556,12 +556,12 @@
 						"type": "object",
 						"properties": {
 							"processId": {
-								"type": "number",
-								"description": "The process ID."
+								"type": "integer",
+								"description": "The process ID. The value should be less than or equal to 2147483647 (2^31 - 1)."
 							},
 							"shellProcessId": {
-								"type": "number",
-								"description": "The process ID of the terminal shell."
+								"type": "integer",
+								"description": "The process ID of the terminal shell. The value should be less than or equal to 2147483647 (2^31 - 1)."
 							}
 						}
 					}
@@ -1695,16 +1695,16 @@
 								"description": "The type of the new value. Typically shown in the UI when hovering over the value."
 							},
 							"variablesReference": {
-								"type": "number",
-								"description": "If variablesReference is > 0, the new value is structured and its children can be retrieved by passing variablesReference to the VariablesRequest."
+								"type": "integer",
+								"description": "If variablesReference is > 0, the new value is structured and its children can be retrieved by passing variablesReference to the VariablesRequest. The value should be less than or equal to 2147483647 (2^31 - 1)."
 							},
 							"namedVariables": {
-								"type": "number",
-								"description": "The number of named child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks."
+								"type": "integer",
+								"description": "The number of named child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks. The value should be less than or equal to 2147483647 (2^31 - 1)."
 							},
 							"indexedVariables": {
-								"type": "number",
-								"description": "The number of indexed child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks."
+								"type": "integer",
+								"description": "The number of indexed child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks. The value should be less than or equal to 2147483647 (2^31 - 1)."
 							}
 						},
 						"required": [ "value" ]
@@ -2007,16 +2007,16 @@
 								"description": "Properties of a evaluate result that can be used to determine how to render the result in the UI."
 							},
 							"variablesReference": {
-								"type": "number",
-								"description": "If variablesReference is > 0, the evaluate result is structured and its children can be retrieved by passing variablesReference to the VariablesRequest."
+								"type": "integer",
+								"description": "If variablesReference is > 0, the evaluate result is structured and its children can be retrieved by passing variablesReference to the VariablesRequest. The value should be less than or equal to 2147483647 (2^31 - 1)."
 							},
 							"namedVariables": {
-								"type": "number",
-								"description": "The number of named child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks."
+								"type": "integer",
+								"description": "The number of named child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks. The value should be less than or equal to 2147483647 (2^31 - 1)."
 							},
 							"indexedVariables": {
-								"type": "number",
-								"description": "The number of indexed child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks."
+								"type": "integer",
+								"description": "The number of indexed child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks. The value should be less than or equal to 2147483647 (2^31 - 1)."
 							},
 							"memoryReference": {
 								"type": "string",
@@ -2090,16 +2090,16 @@
 								"description": "Properties of a value that can be used to determine how to render the result in the UI."
 							},
 							"variablesReference": {
-								"type": "number",
-								"description": "If variablesReference is > 0, the value is structured and its children can be retrieved by passing variablesReference to the VariablesRequest."
+								"type": "integer",
+								"description": "If variablesReference is > 0, the value is structured and its children can be retrieved by passing variablesReference to the VariablesRequest. The value should be less than or equal to 2147483647 (2^31 - 1)."
 							},
 							"namedVariables": {
-								"type": "number",
-								"description": "The number of named child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks."
+								"type": "integer",
+								"description": "The number of named child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks. The value should be less than or equal to 2147483647 (2^31 - 1)."
 							},
 							"indexedVariables": {
-								"type": "number",
-								"description": "The number of indexed child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks."
+								"type": "integer",
+								"description": "The number of indexed child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks. The value should be less than or equal to 2147483647 (2^31 - 1)."
 							}
 						},
 						"required": [ "value" ]
@@ -2778,8 +2778,8 @@
 					"description": "The path of the source to be shown in the UI. It is only used to locate and load the content of the source if no sourceReference is specified (or its value is 0)."
 				},
 				"sourceReference": {
-					"type": "number",
-					"description": "If sourceReference > 0 the contents of the source must be retrieved through the SourceRequest (even if a path is specified). A sourceReference is only valid for a session, so it must not be used to persist a source."
+					"type": "integer",
+					"description": "If sourceReference > 0 the contents of the source must be retrieved through the SourceRequest (even if a path is specified). A sourceReference is only valid for a session, so it must not be used to persist a source. The value should be less than or equal to 2147483647 (2^31 - 1)."
 				},
 				"presentationHint": {
 					"type": "string",
