@@ -309,7 +309,7 @@
 							},
 							"variablesReference": {
 								"type": "integer",
-								"description": "If an attribute 'variablesReference' exists and its value is > 0, the output contains objects which can be retrieved by passing 'variablesReference' to the 'variables' request."
+								"description": "If an attribute 'variablesReference' exists and its value is > 0, the output contains objects which can be retrieved by passing 'variablesReference' to the 'variables' request. The value should be less than or equal to 2147483647 (2^31 - 1)."
 							},
 							"source": {
 								"$ref": "#/definitions/Source",
@@ -557,11 +557,11 @@
 						"properties": {
 							"processId": {
 								"type": "integer",
-								"description": "The process ID."
+								"description": "The process ID. The value should be less than or equal to 2147483647 (2^31 - 1)."
 							},
 							"shellProcessId": {
 								"type": "integer",
-								"description": "The process ID of the terminal shell."
+								"description": "The process ID of the terminal shell. The value should be less than or equal to 2147483647 (2^31 - 1)."
 							}
 						}
 					}
@@ -1696,15 +1696,15 @@
 							},
 							"variablesReference": {
 								"type": "integer",
-								"description": "If variablesReference is > 0, the new value is structured and its children can be retrieved by passing variablesReference to the VariablesRequest."
+								"description": "If variablesReference is > 0, the new value is structured and its children can be retrieved by passing variablesReference to the VariablesRequest. The value should be less than or equal to 2147483647 (2^31 - 1)."
 							},
 							"namedVariables": {
 								"type": "integer",
-								"description": "The number of named child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks."
+								"description": "The number of named child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks. The value should be less than or equal to 2147483647 (2^31 - 1)."
 							},
 							"indexedVariables": {
 								"type": "integer",
-								"description": "The number of indexed child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks."
+								"description": "The number of indexed child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks. The value should be less than or equal to 2147483647 (2^31 - 1)."
 							}
 						},
 						"required": [ "value" ]
@@ -2008,15 +2008,15 @@
 							},
 							"variablesReference": {
 								"type": "integer",
-								"description": "If variablesReference is > 0, the evaluate result is structured and its children can be retrieved by passing variablesReference to the VariablesRequest."
+								"description": "If variablesReference is > 0, the evaluate result is structured and its children can be retrieved by passing variablesReference to the VariablesRequest. The value should be less than or equal to 2147483647 (2^31 - 1)."
 							},
 							"namedVariables": {
 								"type": "integer",
-								"description": "The number of named child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks."
+								"description": "The number of named child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks. The value should be less than or equal to 2147483647 (2^31 - 1)."
 							},
 							"indexedVariables": {
 								"type": "integer",
-								"description": "The number of indexed child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks."
+								"description": "The number of indexed child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks. The value should be less than or equal to 2147483647 (2^31 - 1)."
 							},
 							"memoryReference": {
 								"type": "string",
@@ -2091,15 +2091,15 @@
 							},
 							"variablesReference": {
 								"type": "integer",
-								"description": "If variablesReference is > 0, the value is structured and its children can be retrieved by passing variablesReference to the VariablesRequest."
+								"description": "If variablesReference is > 0, the value is structured and its children can be retrieved by passing variablesReference to the VariablesRequest. The value should be less than or equal to 2147483647 (2^31 - 1)."
 							},
 							"namedVariables": {
 								"type": "integer",
-								"description": "The number of named child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks."
+								"description": "The number of named child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks. The value should be less than or equal to 2147483647 (2^31 - 1)."
 							},
 							"indexedVariables": {
 								"type": "integer",
-								"description": "The number of indexed child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks."
+								"description": "The number of indexed child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks. The value should be less than or equal to 2147483647 (2^31 - 1)."
 							}
 						},
 						"required": [ "value" ]
@@ -2779,7 +2779,7 @@
 				},
 				"sourceReference": {
 					"type": "integer",
-					"description": "If sourceReference > 0 the contents of the source must be retrieved through the SourceRequest (even if a path is specified). A sourceReference is only valid for a session, so it must not be used to persist a source."
+					"description": "If sourceReference > 0 the contents of the source must be retrieved through the SourceRequest (even if a path is specified). A sourceReference is only valid for a session, so it must not be used to persist a source. The value should be less than or equal to 2147483647 (2^31 - 1)."
 				},
 				"presentationHint": {
 					"type": "string",
