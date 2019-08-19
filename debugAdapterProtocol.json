@@ -3191,6 +3191,10 @@
 					"type": "string",
 					"description": "If text is not falsy then it is inserted instead of the label."
 				},
+				"sortText": {
+					"type": "string",
+					"description": "A string that should be used when comparing this item with other items. When `falsy` the label is used."
+				},
 				"type": {
 					"$ref": "#/definitions/CompletionItemType",
 					"description": "The item's type. Typically the client uses this information to render the item in the UI with an icon."

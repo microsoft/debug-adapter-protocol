@@ -298,7 +298,7 @@ interface OutputEvent extends Event {
     output: string;
 
     /**
-     * If an attribute 'variablesReference' exists and its value is > 0, the output contains objects which can be retrieved by passing 'variablesReference' to the 'variables' request.
+     * If an attribute 'variablesReference' exists and its value is > 0, the output contains objects which can be retrieved by passing 'variablesReference' to the 'variables' request. The value should be less than or equal to 2147483647 (2^31 - 1).
      */
     variablesReference?: number;
 
@@ -508,12 +508,12 @@ Response to 'runInTerminal' request.
 interface RunInTerminalResponse extends Response {
   body: {
     /**
-     * The process ID.
+     * The process ID. The value should be less than or equal to 2147483647 (2^31 - 1).
      */
     processId?: number;
 
     /**
-     * The process ID of the terminal shell.
+     * The process ID of the terminal shell. The value should be less than or equal to 2147483647 (2^31 - 1).
      */
     shellProcessId?: number;
   };
@@ -1365,7 +1365,7 @@ interface GotoResponse extends Response {
 
 ### <a name="Requests_Pause" class="anchor"></a>:leftwards_arrow_with_hook: Pause Request
 
-The request suspenses the debuggee.
+The request suspends the debuggee.
 
 The debug adapter first sends the response and then a 'stopped' event (with reason 'pause') after the thread has been paused successfully.
 
@@ -1610,19 +1610,19 @@ interface SetVariableResponse extends Response {
     type?: string;
 
     /**
-     * If variablesReference is > 0, the new value is structured and its children can be retrieved by passing variablesReference to the VariablesRequest.
+     * If variablesReference is > 0, the new value is structured and its children can be retrieved by passing variablesReference to the VariablesRequest. The value should be less than or equal to 2147483647 (2^31 - 1).
      */
     variablesReference?: number;
 
     /**
      * The number of named child variables.
-     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks.
+     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks. The value should be less than or equal to 2147483647 (2^31 - 1).
      */
     namedVariables?: number;
 
     /**
      * The number of indexed child variables.
-     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks.
+     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks. The value should be less than or equal to 2147483647 (2^31 - 1).
      */
     indexedVariables?: number;
   };
@@ -1883,19 +1883,19 @@ interface EvaluateResponse extends Response {
     presentationHint?: VariablePresentationHint;
 
     /**
-     * If variablesReference is > 0, the evaluate result is structured and its children can be retrieved by passing variablesReference to the VariablesRequest.
+     * If variablesReference is > 0, the evaluate result is structured and its children can be retrieved by passing variablesReference to the VariablesRequest. The value should be less than or equal to 2147483647 (2^31 - 1).
      */
     variablesReference: number;
 
     /**
      * The number of named child variables.
-     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks.
+     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks. The value should be less than or equal to 2147483647 (2^31 - 1).
      */
     namedVariables?: number;
 
     /**
      * The number of indexed child variables.
-     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks.
+     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks. The value should be less than or equal to 2147483647 (2^31 - 1).
      */
     indexedVariables?: number;
 
@@ -1970,19 +1970,19 @@ interface SetExpressionResponse extends Response {
     presentationHint?: VariablePresentationHint;
 
     /**
-     * If variablesReference is > 0, the value is structured and its children can be retrieved by passing variablesReference to the VariablesRequest.
+     * If variablesReference is > 0, the value is structured and its children can be retrieved by passing variablesReference to the VariablesRequest. The value should be less than or equal to 2147483647 (2^31 - 1).
      */
     variablesReference?: number;
 
     /**
      * The number of named child variables.
-     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks.
+     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks. The value should be less than or equal to 2147483647 (2^31 - 1).
      */
     namedVariables?: number;
 
     /**
      * The number of indexed child variables.
-     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks.
+     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks. The value should be less than or equal to 2147483647 (2^31 - 1).
      */
     indexedVariables?: number;
   };
@@ -2686,7 +2686,7 @@ interface Source {
   path?: string;
 
   /**
-   * If sourceReference > 0 the contents of the source must be retrieved through the SourceRequest (even if a path is specified). A sourceReference is only valid for a session, so it must not be used to persist a source.
+   * If sourceReference > 0 the contents of the source must be retrieved through the SourceRequest (even if a path is specified). A sourceReference is only valid for a session, so it must not be used to persist a source. The value should be less than or equal to 2147483647 (2^31 - 1).
    */
   sourceReference?: number;
 
@@ -3174,6 +3174,11 @@ interface CompletionItem {
    * If text is not falsy then it is inserted instead of the label.
    */
   text?: string;
+
+  /**
+   * A string that should be used when comparing this item with other items. When `falsy` the label is used.
+   */
+  sortText?: string;
 
   /**
    * The item's type. Typically the client uses this information to render the item in the UI with an icon.
