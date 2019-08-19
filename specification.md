@@ -1519,7 +1519,7 @@ interface VariablesArguments {
   variablesReference: number;
 
   /**
-   * Optional filter to limit the child variables to either named or indexed. If ommited, both types are fetched.
+   * Optional filter to limit the child variables to either named or indexed. If omitted, both types are fetched.
    */
   filter?: 'indexed' | 'named';
 
@@ -3310,7 +3310,7 @@ never: never breaks,
 
 always: always breaks,
 
-unhandled: breaks when excpetion unhandled,
+unhandled: breaks when exception unhandled,
 
 userUnhandled: breaks if the exception is not handled by user code.
 
@@ -3396,7 +3396,7 @@ interface DisassembledInstruction {
   instruction: string;
 
   /**
-   * Name of the symbol that correponds with the location of this instruction, if any.
+   * Name of the symbol that corresponds with the location of this instruction, if any.
    */
   symbol?: string;
 
