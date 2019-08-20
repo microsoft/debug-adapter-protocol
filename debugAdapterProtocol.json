@@ -2521,6 +2521,13 @@
 					"type": "boolean",
 					"description": "The debug adapter supports the 'completions' request."
 				},
+				"completionTriggerCharacters": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"description": "The set of characters that should trigger completion in a REPL. If not specified, the UI should assume the '.' character."
+				},
 				"supportsModulesRequest": {
 					"type": "boolean",
 					"description": "The debug adapter supports the 'modules' request."

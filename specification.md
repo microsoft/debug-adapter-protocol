@@ -2376,6 +2376,11 @@ interface Capabilities {
   supportsCompletionsRequest?: boolean;
 
   /**
+   * The set of characters that should trigger completion in a REPL. If not specified, the UI should assume the '.' character.
+   */
+  completionTriggerCharacters?: string[];
+
+  /**
    * The debug adapter supports the 'modules' request.
    */
   supportsModulesRequest?: boolean;
