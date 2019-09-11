@@ -3,6 +3,8 @@
   - title: Base Protocol
     anchor: Base_Protocol
     children:
+    - title: Cancel
+      anchor: Base_Protocol_Cancel
     - title: ErrorResponse
       anchor: Base_Protocol_ErrorResponse
     - title: Event

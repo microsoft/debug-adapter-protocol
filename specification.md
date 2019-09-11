@@ -21,7 +21,7 @@ Base class of requests, responses, and events.
 ```typescript
 interface ProtocolMessage {
   /**
-   * Sequence number.
+   * Sequence number (also known as message ID). For protocol messages of type 'request' this ID can be used to cancel the request.
    */
   seq: number;
 
@@ -88,6 +88,8 @@ interface Response extends ProtocolMessage {
 
   /**
    * Outcome of the request.
+   * If true, the request was successful and the 'body' attribute may contain the result of the request.
+   * If the value is false, the attribute 'message' contains the error in short form and the 'body' may contain additional information (see 'ErrorResponse.body.error').
    */
   success: boolean;
 
@@ -97,7 +99,12 @@ interface Response extends ProtocolMessage {
   command: string;
 
   /**
-   * Contains error message if success == false.
+   * Contains the raw error in short form if 'success' is false.
+   * This raw error might be interpreted by the frontend and is not shown in the UI.
+   * Some predefined values exist.
+   * Values: 
+   * 'cancelled': request was cancelled.
+   * etc.
    */
   message?: string;
 
@@ -120,6 +127,50 @@ interface ErrorResponse extends Response {
      */
     error?: Message;
   };
+}
+```
+
+### <a name="Base_Protocol_Cancel" class="anchor"></a>:leftwards_arrow_with_hook: Cancel Request
+
+The 'cancel' request is used by the frontend to indicate that it is no longer interested in the result produced by a specific request issued earlier.
+
+This request has a hint characteristic: a debug adapter can only be expected to make a 'best effort' in honouring this request but there are no guarantees.
+
+The 'cancel' request may return an error if it could not cancel an operation but a frontend should refrain from presenting this error to end users.
+
+A frontend client should only call this request if the capability 'supportsCancelRequest' is true.
+
+The request that got canceled still needs to send a response back.
+
+This can either be a normal result ('success' attribute true) or an error response ('success' attribute false and the 'message' set to 'cancelled').
+
+Returning partial results from a cancelled request is possible but please note that a frontend client has no generic way for detecting that a response is partial or not.
+
+```typescript
+interface CancelRequest extends Request {
+  command: 'cancel';
+
+  arguments?: CancelArguments;
+}
+```
+
+Arguments for 'cancel' request.
+
+<a name="Types_CancelArguments" class="anchor"></a>
+```typescript
+interface CancelArguments {
+  /**
+   * The ID (attribute 'seq') of the request to cancel.
+   */
+  requestId?: number;
+}
+```
+
+Response to 'cancel' request. This is just an acknowledgement, so no body field is required.
+
+<a name="Types_CancelResponse" class="anchor"></a>
+```typescript
+interface CancelResponse extends Response {
 }
 ```
 
@@ -2464,6 +2515,11 @@ interface Capabilities {
    * The debug adapter supports the 'disassemble' request.
    */
   supportsDisassembleRequest?: boolean;
+
+  /**
+   * The debug adapter supports the 'cancel' request.
+   */
+  supportsCancelRequest?: boolean;
 }
 ```
 

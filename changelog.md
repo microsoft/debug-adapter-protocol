@@ -6,19 +6,23 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.37.x:
+  * Adds cancellation support for requests via a new `cancel` request and a corresponding `supportsCancelRequest` capability.
+  * Improves some comments.
+
 * 1.36.x:
-  * Introduce a capability `completionTriggerCharacters` for announcing the characters that a frontend UI should use to trigger completion.
-  * Add an optional `sortText` attribute to the `CompletionItem` type.
+  * Introduces a capability `completionTriggerCharacters` for announcing the characters that a frontend UI should use to trigger completion.
+  * Adds an optional `sortText` attribute to the `CompletionItem` type.
   * In the schema change "number" to "integer" in cases where a float makes no sense, e.g. for IDs.
 
 * 1.35.x:
   * Adds an optional `presentationHint` attribute to the `Scope` type which can be used to add semantic to the scope's contents. An example is to mark a scope as a "registers" scope that contains "registers" instead of variables.
-  * Add experimental support for memory access via a new `readMemory` request and a corresponding `supportsReadMemoryRequest` capability.
-  * Add experimental support for memory disassembly via a new `disassemble` request and a corresponding `supportsDisassembleRequest` capability.
+  * Adds experimental support for memory access via a new `readMemory` request and a corresponding `supportsReadMemoryRequest` capability.
+  * Adds experimental support for memory disassembly via a new `disassemble` request and a corresponding `supportsDisassembleRequest` capability.
 
 * 1.34.x:
-  * Added support for data breakpoints via the 'dataBreakpointInfo' and 'setDataBreakpoints' requests and the 'supportsDataBreakpoints' capability.
-  * Improved some comments.
+  * Adds support for data breakpoints via the 'dataBreakpointInfo' and 'setDataBreakpoints' requests and the 'supportsDataBreakpoints' capability.
+  * Improves some comments.
 
 * 1.33.x:
   * Point out that the breakpoint's `id` attribute is mandatory when `breakpoint` events are used.
