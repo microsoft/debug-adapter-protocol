@@ -884,6 +884,73 @@
 			}]
 		},
 
+		"BreakpointLocationsRequest": {
+			"allOf": [ { "$ref": "#/definitions/Request" }, {
+				"type": "object",
+				"description": "The 'breakpointLocations' request returns all possible locations for source breakpoints in a given range.",
+				"properties": {
+					"command": {
+						"type": "string",
+						"enum": [ "breakpointLocations" ]
+					},
+					"arguments": {
+						"$ref": "#/definitions/BreakpointLocationsArguments"
+					}
+				},
+				"required": [ "command" ]
+			}]
+
+		},
+		"BreakpointLocationsArguments": {
+			"type": "object",
+			"description": "Arguments for 'breakpointLocations' request.",
+			"properties": {
+				"source": {
+					"$ref": "#/definitions/Source",
+					"description": "The source location of the breakpoints; either 'source.path' or 'source.reference' must be specified."
+				},
+				"line": {
+					"type": "integer",
+					"description": "Start line of range to search possible breakpoint locations in. If only the line is specified, the request returns all possible locations in that line."
+				},
+				"column": {
+					"type": "integer",
+					"description": "Optional start column of range to search possible breakpoint locations in. If no start column is given, the first column in the start line is assumed."
+				},
+				"endLine": {
+					"type": "integer",
+					"description": "Optional end line of range to search possible breakpoint locations in. If no end line is given, then the end line is assumed to be the start line."
+				},
+				"endColumn": {
+					"type": "integer",
+					"description": "Optional end column of range to search possible breakpoint locations in. If no end column is given, then it is assumed to be in the last column of the end line."
+				}
+			},
+			"required": [ "source", "line" ]
+		},
+		"BreakpointLocationsResponse": {
+			"allOf": [ { "$ref": "#/definitions/Response" }, {
+				"type": "object",
+				"description": "Response to 'breakpointLocations' request.\nContains possible locations for source breakpoints.",
+				"properties": {
+					"body": {
+						"type": "object",
+						"properties": {
+							"breakpoints": {
+								"type": "array",
+								"items": {
+									"$ref": "#/definitions/BreakpointLocation"
+								},
+								"description": "Sorted set of possible breakpoint locations."
+							}
+						},
+						"required": [ "breakpoints" ]
+					}
+				},
+				"required": [ "body" ]
+			}]
+		},
+
 		"SetBreakpointsRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
@@ -2643,6 +2710,10 @@
 				"supportsCancelRequest": {
 					"type": "boolean",
 					"description": "The debug adapter supports the 'cancel' request."
+				},
+				"supportsBreakpointLocationsRequest": {
+					"type": "boolean",
+					"description": "The debug adapter supports the 'breakpointLocations' request."
 				}
 			}
 		},
@@ -3056,6 +3127,30 @@
 					"_enum": [ "public", "private", "protected", "internal", "final" ]
 				}
 			}
+		},
+
+		"BreakpointLocation": {
+			"type": "object",
+			"description": "Properties of a breakpoint location returned from the 'breakpointLocations' request.",
+			"properties": {
+				"line": {
+					"type": "integer",
+					"description": "Start line of breakpoint location."
+				},
+				"column": {
+					"type": "integer",
+					"description": "Optional start column of breakpoint location."
+				},
+				"endLine": {
+					"type": "integer",
+					"description": "Optional end line of breakpoint location if the location covers a range."
+				},
+				"endColumn": {
+					"type": "integer",
+					"description": "Optional end column of breakpoint location if the location covers a range."
+				}
+			},
+			"required": [ "line" ]
 		},
 
 		"SourceBreakpoint": {

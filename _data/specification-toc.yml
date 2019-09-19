@@ -47,6 +47,8 @@
     children:
     - title: Attach
       anchor: Requests_Attach
+    - title: BreakpointLocations
+      anchor: Requests_BreakpointLocations
     - title: Completions
       anchor: Requests_Completions
     - title: ConfigurationDone
@@ -131,6 +133,8 @@
     children:
     - title: Breakpoint
       anchor: Types_Breakpoint
+    - title: BreakpointLocation
+      anchor: Types_BreakpointLocation
     - title: Capabilities
       anchor: Types_Capabilities
     - title: Checksum

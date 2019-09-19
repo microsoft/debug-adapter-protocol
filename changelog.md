@@ -7,6 +7,7 @@ sectionid: changelog
 #### All notable changes to the specification will be documented in this file.
 
 * 1.37.x:
+  * Adds a `breakpointLocations` request (and a corresponding `supportsBreakpointLocationsRequest` capability) for finding the possible breakpoints for a source range.
   * Adds cancellation support for requests via a new `cancel` request and a corresponding `supportsCancelRequest` capability.
   * Improves some comments.
 

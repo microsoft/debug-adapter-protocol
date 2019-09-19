@@ -870,6 +870,66 @@ interface TerminateResponse extends Response {
 }
 ```
 
+### <a name="Requests_BreakpointLocations" class="anchor"></a>:leftwards_arrow_with_hook: BreakpointLocations Request
+
+The 'breakpointLocations' request returns all possible locations for source breakpoints in a given range.
+
+```typescript
+interface BreakpointLocationsRequest extends Request {
+  command: 'breakpointLocations';
+
+  arguments?: BreakpointLocationsArguments;
+}
+```
+
+Arguments for 'breakpointLocations' request.
+
+<a name="Types_BreakpointLocationsArguments" class="anchor"></a>
+```typescript
+interface BreakpointLocationsArguments {
+  /**
+   * The source location of the breakpoints; either 'source.path' or 'source.reference' must be specified.
+   */
+  source: Source;
+
+  /**
+   * Start line of range to search possible breakpoint locations in. If only the line is specified, the request returns all possible locations in that line.
+   */
+  line: number;
+
+  /**
+   * Optional start column of range to search possible breakpoint locations in. If no start column is given, the first column in the start line is assumed.
+   */
+  column?: number;
+
+  /**
+   * Optional end line of range to search possible breakpoint locations in. If no end line is given, then the end line is assumed to be the start line.
+   */
+  endLine?: number;
+
+  /**
+   * Optional end column of range to search possible breakpoint locations in. If no end column is given, then it is assumed to be in the last column of the end line.
+   */
+  endColumn?: number;
+}
+```
+
+Response to 'breakpointLocations' request.
+
+Contains possible locations for source breakpoints.
+
+<a name="Types_BreakpointLocationsResponse" class="anchor"></a>
+```typescript
+interface BreakpointLocationsResponse extends Response {
+  body: {
+    /**
+     * Sorted set of possible breakpoint locations.
+     */
+    breakpoints: BreakpointLocation[];
+  };
+}
+```
+
 ### <a name="Requests_SetBreakpoints" class="anchor"></a>:leftwards_arrow_with_hook: SetBreakpoints Request
 
 Sets multiple breakpoints for a single source and clears all previous breakpoints in that source.
@@ -2520,6 +2580,11 @@ interface Capabilities {
    * The debug adapter supports the 'cancel' request.
    */
   supportsCancelRequest?: boolean;
+
+  /**
+   * The debug adapter supports the 'breakpointLocations' request.
+   */
+  supportsBreakpointLocationsRequest?: boolean;
 }
 ```
 
@@ -3014,6 +3079,34 @@ interface VariablePresentationHint {
    * Values: 'public', 'private', 'protected', 'internal', 'final', etc.
    */
   visibility?: string;
+}
+```
+
+### <a name="Types_BreakpointLocation" class="anchor"></a>BreakpointLocation
+
+Properties of a breakpoint location returned from the 'breakpointLocations' request.
+
+```typescript
+interface BreakpointLocation {
+  /**
+   * Start line of breakpoint location.
+   */
+  line: number;
+
+  /**
+   * Optional start column of breakpoint location.
+   */
+  column?: number;
+
+  /**
+   * Optional end line of breakpoint location if the location covers a range.
+   */
+  endLine?: number;
+
+  /**
+   * Optional end column of breakpoint location if the location covers a range.
+   */
+  endColumn?: number;
 }
 ```
 
