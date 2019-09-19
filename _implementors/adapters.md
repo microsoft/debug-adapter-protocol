@@ -11,6 +11,7 @@ The following table lists the known debug adapters that implement the Debug Adap
 | Adapter | Maintainer | Repository |
 |---------|------------|------------|
 [Apex](https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode-apex-debugger)|[@ntotten](https://github.com/ntotten)| [forcedotcom/salesforcedx-vscode](https://github.com/forcedotcom/salesforcedx-vscode)
+| Ballerina | [Ballerina.io](https://ballerina.io/) | [ballerina-platform/ballerina-lang](https://github.com/ballerina-platform/ballerina-lang/) | 
 [C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)|[@pieandcakes](https://github.com/pieandcakes)| [Microsoft/vscode-cpptools](https://github.com/Microsoft/vscode-cpptools)
 [C#](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp)|[@gregg-miskelly](https://github.com/gregg-miskelly)|[OmniSharp/omnisharp-vscode](https://github.com/OmniSharp/omnisharp-vscode)
 [Cordova Tools](https://marketplace.visualstudio.com/items?itemName=vsmobile.cordova-tools)|[@MSLaguana](https://github.com/MSLaguana)|[Microsoft/vscode-cordova](https://github.com/Microsoft/vscode-cordova)
