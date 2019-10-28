@@ -36,6 +36,7 @@ The following table lists the known debug adapters that implement the Debug Adap
 [HXCPP](https://marketplace.visualstudio.com/items?itemName=vshaxe.hxcpp-debugger)|[@vshaxe](https://github.com/vshaxe/)|[vshaxe/hxcpp-debugger](https://github.com/vshaxe/hxcpp-debugger)
 [Java Debugger](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-debug)|[@akaroml](https://github.com/akaroml)|[Microsoft/vscode-java-debug](https://github.com/Microsoft/vscode-java-debug)
 [JSIRDebugger](https://marketplace.visualstudio.com/items?itemName=muji.jsirdebugger)|muji
+[Karate](https://marketplace.visualstudio.com/items?itemName=kirkslota.karate-runner)|[@kirk_slota](https://twitter.com/kirk_slota) [@ptrthomas](https://twitter.com/ptrthomas)|[karate/karate-core](https://github.com/intuit/karate/tree/develop/karate-core/src/main/java/com/intuit/karate/debug)
 [LLDB Debugger](https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb)|[@vadimcn](https://github.com/vadimcn)|[vadimcn/vscode-lldb](https://github.com/vadimcn/vscode-lldb)
 [Lua and Ravi 5.3 Debugger](https://marketplace.visualstudio.com/items?itemName=ravilang.ravi-debug)|[@dibyendumajumdar](https://github.com/dibyendumajumdar)|[dibyendumajumdar/ravi-vscode-debugger](https://github.com/dibyendumajumdar/ravi-vscode-debugger)
 [Mock Debug](https://marketplace.visualstudio.com/items?itemName=andreweinand.mock-debug)|[@weinand](https://github.com/weinand)|[Microsoft/vscode-mock-debug](https://github.com/Microsoft/vscode-mock-debug)
