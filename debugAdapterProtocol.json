@@ -3360,6 +3360,14 @@
 				"length": {
 					"type": "integer",
 					"description": "This value determines how many characters are overwritten by the completion text.\nIf missing the value 0 is assumed which results in the completion text being inserted."
+				},
+				"selectionStart": {
+					"type": "integer",
+					"description": "Determines the start of the new selection after the text has been inserted (or replaced).\nThe start position must in the range 0 and length of the completion text.\nIf omitted the selection starts at the end of the completion text."
+				},
+				"selectionLength": {
+					"type": "integer",
+					"description": "Determines the length of the new selection after the text has been inserted (or replaced).\nThe selection can not extend beyond the bounds of the completion text.\nIf omitted the length is assumed to be 0."
 				}
 			},
 			"required": [ "label" ]
