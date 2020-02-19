@@ -6,6 +6,13 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.39.x:
+  * add optional `selectionStart` and `selectionLength` attributes to completion item. With these attributes the selection range or position can be controlled after the completion text has been inserted.
+  * add optional `group` attribute to `output` event in order to keep an output log organized by grouping related messages.
+
+* 1.38.x:
+  * Fixes some typos and improves some comments.
+
 * 1.37.x:
   * Adds a `breakpointLocations` request (and a corresponding `supportsBreakpointLocationsRequest` capability) for finding the possible breakpoints for a source range.
   * Adds cancellation support for requests via a new `cancel` request and a corresponding `supportsCancelRequest` capability.
