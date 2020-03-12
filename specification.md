@@ -1972,6 +1972,7 @@ interface EvaluateArguments {
    * 'watch': evaluate is run in a watch.
    * 'repl': evaluate is run from REPL console.
    * 'hover': evaluate is run from a data hover.
+   * 'clipboard': evaluate is run to generate the value that will be stored in the clipboard.
    * etc.
    */
   context?: string;
@@ -2596,6 +2597,11 @@ interface Capabilities {
    * The debug adapter supports the 'breakpointLocations' request.
    */
   supportsBreakpointLocationsRequest?: boolean;
+
+  /**
+   * The debug adapter supports the 'clipboard' context value in the 'evaluate' request.
+   */
+  supportsClipboardContext?: boolean;
 }
 ```
 

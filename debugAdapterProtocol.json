@@ -2086,11 +2086,12 @@
 				},
 				"context": {
 					"type": "string",
-					"_enum": [ "watch", "repl", "hover" ],
+					"_enum": [ "watch", "repl", "hover", "clipboard" ],
 					"enumDescriptions": [
 						"evaluate is run in a watch.",
 						"evaluate is run from REPL console.",
-						"evaluate is run from a data hover."
+						"evaluate is run from a data hover.",
+						"evaluate is run to generate the value that will be stored in the clipboard."
 					],
 					"description": "The context in which the evaluate request is run."
 				},
@@ -2724,6 +2725,10 @@
 				"supportsBreakpointLocationsRequest": {
 					"type": "boolean",
 					"description": "The debug adapter supports the 'breakpointLocations' request."
+				},
+				"supportsClipboardContext": {
+					"type": "boolean",
+					"description": "The debug adapter supports the 'clipboard' context value in the 'evaluate' request."
 				}
 			}
 		},

@@ -6,6 +6,9 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.40.x:
+  * new value `clipboard` for `context` argument of `evaluate` request.
+
 * 1.39.x:
   * add optional `selectionStart` and `selectionLength` attributes to completion item. With these attributes the selection range or position can be controlled after the completion text has been inserted.
   * add optional `group` attribute to `output` event in order to keep an output log organized by grouping related messages.
