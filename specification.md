@@ -142,9 +142,15 @@ The 'cancel' request may return an error if it could not cancel an operation but
 
 A frontend client should only call this request if the capability 'supportsCancelRequest' is true.
 
-The request that got canceled still needs to send a response back. This can either be a normal result ('success' attribute true) or an error response ('success' attribute false and the 'message' set to 'cancelled'). Returning partial results from a cancelled request is possible but please note that a frontend client has no generic way for detecting that a response is partial or not.
+The request that got canceled still needs to send a response back. This can either be a normal result ('success' attribute true)
 
- The progress that got cancelled still needs to send a 'progressEnd' event back. A client should not assume that progress just got cancelled after sending the 'cancel' request.
+or an error response ('success' attribute false and the 'message' set to 'cancelled').
+
+Returning partial results from a cancelled request is possible but please note that a frontend client has no generic way for detecting that a response is partial or not.
+
+ The progress that got cancelled still needs to send a 'progressEnd' event back.
+
+ A client should not assume that progress just got cancelled after sending the 'cancel' request.
 
 ```typescript
 interface CancelRequest extends Request {
@@ -160,12 +166,14 @@ Arguments for 'cancel' request.
 ```typescript
 interface CancelArguments {
   /**
-   * The ID (attribute 'seq') of the request to cancel. If missing no request is cancelled. Both a 'requestId' and a 'progressId' can be specified in one request.
+   * The ID (attribute 'seq') of the request to cancel. If missing no request is cancelled.
+   * Both a 'requestId' and a 'progressId' can be specified in one request.
    */
   requestId?: number;
 
   /**
-   * The ID (attribute 'progressId') of the progress to cancel. If missing no progress is cancelled. Both a 'requestId' and a 'progressId' can be specified in one request.
+   * The ID (attribute 'progressId') of the progress to cancel. If missing no progress is cancelled.
+   * Both a 'requestId' and a 'progressId' can be specified in one request.
    */
   progressId?: string;
 }
@@ -528,7 +536,9 @@ The event signals that a long running operation is about to start and
 
 provides additional information for the client to set up a corresponding progress and cancellation UI.
 
-The client is free to delay the showing of the UI in order to reduce flicker. This event should only be sent if the client has passed the value true for the 'supportsProgressReporting' capability of the 'initialize' request.
+The client is free to delay the showing of the UI in order to reduce flicker.
+
+This event should only be sent if the client has passed the value true for the 'supportsProgressReporting' capability of the 'initialize' request.
 
 ```typescript
 interface ProgressStartEvent extends Event {
@@ -536,7 +546,8 @@ interface ProgressStartEvent extends Event {
 
   body: {
     /**
-     * An ID that must be used in subsequent 'progressUpdate' and 'progressEnd' events to make them refer to the same progress reporting. IDs must be unique within a debug session.
+     * An ID that must be used in subsequent 'progressUpdate' and 'progressEnd' events to make them refer to the same progress reporting.
+     * IDs must be unique within a debug session.
      */
     progressId: string;
 
@@ -576,7 +587,9 @@ interface ProgressStartEvent extends Event {
 
 The event signals that the progress reporting needs to updated with a new message and/or percentage.
 
-The client does not have to update the UI immediately, but the clients needs to keep track of the message and/or percentage values. This event should only be sent if the client has passed the value true for the 'supportsProgressReporting' capability of the 'initialize' request.
+The client does not have to update the UI immediately, but the clients needs to keep track of the message and/or percentage values.
+
+This event should only be sent if the client has passed the value true for the 'supportsProgressReporting' capability of the 'initialize' request.
 
 ```typescript
 interface ProgressUpdateEvent extends Event {
@@ -603,7 +616,9 @@ interface ProgressUpdateEvent extends Event {
 
 ### <a name="Events_ProgressEnd" class="anchor"></a>:arrow_left: ProgressEnd Event
 
-The event signals the end of the progress reporting with an optional final message. This event should only be sent if the client has passed the value true for the 'supportsProgressReporting' capability of the 'initialize' request.
+The event signals the end of the progress reporting with an optional final message.
+
+This event should only be sent if the client has passed the value true for the 'supportsProgressReporting' capability of the 'initialize' request.
 
 ```typescript
 interface ProgressEndEvent extends Event {
@@ -627,7 +642,11 @@ interface ProgressEndEvent extends Event {
 
 ### <a name="Reverse_Requests_RunInTerminal" class="anchor"></a>:arrow_right_hook: RunInTerminal Request
 
-This optional request is sent from the debug adapter to the client to run a command in a terminal. This is typically used to launch the debuggee in a terminal provided by the client. This request should only be called if the client has passed the value true for the 'supportsRunInTerminalRequest' capability of the 'initialize' request.
+This optional request is sent from the debug adapter to the client to run a command in a terminal.
+
+This is typically used to launch the debuggee in a terminal provided by the client.
+
+This request should only be called if the client has passed the value true for the 'supportsRunInTerminalRequest' capability of the 'initialize' request.
 
 ```typescript
 interface RunInTerminalRequest extends Request {
@@ -692,9 +711,13 @@ interface RunInTerminalResponse extends Response {
 
 ### <a name="Requests_Initialize" class="anchor"></a>:leftwards_arrow_with_hook: Initialize Request
 
-The 'initialize' request is sent as the first request from the client to the debug adapter in order to configure it with client capabilities and to retrieve capabilities from the debug adapter.
+The 'initialize' request is sent as the first request from the client to the debug adapter
 
-Until the debug adapter has responded to with an 'initialize' response, the client must not send any additional requests or events to the debug adapter. In addition the debug adapter is not allowed to send any requests or events to the client until it has responded with an 'initialize' response.
+in order to configure it with client capabilities and to retrieve capabilities from the debug adapter.
+
+Until the debug adapter has responded to with an 'initialize' response, the client must not send any additional requests or events to the debug adapter.
+
+In addition the debug adapter is not allowed to send any requests or events to the client until it has responded with an 'initialize' response.
 
 The 'initialize' request may only be sent once.
 
@@ -788,7 +811,11 @@ interface InitializeResponse extends Response {
 
 ### <a name="Requests_ConfigurationDone" class="anchor"></a>:leftwards_arrow_with_hook: ConfigurationDone Request
 
-This optional request indicates that the client has finished initialization of the debug adapter, so it is the last request in the sequence of configuration requests (which was started by the 'initialized' event). Clients should only call this request if the capability 'supportsConfigurationDoneRequest' is true.
+This optional request indicates that the client has finished initialization of the debug adapter.
+
+So it is the last request in the sequence of configuration requests (which was started by the 'initialized' event).
+
+Clients should only call this request if the capability 'supportsConfigurationDoneRequest' is true.
 
 ```typescript
 interface ConfigurationDoneRequest extends Request {
@@ -816,7 +843,9 @@ interface ConfigurationDoneResponse extends Response {
 
 ### <a name="Requests_Launch" class="anchor"></a>:leftwards_arrow_with_hook: Launch Request
 
-This launch request is sent from the client to the debug adapter to start the debuggee with or without debugging (if 'noDebug' is true). Since launching is debugger/runtime specific, the arguments for this request are not part of this specification.
+This launch request is sent from the client to the debug adapter to start the debuggee with or without debugging (if 'noDebug' is true).
+
+Since launching is debugger/runtime specific, the arguments for this request are not part of this specification.
 
 ```typescript
 interface LaunchRequest extends Request {
@@ -855,7 +884,9 @@ interface LaunchResponse extends Response {
 
 ### <a name="Requests_Attach" class="anchor"></a>:leftwards_arrow_with_hook: Attach Request
 
-The attach request is sent from the client to the debug adapter to attach to a debuggee that is already running. Since attaching is debugger/runtime specific, the arguments for this request are not part of this specification.
+The attach request is sent from the client to the debug adapter to attach to a debuggee that is already running.
+
+Since attaching is debugger/runtime specific, the arguments for this request are not part of this specification.
 
 ```typescript
 interface AttachRequest extends Request {
@@ -889,7 +920,9 @@ interface AttachResponse extends Response {
 
 ### <a name="Requests_Restart" class="anchor"></a>:leftwards_arrow_with_hook: Restart Request
 
-Restarts a debug session. Clients should only call this request if the capability 'supportsRestartRequest' is true. If the capability is missing or has the value false, a typical client will emulate 'restart' by terminating the debug adapter first and then launching it anew.
+Restarts a debug session. Clients should only call this request if the capability 'supportsRestartRequest' is true.
+
+If the capability is missing or has the value false, a typical client will emulate 'restart' by terminating the debug adapter first and then launching it anew.
 
 ```typescript
 interface RestartRequest extends Request {
@@ -917,7 +950,15 @@ interface RestartResponse extends Response {
 
 ### <a name="Requests_Disconnect" class="anchor"></a>:leftwards_arrow_with_hook: Disconnect Request
 
-The 'disconnect' request is sent from the client to the debug adapter in order to stop debugging. It asks the debug adapter to disconnect from the debuggee and to terminate the debug adapter. If the debuggee has been started with the 'launch' request, the 'disconnect' request terminates the debuggee. If the 'attach' request was used to connect to the debuggee, 'disconnect' does not terminate the debuggee. This behavior can be controlled with the 'terminateDebuggee' argument (if supported by the debug adapter).
+The 'disconnect' request is sent from the client to the debug adapter in order to stop debugging.
+
+It asks the debug adapter to disconnect from the debuggee and to terminate the debug adapter.
+
+If the debuggee has been started with the 'launch' request, the 'disconnect' request terminates the debuggee.
+
+If the 'attach' request was used to connect to the debuggee, 'disconnect' does not terminate the debuggee.
+
+This behavior can be controlled with the 'terminateDebuggee' argument (if supported by the debug adapter).
 
 ```typescript
 interface DisconnectRequest extends Request {
@@ -956,7 +997,9 @@ interface DisconnectResponse extends Response {
 
 ### <a name="Requests_Terminate" class="anchor"></a>:leftwards_arrow_with_hook: Terminate Request
 
-The 'terminate' request is sent from the client to the debug adapter in order to give the debuggee a chance for terminating itself. Clients should only call this request if the capability 'supportsTerminateRequest' is true.
+The 'terminate' request is sent from the client to the debug adapter in order to give the debuggee a chance for terminating itself.
+
+Clients should only call this request if the capability 'supportsTerminateRequest' is true.
 
 ```typescript
 interface TerminateRequest extends Request {
@@ -988,7 +1031,9 @@ interface TerminateResponse extends Response {
 
 ### <a name="Requests_BreakpointLocations" class="anchor"></a>:leftwards_arrow_with_hook: BreakpointLocations Request
 
-The 'breakpointLocations' request returns all possible locations for source breakpoints in a given range. Clients should only call this request if the capability 'supportsBreakpointLocationsRequest' is true.
+The 'breakpointLocations' request returns all possible locations for source breakpoints in a given range.
+
+Clients should only call this request if the capability 'supportsBreakpointLocationsRequest' is true.
 
 ```typescript
 interface BreakpointLocationsRequest extends Request {
@@ -1104,7 +1149,8 @@ The breakpoints returned are in the same order as the elements of the 'breakpoin
 interface SetBreakpointsResponse extends Response {
   body: {
     /**
-     * Information about the breakpoints. The array elements are in the same order as the elements of the 'breakpoints' (or the deprecated 'lines') array in the arguments.
+     * Information about the breakpoints.
+     * The array elements are in the same order as the elements of the 'breakpoints' (or the deprecated 'lines') array in the arguments.
      */
     breakpoints: Breakpoint[];
   };
@@ -1117,7 +1163,9 @@ Replaces all existing function breakpoints with new function breakpoints.
 
 To clear all function breakpoints, specify an empty array.
 
-When a function breakpoint is hit, a 'stopped' event (with reason 'function breakpoint') is generated. Clients should only call this request if the capability 'supportsFunctionBreakpoints' is true.
+When a function breakpoint is hit, a 'stopped' event (with reason 'function breakpoint') is generated.
+
+Clients should only call this request if the capability 'supportsFunctionBreakpoints' is true.
 
 ```typescript
 interface SetFunctionBreakpointsRequest extends Request {
@@ -1157,7 +1205,11 @@ interface SetFunctionBreakpointsResponse extends Response {
 
 ### <a name="Requests_SetExceptionBreakpoints" class="anchor"></a>:leftwards_arrow_with_hook: SetExceptionBreakpoints Request
 
-The request configures the debuggers response to thrown exceptions. If an exception is configured to break, a 'stopped' event is fired (with reason 'exception'). Clients should only call this request if the capability 'exceptionBreakpointFilters' returns one or more filters.
+The request configures the debuggers response to thrown exceptions.
+
+If an exception is configured to break, a 'stopped' event is fired (with reason 'exception').
+
+Clients should only call this request if the capability 'exceptionBreakpointFilters' returns one or more filters.
 
 ```typescript
 interface SetExceptionBreakpointsRequest extends Request {
@@ -1178,7 +1230,8 @@ interface SetExceptionBreakpointsArguments {
   filters: string[];
 
   /**
-   * Configuration options for selected exceptions. The attribute is only honored by a debug adapter if the capability 'supportsExceptionOptions' is true.
+   * Configuration options for selected exceptions.
+   * The attribute is only honored by a debug adapter if the capability 'supportsExceptionOptions' is true.
    */
   exceptionOptions?: ExceptionOptions[];
 }
@@ -1194,7 +1247,9 @@ interface SetExceptionBreakpointsResponse extends Response {
 
 ### <a name="Requests_DataBreakpointInfo" class="anchor"></a>:leftwards_arrow_with_hook: DataBreakpointInfo Request
 
-Obtains information on a possible data breakpoint that could be set on an expression or variable. Clients should only call this request if the capability 'supportsDataBreakpoints' is true.
+Obtains information on a possible data breakpoint that could be set on an expression or variable.
+
+Clients should only call this request if the capability 'supportsDataBreakpoints' is true.
 
 ```typescript
 interface DataBreakpointInfoRequest extends Request {
@@ -1215,7 +1270,8 @@ interface DataBreakpointInfoArguments {
   variablesReference?: number;
 
   /**
-   * The name of the Variable's child to obtain data breakpoint information for. If variableReference isn’t provided, this can be an expression.
+   * The name of the Variable's child to obtain data breakpoint information for.
+   * If variableReference isn’t provided, this can be an expression.
    */
   name: string;
 }
@@ -1256,7 +1312,9 @@ Replaces all existing data breakpoints with new data breakpoints.
 
 To clear all data breakpoints, specify an empty array.
 
-When a data breakpoint is hit, a 'stopped' event (with reason 'data breakpoint') is generated. Clients should only call this request if the capability 'supportsDataBreakpoints' is true.
+When a data breakpoint is hit, a 'stopped' event (with reason 'data breakpoint') is generated.
+
+Clients should only call this request if the capability 'supportsDataBreakpoints' is true.
 
 ```typescript
 interface SetDataBreakpointsRequest extends Request {
@@ -1312,7 +1370,8 @@ Arguments for 'continue' request.
 ```typescript
 interface ContinueArguments {
   /**
-   * Continue execution for the specified thread (if possible). If the backend cannot continue on a single thread but will continue on all threads, it should set the 'allThreadsContinued' attribute in the response to true.
+   * Continue execution for the specified thread (if possible).
+   * If the backend cannot continue on a single thread but will continue on all threads, it should set the 'allThreadsContinued' attribute in the response to true.
    */
   threadId: number;
 }
@@ -1325,7 +1384,8 @@ Response to 'continue' request.
 interface ContinueResponse extends Response {
   body: {
     /**
-     * If true, the 'continue' request has ignored the specified thread and continued all threads instead. If this attribute is missing a value of 'true' is assumed for backward compatibility.
+     * If true, the 'continue' request has ignored the specified thread and continued all threads instead.
+     * If this attribute is missing a value of 'true' is assumed for backward compatibility.
      */
     allThreadsContinued?: boolean;
   };
@@ -1451,7 +1511,9 @@ interface StepOutResponse extends Response {
 
 The request starts the debuggee to run one step backwards.
 
-The debug adapter first sends the response and then a 'stopped' event (with reason 'step') after the step has completed. Clients should only call this request if the capability 'supportsStepBack' is true.
+The debug adapter first sends the response and then a 'stopped' event (with reason 'step') after the step has completed.
+
+Clients should only call this request if the capability 'supportsStepBack' is true.
 
 ```typescript
 interface StepBackRequest extends Request {
@@ -1483,7 +1545,9 @@ interface StepBackResponse extends Response {
 
 ### <a name="Requests_ReverseContinue" class="anchor"></a>:leftwards_arrow_with_hook: ReverseContinue Request
 
-The request starts the debuggee to run backward. Clients should only call this request if the capability 'supportsStepBack' is true.
+The request starts the debuggee to run backward.
+
+Clients should only call this request if the capability 'supportsStepBack' is true.
 
 ```typescript
 interface ReverseContinueRequest extends Request {
@@ -1517,7 +1581,9 @@ interface ReverseContinueResponse extends Response {
 
 The request restarts execution of the specified stackframe.
 
-The debug adapter first sends the response and then a 'stopped' event (with reason 'restart') after the restart has completed. Clients should only call this request if the capability 'supportsRestartFrame' is true.
+The debug adapter first sends the response and then a 'stopped' event (with reason 'restart') after the restart has completed.
+
+Clients should only call this request if the capability 'supportsRestartFrame' is true.
 
 ```typescript
 interface RestartFrameRequest extends Request {
@@ -1555,7 +1621,9 @@ This makes it possible to skip the execution of code or to executed code again.
 
 The code between the current location and the goto target is not executed but skipped.
 
-The debug adapter first sends the response and then a 'stopped' event with reason 'goto'. Clients should only call this request if the capability 'supportsGotoTargetsRequest' is true (because only then goto targets exist that can be passed as arguments).
+The debug adapter first sends the response and then a 'stopped' event with reason 'goto'.
+
+Clients should only call this request if the capability 'supportsGotoTargetsRequest' is true (because only then goto targets exist that can be passed as arguments).
 
 ```typescript
 interface GotoRequest extends Request {
@@ -1657,7 +1725,8 @@ interface StackTraceArguments {
   levels?: number;
 
   /**
-   * Specifies details on how to format the stack frames. The attribute is only honored by a debug adapter if the capability 'supportsValueFormattingOptions' is true.
+   * Specifies details on how to format the stack frames.
+   * The attribute is only honored by a debug adapter if the capability 'supportsValueFormattingOptions' is true.
    */
   format?: StackFrameFormat;
 }
@@ -1761,7 +1830,8 @@ interface VariablesArguments {
   count?: number;
 
   /**
-   * Specifies details on how to format the Variable values. The attribute is only honored by a debug adapter if the capability 'supportsValueFormattingOptions' is true.
+   * Specifies details on how to format the Variable values.
+   * The attribute is only honored by a debug adapter if the capability 'supportsValueFormattingOptions' is true.
    */
   format?: ValueFormat;
 }
@@ -1837,19 +1907,22 @@ interface SetVariableResponse extends Response {
     type?: string;
 
     /**
-     * If variablesReference is > 0, the new value is structured and its children can be retrieved by passing variablesReference to the VariablesRequest. The value should be less than or equal to 2147483647 (2^31 - 1).
+     * If variablesReference is > 0, the new value is structured and its children can be retrieved by passing variablesReference to the VariablesRequest.
+     * The value should be less than or equal to 2147483647 (2^31 - 1).
      */
     variablesReference?: number;
 
     /**
      * The number of named child variables.
-     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks. The value should be less than or equal to 2147483647 (2^31 - 1).
+     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks.
+     * The value should be less than or equal to 2147483647 (2^31 - 1).
      */
     namedVariables?: number;
 
     /**
      * The number of indexed child variables.
-     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks. The value should be less than or equal to 2147483647 (2^31 - 1).
+     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks.
+     * The value should be less than or equal to 2147483647 (2^31 - 1).
      */
     indexedVariables?: number;
   };
@@ -1879,7 +1952,8 @@ interface SourceArguments {
   source?: Source;
 
   /**
-   * The reference to the source. This is the same as source.sourceReference. This is provided for backward compatibility since old backends do not understand the 'source' attribute.
+   * The reference to the source. This is the same as source.sourceReference.
+   * This is provided for backward compatibility since old backends do not understand the 'source' attribute.
    */
   sourceReference: number;
 }
@@ -1930,7 +2004,9 @@ interface ThreadsResponse extends Response {
 
 ### <a name="Requests_TerminateThreads" class="anchor"></a>:leftwards_arrow_with_hook: TerminateThreads Request
 
-The request terminates the threads with the given ids. Clients should only call this request if the capability 'supportsTerminateThreadsRequest' is true.
+The request terminates the threads with the given ids.
+
+Clients should only call this request if the capability 'supportsTerminateThreadsRequest' is true.
 
 ```typescript
 interface TerminateThreadsRequest extends Request {
@@ -1962,7 +2038,9 @@ interface TerminateThreadsResponse extends Response {
 
 ### <a name="Requests_Modules" class="anchor"></a>:leftwards_arrow_with_hook: Modules Request
 
-Modules can be retrieved from the debug adapter with this request which can either return all modules or a range of modules to support paging. Clients should only call this request if the capability 'supportsModulesRequest' is true.
+Modules can be retrieved from the debug adapter with this request which can either return all modules or a range of modules to support paging.
+
+Clients should only call this request if the capability 'supportsModulesRequest' is true.
 
 ```typescript
 interface ModulesRequest extends Request {
@@ -2010,7 +2088,9 @@ interface ModulesResponse extends Response {
 
 ### <a name="Requests_LoadedSources" class="anchor"></a>:leftwards_arrow_with_hook: LoadedSources Request
 
-Retrieves the set of all sources currently loaded by the debugged process. Clients should only call this request if the capability 'supportsLoadedSourcesRequest' is true.
+Retrieves the set of all sources currently loaded by the debugged process.
+
+Clients should only call this request if the capability 'supportsLoadedSourcesRequest' is true.
 
 ```typescript
 interface LoadedSourcesRequest extends Request {
@@ -2077,13 +2157,15 @@ interface EvaluateArguments {
    * 'watch': evaluate is run in a watch.
    * 'repl': evaluate is run from REPL console.
    * 'hover': evaluate is run from a data hover.
-   * 'clipboard': evaluate is run to generate the value that will be stored in the clipboard. The attribute is only honored by a debug adapter if the capability 'supportsClipboardContext' is true.
+   * 'clipboard': evaluate is run to generate the value that will be stored in the clipboard.
+   * The attribute is only honored by a debug adapter if the capability 'supportsClipboardContext' is true.
    * etc.
    */
   context?: string;
 
   /**
-   * Specifies details on how to format the Evaluate result. The attribute is only honored by a debug adapter if the capability 'supportsValueFormattingOptions' is true.
+   * Specifies details on how to format the Evaluate result.
+   * The attribute is only honored by a debug adapter if the capability 'supportsValueFormattingOptions' is true.
    */
   format?: ValueFormat;
 }
@@ -2101,7 +2183,8 @@ interface EvaluateResponse extends Response {
     result: string;
 
     /**
-     * The optional type of the evaluate result. This attribute should only be returned by a debug adapter if the client has passed the value true for the 'supportsVariableType' capability of the 'initialize' request.
+     * The optional type of the evaluate result.
+     * This attribute should only be returned by a debug adapter if the client has passed the value true for the 'supportsVariableType' capability of the 'initialize' request.
      */
     type?: string;
 
@@ -2111,24 +2194,29 @@ interface EvaluateResponse extends Response {
     presentationHint?: VariablePresentationHint;
 
     /**
-     * If variablesReference is > 0, the evaluate result is structured and its children can be retrieved by passing variablesReference to the VariablesRequest. The value should be less than or equal to 2147483647 (2^31 - 1).
+     * If variablesReference is > 0, the evaluate result is structured and its children can be retrieved by passing variablesReference to the VariablesRequest.
+     * The value should be less than or equal to 2147483647 (2^31 - 1).
      */
     variablesReference: number;
 
     /**
      * The number of named child variables.
-     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks. The value should be less than or equal to 2147483647 (2^31 - 1).
+     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks.
+     * The value should be less than or equal to 2147483647 (2^31 - 1).
      */
     namedVariables?: number;
 
     /**
      * The number of indexed child variables.
-     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks. The value should be less than or equal to 2147483647 (2^31 - 1).
+     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks.
+     * The value should be less than or equal to 2147483647 (2^31 - 1).
      */
     indexedVariables?: number;
 
     /**
-     * Optional memory reference to a location appropriate for this result. For pointer type eval results, this is generally a reference to the memory address contained in the pointer. This attribute should be returned by a debug adapter if the client has passed the value true for the 'supportsMemoryReferences' capability of the 'initialize' request.
+     * Optional memory reference to a location appropriate for this result.
+     * For pointer type eval results, this is generally a reference to the memory address contained in the pointer.
+     * This attribute should be returned by a debug adapter if the client has passed the value true for the 'supportsMemoryReferences' capability of the 'initialize' request.
      */
     memoryReference?: string;
   };
@@ -2139,7 +2227,9 @@ interface EvaluateResponse extends Response {
 
 Evaluates the given 'value' expression and assigns it to the 'expression' which must be a modifiable l-value.
 
-The expressions have access to any variables and arguments that are in scope of the specified frame. Clients should only call this request if the capability 'supportsSetExpression' is true.
+The expressions have access to any variables and arguments that are in scope of the specified frame.
+
+Clients should only call this request if the capability 'supportsSetExpression' is true.
 
 ```typescript
 interface SetExpressionRequest extends Request {
@@ -2188,7 +2278,8 @@ interface SetExpressionResponse extends Response {
     value: string;
 
     /**
-     * The optional type of the value. This attribute should only be returned by a debug adapter if the client has passed the value true for the 'supportsVariableType' capability of the 'initialize' request.
+     * The optional type of the value.
+     * This attribute should only be returned by a debug adapter if the client has passed the value true for the 'supportsVariableType' capability of the 'initialize' request.
      */
     type?: string;
 
@@ -2198,19 +2289,22 @@ interface SetExpressionResponse extends Response {
     presentationHint?: VariablePresentationHint;
 
     /**
-     * If variablesReference is > 0, the value is structured and its children can be retrieved by passing variablesReference to the VariablesRequest. The value should be less than or equal to 2147483647 (2^31 - 1).
+     * If variablesReference is > 0, the value is structured and its children can be retrieved by passing variablesReference to the VariablesRequest.
+     * The value should be less than or equal to 2147483647 (2^31 - 1).
      */
     variablesReference?: number;
 
     /**
      * The number of named child variables.
-     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks. The value should be less than or equal to 2147483647 (2^31 - 1).
+     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks.
+     * The value should be less than or equal to 2147483647 (2^31 - 1).
      */
     namedVariables?: number;
 
     /**
      * The number of indexed child variables.
-     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks. The value should be less than or equal to 2147483647 (2^31 - 1).
+     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks.
+     * The value should be less than or equal to 2147483647 (2^31 - 1).
      */
     indexedVariables?: number;
   };
@@ -2223,7 +2317,9 @@ This request retrieves the possible stepIn targets for the specified stack frame
 
 These targets can be used in the 'stepIn' request.
 
-The StepInTargets may only be called if the 'supportsStepInTargetsRequest' capability exists and is true. Clients should only call this request if the capability 'supportsStepInTargetsRequest' is true.
+The StepInTargets may only be called if the 'supportsStepInTargetsRequest' capability exists and is true.
+
+Clients should only call this request if the capability 'supportsStepInTargetsRequest' is true.
 
 ```typescript
 interface StepInTargetsRequest extends Request {
@@ -2368,7 +2464,9 @@ interface CompletionsResponse extends Response {
 
 ### <a name="Requests_ExceptionInfo" class="anchor"></a>:leftwards_arrow_with_hook: ExceptionInfo Request
 
-Retrieves the details of the exception that caused this event to be raised. Clients should only call this request if the capability 'supportsExceptionInfoRequest' is true.
+Retrieves the details of the exception that caused this event to be raised.
+
+Clients should only call this request if the capability 'supportsExceptionInfoRequest' is true.
 
 ```typescript
 interface ExceptionInfoRequest extends Request {
@@ -2421,7 +2519,9 @@ interface ExceptionInfoResponse extends Response {
 
 ### <a name="Requests_ReadMemory" class="anchor"></a>:leftwards_arrow_with_hook: ReadMemory Request
 
-Reads bytes from memory at the provided location. Clients should only call this request if the capability 'supportsReadMemoryRequest' is true.
+Reads bytes from memory at the provided location.
+
+Clients should only call this request if the capability 'supportsReadMemoryRequest' is true.
 
 ```typescript
 interface ReadMemoryRequest extends Request {
@@ -2460,12 +2560,14 @@ Response to 'readMemory' request.
 interface ReadMemoryResponse extends Response {
   body?: {
     /**
-     * The address of the first byte of data returned. Treated as a hex value if prefixed with '0x', or as a decimal value otherwise.
+     * The address of the first byte of data returned.
+     * Treated as a hex value if prefixed with '0x', or as a decimal value otherwise.
      */
     address: string;
 
     /**
-     * The number of unreadable bytes encountered after the last successfully read byte. This can be used to determine the number of bytes that must be skipped before a subsequent 'readMemory' request will succeed.
+     * The number of unreadable bytes encountered after the last successfully read byte.
+     * This can be used to determine the number of bytes that must be skipped before a subsequent 'readMemory' request will succeed.
      */
     unreadableBytes?: number;
 
@@ -2479,7 +2581,9 @@ interface ReadMemoryResponse extends Response {
 
 ### <a name="Requests_Disassemble" class="anchor"></a>:leftwards_arrow_with_hook: Disassemble Request
 
-Disassembles code stored at the provided location. Clients should only call this request if the capability 'supportsDisassembleRequest' is true.
+Disassembles code stored at the provided location.
+
+Clients should only call this request if the capability 'supportsDisassembleRequest' is true.
 
 ```typescript
 interface DisassembleRequest extends Request {
@@ -2510,7 +2614,8 @@ interface DisassembleArguments {
   instructionOffset?: number;
 
   /**
-   * Number of instructions to disassemble starting at the specified location and offset. An adapter must return exactly this number of instructions - any unavailable instructions should be replaced with an implementation-defined 'invalid instruction' value.
+   * Number of instructions to disassemble starting at the specified location and offset.
+   * An adapter must return exactly this number of instructions - any unavailable instructions should be replaced with an implementation-defined 'invalid instruction' value.
    */
   instructionCount: number;
 
@@ -2854,7 +2959,9 @@ interface Module {
 
 ### <a name="Types_ColumnDescriptor" class="anchor"></a>ColumnDescriptor
 
-A ColumnDescriptor specifies what module attribute to show in a column of the ModulesView, how to format it, and what the column's label should be.
+A ColumnDescriptor specifies what module attribute to show in a column of the ModulesView, how to format it,
+
+and what the column's label should be.
 
 It is only used if the underlying UI actually supports this level of customization.
 
@@ -2919,27 +3026,34 @@ interface Thread {
 
 ### <a name="Types_Source" class="anchor"></a>Source
 
-A Source is a descriptor for source code. It is returned from the debug adapter as part of a StackFrame and it is used by clients when specifying breakpoints.
+A Source is a descriptor for source code.
+
+It is returned from the debug adapter as part of a StackFrame and it is used by clients when specifying breakpoints.
 
 ```typescript
 interface Source {
   /**
-   * The short name of the source. Every source returned from the debug adapter has a name. When sending a source to the debug adapter this name is optional.
+   * The short name of the source. Every source returned from the debug adapter has a name.
+   * When sending a source to the debug adapter this name is optional.
    */
   name?: string;
 
   /**
-   * The path of the source to be shown in the UI. It is only used to locate and load the content of the source if no sourceReference is specified (or its value is 0).
+   * The path of the source to be shown in the UI.
+   * It is only used to locate and load the content of the source if no sourceReference is specified (or its value is 0).
    */
   path?: string;
 
   /**
-   * If sourceReference > 0 the contents of the source must be retrieved through the SourceRequest (even if a path is specified). A sourceReference is only valid for a session, so it must not be used to persist a source. The value should be less than or equal to 2147483647 (2^31 - 1).
+   * If sourceReference > 0 the contents of the source must be retrieved through the SourceRequest (even if a path is specified).
+   * A sourceReference is only valid for a session, so it must not be used to persist a source.
+   * The value should be less than or equal to 2147483647 (2^31 - 1).
    */
   sourceReference?: number;
 
   /**
-   * An optional hint for how to present the source in the UI. A value of 'deemphasize' can be used to indicate that the source is not available or that it is skipped on stepping.
+   * An optional hint for how to present the source in the UI.
+   * A value of 'deemphasize' can be used to indicate that the source is not available or that it is skipped on stepping.
    */
   presentationHint?: 'normal' | 'emphasize' | 'deemphasize';
 
@@ -2954,7 +3068,8 @@ interface Source {
   sources?: Source[];
 
   /**
-   * Optional data that a debug adapter might want to loop through the client. The client should leave the data intact and persist it across sessions. The client should not interpret the data.
+   * Optional data that a debug adapter might want to loop through the client.
+   * The client should leave the data intact and persist it across sessions. The client should not interpret the data.
    */
   adapterData?: any;
 
@@ -2972,7 +3087,8 @@ A Stackframe contains the source location.
 ```typescript
 interface StackFrame {
   /**
-   * An identifier for the stack frame. It must be unique across all threads. This id can be used to retrieve the scopes of the frame with the 'scopesRequest' or to restart the execution of a stackframe.
+   * An identifier for the stack frame. It must be unique across all threads.
+   * This id can be used to retrieve the scopes of the frame with the 'scopesRequest' or to restart the execution of a stackframe.
    */
   id: number;
 
@@ -3017,7 +3133,8 @@ interface StackFrame {
   moduleId?: number | string;
 
   /**
-   * An optional hint for how to present this frame in the UI. A value of 'label' can be used to indicate that the frame is an artificial frame that is used as a visual label or separator. A value of 'subtle' can be used to change the appearance of a frame in a 'subtle' way.
+   * An optional hint for how to present this frame in the UI.
+   * A value of 'label' can be used to indicate that the frame is an artificial frame that is used as a visual label or separator. A value of 'subtle' can be used to change the appearance of a frame in a 'subtle' way.
    */
   presentationHint?: 'normal' | 'label' | 'subtle';
 }
@@ -3120,7 +3237,8 @@ interface Variable {
   value: string;
 
   /**
-   * The type of the variable's value. Typically shown in the UI when hovering over the value. This attribute should only be returned by a debug adapter if the client has passed the value true for the 'supportsVariableType' capability of the 'initialize' request.
+   * The type of the variable's value. Typically shown in the UI when hovering over the value.
+   * This attribute should only be returned by a debug adapter if the client has passed the value true for the 'supportsVariableType' capability of the 'initialize' request.
    */
   type?: string;
 
@@ -3152,7 +3270,8 @@ interface Variable {
   indexedVariables?: number;
 
   /**
-   * Optional memory reference for the variable if the variable represents executable code, such as a function pointer. This attribute is only required if the client has passed the value true for the 'supportsMemoryReferences' capability of the 'initialize' request.
+   * Optional memory reference for the variable if the variable represents executable code, such as a function pointer.
+   * This attribute is only required if the client has passed the value true for the 'supportsMemoryReferences' capability of the 'initialize' request.
    */
   memoryReference?: string;
 }
@@ -3176,7 +3295,8 @@ interface VariablePresentationHint {
    * 'innerClass': Indicates that the object is an inner class.
    * 'interface': Indicates that the object is an interface.
    * 'mostDerivedClass': Indicates that the object is the most derived class.
-   * 'virtual': Indicates that the object is virtual, that means it is a synthetic object introduced by the adapter for rendering purposes, e.g. an index range for large arrays.
+   * 'virtual': Indicates that the object is virtual, that means it is a synthetic object introducedby the
+   * adapter for rendering purposes, e.g. an index range for large arrays.
    * 'dataBreakpoint': Indicates that a data breakpoint is registered for the object.
    * etc.
    */
@@ -3249,17 +3369,22 @@ interface SourceBreakpoint {
   column?: number;
 
   /**
-   * An optional expression for conditional breakpoints. It is only honored by a debug adapter if the capability 'supportsConditionalBreakpoints' is true.
+   * An optional expression for conditional breakpoints.
+   * It is only honored by a debug adapter if the capability 'supportsConditionalBreakpoints' is true.
    */
   condition?: string;
 
   /**
-   * An optional expression that controls how many hits of the breakpoint are ignored. The backend is expected to interpret the expression as needed. The attribute is only honored by a debug adapter if the capability 'supportsHitConditionalBreakpoints' is true.
+   * An optional expression that controls how many hits of the breakpoint are ignored.
+   * The backend is expected to interpret the expression as needed.
+   * The attribute is only honored by a debug adapter if the capability 'supportsHitConditionalBreakpoints' is true.
    */
   hitCondition?: string;
 
   /**
-   * If this attribute exists and is non-empty, the backend must not 'break' (stop) but log the message instead. Expressions within {} are interpolated. The attribute is only honored by a debug adapter if the capability 'supportsLogPoints' is true.
+   * If this attribute exists and is non-empty, the backend must not 'break' (stop)
+   * but log the message instead. Expressions within {} are interpolated.
+   * The attribute is only honored by a debug adapter if the capability 'supportsLogPoints' is true.
    */
   logMessage?: string;
 }
@@ -3277,12 +3402,15 @@ interface FunctionBreakpoint {
   name: string;
 
   /**
-   * An optional expression for conditional breakpoints. It is only honored by a debug adapter if the capability 'supportsConditionalBreakpoints' is true.
+   * An optional expression for conditional breakpoints.
+   * It is only honored by a debug adapter if the capability 'supportsConditionalBreakpoints' is true.
    */
   condition?: string;
 
   /**
-   * An optional expression that controls how many hits of the breakpoint are ignored. The backend is expected to interpret the expression as needed. The attribute is only honored by a debug adapter if the capability 'supportsHitConditionalBreakpoints' is true.
+   * An optional expression that controls how many hits of the breakpoint are ignored.
+   * The backend is expected to interpret the expression as needed.
+   * The attribute is only honored by a debug adapter if the capability 'supportsHitConditionalBreakpoints' is true.
    */
   hitCondition?: string;
 }
@@ -3318,7 +3446,8 @@ interface DataBreakpoint {
   condition?: string;
 
   /**
-   * An optional expression that controls how many hits of the breakpoint are ignored. The backend is expected to interpret the expression as needed.
+   * An optional expression that controls how many hits of the breakpoint are ignored.
+   * The backend is expected to interpret the expression as needed.
    */
   hitCondition?: string;
 }
@@ -3341,7 +3470,8 @@ interface Breakpoint {
   verified: boolean;
 
   /**
-   * An optional message about the state of the breakpoint. This is shown to the user and can be used to explain why a breakpoint could not be verified.
+   * An optional message about the state of the breakpoint.
+   * This is shown to the user and can be used to explain why a breakpoint could not be verified.
    */
   message?: string;
 
@@ -3366,7 +3496,8 @@ interface Breakpoint {
   endLine?: number;
 
   /**
-   * An optional end column of the actual range covered by the breakpoint. If no end line is given, then the end column is assumed to be in the start line.
+   * An optional end column of the actual range covered by the breakpoint.
+   * If no end line is given, then the end column is assumed to be in the start line.
    */
   endColumn?: number;
 }
@@ -3586,7 +3717,8 @@ An ExceptionOptions assigns configuration options to a set of exceptions.
 ```typescript
 interface ExceptionOptions {
   /**
-   * A path that selects a single or multiple exceptions in a tree. If 'path' is missing, the whole tree is selected. By convention the first segment of the path is a category that is used to group exceptions in the UI.
+   * A path that selects a single or multiple exceptions in a tree. If 'path' is missing, the whole tree is selected.
+   * By convention the first segment of the path is a category that is used to group exceptions in the UI.
    */
   path?: ExceptionPathSegment[];
 
@@ -3615,7 +3747,11 @@ type ExceptionBreakMode = 'never' | 'always' | 'unhandled' | 'userUnhandled';
 
 ### <a name="Types_ExceptionPathSegment" class="anchor"></a>ExceptionPathSegment
 
-An ExceptionPathSegment represents a segment in a path that is used to match leafs or nodes in a tree of exceptions. If a segment consists of more than one name, it matches the names provided if 'negate' is false or missing or it matches anything except the names provided if 'negate' is true.
+An ExceptionPathSegment represents a segment in a path that is used to match leafs or nodes in a tree of exceptions.
+
+If a segment consists of more than one name, it matches the names provided if 'negate' is false or missing or
+
+it matches anything except the names provided if 'negate' is true.
 
 ```typescript
 interface ExceptionPathSegment {
@@ -3696,7 +3832,9 @@ interface DisassembledInstruction {
   symbol?: string;
 
   /**
-   * Source location that corresponds to this instruction, if any. Should always be set (if available) on the first instruction returned, but can be omitted afterwards if this instruction maps to the same source file as the previous instruction.
+   * Source location that corresponds to this instruction, if any.
+   * Should always be set (if available) on the first instruction returned,
+   * but can be omitted afterwards if this instruction maps to the same source file as the previous instruction.
    */
   location?: Source;
 
