@@ -132,7 +132,9 @@ interface ErrorResponse extends Response {
 
 ### <a name="Base_Protocol_Cancel" class="anchor"></a>:leftwards_arrow_with_hook: Cancel Request
 
-The 'cancel' request is used by the frontend to indicate that it is no longer interested in the result produced by a specific request issued earlier.
+The 'cancel' request is used by the frontend in two situations:
+- to indicate that it is no longer interested in the result produced by a specific request issued earlier
+- to cancel a progress sequence.
 
 This request has a hint characteristic: a debug adapter can only be expected to make a 'best effort' in honouring this request but there are no guarantees.
 
@@ -140,11 +142,9 @@ The 'cancel' request may return an error if it could not cancel an operation but
 
 A frontend client should only call this request if the capability 'supportsCancelRequest' is true.
 
-The request that got canceled still needs to send a response back.
+The request that got canceled still needs to send a response back. This can either be a normal result ('success' attribute true) or an error response ('success' attribute false and the 'message' set to 'cancelled'). Returning partial results from a cancelled request is possible but please note that a frontend client has no generic way for detecting that a response is partial or not.
 
-This can either be a normal result ('success' attribute true) or an error response ('success' attribute false and the 'message' set to 'cancelled').
-
-Returning partial results from a cancelled request is possible but please note that a frontend client has no generic way for detecting that a response is partial or not.
+ The progress that got cancelled still needs to send a 'progressEnd' event back. A client should not assume that progress just got cancelled after sending the 'cancel' request.
 
 ```typescript
 interface CancelRequest extends Request {
@@ -160,9 +160,14 @@ Arguments for 'cancel' request.
 ```typescript
 interface CancelArguments {
   /**
-   * The ID (attribute 'seq') of the request to cancel.
+   * The ID (attribute 'seq') of the request to cancel. If missing no request is cancelled. Both a 'requestId' and a 'progressId' can be specified in one request.
    */
   requestId?: number;
+
+  /**
+   * The ID (attribute 'progressId') of the progress to cancel. If missing no progress is cancelled. Both a 'requestId' and a 'progressId' can be specified in one request.
+   */
+  progressId?: string;
 }
 ```
 
@@ -517,6 +522,107 @@ interface CapabilitiesEvent extends Event {
 }
 ```
 
+### <a name="Events_ProgressStart" class="anchor"></a>:arrow_left: ProgressStart Event
+
+The event signals that a long running operation is about to start and
+
+provides additional information for the client to set up a corresponding progress and cancellation UI.
+
+The client is free to delay the showing of the UI in order to reduce flicker.
+
+```typescript
+interface ProgressStartEvent extends Event {
+  event: 'progressStart';
+
+  body: {
+    /**
+     * An ID that must be used in subsequent 'progressUpdate' and 'progressEnd' events to make them refer to the same progress reporting. IDs must be unique within a debug session.
+     */
+    progressId: string;
+
+    /**
+     * Mandatory (short) title of the progress reporting. Shown in the UI to describe the long running operation.
+     */
+    title: string;
+
+    /**
+     * The request ID that this progress report is related to. If specified a debug adapter is expected to emit
+     * progress events for the long running request until the request has been either completed or cancelled.
+     * If the request ID is omitted, the progress report is assumed to be related to some general activity of the debug adapter.
+     */
+    requestId?: number;
+
+    /**
+     * If true, the request that reports progress may be canceled with a 'cancel' request.
+     * So this property basically controls whether the client should use UX that supports cancellation.
+     * Clients that don't support cancellation are allowed to ignore the setting.
+     */
+    cancellable?: boolean;
+
+    /**
+     * Optional, more detailed progress message.
+     */
+    message?: string;
+
+    /**
+     * Optional progress percentage to display (value range: 0 to 100). If omitted no percentage will be shown.
+     */
+    percentage?: number;
+  };
+}
+```
+
+### <a name="Events_ProgressUpdate" class="anchor"></a>:arrow_left: ProgressUpdate Event
+
+The event signals that the progress reporting needs to updated with a new message and/or percentage.
+
+The client does not have to update the UI immediately, but the clients needs to keep track of the message and/or percentage values.
+
+```typescript
+interface ProgressUpdateEvent extends Event {
+  event: 'progressUpdate';
+
+  body: {
+    /**
+     * The ID that was introduced in the initial 'progressStart' event.
+     */
+    progressId: string;
+
+    /**
+     * Optional, more detailed progress message. If omitted, the previous message (if any) is used.
+     */
+    message?: string;
+
+    /**
+     * Optional progress percentage to display (value range: 0 to 100). If omitted no percentage will be shown.
+     */
+    percentage?: number;
+  };
+}
+```
+
+### <a name="Events_ProgressEnd" class="anchor"></a>:arrow_left: ProgressEnd Event
+
+The event signals the end of the progress reporting with an optional final message.
+
+```typescript
+interface ProgressEndEvent extends Event {
+  event: 'progressEnd';
+
+  body: {
+    /**
+     * The ID that was introduced in the initial 'ProgressStartEvent'.
+     */
+    progressId: string;
+
+    /**
+     * Optional, more detailed progress message. If omitted, the previous message (if any) is used.
+     */
+    message?: string;
+  };
+}
+```
+
 ## <a name="Reverse_Requests" class="anchor"></a>Reverse Requests
 
 ### <a name="Reverse_Requests_RunInTerminal" class="anchor"></a>:arrow_right_hook: RunInTerminal Request
@@ -660,6 +766,11 @@ interface InitializeRequestArguments {
    * Client supports memory references.
    */
   supportsMemoryReferences?: boolean;
+
+  /**
+   * Client supports progress reporting.
+   */
+  supportsProgressReporting?: boolean;
 }
 ```
 

@@ -36,6 +36,12 @@
       anchor: Events_Output
     - title: Process
       anchor: Events_Process
+    - title: ProgressEnd
+      anchor: Events_ProgressEnd
+    - title: ProgressStart
+      anchor: Events_ProgressStart
+    - title: ProgressUpdate
+      anchor: Events_ProgressUpdate
     - title: Stopped
       anchor: Events_Stopped
     - title: Terminated
