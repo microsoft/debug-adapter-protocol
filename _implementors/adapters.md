@@ -53,6 +53,7 @@ The following table lists the known debug adapters that implement the Debug Adap
 [React Native Tools](https://marketplace.visualstudio.com/items?itemName=vsmobile.vscode-react-native)|[@MSLaguana](https://github.com/MSLaguana)|[Microsoft/vscode-react-native](https://github.com/Microsoft/vscode-react-native/issues)
 [Ruby](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby)|[@rebornix](https://github.com/rebornix)|[rubyide/vscode-ruby](https://github.com/rubyide/vscode-ruby)
 [SWF](https://marketplace.visualstudio.com/items?itemName=bowlerhatllc.vscode-nextgenas)|[@joshtynjala](https://github.com/joshtynjala)|[BowlerHatLLC/vscode-nextgenas](https://github.com/BowlerHatLLC/vscode-nextgenas)
+[VDM, VDM++, VDM-RT](https://github.com/nickbattle/vdmj/tree/master/LSP)|[@nickbattle](https://github.com/nickbattle)|[VDMJ-LSP](https://github.com/nickbattle/vdmj/tree/master/LSP)
 {: .table .table-bordered .table-responsive}
 
 *If you are missing a debug adapter implementation please create a pull request in GitHub against this markdown [document](https://github.com/Microsoft/debug-adapter-protocol/blob/gh-pages/_implementors/adapters.md)*
