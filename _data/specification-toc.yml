@@ -107,6 +107,8 @@
       anchor: Requests_SetExpression
     - title: SetFunctionBreakpoints
       anchor: Requests_SetFunctionBreakpoints
+    - title: SetInstructionBreakpoints
+      anchor: Requests_SetInstructionBreakpoints
     - title: SetVariable
       anchor: Requests_SetVariable
     - title: Source
@@ -173,6 +175,8 @@
       anchor: Types_FunctionBreakpoint
     - title: GotoTarget
       anchor: Types_GotoTarget
+    - title: InstructionBreakpoint
+      anchor: Types_InstructionBreakpoint
     - title: Message
       anchor: Types_Message
     - title: Module

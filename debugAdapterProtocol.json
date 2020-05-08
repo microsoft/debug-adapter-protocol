@@ -193,7 +193,7 @@
 							"reason": {
 								"type": "string",
 								"description": "The reason for the event.\nFor backward compatibility this string is shown in the UI if the 'description' attribute is missing (but it must not be translated).",
-								"_enum": [ "step", "breakpoint", "exception", "pause", "entry", "goto", "function breakpoint", "data breakpoint" ]
+								"_enum": [ "step", "breakpoint", "exception", "pause", "entry", "goto", "function breakpoint", "data breakpoint", "instruction breakpoint" ]
 							},
 							"description": {
 								"type": "string",
@@ -1347,6 +1347,63 @@
 									"$ref": "#/definitions/Breakpoint"
 								},
 								"description": "Information about the data breakpoints. The array elements correspond to the elements of the input argument 'breakpoints' array."
+							}
+						},
+						"required": [ "breakpoints" ]
+					}
+				},
+				"required": [ "body" ]
+			}]
+		},
+
+		"SetInstructionBreakpointsRequest": {
+			"allOf": [
+				{ "$ref": "#/definitions/Request" },
+				{
+					"type": "object",
+					"description": "Replaces all existing instruction breakpoints. Typically, instruction breakpoints would be set from a diassembly window. \nTo clear all instruction breakpoints, specify an empty array.\nWhen an instruction breakpoint is hit, a 'stopped' event (with reason 'instruction breakpoint') is generated.\nClients should only call this request if the capability 'supportsInstructionBreakpoints' is true.",
+					"properties": {
+						"command": {
+						"type": "string",
+						"enum": [ "setInstructionBreakpoints" ]
+					},
+					"arguments": {
+						"$ref": "#/definitions/SetInstructionBreakpointsArguments"
+					}
+				},
+				"required": [ "command", "arguments" ]
+			}]
+		},
+		"SetInstructionBreakpointsArguments": {
+			"type": "object",
+			"description": "Arguments for 'setInstructionBreakpoints' request",
+			"properties": {
+				"breakpoints": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/InstructionBreakpoint"
+					},
+					"description": "The instruction references of the breakpoints"
+				}
+			},
+			"required": ["breakpoints"]
+		},
+		"SetInstructionBreakpointsResponse": {
+			"allOf": [
+				{ "$ref": "#/definitions/Response" },
+				{
+					"type": "object",
+					"description": "Response to 'setInstructionBreakpoints' request",
+					"properties": {
+						"body": {
+							"type": "object",
+							"properties": {
+								"breakpoints": {
+									"type": "array",
+									"items": {
+										"$ref": "#/definitions/Breakpoint"
+									},
+								"description": "Information about the breakpoints. The array elements correspond to the elements of the 'breakpoints' array."
 							}
 						},
 						"required": [ "breakpoints" ]
@@ -2840,6 +2897,10 @@
 				"supportsClipboardContext": {
 					"type": "boolean",
 					"description": "The debug adapter supports the 'clipboard' context value in the 'evaluate' request."
+				},
+				"supportsInstructionBreakpoints": {
+					"type": "boolean",
+					"description": "The debug adapter supports adding breakpoints based on instruction references."
 				}
 			}
 		},
@@ -3357,9 +3418,33 @@
 			"required": [ "dataId" ]
 		},
 
+		"InstructionBreakpoint": {
+			"type": "object",
+			"description": "Properties of a breakpoint passed to the setInstructionBreakpoints request",
+			"properties": {
+				"instructionReference": {
+					"type": "string",
+					"description": "The instruction reference of the breakpoint.\nThis should be a memory or instruction pointer reference from an EvaluateResponse, Variable, StackFrame, GotoTarget, or Breakpoint."
+				},
+				"offset": {
+					"type": "integer",
+					"description": "An optional offset from the instruction reference.\nThis can be negative."
+				},
+				"condition": {
+					"type": "string",
+					"description": "An optional expression for conditional breakpoints.\nIt is only honored by a debug adapter if the capability 'supportsConditionalBreakpoints' is true."
+				},
+				"hitCondition": {
+					"type": "string",
+					"description": "An optional expression that controls how many hits of the breakpoint are ignored.\nThe backend is expected to interpret the expression as needed.\nThe attribute is only honored by a debug adapter if the capability 'supportsHitConditionalBreakpoints' is true."
+				}
+			},
+			"required": [ "instructionReference" ]
+		},
+
 		"Breakpoint": {
 			"type": "object",
-			"description": "Information about a Breakpoint created in setBreakpoints or setFunctionBreakpoints.",
+			"description": "Information about a Breakpoint created in setBreakpoints, setFunctionBreakpoints, setInstructionBreakpoints, or setDataBreakpoints.",
 			"properties": {
 				"id": {
 					"type": "integer",
@@ -3392,6 +3477,14 @@
 				"endColumn": {
 					"type": "integer",
 					"description": "An optional end column of the actual range covered by the breakpoint.\nIf no end line is given, then the end column is assumed to be in the start line."
+				},
+				"instructionReference": {
+					"type": "string",
+					"description": "An optional memory reference to where the breakpoint is set."
+				},
+				"offset": {
+					"type": "integer",
+					"description": "An optional offset from the instruction reference.\nThis can be negative."
 				}
 			},
 			"required": [ "verified" ]
