@@ -1415,6 +1415,11 @@ interface NextArguments {
    * Execute 'next' for this thread.
    */
   threadId: number;
+
+  /**
+   * Optional granularity to step. If no granularity is specified, a granularity of 'statement' is assumed.
+   */
+  granularity?: SteppingGranularity;
 }
 ```
 
@@ -1462,6 +1467,11 @@ interface StepInArguments {
    * Optional id of the target to step into.
    */
   targetId?: number;
+
+  /**
+   * Optional granularity to step. If no granularity is specified, a granularity of 'statement' is assumed.
+   */
+  granularity?: SteppingGranularity;
 }
 ```
 
@@ -1496,6 +1506,11 @@ interface StepOutArguments {
    * Execute 'stepOut' for this thread.
    */
   threadId: number;
+
+  /**
+   * Optional granularity to step. If no granularity is specified, a granularity of 'statement' is assumed.
+   */
+  granularity?: SteppingGranularity;
 }
 ```
 
@@ -1532,6 +1547,11 @@ interface StepBackArguments {
    * Execute 'stepBack' for this thread.
    */
   threadId: number;
+
+  /**
+   * Optional granularity to step. If no granularity is specified, a granularity of 'statement' is assumed.
+   */
+  granularity?: SteppingGranularity;
 }
 ```
 
@@ -2812,6 +2832,11 @@ interface Capabilities {
    * The debug adapter supports the 'clipboard' context value in the 'evaluate' request.
    */
   supportsClipboardContext?: boolean;
+
+  /**
+   * The debug adapter supports stepping granularities.
+   */
+  supportsSteppingGranularity?: boolean;
 }
 ```
 
@@ -3501,6 +3526,14 @@ interface Breakpoint {
    */
   endColumn?: number;
 }
+```
+
+### <a name="Types_SteppingGranularity" class="anchor"></a>SteppingGranularity
+
+The granularity of the requested step.
+
+```typescript
+type SteppingGranularity = 'statement' | 'line' | 'instruction';
 ```
 
 ### <a name="Types_StepInTarget" class="anchor"></a>StepInTarget
