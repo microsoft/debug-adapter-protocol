@@ -128,7 +128,6 @@ function Type(typeName: string, definition: P.Definition | P.StringType, superty
 	s += '```typescript\n';
 
 	if ((<P.StringType>definition).enum) {
-		s += comment(<P.StringType> definition);
 		s += Enum(typeName, <P.StringType> definition);
 	} else {
 		s += Interface(typeName, <P.Definition> definition, supertype);

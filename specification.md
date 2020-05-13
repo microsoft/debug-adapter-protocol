@@ -3446,7 +3446,6 @@ interface FunctionBreakpoint {
 This enumeration defines all possible access types for data breakpoints.
 
 ```typescript
-This enumeration defines all possible access types for data breakpoints.
 type DataBreakpointAccessType = 'read' | 'write' | 'readWrite';
 ```
 
@@ -3534,12 +3533,6 @@ interface Breakpoint {
 The granularity of the requested step.
 
 ```typescript
-The granularity of the requested step.
-'statement': The step should allow the program to run until the current statement has finished executing.
-The meaning of a statement is determined by the adapter and it may be considered equivalent to a line.
-For example 'for(int i = 0; i < 10; i++) could be considered to have 3 statements 'int i = 0', 'i < 10', and 'i++'.
-'line': The step should allow the program to run until the current source line has executed.
-'instruction': The step should allow one instruction to execute (e.g. one x86 instruction).
 type SteppingGranularity = 'statement' | 'line' | 'instruction';
 ```
 
@@ -3665,7 +3658,6 @@ interface CompletionItem {
 Some predefined types for the CompletionItem. Please note that not all clients have specific icons for all of them.
 
 ```typescript
-Some predefined types for the CompletionItem. Please note that not all clients have specific icons for all of them.
 type CompletionItemType = 'method' | 'function' | 'constructor' | 'field' | 'variable' | 'class' | 'interface' | 'module' | 'property' | 'unit' | 'value' | 'enum' | 'keyword' | 'snippet' | 'text' | 'color' | 'file' | 'reference' | 'customcolor';
 ```
 
@@ -3674,7 +3666,6 @@ type CompletionItemType = 'method' | 'function' | 'constructor' | 'field' | 'var
 Names of checksum algorithms that may be supported by a debug adapter.
 
 ```typescript
-Names of checksum algorithms that may be supported by a debug adapter.
 type ChecksumAlgorithm = 'MD5' | 'SHA1' | 'SHA256' | 'timestamp';
 ```
 
@@ -3784,11 +3775,6 @@ unhandled: breaks when exception unhandled,
 userUnhandled: breaks if the exception is not handled by user code.
 
 ```typescript
-This enumeration defines all possible conditions when a thrown exception should result in a break.
-never: never breaks,
-always: always breaks,
-unhandled: breaks when exception unhandled,
-userUnhandled: breaks if the exception is not handled by user code.
 type ExceptionBreakMode = 'never' | 'always' | 'unhandled' | 'userUnhandled';
 ```
 
