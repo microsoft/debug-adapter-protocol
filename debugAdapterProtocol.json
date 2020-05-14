@@ -2914,14 +2914,14 @@
 					"type": "boolean",
 					"description": "The debug adapter supports the 'clipboard' context value in the 'evaluate' request."
 				},
-     		"supportsSteppingGranularity": {
+				"supportsSteppingGranularity": {
 					"type": "boolean",
 					"description": "The debug adapter supports stepping granularities (argument 'granularity') for the stepping requests."
 				},
 				"supportsInstructionBreakpoints": {
 					"type": "boolean",
 					"description": "The debug adapter supports adding breakpoints based on instruction references."
-        }
+				}
 			}
 		},
 

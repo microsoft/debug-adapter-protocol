@@ -2876,12 +2876,12 @@ interface Capabilities {
    * The debug adapter supports the 'clipboard' context value in the 'evaluate' request.
    */
   supportsClipboardContext?: boolean;
-  
+
   /**
    * The debug adapter supports stepping granularities (argument 'granularity') for the stepping requests.
    */
   supportsSteppingGranularity?: boolean;
-  
+
   /**
    * The debug adapter supports adding breakpoints based on instruction references.
    */

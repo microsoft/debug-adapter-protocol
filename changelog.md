@@ -8,6 +8,7 @@ sectionid: changelog
 
 * 1.41.x:
   * Add "stepping granularity" support for the stepping requests `next`, `stepIn`, `stepOut`, `stepBack` and a corresponding **client** capability `supportsSteppingGranularity`.
+  * Add instruction breakpoints and a corresponding **client** capability `supportsInstructionBreakpoints`.
 
 * 1.40.x:
   * New value `clipboard` for `context` argument of `evaluate` request.
