@@ -195,6 +195,8 @@
       anchor: Types_StackFrameFormat
     - title: StepInTarget
       anchor: Types_StepInTarget
+    - title: SteppingGranularity
+      anchor: Types_SteppingGranularity
     - title: Thread
       anchor: Types_Thread
     - title: ValueFormat

@@ -181,7 +181,7 @@
 		"StoppedEvent": {
 			"allOf": [ { "$ref": "#/definitions/Event" }, {
 				"type": "object",
-				"description": "The event indicates that the execution of the debuggee has stopped due to some condition.\nThis can be caused by a break point previously set, a stepping action has completed, by executing a debugger statement etc.",
+				"description": "The event indicates that the execution of the debuggee has stopped due to some condition.\nThis can be caused by a break point previously set, a stepping request has completed, by executing a debugger statement etc.",
 				"properties": {
 					"event": {
 						"type": "string",
@@ -1482,6 +1482,10 @@
 				"threadId": {
 					"type": "integer",
 					"description": "Execute 'next' for this thread."
+				},
+				"granularity": {
+					"$ref": "#/definitions/SteppingGranularity",
+					"description": "Optional granularity to step. If no granularity is specified, a granularity of 'statement' is assumed."
 				}
 			},
 			"required": [ "threadId" ]
@@ -1520,6 +1524,10 @@
 				"targetId": {
 					"type": "integer",
 					"description": "Optional id of the target to step into."
+				},
+				"granularity": {
+					"$ref": "#/definitions/SteppingGranularity",
+					"description": "Optional granularity to step. If no granularity is specified, a granularity of 'statement' is assumed."
 				}
 			},
 			"required": [ "threadId" ]
@@ -1554,6 +1562,10 @@
 				"threadId": {
 					"type": "integer",
 					"description": "Execute 'stepOut' for this thread."
+				},
+				"granularity": {
+					"$ref": "#/definitions/SteppingGranularity",
+					"description": "Optional granularity to step. If no granularity is specified, a granularity of 'statement' is assumed."
 				}
 			},
 			"required": [ "threadId" ]
@@ -1588,6 +1600,10 @@
 				"threadId": {
 					"type": "integer",
 					"description": "Execute 'stepBack' for this thread."
+				},
+				"granularity": {
+					"$ref": "#/definitions/SteppingGranularity",
+					"description": "Optional granularity to step. If no granularity is specified, a granularity of 'statement' is assumed."
 				}
 			},
 			"required": [ "threadId" ]
@@ -2898,10 +2914,14 @@
 					"type": "boolean",
 					"description": "The debug adapter supports the 'clipboard' context value in the 'evaluate' request."
 				},
+     		"supportsSteppingGranularity": {
+					"type": "boolean",
+					"description": "The debug adapter supports stepping granularities (argument 'granularity') for the stepping requests."
+				},
 				"supportsInstructionBreakpoints": {
 					"type": "boolean",
 					"description": "The debug adapter supports adding breakpoints based on instruction references."
-				}
+        }
 			}
 		},
 
@@ -3488,6 +3508,17 @@
 				}
 			},
 			"required": [ "verified" ]
+		},
+
+		"SteppingGranularity": {
+			"type": "string",
+			"description": "The granularity of one 'step' in the stepping requests 'next', 'stepIn', 'stepOut', and 'stepBack'.",
+			"enum": [ "statement", "line", "instruction" ],
+			"enumDescriptions": [
+				"The step should allow the program to run until the current statement has finished executing.\nThe meaning of a statement is determined by the adapter and it may be considered equivalent to a line.\nFor example 'for(int i = 0; i < 10; i++) could be considered to have 3 statements 'int i = 0', 'i < 10', and 'i++'.",
+				"The step should allow the program to run until the current source line has executed.",
+				"The step should allow one instruction to execute (e.g. one x86 instruction)."
+			]
 		},
 
 		"StepInTarget": {

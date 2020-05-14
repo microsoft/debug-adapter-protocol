@@ -213,7 +213,7 @@ interface InitializedEvent extends Event {
 
 The event indicates that the execution of the debuggee has stopped due to some condition.
 
-This can be caused by a break point previously set, a stepping action has completed, by executing a debugger statement etc.
+This can be caused by a break point previously set, a stepping request has completed, by executing a debugger statement etc.
 
 ```typescript
 interface StoppedEvent extends Event {
@@ -1459,6 +1459,11 @@ interface NextArguments {
    * Execute 'next' for this thread.
    */
   threadId: number;
+
+  /**
+   * Optional granularity to step. If no granularity is specified, a granularity of 'statement' is assumed.
+   */
+  granularity?: SteppingGranularity;
 }
 ```
 
@@ -1506,6 +1511,11 @@ interface StepInArguments {
    * Optional id of the target to step into.
    */
   targetId?: number;
+
+  /**
+   * Optional granularity to step. If no granularity is specified, a granularity of 'statement' is assumed.
+   */
+  granularity?: SteppingGranularity;
 }
 ```
 
@@ -1540,6 +1550,11 @@ interface StepOutArguments {
    * Execute 'stepOut' for this thread.
    */
   threadId: number;
+
+  /**
+   * Optional granularity to step. If no granularity is specified, a granularity of 'statement' is assumed.
+   */
+  granularity?: SteppingGranularity;
 }
 ```
 
@@ -1576,6 +1591,11 @@ interface StepBackArguments {
    * Execute 'stepBack' for this thread.
    */
   threadId: number;
+
+  /**
+   * Optional granularity to step. If no granularity is specified, a granularity of 'statement' is assumed.
+   */
+  granularity?: SteppingGranularity;
 }
 ```
 
@@ -2856,7 +2876,12 @@ interface Capabilities {
    * The debug adapter supports the 'clipboard' context value in the 'evaluate' request.
    */
   supportsClipboardContext?: boolean;
-
+  
+  /**
+   * The debug adapter supports stepping granularities (argument 'granularity') for the stepping requests.
+   */
+  supportsSteppingGranularity?: boolean;
+  
   /**
    * The debug adapter supports adding breakpoints based on instruction references.
    */
@@ -3594,6 +3619,14 @@ interface Breakpoint {
    */
   offset?: number;
 }
+```
+
+### <a name="Types_SteppingGranularity" class="anchor"></a>SteppingGranularity
+
+The granularity of one 'step' in the stepping requests 'next', 'stepIn', 'stepOut', and 'stepBack'.
+
+```typescript
+type SteppingGranularity = 'statement' | 'line' | 'instruction';
 ```
 
 ### <a name="Types_StepInTarget" class="anchor"></a>StepInTarget

@@ -6,10 +6,13 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.41.x:
+  * Add "stepping granularity" support for the stepping requests `next`, `stepIn`, `stepOut`, `stepBack` and a corresponding **client** capability `supportsSteppingGranularity`.
+
 * 1.40.x:
-  * new value `clipboard` for `context` argument of `evaluate` request.
-  * add support for reporting progress via `progressStart`, `progressUpdate`, and `progressEnd` events and a corresponding **client** capability `supportsProgressReporting`. Progress can be cancelled via a new `progressId` argument for the `cancel` request.
-  * clarifed descriptions of all optional requests, events, and attributes to make clear what is the corresponding capability.
+  * New value `clipboard` for `context` argument of `evaluate` request.
+  * Add support for reporting progress via `progressStart`, `progressUpdate`, and `progressEnd` events and a corresponding **client** capability `supportsProgressReporting`. Progress can be cancelled via a new `progressId` argument for the `cancel` request.
+  * Clarifed descriptions of all optional requests, events, and attributes to make clear what is the corresponding capability.
 
 * 1.39.x:
   * add optional `selectionStart` and `selectionLength` attributes to completion item. With these attributes the selection range or position can be controlled after the completion text has been inserted.
