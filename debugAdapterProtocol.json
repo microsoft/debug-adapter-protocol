@@ -1425,6 +1425,10 @@
 				"threadId": {
 					"type": "integer",
 					"description": "Execute 'next' for this thread."
+				},
+				"granularity": {
+					"$ref": "#/definitions/SteppingGranularity",
+					"description": "Optional granularity to step. If no granularity is specified, a granularity of 'statement' is assumed."
 				}
 			},
 			"required": [ "threadId" ]
@@ -1463,6 +1467,10 @@
 				"targetId": {
 					"type": "integer",
 					"description": "Optional id of the target to step into."
+				},
+				"granularity": {
+					"$ref": "#/definitions/SteppingGranularity",
+					"description": "Optional granularity to step. If no granularity is specified, a granularity of 'statement' is assumed."
 				}
 			},
 			"required": [ "threadId" ]
@@ -1497,6 +1505,10 @@
 				"threadId": {
 					"type": "integer",
 					"description": "Execute 'stepOut' for this thread."
+				},
+				"granularity": {
+					"$ref": "#/definitions/SteppingGranularity",
+					"description": "Optional granularity to step. If no granularity is specified, a granularity of 'statement' is assumed."
 				}
 			},
 			"required": [ "threadId" ]
@@ -1531,6 +1543,10 @@
 				"threadId": {
 					"type": "integer",
 					"description": "Execute 'stepBack' for this thread."
+				},
+				"granularity": {
+					"$ref": "#/definitions/SteppingGranularity",
+					"description": "Optional granularity to step. If no granularity is specified, a granularity of 'statement' is assumed."
 				}
 			},
 			"required": [ "threadId" ]
@@ -2840,6 +2856,10 @@
 				"supportsClipboardContext": {
 					"type": "boolean",
 					"description": "The debug adapter supports the 'clipboard' context value in the 'evaluate' request."
+				},
+				"supportsSteppingGranularity": {
+					"type": "boolean",
+					"description": "The debug adapter supports stepping granularities."
 				}
 			}
 		},
@@ -3395,6 +3415,17 @@
 				}
 			},
 			"required": [ "verified" ]
+		},
+
+		"SteppingGranularity": {
+			"type": "string",
+			"description": "The granularity of the requested step.",
+			"enum": [ "statement", "line", "instruction" ],
+			"enumDescriptions": [
+				"The step should allow the program to run until the current statement has finished executing.\nThe meaning of a statement is determined by the adapter and it may be considered equivalent to a line.\nFor example 'for(int i = 0; i < 10; i++) could be considered to have 3 statements 'int i = 0', 'i < 10', and 'i++'.",
+				"The step should allow the program to run until the current source line has executed.",
+				"The step should allow one instruction to execute (e.g. one x86 instruction)."
+			]
 		},
 
 		"StepInTarget": {
