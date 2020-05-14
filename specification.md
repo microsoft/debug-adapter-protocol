@@ -213,7 +213,7 @@ interface InitializedEvent extends Event {
 
 The event indicates that the execution of the debuggee has stopped due to some condition.
 
-This can be caused by a break point previously set, a stepping action has completed, by executing a debugger statement etc.
+This can be caused by a break point previously set, a stepping request has completed, by executing a debugger statement etc.
 
 ```typescript
 interface StoppedEvent extends Event {
@@ -2834,7 +2834,7 @@ interface Capabilities {
   supportsClipboardContext?: boolean;
 
   /**
-   * The debug adapter supports stepping granularities.
+   * The debug adapter supports stepping granularities (argument 'granularity') for the stepping requests.
    */
   supportsSteppingGranularity?: boolean;
 }
@@ -3530,7 +3530,7 @@ interface Breakpoint {
 
 ### <a name="Types_SteppingGranularity" class="anchor"></a>SteppingGranularity
 
-The granularity of the requested step.
+The granularity of one 'step' in the stepping requests 'next', 'stepIn', 'stepOut', and 'stepBack'.
 
 ```typescript
 type SteppingGranularity = 'statement' | 'line' | 'instruction';
