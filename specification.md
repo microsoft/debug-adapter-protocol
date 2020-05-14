@@ -223,7 +223,7 @@ interface StoppedEvent extends Event {
     /**
      * The reason for the event.
      * For backward compatibility this string is shown in the UI if the 'description' attribute is missing (but it must not be translated).
-     * Values: 'step', 'breakpoint', 'exception', 'pause', 'entry', 'goto', 'function breakpoint', 'data breakpoint', etc.
+     * Values: 'step', 'breakpoint', 'exception', 'pause', 'entry', 'goto', 'function breakpoint', 'data breakpoint', 'instruction breakpoint', etc.
      */
     reason: string;
 
@@ -1346,6 +1346,50 @@ interface SetDataBreakpointsResponse extends Response {
   body: {
     /**
      * Information about the data breakpoints. The array elements correspond to the elements of the input argument 'breakpoints' array.
+     */
+    breakpoints: Breakpoint[];
+  };
+}
+```
+
+### <a name="Requests_SetInstructionBreakpoints" class="anchor"></a>:leftwards_arrow_with_hook: SetInstructionBreakpoints Request
+
+Replaces all existing instruction breakpoints. Typically, instruction breakpoints would be set from a diassembly window. 
+
+To clear all instruction breakpoints, specify an empty array.
+
+When an instruction breakpoint is hit, a 'stopped' event (with reason 'instruction breakpoint') is generated.
+
+Clients should only call this request if the capability 'supportsInstructionBreakpoints' is true.
+
+```typescript
+interface SetInstructionBreakpointsRequest extends Request {
+  command: 'setInstructionBreakpoints';
+
+  arguments: SetInstructionBreakpointsArguments;
+}
+```
+
+Arguments for 'setInstructionBreakpoints' request
+
+<a name="Types_SetInstructionBreakpointsArguments" class="anchor"></a>
+```typescript
+interface SetInstructionBreakpointsArguments {
+  /**
+   * The instruction references of the breakpoints
+   */
+  breakpoints: InstructionBreakpoint[];
+}
+```
+
+Response to 'setInstructionBreakpoints' request
+
+<a name="Types_SetInstructionBreakpointsResponse" class="anchor"></a>
+```typescript
+interface SetInstructionBreakpointsResponse extends Response {
+  body: {
+    /**
+     * Information about the breakpoints. The array elements correspond to the elements of the 'breakpoints' array.
      */
     breakpoints: Breakpoint[];
   };
@@ -2832,11 +2876,16 @@ interface Capabilities {
    * The debug adapter supports the 'clipboard' context value in the 'evaluate' request.
    */
   supportsClipboardContext?: boolean;
-
+  
   /**
    * The debug adapter supports stepping granularities (argument 'granularity') for the stepping requests.
    */
   supportsSteppingGranularity?: boolean;
+  
+  /**
+   * The debug adapter supports adding breakpoints based on instruction references.
+   */
+  supportsInstructionBreakpoints?: boolean;
 }
 ```
 
@@ -3478,9 +3527,42 @@ interface DataBreakpoint {
 }
 ```
 
+### <a name="Types_InstructionBreakpoint" class="anchor"></a>InstructionBreakpoint
+
+Properties of a breakpoint passed to the setInstructionBreakpoints request
+
+```typescript
+interface InstructionBreakpoint {
+  /**
+   * The instruction reference of the breakpoint.
+   * This should be a memory or instruction pointer reference from an EvaluateResponse, Variable, StackFrame, GotoTarget, or Breakpoint.
+   */
+  instructionReference: string;
+
+  /**
+   * An optional offset from the instruction reference.
+   * This can be negative.
+   */
+  offset?: number;
+
+  /**
+   * An optional expression for conditional breakpoints.
+   * It is only honored by a debug adapter if the capability 'supportsConditionalBreakpoints' is true.
+   */
+  condition?: string;
+
+  /**
+   * An optional expression that controls how many hits of the breakpoint are ignored.
+   * The backend is expected to interpret the expression as needed.
+   * The attribute is only honored by a debug adapter if the capability 'supportsHitConditionalBreakpoints' is true.
+   */
+  hitCondition?: string;
+}
+```
+
 ### <a name="Types_Breakpoint" class="anchor"></a>Breakpoint
 
-Information about a Breakpoint created in setBreakpoints or setFunctionBreakpoints.
+Information about a Breakpoint created in setBreakpoints, setFunctionBreakpoints, setInstructionBreakpoints, or setDataBreakpoints.
 
 ```typescript
 interface Breakpoint {
@@ -3525,6 +3607,17 @@ interface Breakpoint {
    * If no end line is given, then the end column is assumed to be in the start line.
    */
   endColumn?: number;
+
+  /**
+   * An optional memory reference to where the breakpoint is set.
+   */
+  instructionReference?: string;
+
+  /**
+   * An optional offset from the instruction reference.
+   * This can be negative.
+   */
+  offset?: number;
 }
 ```
 
