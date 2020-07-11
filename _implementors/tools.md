@@ -17,7 +17,8 @@ The following table lists the known development tools (IDEs) that implement the 
 | Emacs                         | emacs.dap-mode | [@yyoncho](https://github.com/yyoncho) | [dap-mode](https://github.com/yyoncho/dap-mode)
 | Theia                         | Theia        | Eclipse    | [theia](https://github.com/theia-ide/theia/)
 | Vim                           | vimspector   | [Ben Jackson](https://github.com/puremourning) | [vimspector](https://github.com/puremourning/vimspector), [vim](https://github.com/vim/vim)
-| Cloud Studio                  | cloudstudio  | [CODING](https://studio.dev.tencent.com/) | 
+| Cloud Studio                  | cloudstudio  | [CODING](https://studio.dev.tencent.com/) 
+| JCIDE                         | JCIDE        | [JavaCardOS](https://www.javacardos.com/)   | [JCIDE](https://www.javacardos.com/tools)|
 {: .table .table-bordered .table-responsive}
 
 The "client ID" is the identifier that a development tool sends to the debug adapter as part of the [**initialize**](../../specification#Requests_Initialize) request.
