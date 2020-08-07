@@ -43,6 +43,7 @@ The following table lists the known debug adapters that implement the Debug Adap
 [Kotlin](https://marketplace.visualstudio.com/items?itemName=fwcd.kotlin)|[@fwcd](https://github.com/fwcd)|[fwcd/kotlin-debug-adapter](https://github.com/fwcd/kotlin-debug-adapter)
 [LLDB Debugger](https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb)|[@vadimcn](https://github.com/vadimcn)|[vadimcn/vscode-lldb](https://github.com/vadimcn/vscode-lldb)
 [Lua and Ravi 5.3 Debugger](https://marketplace.visualstudio.com/items?itemName=ravilang.ravi-debug)|[@dibyendumajumdar](https://github.com/dibyendumajumdar)|[dibyendumajumdar/ravi-vscode-debugger](https://github.com/dibyendumajumdar/ravi-vscode-debugger)
+[Lua Debug](https://marketplace.visualstudio.com/items?itemName=actboy168.lua-debug)|[@actboy168](https://github.com/actboy168)|[actboy168/lua-debug](https://github.com/actboy168/lua-debug)
 [Mock Debug](https://marketplace.visualstudio.com/items?itemName=andreweinand.mock-debug)|[@weinand](https://github.com/weinand)|[Microsoft/vscode-mock-debug](https://github.com/Microsoft/vscode-mock-debug)
 [Mono Debug](https://marketplace.visualstudio.com/items?itemName=ms-vscode.mono-debug)|[@weinand](https://github.com/weinand)|[Microsoft/vscode-mono-debug](https://github.com/Microsoft/vscode-mono-debug)
 [NativeScript](https://marketplace.visualstudio.com/items?itemName=Telerik.nativescript)|[@ivanbuhov](https://github.com/ivanbuhov)|[NativeScript/nativescript-vscode-extension](https://github.com/NativeScript/nativescript-vscode-extension/)
