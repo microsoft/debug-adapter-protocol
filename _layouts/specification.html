@@ -17,7 +17,7 @@ layout: default
                 <div id="outlineAccordion" data-children=".item">
                     {% for toc-l2 in toc-l1.children %}
                     <div class="item">
-                        <a class="nav-link" data-toggle="collapse" data-parent="#outlineAccordion" href="#{{ toc-l2.anchor }}" aria-expanded="true" aria-controls="exampleAccordion1">
+                        <a class="nav-link" data-toggle="collapse" data-parent="#outlineAccordion" href="#{{ toc-l2.anchor }}" aria-expanded="true" aria-controls="outlineAccordion">
                             {{ toc-l2.title }}
                         </a>
                         <div id="{{ toc-l2.anchor }}" class="collapse {% if toc-l2.anchor=='general' %}show{% endif%}" role="tabpanel">

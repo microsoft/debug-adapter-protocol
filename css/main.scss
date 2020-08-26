@@ -23,6 +23,10 @@ body {
 	padding: 40px 0;
 }
 
+.bg-primary {
+	background-color: #2753e3 !important;
+  }
+
 .header-container {
   color: #fff;
 
@@ -91,11 +95,11 @@ pre[class=highlight] {
 }
 
 .highlight .c {
-	color: #929292
+	color: #525151
 }
 
 .highlight .err {
-	color: #929292
+	color: #525151
 }
 
 .highlight .k {
@@ -103,11 +107,11 @@ pre[class=highlight] {
 }
 
 .highlight .l {
-	color: #F5871F
+	color: #85450A
 }
 
 .highlight .n {
-	color: #929292
+	color: #525151
 }
 
 .highlight .o {
@@ -115,23 +119,23 @@ pre[class=highlight] {
 }
 
 .highlight .p {
-	color: #929292
+	color: #525151
 }
 
 .highlight .cm {
-	color: #929292
+	color: #525151
 }
 
 .highlight .cp {
-	color: #929292
+	color: #525151
 }
 
 .highlight .c1 {
-	color: #929292
+	color: #525151
 }
 
 .highlight .cs {
-	color: #929292
+	color: #525151
 }
 
 .highlight .gd {
@@ -148,11 +152,11 @@ pre[class=highlight] {
 }
 
 .highlight .gi {
-	color: #718C00
+	color: #5B7201
 }
 
 .highlight .gp {
-	color: #718C00;
+	color: #5B7201;
 	font-weight: bold
 }
 
@@ -190,15 +194,15 @@ pre[class=highlight] {
 }
 
 .highlight .ld {
-	color: #718C00
+	color: #5B7201
 }
 
 .highlight .m {
-	color: #F5871F
+	color: #85450A
 }
 
 .highlight .s {
-	color: #718C00
+	color: #5B7201
 }
 
 .highlight .na {
@@ -266,23 +270,23 @@ pre[class=highlight] {
 }
 
 .highlight .mf {
-	color: #F5871F
+	color: #85450A
 }
 
 .highlight .mh {
-	color: #F5871F
+	color: #85450A
 }
 
 .highlight .mi {
-	color: #F5871F
+	color: #85450A
 }
 
 .highlight .mo {
-	color: #F5871F
+	color: #85450A
 }
 
 .highlight .sb {
-	color: #718C00
+	color: #5B7201
 }
 
 .highlight .sc {
@@ -290,39 +294,39 @@ pre[class=highlight] {
 }
 
 .highlight .sd {
-	color: #929292
+	color: #525151
 }
 
 .highlight .s2 {
-	color: #718C00
+	color: #5B7201
 }
 
 .highlight .se {
-	color: #F5871F
+	color: #85450A
 }
 
 .highlight .sh {
-	color: #718C00
+	color: #5B7201
 }
 
 .highlight .si {
-	color: #F5871F
+	color: #85450A
 }
 
 .highlight .sx {
-	color: #718C00
+	color: #5B7201
 }
 
 .highlight .sr {
-	color: #718C00
+	color: #5B7201
 }
 
 .highlight .s1 {
-	color: #718C00
+	color: #5B7201
 }
 
 .highlight .ss {
-	color: #718C00
+	color: #5B7201
 }
 
 .highlight .bp {
@@ -342,7 +346,7 @@ pre[class=highlight] {
 }
 
 .highlight .il {
-	color: #F5871F
+	color: #85450A
 }
 
 .more-info {
@@ -426,6 +430,22 @@ pre[class=highlight] {
     font-size: 18px;
     font-weight: bold;
     margin: 0;
+}
+
+.nav .nav-link {
+	color: #2753e3 !important;
+  }  
+
+.nav .nav-link:hover {
+	color: #1034a8 !important;
+}  
+
+a { 
+	color: #2753e3;
+}  
+
+a:hover {
+	color: #1034a8
 }
 
 .navbar-dark .navbar-nav .nav-link:hover {
