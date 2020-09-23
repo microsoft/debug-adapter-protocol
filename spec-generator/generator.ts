@@ -118,17 +118,19 @@ function Type(typeName: string, definition: P.Definition | P.StringType, superty
 
 	if (lastRequestType.length > 0 && typeName.startsWith(lastRequestType) && typeName !== `${lastRequestType}Request` && typeName !== 'DisassembledInstruction') {
 		// this definition belongs to the previous request: don't add header but add an anchor so that we can link to it
-		s += description(definition);
+		s += comment(definition);
 		s += `<a name="Types_${shortHeading}" class="anchor"></a>\n`;
 	} else {
 		s += Header(3, heading, shortHeading);
-		s += description(definition);
+		s += comment(definition);
 	}
 
 	s += '```typescript\n';
 
 	if ((<P.StringType>definition).enum) {
 		s += Enum(typeName, <P.StringType> definition);
+	} else if ((<P.StringType>definition)._enum) {
+		s += _Enum(typeName, <P.StringType> definition);
 	} else {
 		s += Interface(typeName, <P.Definition> definition, supertype);
 	}
@@ -200,8 +202,36 @@ function Enum(typeName: string, definition: P.StringType): string {
 	return line(`type ${typeName} = ${x};`);
 }
 
-function enumAsOrType(enm: string[]) {
-	return enm.map(v => `'${v}'`).join(' | ');
+function _Enum(typeName: string, definition: P.StringType): string {
+	const x = enumAsOrType(definition._enum, true);
+	return line(`export type ${typeName} = ${x};`);
+}
+
+function enumAsOrType(enm: string[], open = false) {
+	let r = enm.map(v => `'${v}'`).join(' | ');
+	if (open) {
+		r += ' | string';
+	}
+	return r;
+}
+
+function enumDescriptions(c: P.Commentable, markdown: boolean) {
+
+	const bullet = markdown ? '- ' : '';
+	let description = '';
+	const e = c.enum || c._enum;
+	if (e) {
+		description += '\nValues: ';
+		if (c.enumDescriptions) {
+			for (let i = 0; i < e.length; i++) {
+				description += `\n${bullet}'${e[i]}': ${c.enumDescriptions[i]}`;
+			}
+			description += '\netc.';
+		} else {
+			description += `${e.map(v => `'${v}'`).join(', ')}, etc.`;
+		}
+	}
+	return description;
 }
 
 function comment(c: P.Commentable): string {
@@ -213,33 +243,17 @@ function comment(c: P.Commentable): string {
 		c = (<any>c).items;
 	}
 
-	// a 'closed' enum with individual descriptions
-	if (c.enum && c.enumDescriptions) {
-		for (let i = 0; i < c.enum.length; i++) {
-			description += `\n'${c.enum[i]}': ${c.enumDescriptions[i]}`;
-		}
-	}
-
-	// an 'open' enum
-	if (c._enum) {
-		description += '\nValues: ';
-		if (c.enumDescriptions) {
-			for (let i = 0; i < c._enum.length; i++) {
-				description += `\n'${c._enum[i]}': ${c.enumDescriptions[i]}`;
-			}
-			description += '\netc.';
-		} else {
-			description += `${c._enum.map(v => `'${v}'`).join(', ')}, etc.`;
-		}
-	}
-
 	if (description) {
 		if (numIndents === 0) {
+
 			// in markdown
-			description = description.replace(/\n/g, '\n');
-			return description + '\n';
+			description = description.replace(/\n/g, '\n\n').replace(/\n\n- /g, '\n- ');
+			description += enumDescriptions(c, true);
+			return description + '\n\n';
 		} else {
+			
 			// in code
+			description += enumDescriptions(c, false);
 			description = description.replace(/<code>(.*)<\/code>/g, "'$1'");
 			const ind = indent();
 			return `${ind}/**\n${ind} * ` + description.replace(/\n/g, `\n${ind} * `) + `\n${ind} */\n`;
@@ -279,6 +293,8 @@ function propertyType(prop: any): string {
 		case 'string':
 			if (prop.enum) {
 				return enumAsOrType(prop.enum);
+			} else if (prop._enum) {
+				return enumAsOrType(prop._enum, true);
 			}
 			return `string`;
 		case 'integer':
