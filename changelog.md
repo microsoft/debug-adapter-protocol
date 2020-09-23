@@ -6,6 +6,9 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.42.x:
+  * Add `invalidated` event and a corresponding **client** capability `supportsInvalidatedEvent`.
+
 * 1.41.x:
   * Add "stepping granularity" support for the stepping requests `next`, `stepIn`, `stepOut`, `stepBack` and a corresponding **client** capability `supportsSteppingGranularity`.
   * Add instruction breakpoints and a corresponding **client** capability `supportsInstructionBreakpoints`.

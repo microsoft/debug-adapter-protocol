@@ -28,6 +28,8 @@
       anchor: Events_Exited
     - title: Initialized
       anchor: Events_Initialized
+    - title: Invalidated
+      anchor: Events_Invalidated
     - title: LoadedSource
       anchor: Events_LoadedSource
     - title: Module
@@ -177,6 +179,8 @@
       anchor: Types_GotoTarget
     - title: InstructionBreakpoint
       anchor: Types_InstructionBreakpoint
+    - title: InvalidatedAreas
+      anchor: Types_InvalidatedAreas
     - title: Message
       anchor: Types_Message
     - title: Module

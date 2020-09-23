@@ -650,6 +650,40 @@
 			}]
 		},
 
+		"InvalidatedEvent": {
+			"allOf": [ { "$ref": "#/definitions/Event" }, {
+				"type": "object",
+				"description": "This event signals that some state in the debug adapter has changed and requires that the client needs to re-render the data snapshot previously requested.\nDebug adapters do not have to emit this event for runtime changes like stopped or thread events because in that case the client refetches the new state anyway. But the event can be used for example to refresh the UI after rendering formatting has changed in the debug adapter.\nThis event should only be sent if the debug adapter has received a value true for the 'supportsInvalidatedEvent' capability of the 'initialize' request.",
+				"properties": {
+					"event": {
+						"type": "string",
+						"enum": [ "invalidated" ]
+					},
+					"body": {
+						"type": "object",
+						"properties": {
+							"areas": {
+								"type": "array",
+								"description": "Optional set of logical areas that got invalidated. This property has a hint characteristic: a client can only be expected to make a 'best effort' in honouring the areas but there are no guarantees. If this property is missing, empty, or if values are not understand the client should assume a single value 'all'.",
+								"items": {
+									"$ref": "#/definitions/InvalidatedAreas"
+								}
+							},
+							"threadId": {
+								"type": "number",
+								"description": "If specified, the client only needs to refetch data related to this thread."
+							},
+							"stackFrameId": {
+								"type": "number",
+								"description": "If specified, the client only needs to refetch data related to this stack frame (and the 'threadId' is ignored)."
+							}
+						}
+					}
+				},
+				"required": [ "event", "body" ]
+			}]
+		},
+
 		"RunInTerminalRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
@@ -794,6 +828,10 @@
 				"supportsProgressReporting": {
 					"type": "boolean",
 					"description": "Client supports progress reporting."
+				},
+				"supportsInvalidatedEvent": {
+					"type": "boolean",
+					"description": "Client supports the invalidated event."
 				}
 			},
 			"required": [ "adapterID" ]
@@ -3809,6 +3847,18 @@
 				}
 			},
 			"required": [ "address", "instruction" ]
+		},
+
+		"InvalidatedAreas": {
+			"type": "string",
+			"description": "Logical areas that can be invalidated by the 'invalidated' event.",
+			"_enum": [ "all", "stacks", "threads", "variables" ],
+			"enumDescriptions": [
+				"All previously fetched data has become invalid and needs to be refetched.",
+				"Previously fetched stack related data has become invalid and needs to be refetched.",
+				"Previously fetched thread related data has become invalid and needs to be refetched.",
+				"Previously fetched variable data has become invalid and needs to be refetched."
+			]
 		}
 
 	}

@@ -29,7 +29,7 @@ interface ProtocolMessage {
    * Message type.
    * Values: 'request', 'response', 'event', etc.
    */
-  type: string;
+  type: 'request' | 'response' | 'event' | string;
 }
 ```
 
@@ -106,7 +106,7 @@ interface Response extends ProtocolMessage {
    * 'cancelled': request was cancelled.
    * etc.
    */
-  message?: string;
+  message?: 'cancelled' | string;
 
   /**
    * Contains request result if success is true and optional error details if success is false.
@@ -225,7 +225,7 @@ interface StoppedEvent extends Event {
      * For backward compatibility this string is shown in the UI if the 'description' attribute is missing (but it must not be translated).
      * Values: 'step', 'breakpoint', 'exception', 'pause', 'entry', 'goto', 'function breakpoint', 'data breakpoint', 'instruction breakpoint', etc.
      */
-    reason: string;
+    reason: 'step' | 'breakpoint' | 'exception' | 'pause' | 'entry' | 'goto' | 'function breakpoint' | 'data breakpoint' | 'instruction breakpoint' | string;
 
     /**
      * The full reason for the event, e.g. 'Paused on exception'. This string is shown in the UI as is and must be translated.
@@ -331,7 +331,7 @@ interface ThreadEvent extends Event {
      * The reason for the event.
      * Values: 'started', 'exited', etc.
      */
-    reason: string;
+    reason: 'started' | 'exited' | string;
 
     /**
      * The identifier of the thread.
@@ -354,7 +354,7 @@ interface OutputEvent extends Event {
      * The output category. If not specified, 'console' is assumed.
      * Values: 'console', 'stdout', 'stderr', 'telemetry', etc.
      */
-    category?: string;
+    category?: 'console' | 'stdout' | 'stderr' | 'telemetry' | string;
 
     /**
      * The output to report.
@@ -363,12 +363,14 @@ interface OutputEvent extends Event {
 
     /**
      * Support for keeping an output log organized by grouping related messages.
+     * Values: 
      * 'start': Start a new group in expanded mode. Subsequent output events are members of the group and should be shown indented.
      * The 'output' attribute becomes the name of the group and is not indented.
      * 'startCollapsed': Start a new group in collapsed mode. Subsequent output events are members of the group and should be shown indented (as soon as the group is expanded).
      * The 'output' attribute becomes the name of the group and is not indented.
      * 'end': End the current group and decreases the indentation of subsequent output events.
      * A non empty 'output' attribute is shown as the unindented end of the group.
+     * etc.
      */
     group?: 'start' | 'startCollapsed' | 'end';
 
@@ -413,7 +415,7 @@ interface BreakpointEvent extends Event {
      * The reason for the event.
      * Values: 'changed', 'new', 'removed', etc.
      */
-    reason: string;
+    reason: 'changed' | 'new' | 'removed' | string;
 
     /**
      * The 'id' attribute is used to find the target breakpoint and the other attributes are used as the new values.
@@ -434,6 +436,7 @@ interface ModuleEvent extends Event {
   body: {
     /**
      * The reason for the event.
+     * Values: 'new', 'changed', 'removed', etc.
      */
     reason: 'new' | 'changed' | 'removed';
 
@@ -456,6 +459,7 @@ interface LoadedSourceEvent extends Event {
   body: {
     /**
      * The reason for the event.
+     * Values: 'new', 'changed', 'removed', etc.
      */
     reason: 'new' | 'changed' | 'removed';
 
@@ -493,9 +497,11 @@ interface ProcessEvent extends Event {
 
     /**
      * Describes how the debug engine started debugging this process.
+     * Values: 
      * 'launch': Process was launched under the debugger.
      * 'attach': Debugger attached to an existing process.
      * 'attachForSuspendedLaunch': A project launcher component has launched a new process in a suspended state and then asked the debugger to attach.
+     * etc.
      */
     startMethod?: 'launch' | 'attach' | 'attachForSuspendedLaunch';
 
@@ -638,6 +644,37 @@ interface ProgressEndEvent extends Event {
 }
 ```
 
+### <a name="Events_Invalidated" class="anchor"></a>:arrow_left: Invalidated Event
+
+This event signals that some state in the debug adapter has changed and requires that the client needs to re-render the data snapshot previously requested.
+
+Debug adapters do not have to emit this event for runtime changes like stopped or thread events because in that case the client refetches the new state anyway. But the event can be used for example to refresh the UI after rendering formatting has changed in the debug adapter.
+
+This event should only be sent if the debug adapter has received a value true for the 'supportsInvalidatedEvent' capability of the 'initialize' request.
+
+```typescript
+interface InvalidatedEvent extends Event {
+  event: 'invalidated';
+
+  body: {
+    /**
+     * Optional set of logical areas that got invalidated. This property has a hint characteristic: a client can only be expected to make a 'best effort' in honouring the areas but there are no guarantees. If this property is missing, empty, or if values are not understand the client should assume a single value 'all'.
+     */
+    areas?: InvalidatedAreas[];
+
+    /**
+     * If specified, the client only needs to refetch data related to this thread.
+     */
+    threadId?: number;
+
+    /**
+     * If specified, the client only needs to refetch data related to this stack frame (and the 'threadId' is ignored).
+     */
+    stackFrameId?: number;
+  };
+}
+```
+
 ## <a name="Reverse_Requests" class="anchor"></a>Reverse Requests
 
 ### <a name="Reverse_Requests_RunInTerminal" class="anchor"></a>:arrow_right_hook: RunInTerminal Request
@@ -663,6 +700,7 @@ Arguments for 'runInTerminal' request.
 interface RunInTerminalRequestArguments {
   /**
    * What kind of terminal to launch.
+   * Values: 'integrated', 'external', etc.
    */
   kind?: 'integrated' | 'external';
 
@@ -768,7 +806,7 @@ interface InitializeRequestArguments {
    * Determines in what format paths are specified. The default is 'path', which is the native format.
    * Values: 'path', 'uri', etc.
    */
-  pathFormat?: string;
+  pathFormat?: 'path' | 'uri' | string;
 
   /**
    * Client supports the optional type attribute for variables.
@@ -794,6 +832,11 @@ interface InitializeRequestArguments {
    * Client supports progress reporting.
    */
   supportsProgressReporting?: boolean;
+
+  /**
+   * Client supports the invalidated event.
+   */
+  supportsInvalidatedEvent?: boolean;
 }
 ```
 
@@ -1880,6 +1923,7 @@ interface VariablesArguments {
 
   /**
    * Optional filter to limit the child variables to either named or indexed. If omitted, both types are fetched.
+   * Values: 'indexed', 'named', etc.
    */
   filter?: 'indexed' | 'named';
 
@@ -2225,7 +2269,7 @@ interface EvaluateArguments {
    * The attribute is only honored by a debug adapter if the capability 'supportsClipboardContext' is true.
    * etc.
    */
-  context?: string;
+  context?: 'watch' | 'repl' | 'hover' | 'clipboard' | string;
 
   /**
    * Specifies details on how to format the Evaluate result.
@@ -3058,6 +3102,7 @@ interface ColumnDescriptor {
 
   /**
    * Datatype of values in this column.  Defaults to 'string' if not specified.
+   * Values: 'string', 'number', 'boolean', 'unixTimestampUTC', etc.
    */
   type?: 'string' | 'number' | 'boolean' | 'unixTimestampUTC';
 
@@ -3128,6 +3173,7 @@ interface Source {
   /**
    * An optional hint for how to present the source in the UI.
    * A value of 'deemphasize' can be used to indicate that the source is not available or that it is skipped on stepping.
+   * Values: 'normal', 'emphasize', 'deemphasize', etc.
    */
   presentationHint?: 'normal' | 'emphasize' | 'deemphasize';
 
@@ -3209,6 +3255,7 @@ interface StackFrame {
   /**
    * An optional hint for how to present this frame in the UI.
    * A value of 'label' can be used to indicate that the frame is an artificial frame that is used as a visual label or separator. A value of 'subtle' can be used to change the appearance of a frame in a 'subtle' way.
+   * Values: 'normal', 'label', 'subtle', etc.
    */
   presentationHint?: 'normal' | 'label' | 'subtle';
 }
@@ -3233,7 +3280,7 @@ interface Scope {
    * 'registers': Scope contains registers. Only a single 'registers' scope should be returned from a 'scopes' request.
    * etc.
    */
-  presentationHint?: string;
+  presentationHint?: 'arguments' | 'locals' | 'registers' | string;
 
   /**
    * The variables of this scope can be retrieved by passing the value of variablesReference to the VariablesRequest.
@@ -3374,7 +3421,7 @@ interface VariablePresentationHint {
    * 'dataBreakpoint': Indicates that a data breakpoint is registered for the object.
    * etc.
    */
-  kind?: string;
+  kind?: 'property' | 'method' | 'class' | 'data' | 'event' | 'baseClass' | 'innerClass' | 'interface' | 'mostDerivedClass' | 'virtual' | 'dataBreakpoint' | string;
 
   /**
    * Set of attributes represented as an array of strings. Before introducing additional values, try to use the listed values.
@@ -3388,13 +3435,13 @@ interface VariablePresentationHint {
    * 'hasSideEffects': Indicates that the evaluation had side effects.
    * etc.
    */
-  attributes?: string[];
+  attributes?: ('static' | 'constant' | 'readOnly' | 'rawString' | 'hasObjectId' | 'canHaveObjectId' | 'hasSideEffects' | string)[];
 
   /**
    * Visibility of variable. Before introducing additional values, try to use the listed values.
    * Values: 'public', 'private', 'protected', 'internal', 'final', etc.
    */
-  visibility?: string;
+  visibility?: 'public' | 'private' | 'protected' | 'internal' | 'final' | string;
 }
 ```
 
@@ -3493,6 +3540,7 @@ interface FunctionBreakpoint {
 ### <a name="Types_DataBreakpointAccessType" class="anchor"></a>DataBreakpointAccessType
 
 This enumeration defines all possible access types for data breakpoints.
+Values: 'read', 'write', 'readWrite', etc.
 
 ```typescript
 type DataBreakpointAccessType = 'read' | 'write' | 'readWrite';
@@ -3624,6 +3672,13 @@ interface Breakpoint {
 ### <a name="Types_SteppingGranularity" class="anchor"></a>SteppingGranularity
 
 The granularity of one 'step' in the stepping requests 'next', 'stepIn', 'stepOut', and 'stepBack'.
+Values: 
+- 'statement': The step should allow the program to run until the current statement has finished executing.
+The meaning of a statement is determined by the adapter and it may be considered equivalent to a line.
+For example 'for(int i = 0; i < 10; i++) could be considered to have 3 statements 'int i = 0', 'i < 10', and 'i++'.
+- 'line': The step should allow the program to run until the current source line has executed.
+- 'instruction': The step should allow one instruction to execute (e.g. one x86 instruction).
+etc.
 
 ```typescript
 type SteppingGranularity = 'statement' | 'line' | 'instruction';
@@ -3749,6 +3804,7 @@ interface CompletionItem {
 ### <a name="Types_CompletionItemType" class="anchor"></a>CompletionItemType
 
 Some predefined types for the CompletionItem. Please note that not all clients have specific icons for all of them.
+Values: 'method', 'function', 'constructor', 'field', 'variable', 'class', 'interface', 'module', 'property', 'unit', 'value', 'enum', 'keyword', 'snippet', 'text', 'color', 'file', 'reference', 'customcolor', etc.
 
 ```typescript
 type CompletionItemType = 'method' | 'function' | 'constructor' | 'field' | 'variable' | 'class' | 'interface' | 'module' | 'property' | 'unit' | 'value' | 'enum' | 'keyword' | 'snippet' | 'text' | 'color' | 'file' | 'reference' | 'customcolor';
@@ -3757,6 +3813,7 @@ type CompletionItemType = 'method' | 'function' | 'constructor' | 'field' | 'var
 ### <a name="Types_ChecksumAlgorithm" class="anchor"></a>ChecksumAlgorithm
 
 Names of checksum algorithms that may be supported by a debug adapter.
+Values: 'MD5', 'SHA1', 'SHA256', 'timestamp', etc.
 
 ```typescript
 type ChecksumAlgorithm = 'MD5' | 'SHA1' | 'SHA256' | 'timestamp';
@@ -3866,6 +3923,7 @@ always: always breaks,
 unhandled: breaks when exception unhandled,
 
 userUnhandled: breaks if the exception is not handled by user code.
+Values: 'never', 'always', 'unhandled', 'userUnhandled', etc.
 
 ```typescript
 type ExceptionBreakMode = 'never' | 'always' | 'unhandled' | 'userUnhandled';
@@ -3984,5 +4042,19 @@ interface DisassembledInstruction {
    */
   endColumn?: number;
 }
+```
+
+### <a name="Types_InvalidatedAreas" class="anchor"></a>InvalidatedAreas
+
+Logical areas that can be invalidated by the 'invalidated' event.
+Values: 
+- 'all': All previously fetched data has become invalid and needs to be refetched.
+- 'stacks': Previously fetched stack related data has become invalid and needs to be refetched.
+- 'threads': Previously fetched thread related data has become invalid and needs to be refetched.
+- 'variables': Previously fetched variable data has become invalid and needs to be refetched.
+etc.
+
+```typescript
+export type InvalidatedAreas = 'all' | 'stacks' | 'threads' | 'variables' | string;
 ```
 
