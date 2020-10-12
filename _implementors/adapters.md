@@ -12,7 +12,7 @@ The following table lists the known debug adapters that implement the Debug Adap
 |---------|------------|------------|
 [Android](https://marketplace.visualstudio.com/items?itemName=adelphes.android-dev-ext)|[@adelphes](https://github.com/adelphes)| [adelphes/android-dev-ext](https://github.com/adelphes/android-dev-ext)
 [Apex](https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode-apex-debugger)|[@ntotten](https://github.com/ntotten)| [forcedotcom/salesforcedx-vscode](https://github.com/forcedotcom/salesforcedx-vscode)
-| Ballerina | [Ballerina.io](https://ballerina.io/) | [ballerina-platform/ballerina-lang](https://github.com/ballerina-platform/ballerina-lang/) | 
+| Ballerina | [Ballerina.io](https://ballerina.io/) | [ballerina-platform/ballerina-lang](https://github.com/ballerina-platform/ballerina-lang/) |
 [C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)|[@WardenGnaw](https://github.com/WardenGnaw)| [Microsoft/vscode-cpptools](https://github.com/Microsoft/vscode-cpptools)
 [C#](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp)|[@gregg-miskelly](https://github.com/gregg-miskelly)|[OmniSharp/omnisharp-vscode](https://github.com/OmniSharp/omnisharp-vscode)
 [Cordova Tools](https://marketplace.visualstudio.com/items?itemName=vsmobile.cordova-tools)|[@MSLaguana](https://github.com/MSLaguana)|[Microsoft/vscode-cordova](https://github.com/Microsoft/vscode-cordova)
@@ -57,6 +57,8 @@ The following table lists the known debug adapters that implement the Debug Adap
 [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)|[@DonJayamanne](https://github.com/DonJayamanne)|[Microsoft/vscode-python](https://github.com/Microsoft/vscode-python)
 [React Native Tools](https://marketplace.visualstudio.com/items?itemName=vsmobile.vscode-react-native)|[@MSLaguana](https://github.com/MSLaguana)|[Microsoft/vscode-react-native](https://github.com/Microsoft/vscode-react-native/issues)
 [Ruby](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby)|[@rebornix](https://github.com/rebornix)|[rubyide/vscode-ruby](https://github.com/rubyide/vscode-ruby)
+[Ruby Byebug](https://rubygems.org/gems/byebug-dap)|[Ethan Reesor](https://gitlab.com/firelizzard)|[firelizzard/byebug-dap](https://gitlab.com/firelizzard/byebug-dap)
+[Ruby Byebug (VSCode)](https://marketplace.visualstudio.com/items?itemName=ethan-reesor.vscode-byebug)|[Ethan Reesor](https://gitlab.com/firelizzard)|[firelizzard/vscode-byebug](https://gitlab.com/firelizzard/vscode-byebug)
 [SWF](https://marketplace.visualstudio.com/items?itemName=bowlerhatllc.vscode-nextgenas)|[@joshtynjala](https://github.com/joshtynjala)|[BowlerHatLLC/vscode-nextgenas](https://github.com/BowlerHatLLC/vscode-nextgenas)
 [VDM, VDM++, VDM-RT](https://github.com/nickbattle/vdmj/tree/master/LSP)|[@nickbattle](https://github.com/nickbattle)|[VDMJ-LSP](https://github.com/nickbattle/vdmj/tree/master/LSP)
 {: .table .table-bordered .table-responsive}
