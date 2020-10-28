@@ -17,6 +17,7 @@ The following table lists the known development tools (IDEs) that implement the 
 | Emacs                         | emacs.dap-mode | [@yyoncho](https://github.com/yyoncho) | [dap-mode](https://github.com/yyoncho/dap-mode)
 | Theia                         | Theia        | Eclipse    | [theia](https://github.com/theia-ide/theia/)
 | Vim                           | vimspector   | [Ben Jackson](https://github.com/puremourning) | [vimspector](https://github.com/puremourning/vimspector), [vim](https://github.com/vim/vim)
+| Neovim                        | neovim       | [@mfussenegger](https://github.com/mfussenegger) | [nvim-dap](https://github.com/mfussenegger/nvim-dap), [neovim](https://github.com/neovim/neovim)
 | Cloud Studio                  | cloudstudio  | [CODING](https://studio.dev.tencent.com/) 
 | JCIDE                         | JCIDE        | [JavaCardOS](https://www.javacardos.com/)   | [JCIDE](https://www.javacardos.com/tools)|
 {: .table .table-bordered .table-responsive}
