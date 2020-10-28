@@ -670,11 +670,11 @@
 								}
 							},
 							"threadId": {
-								"type": "number",
+								"type": "integer",
 								"description": "If specified, the client only needs to refetch data related to this thread."
 							},
 							"stackFrameId": {
-								"type": "number",
+								"type": "integer",
 								"description": "If specified, the client only needs to refetch data related to this stack frame (and the 'threadId' is ignored)."
 							}
 						}
