@@ -16,6 +16,7 @@ The following table lists the known SDKs or libraries that support the Debug Ada
 | Sample for integrating debug adapters in Visual Studio | C#/.NET | Microsoft | [Microsoft/VSDebugAdapterHost](https://github.com/Microsoft/VSDebugAdapterHost)
 | Libraries for implementing debug adapters on JVM | Java | Eclipse Foundation | [eclipse/lsp4j](https://github.com/eclipse/lsp4j)
 | C++ library for implementing debug adapters | C++ | Google | [google/cppdap](https://github.com/google/cppdap)
+| Ruby library for encoding and decoding DAP messages | Ruby | [Ethan Reesor](https://gitlab.com/firelizzard) | [firelizzard/ruby-dap](https://gitlab.com/firelizzard/ruby-dap)
 {: .table .table-bordered .table-responsive}
 
 *If you are missing a SDK please create a pull request in GitHub against this markdown [document](https://github.com/Microsoft/debug-adapter-protocol/blob/gh-pages/_implementors/sdks.md)*
