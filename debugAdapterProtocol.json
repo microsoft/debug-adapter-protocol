@@ -567,7 +567,7 @@
 								"description": "Mandatory (short) title of the progress reporting. Shown in the UI to describe the long running operation."
 							},
 							"requestId": {
-								"type": "number",
+								"type": "integer",
 								"description": "The request ID that this progress report is related to. If specified a debug adapter is expected to emit\nprogress events for the long running request until the request has been either completed or cancelled.\nIf the request ID is omitted, the progress report is assumed to be related to some general activity of the debug adapter."
 							},
 							"cancellable": {
