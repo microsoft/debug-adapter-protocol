@@ -234,7 +234,8 @@ interface StoppedEvent extends Event {
      * Values: 'step', 'breakpoint', 'exception', 'pause', 'entry', 'goto', 'function
      * breakpoint', 'data breakpoint', 'instruction breakpoint', etc.
      */
-    reason: 'step' | 'breakpoint' | 'exception' | 'pause' | 'entry' | 'goto' | 'function breakpoint' | 'data breakpoint' | 'instruction breakpoint' | string;
+    reason: 'step' | 'breakpoint' | 'exception' | 'pause' | 'entry' | 'goto'
+      | 'function breakpoint' | 'data breakpoint' | 'instruction breakpoint' | string;
 
     /**
      * The full reason for the event, e.g. 'Paused on exception'. This string is shown
@@ -3608,7 +3609,8 @@ interface VariablePresentationHint {
    * 'dataBreakpoint': Indicates that a data breakpoint is registered for the object.
    * etc.
    */
-  kind?: 'property' | 'method' | 'class' | 'data' | 'event' | 'baseClass' | 'innerClass' | 'interface' | 'mostDerivedClass' | 'virtual' | 'dataBreakpoint' | string;
+  kind?: 'property' | 'method' | 'class' | 'data' | 'event' | 'baseClass' | 'innerClass'
+      | 'interface' | 'mostDerivedClass' | 'virtual' | 'dataBreakpoint' | string;
 
   /**
    * Set of attributes represented as an array of strings. Before introducing
@@ -3624,7 +3626,8 @@ interface VariablePresentationHint {
    * 'hasSideEffects': Indicates that the evaluation had side effects.
    * etc.
    */
-  attributes?: ('static' | 'constant' | 'readOnly' | 'rawString' | 'hasObjectId' | 'canHaveObjectId' | 'hasSideEffects' | string)[];
+  attributes?: ('static' | 'constant' | 'readOnly' | 'rawString' | 'hasObjectId'
+      | 'canHaveObjectId' | 'hasSideEffects' | string)[];
 
   /**
    * Visibility of variable. Before introducing additional values, try to use the
@@ -4022,7 +4025,9 @@ Some predefined types for the CompletionItem. Please note that not all clients h
 Values: 'method', 'function', 'constructor', 'field', 'variable', 'class', 'interface', 'module', 'property', 'unit', 'value', 'enum', 'keyword', 'snippet', 'text', 'color', 'file', 'reference', 'customcolor', etc.
 
 ```typescript
-type CompletionItemType = 'method' | 'function' | 'constructor' | 'field' | 'variable' | 'class' | 'interface' | 'module' | 'property' | 'unit' | 'value' | 'enum' | 'keyword' | 'snippet' | 'text' | 'color' | 'file' | 'reference' | 'customcolor';
+type CompletionItemType = 'method' | 'function' | 'constructor' | 'field' | 'variable' | 'class'
+      | 'interface' | 'module' | 'property' | 'unit' | 'value' | 'enum' | 'keyword'
+      | 'snippet' | 'text' | 'color' | 'file' | 'reference' | 'customcolor';
 ```
 
 ### <a name="Types_ChecksumAlgorithm" class="anchor"></a>ChecksumAlgorithm
