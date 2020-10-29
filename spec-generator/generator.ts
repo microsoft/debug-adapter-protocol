@@ -7,6 +7,8 @@
 import * as fs from 'fs';
 import {IProtocol, Protocol as P} from './json_schema';
 
+const MAX_LINE_LENGTH = 80;
+
 class OutlineNode {
 
 	private children: OutlineNode[] = [];
@@ -199,12 +201,12 @@ function Interface(interfaceName: string, definition: P.Definition, superType?: 
 
 function Enum(typeName: string, definition: P.StringType): string {
 	const x = enumAsOrType(definition.enum);
-	return line(`type ${typeName} = ${x};`);
+	return breakLines(`${indent()}type ${typeName} = ${x};`, ' | ', `    | `) + `\n`;
 }
 
 function _Enum(typeName: string, definition: P.StringType): string {
 	const x = enumAsOrType(definition._enum, true);
-	return line(`export type ${typeName} = ${x};`);
+limit	return breakLines(`${indent()}export type ${typeName} = ${x};`, ' | ', `    | `) + `\n`;
 }
 
 function enumAsOrType(enm: string[], open = false) {
@@ -251,15 +253,47 @@ function comment(c: P.Commentable): string {
 			description += enumDescriptions(c, true);
 			return description + '\n\n';
 		} else {
-			
+
 			// in code
 			description += enumDescriptions(c, false);
 			description = description.replace(/<code>(.*)<\/code>/g, "'$1'");
 			const ind = indent();
-			return `${ind}/**\n${ind} * ` + description.replace(/\n/g, `\n${ind} * `) + `\n${ind} */\n`;
+			return `${ind}/**` + breakLines('\n' + description, ' ', ` * `) + `\n${ind} */\n`;
 		}
 	}
 	return '';
+}
+
+function breakLines(s: string, breakPat: string, lineStart: string): string {
+	s = s.replace(/\n/g, `${breakPat}@@@${breakPat}`);	// preserve newlines as a special word
+	let ind = `${indent()}${lineStart}`;
+	let result = [];
+	const words= s.split(breakPat);
+	let line = '';
+	for (let w of words) {
+
+		if (w === '@@@') {
+			// force a new line
+			result.push(line);
+			line = '';
+			continue;
+		}
+
+		if (ind.length + line.length + w.length + 1 > MAX_LINE_LENGTH) {
+			// word doesn't fit into line: start a new line
+			result.push(line);
+			line = '';
+		}
+
+		if (line.length > 0) {
+			line += breakPat;
+		}
+		line += w;
+	}
+	if (line.length > 0) {
+		result.push(line);
+	}
+	return result.join(`\n${ind}`);
 }
 
 function openBlock(str: string, openChar?: string, indent?: boolean): string {
@@ -292,9 +326,9 @@ function propertyType(prop: any): string {
 			return objectType(prop);
 		case 'string':
 			if (prop.enum) {
-				return enumAsOrType(prop.enum);
+				return breakLines(enumAsOrType(prop.enum), ' | ', `    | `);
 			} else if (prop._enum) {
-				return enumAsOrType(prop._enum, true);
+				return breakLines(enumAsOrType(prop._enum, true), ' | ', `    | `);
 			}
 			return `string`;
 		case 'integer':
@@ -345,7 +379,6 @@ function property(name: string, optional: boolean, prop: P.PropertyType): string
 	const type = propertyType(prop);
 	const propertyDef = `${name}${optional ? '?' : ''}: ${type}`;
 	if (type[0] === '\'' && type[type.length-1] === '\'' && type.indexOf('|') < 0) {
-		//s += line(`// ${propertyDef};`);
 		s += line(`${propertyDef};`);
 	} else {
 		s += line(`${propertyDef};`);
