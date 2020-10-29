@@ -235,7 +235,7 @@ interface StoppedEvent extends Event {
      * breakpoint', 'data breakpoint', 'instruction breakpoint', etc.
      */
     reason: 'step' | 'breakpoint' | 'exception' | 'pause' | 'entry' | 'goto'
-      | 'function breakpoint' | 'data breakpoint' | 'instruction breakpoint' | string;
+        | 'function breakpoint' | 'data breakpoint' | 'instruction breakpoint' | string;
 
     /**
      * The full reason for the event, e.g. 'Paused on exception'. This string is shown
@@ -4025,9 +4025,10 @@ Some predefined types for the CompletionItem. Please note that not all clients h
 Values: 'method', 'function', 'constructor', 'field', 'variable', 'class', 'interface', 'module', 'property', 'unit', 'value', 'enum', 'keyword', 'snippet', 'text', 'color', 'file', 'reference', 'customcolor', etc.
 
 ```typescript
-type CompletionItemType = 'method' | 'function' | 'constructor' | 'field' | 'variable' | 'class'
-      | 'interface' | 'module' | 'property' | 'unit' | 'value' | 'enum' | 'keyword'
-      | 'snippet' | 'text' | 'color' | 'file' | 'reference' | 'customcolor';
+type CompletionItemType = 'method' | 'function' | 'constructor' | 'field'
+    | 'variable' | 'class' | 'interface' | 'module' | 'property' | 'unit' | 'value'
+    | 'enum' | 'keyword' | 'snippet' | 'text' | 'color' | 'file' | 'reference'
+    | 'customcolor';
 ```
 
 ### <a name="Types_ChecksumAlgorithm" class="anchor"></a>ChecksumAlgorithm
@@ -4286,6 +4287,7 @@ Values:
 etc.
 
 ```typescript
-export type InvalidatedAreas = 'all' | 'stacks' | 'threads' | 'variables' | string;
+export type InvalidatedAreas = 'all' | 'stacks' | 'threads' | 'variables'
+    | string;
 ```
 
