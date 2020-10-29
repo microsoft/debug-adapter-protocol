@@ -21,7 +21,8 @@ Base class of requests, responses, and events.
 ```typescript
 interface ProtocolMessage {
   /**
-   * Sequence number (also known as message ID). For protocol messages of type 'request' this ID can be used to cancel the request.
+   * Sequence number (also known as message ID). For protocol messages of type
+   * 'request' this ID can be used to cancel the request.
    */
   seq: number;
 
@@ -88,8 +89,11 @@ interface Response extends ProtocolMessage {
 
   /**
    * Outcome of the request.
-   * If true, the request was successful and the 'body' attribute may contain the result of the request.
-   * If the value is false, the attribute 'message' contains the error in short form and the 'body' may contain additional information (see 'ErrorResponse.body.error').
+   * If true, the request was successful and the 'body' attribute may contain the
+   * result of the request.
+   * If the value is false, the attribute 'message' contains the error in short form
+   * and the 'body' may contain additional information (see
+   * 'ErrorResponse.body.error').
    */
   success: boolean;
 
@@ -109,7 +113,8 @@ interface Response extends ProtocolMessage {
   message?: 'cancelled' | string;
 
   /**
-   * Contains request result if success is true and optional error details if success is false.
+   * Contains request result if success is true and optional error details if success
+   * is false.
    */
   body?: any;
 }
@@ -166,13 +171,15 @@ Arguments for 'cancel' request.
 ```typescript
 interface CancelArguments {
   /**
-   * The ID (attribute 'seq') of the request to cancel. If missing no request is cancelled.
+   * The ID (attribute 'seq') of the request to cancel. If missing no request is
+   * cancelled.
    * Both a 'requestId' and a 'progressId' can be specified in one request.
    */
   requestId?: number;
 
   /**
-   * The ID (attribute 'progressId') of the progress to cancel. If missing no progress is cancelled.
+   * The ID (attribute 'progressId') of the progress to cancel. If missing no
+   * progress is cancelled.
    * Both a 'requestId' and a 'progressId' can be specified in one request.
    */
   progressId?: string;
@@ -222,13 +229,16 @@ interface StoppedEvent extends Event {
   body: {
     /**
      * The reason for the event.
-     * For backward compatibility this string is shown in the UI if the 'description' attribute is missing (but it must not be translated).
-     * Values: 'step', 'breakpoint', 'exception', 'pause', 'entry', 'goto', 'function breakpoint', 'data breakpoint', 'instruction breakpoint', etc.
+     * For backward compatibility this string is shown in the UI if the 'description'
+     * attribute is missing (but it must not be translated).
+     * Values: 'step', 'breakpoint', 'exception', 'pause', 'entry', 'goto', 'function
+     * breakpoint', 'data breakpoint', 'instruction breakpoint', etc.
      */
     reason: 'step' | 'breakpoint' | 'exception' | 'pause' | 'entry' | 'goto' | 'function breakpoint' | 'data breakpoint' | 'instruction breakpoint' | string;
 
     /**
-     * The full reason for the event, e.g. 'Paused on exception'. This string is shown in the UI as is and must be translated.
+     * The full reason for the event, e.g. 'Paused on exception'. This string is shown
+     * in the UI as is and must be translated.
      */
     description?: string;
 
@@ -238,19 +248,24 @@ interface StoppedEvent extends Event {
     threadId?: number;
 
     /**
-     * A value of true hints to the frontend that this event should not change the focus.
+     * A value of true hints to the frontend that this event should not change the
+     * focus.
      */
     preserveFocusHint?: boolean;
 
     /**
-     * Additional information. E.g. if reason is 'exception', text contains the exception name. This string is shown in the UI.
+     * Additional information. E.g. if reason is 'exception', text contains the
+     * exception name. This string is shown in the UI.
      */
     text?: string;
 
     /**
-     * If 'allThreadsStopped' is true, a debug adapter can announce that all threads have stopped.
-     * - The client should use this information to enable that all threads can be expanded to access their stacktraces.
-     * - If the attribute is missing or false, only the thread with the given threadId can be expanded.
+     * If 'allThreadsStopped' is true, a debug adapter can announce that all threads
+     * have stopped.
+     * - The client should use this information to enable that all threads can be
+     * expanded to access their stacktraces.
+     * - If the attribute is missing or false, only the thread with the given threadId
+     * can be expanded.
      */
     allThreadsStopped?: boolean;
   };
@@ -276,7 +291,8 @@ interface ContinuedEvent extends Event {
     threadId: number;
 
     /**
-     * If 'allThreadsContinued' is true, a debug adapter can announce that all threads have continued.
+     * If 'allThreadsContinued' is true, a debug adapter can announce that all threads
+     * have continued.
      */
     allThreadsContinued?: boolean;
   };
@@ -310,8 +326,10 @@ interface TerminatedEvent extends Event {
 
   body?: {
     /**
-     * A debug adapter may set 'restart' to true (or to an arbitrary object) to request that the front end restarts the session.
-     * The value is not interpreted by the client and passed unmodified as an attribute '__restart' to the 'launch' and 'attach' requests.
+     * A debug adapter may set 'restart' to true (or to an arbitrary object) to request
+     * that the front end restarts the session.
+     * The value is not interpreted by the client and passed unmodified as an attribute
+     * '__restart' to the 'launch' and 'attach' requests.
      */
     restart?: any;
   };
@@ -364,18 +382,25 @@ interface OutputEvent extends Event {
     /**
      * Support for keeping an output log organized by grouping related messages.
      * Values: 
-     * 'start': Start a new group in expanded mode. Subsequent output events are members of the group and should be shown indented.
+     * 'start': Start a new group in expanded mode. Subsequent output events are
+     * members of the group and should be shown indented.
      * The 'output' attribute becomes the name of the group and is not indented.
-     * 'startCollapsed': Start a new group in collapsed mode. Subsequent output events are members of the group and should be shown indented (as soon as the group is expanded).
+     * 'startCollapsed': Start a new group in collapsed mode. Subsequent output events
+     * are members of the group and should be shown indented (as soon as the group is
+     * expanded).
      * The 'output' attribute becomes the name of the group and is not indented.
-     * 'end': End the current group and decreases the indentation of subsequent output events.
+     * 'end': End the current group and decreases the indentation of subsequent output
+     * events.
      * A non empty 'output' attribute is shown as the unindented end of the group.
      * etc.
      */
     group?: 'start' | 'startCollapsed' | 'end';
 
     /**
-     * If an attribute 'variablesReference' exists and its value is > 0, the output contains objects which can be retrieved by passing 'variablesReference' to the 'variables' request. The value should be less than or equal to 2147483647 (2^31 - 1).
+     * If an attribute 'variablesReference' exists and its value is > 0, the output
+     * contains objects which can be retrieved by passing 'variablesReference' to the
+     * 'variables' request. The value should be less than or equal to 2147483647
+     * (2^31-1).
      */
     variablesReference?: number;
 
@@ -395,7 +420,8 @@ interface OutputEvent extends Event {
     column?: number;
 
     /**
-     * Optional data to report. For the 'telemetry' category the data will be sent to telemetry, for the other categories the data is shown in JSON format.
+     * Optional data to report. For the 'telemetry' category the data will be sent to
+     * telemetry, for the other categories the data is shown in JSON format.
      */
     data?: any;
   };
@@ -418,7 +444,8 @@ interface BreakpointEvent extends Event {
     reason: 'changed' | 'new' | 'removed' | string;
 
     /**
-     * The 'id' attribute is used to find the target breakpoint and the other attributes are used as the new values.
+     * The 'id' attribute is used to find the target breakpoint and the other
+     * attributes are used as the new values.
      */
     breakpoint: Breakpoint;
   };
@@ -441,7 +468,8 @@ interface ModuleEvent extends Event {
     reason: 'new' | 'changed' | 'removed';
 
     /**
-     * The new, changed, or removed module. In case of 'removed' only the module id is used.
+     * The new, changed, or removed module. In case of 'removed' only the module id is
+     * used.
      */
     module: Module;
   };
@@ -481,12 +509,14 @@ interface ProcessEvent extends Event {
 
   body: {
     /**
-     * The logical name of the process. This is usually the full path to process's executable file. Example: /home/example/myproj/program.js.
+     * The logical name of the process. This is usually the full path to process's
+     * executable file. Example: /home/example/myproj/program.js.
      */
     name: string;
 
     /**
-     * The system process id of the debugged process. This property will be missing for non-system processes.
+     * The system process id of the debugged process. This property will be missing for
+     * non-system processes.
      */
     systemProcessId?: number;
 
@@ -500,13 +530,15 @@ interface ProcessEvent extends Event {
      * Values: 
      * 'launch': Process was launched under the debugger.
      * 'attach': Debugger attached to an existing process.
-     * 'attachForSuspendedLaunch': A project launcher component has launched a new process in a suspended state and then asked the debugger to attach.
+     * 'attachForSuspendedLaunch': A project launcher component has launched a new
+     * process in a suspended state and then asked the debugger to attach.
      * etc.
      */
     startMethod?: 'launch' | 'attach' | 'attachForSuspendedLaunch';
 
     /**
-     * The size of a pointer or address for this process, in bits. This value may be used by clients when formatting addresses for display.
+     * The size of a pointer or address for this process, in bits. This value may be
+     * used by clients when formatting addresses for display.
      */
     pointerSize?: number;
   };
@@ -552,26 +584,33 @@ interface ProgressStartEvent extends Event {
 
   body: {
     /**
-     * An ID that must be used in subsequent 'progressUpdate' and 'progressEnd' events to make them refer to the same progress reporting.
+     * An ID that must be used in subsequent 'progressUpdate' and 'progressEnd' events
+     * to make them refer to the same progress reporting.
      * IDs must be unique within a debug session.
      */
     progressId: string;
 
     /**
-     * Mandatory (short) title of the progress reporting. Shown in the UI to describe the long running operation.
+     * Mandatory (short) title of the progress reporting. Shown in the UI to describe
+     * the long running operation.
      */
     title: string;
 
     /**
-     * The request ID that this progress report is related to. If specified a debug adapter is expected to emit
-     * progress events for the long running request until the request has been either completed or cancelled.
-     * If the request ID is omitted, the progress report is assumed to be related to some general activity of the debug adapter.
+     * The request ID that this progress report is related to. If specified a debug
+     * adapter is expected to emit
+     * progress events for the long running request until the request has been either
+     * completed or cancelled.
+     * If the request ID is omitted, the progress report is assumed to be related to
+     * some general activity of the debug adapter.
      */
     requestId?: number;
 
     /**
-     * If true, the request that reports progress may be canceled with a 'cancel' request.
-     * So this property basically controls whether the client should use UX that supports cancellation.
+     * If true, the request that reports progress may be canceled with a 'cancel'
+     * request.
+     * So this property basically controls whether the client should use UX that
+     * supports cancellation.
      * Clients that don't support cancellation are allowed to ignore the setting.
      */
     cancellable?: boolean;
@@ -582,7 +621,8 @@ interface ProgressStartEvent extends Event {
     message?: string;
 
     /**
-     * Optional progress percentage to display (value range: 0 to 100). If omitted no percentage will be shown.
+     * Optional progress percentage to display (value range: 0 to 100). If omitted no
+     * percentage will be shown.
      */
     percentage?: number;
   };
@@ -608,12 +648,14 @@ interface ProgressUpdateEvent extends Event {
     progressId: string;
 
     /**
-     * Optional, more detailed progress message. If omitted, the previous message (if any) is used.
+     * Optional, more detailed progress message. If omitted, the previous message (if
+     * any) is used.
      */
     message?: string;
 
     /**
-     * Optional progress percentage to display (value range: 0 to 100). If omitted no percentage will be shown.
+     * Optional progress percentage to display (value range: 0 to 100). If omitted no
+     * percentage will be shown.
      */
     percentage?: number;
   };
@@ -637,7 +679,8 @@ interface ProgressEndEvent extends Event {
     progressId: string;
 
     /**
-     * Optional, more detailed progress message. If omitted, the previous message (if any) is used.
+     * Optional, more detailed progress message. If omitted, the previous message (if
+     * any) is used.
      */
     message?: string;
   };
@@ -658,7 +701,11 @@ interface InvalidatedEvent extends Event {
 
   body: {
     /**
-     * Optional set of logical areas that got invalidated. This property has a hint characteristic: a client can only be expected to make a 'best effort' in honouring the areas but there are no guarantees. If this property is missing, empty, or if values are not understand the client should assume a single value 'all'.
+     * Optional set of logical areas that got invalidated. This property has a hint
+     * characteristic: a client can only be expected to make a 'best effort' in
+     * honouring the areas but there are no guarantees. If this property is missing,
+     * empty, or if values are not understand the client should assume a single value
+     * 'all'.
      */
     areas?: InvalidatedAreas[];
 
@@ -668,7 +715,8 @@ interface InvalidatedEvent extends Event {
     threadId?: number;
 
     /**
-     * If specified, the client only needs to refetch data related to this stack frame (and the 'threadId' is ignored).
+     * If specified, the client only needs to refetch data related to this stack frame
+     * (and the 'threadId' is ignored).
      */
     stackFrameId?: number;
   };
@@ -720,7 +768,8 @@ interface RunInTerminalRequestArguments {
   args: string[];
 
   /**
-   * Environment key-value pairs that are added to or removed from the default environment.
+   * Environment key-value pairs that are added to or removed from the default
+   * environment.
    */
   env?: { [key: string]: string | null; };
 }
@@ -733,12 +782,13 @@ Response to 'runInTerminal' request.
 interface RunInTerminalResponse extends Response {
   body: {
     /**
-     * The process ID. The value should be less than or equal to 2147483647 (2^31 - 1).
+     * The process ID. The value should be less than or equal to 2147483647 (2^31-1).
      */
     processId?: number;
 
     /**
-     * The process ID of the terminal shell. The value should be less than or equal to 2147483647 (2^31 - 1).
+     * The process ID of the terminal shell. The value should be less than or equal to
+     * 2147483647 (2^31-1).
      */
     shellProcessId?: number;
   };
@@ -788,7 +838,8 @@ interface InitializeRequestArguments {
   adapterID: string;
 
   /**
-   * The ISO-639 locale of the (frontend) client using this adapter, e.g. en-US or de-CH.
+   * The ISO-639 locale of the (frontend) client using this adapter, e.g. en-US or
+   * de-CH.
    */
   locale?: string;
 
@@ -803,7 +854,8 @@ interface InitializeRequestArguments {
   columnsStartAt1?: boolean;
 
   /**
-   * Determines in what format paths are specified. The default is 'path', which is the native format.
+   * Determines in what format paths are specified. The default is 'path', which is
+   * the native format.
    * Values: 'path', 'uri', etc.
    */
   pathFormat?: 'path' | 'uri' | string;
@@ -904,7 +956,8 @@ Arguments for 'launch' request. Additional attributes are implementation specifi
 ```typescript
 interface LaunchRequestArguments {
   /**
-   * If noDebug is true the launch request should launch the program without enabling debugging.
+   * If noDebug is true the launch request should launch the program without enabling
+   * debugging.
    */
   noDebug?: boolean;
 
@@ -1017,14 +1070,17 @@ Arguments for 'disconnect' request.
 ```typescript
 interface DisconnectArguments {
   /**
-   * A value of true indicates that this 'disconnect' request is part of a restart sequence.
+   * A value of true indicates that this 'disconnect' request is part of a restart
+   * sequence.
    */
   restart?: boolean;
 
   /**
-   * Indicates whether the debuggee should be terminated when the debugger is disconnected.
+   * Indicates whether the debuggee should be terminated when the debugger is
+   * disconnected.
    * If unspecified, the debug adapter is free to do whatever it thinks is best.
-   * The attribute is only honored by a debug adapter if the capability 'supportTerminateDebuggee' is true.
+   * The attribute is only honored by a debug adapter if the capability
+   * 'supportTerminateDebuggee' is true.
    */
   terminateDebuggee?: boolean;
 }
@@ -1058,7 +1114,8 @@ Arguments for 'terminate' request.
 ```typescript
 interface TerminateArguments {
   /**
-   * A value of true indicates that this 'terminate' request is part of a restart sequence.
+   * A value of true indicates that this 'terminate' request is part of a restart
+   * sequence.
    */
   restart?: boolean;
 }
@@ -1092,27 +1149,33 @@ Arguments for 'breakpointLocations' request.
 ```typescript
 interface BreakpointLocationsArguments {
   /**
-   * The source location of the breakpoints; either 'source.path' or 'source.reference' must be specified.
+   * The source location of the breakpoints; either 'source.path' or
+   * 'source.reference' must be specified.
    */
   source: Source;
 
   /**
-   * Start line of range to search possible breakpoint locations in. If only the line is specified, the request returns all possible locations in that line.
+   * Start line of range to search possible breakpoint locations in. If only the line
+   * is specified, the request returns all possible locations in that line.
    */
   line: number;
 
   /**
-   * Optional start column of range to search possible breakpoint locations in. If no start column is given, the first column in the start line is assumed.
+   * Optional start column of range to search possible breakpoint locations in. If no
+   * start column is given, the first column in the start line is assumed.
    */
   column?: number;
 
   /**
-   * Optional end line of range to search possible breakpoint locations in. If no end line is given, then the end line is assumed to be the start line.
+   * Optional end line of range to search possible breakpoint locations in. If no end
+   * line is given, then the end line is assumed to be the start line.
    */
   endLine?: number;
 
   /**
-   * Optional end column of range to search possible breakpoint locations in. If no end column is given, then it is assumed to be in the last column of the end line.
+   * Optional end column of range to search possible breakpoint locations in. If no
+   * end column is given, then it is assumed to be in the last column of the end
+   * line.
    */
   endColumn?: number;
 }
@@ -1156,7 +1219,8 @@ Arguments for 'setBreakpoints' request.
 ```typescript
 interface SetBreakpointsArguments {
   /**
-   * The source location of the breakpoints; either 'source.path' or 'source.reference' must be specified.
+   * The source location of the breakpoints; either 'source.path' or
+   * 'source.reference' must be specified.
    */
   source: Source;
 
@@ -1171,7 +1235,8 @@ interface SetBreakpointsArguments {
   lines?: number[];
 
   /**
-   * A value of true indicates that the underlying source has been modified which results in new breakpoint locations.
+   * A value of true indicates that the underlying source has been modified which
+   * results in new breakpoint locations.
    */
   sourceModified?: boolean;
 }
@@ -1193,7 +1258,8 @@ interface SetBreakpointsResponse extends Response {
   body: {
     /**
      * Information about the breakpoints.
-     * The array elements are in the same order as the elements of the 'breakpoints' (or the deprecated 'lines') array in the arguments.
+     * The array elements are in the same order as the elements of the 'breakpoints'
+     * (or the deprecated 'lines') array in the arguments.
      */
     breakpoints: Breakpoint[];
   };
@@ -1239,7 +1305,8 @@ Returned is information about each breakpoint created by this request.
 interface SetFunctionBreakpointsResponse extends Response {
   body: {
     /**
-     * Information about the breakpoints. The array elements correspond to the elements of the 'breakpoints' array.
+     * Information about the breakpoints. The array elements correspond to the elements
+     * of the 'breakpoints' array.
      */
     breakpoints: Breakpoint[];
   };
@@ -1268,13 +1335,15 @@ Arguments for 'setExceptionBreakpoints' request.
 ```typescript
 interface SetExceptionBreakpointsArguments {
   /**
-   * IDs of checked exception options. The set of IDs is returned via the 'exceptionBreakpointFilters' capability.
+   * IDs of checked exception options. The set of IDs is returned via the
+   * 'exceptionBreakpointFilters' capability.
    */
   filters: string[];
 
   /**
    * Configuration options for selected exceptions.
-   * The attribute is only honored by a debug adapter if the capability 'supportsExceptionOptions' is true.
+   * The attribute is only honored by a debug adapter if the capability
+   * 'supportsExceptionOptions' is true.
    */
   exceptionOptions?: ExceptionOptions[];
 }
@@ -1308,7 +1377,8 @@ Arguments for 'dataBreakpointInfo' request.
 ```typescript
 interface DataBreakpointInfoArguments {
   /**
-   * Reference to the Variable container if the data breakpoint is requested for a child of the container.
+   * Reference to the Variable container if the data breakpoint is requested for a
+   * child of the container.
    */
   variablesReference?: number;
 
@@ -1327,22 +1397,26 @@ Response to 'dataBreakpointInfo' request.
 interface DataBreakpointInfoResponse extends Response {
   body: {
     /**
-     * An identifier for the data on which a data breakpoint can be registered with the setDataBreakpoints request or null if no data breakpoint is available.
+     * An identifier for the data on which a data breakpoint can be registered with the
+     * setDataBreakpoints request or null if no data breakpoint is available.
      */
     dataId: string | null;
 
     /**
-     * UI string that describes on what data the breakpoint is set on or why a data breakpoint is not available.
+     * UI string that describes on what data the breakpoint is set on or why a data
+     * breakpoint is not available.
      */
     description: string;
 
     /**
-     * Optional attribute listing the available access types for a potential data breakpoint. A UI frontend could surface this information.
+     * Optional attribute listing the available access types for a potential data
+     * breakpoint. A UI frontend could surface this information.
      */
     accessTypes?: DataBreakpointAccessType[];
 
     /**
-     * Optional attribute indicating that a potential data breakpoint could be persisted across sessions.
+     * Optional attribute indicating that a potential data breakpoint could be
+     * persisted across sessions.
      */
     canPersist?: boolean;
   };
@@ -1373,7 +1447,8 @@ Arguments for 'setDataBreakpoints' request.
 ```typescript
 interface SetDataBreakpointsArguments {
   /**
-   * The contents of this array replaces all existing data breakpoints. An empty array clears all data breakpoints.
+   * The contents of this array replaces all existing data breakpoints. An empty
+   * array clears all data breakpoints.
    */
   breakpoints: DataBreakpoint[];
 }
@@ -1388,7 +1463,8 @@ Returned is information about each breakpoint created by this request.
 interface SetDataBreakpointsResponse extends Response {
   body: {
     /**
-     * Information about the data breakpoints. The array elements correspond to the elements of the input argument 'breakpoints' array.
+     * Information about the data breakpoints. The array elements correspond to the
+     * elements of the input argument 'breakpoints' array.
      */
     breakpoints: Breakpoint[];
   };
@@ -1432,7 +1508,8 @@ Response to 'setInstructionBreakpoints' request
 interface SetInstructionBreakpointsResponse extends Response {
   body: {
     /**
-     * Information about the breakpoints. The array elements correspond to the elements of the 'breakpoints' array.
+     * Information about the breakpoints. The array elements correspond to the elements
+     * of the 'breakpoints' array.
      */
     breakpoints: Breakpoint[];
   };
@@ -1458,7 +1535,9 @@ Arguments for 'continue' request.
 interface ContinueArguments {
   /**
    * Continue execution for the specified thread (if possible).
-   * If the backend cannot continue on a single thread but will continue on all threads, it should set the 'allThreadsContinued' attribute in the response to true.
+   * If the backend cannot continue on a single thread but will continue on all
+   * threads, it should set the 'allThreadsContinued' attribute in the response to
+   * true.
    */
   threadId: number;
 }
@@ -1471,8 +1550,10 @@ Response to 'continue' request.
 interface ContinueResponse extends Response {
   body: {
     /**
-     * If true, the 'continue' request has ignored the specified thread and continued all threads instead.
-     * If this attribute is missing a value of 'true' is assumed for backward compatibility.
+     * If true, the 'continue' request has ignored the specified thread and continued
+     * all threads instead.
+     * If this attribute is missing a value of 'true' is assumed for backward
+     * compatibility.
      */
     allThreadsContinued?: boolean;
   };
@@ -1504,7 +1585,8 @@ interface NextArguments {
   threadId: number;
 
   /**
-   * Optional granularity to step. If no granularity is specified, a granularity of 'statement' is assumed.
+   * Optional granularity to step. If no granularity is specified, a granularity of
+   * 'statement' is assumed.
    */
   granularity?: SteppingGranularity;
 }
@@ -1556,7 +1638,8 @@ interface StepInArguments {
   targetId?: number;
 
   /**
-   * Optional granularity to step. If no granularity is specified, a granularity of 'statement' is assumed.
+   * Optional granularity to step. If no granularity is specified, a granularity of
+   * 'statement' is assumed.
    */
   granularity?: SteppingGranularity;
 }
@@ -1595,7 +1678,8 @@ interface StepOutArguments {
   threadId: number;
 
   /**
-   * Optional granularity to step. If no granularity is specified, a granularity of 'statement' is assumed.
+   * Optional granularity to step. If no granularity is specified, a granularity of
+   * 'statement' is assumed.
    */
   granularity?: SteppingGranularity;
 }
@@ -1636,7 +1720,8 @@ interface StepBackArguments {
   threadId: number;
 
   /**
-   * Optional granularity to step. If no granularity is specified, a granularity of 'statement' is assumed.
+   * Optional granularity to step. If no granularity is specified, a granularity of
+   * 'statement' is assumed.
    */
   granularity?: SteppingGranularity;
 }
@@ -1827,13 +1912,15 @@ interface StackTraceArguments {
   startFrame?: number;
 
   /**
-   * The maximum number of frames to return. If levels is not specified or 0, all frames are returned.
+   * The maximum number of frames to return. If levels is not specified or 0, all
+   * frames are returned.
    */
   levels?: number;
 
   /**
    * Specifies details on how to format the stack frames.
-   * The attribute is only honored by a debug adapter if the capability 'supportsValueFormattingOptions' is true.
+   * The attribute is only honored by a debug adapter if the capability
+   * 'supportsValueFormattingOptions' is true.
    */
   format?: StackFrameFormat;
 }
@@ -1846,7 +1933,8 @@ Response to 'stackTrace' request.
 interface StackTraceResponse extends Response {
   body: {
     /**
-     * The frames of the stackframe. If the array has length zero, there are no stackframes available.
+     * The frames of the stackframe. If the array has length zero, there are no
+     * stackframes available.
      * This means that there is no location information available.
      */
     stackFrames: StackFrame[];
@@ -1890,7 +1978,8 @@ Response to 'scopes' request.
 interface ScopesResponse extends Response {
   body: {
     /**
-     * The scopes of the stackframe. If the array has length zero, there are no scopes available.
+     * The scopes of the stackframe. If the array has length zero, there are no scopes
+     * available.
      */
     scopes: Scope[];
   };
@@ -1922,7 +2011,8 @@ interface VariablesArguments {
   variablesReference: number;
 
   /**
-   * Optional filter to limit the child variables to either named or indexed. If omitted, both types are fetched.
+   * Optional filter to limit the child variables to either named or indexed. If
+   * omitted, both types are fetched.
    * Values: 'indexed', 'named', etc.
    */
   filter?: 'indexed' | 'named';
@@ -1933,13 +2023,15 @@ interface VariablesArguments {
   start?: number;
 
   /**
-   * The number of variables to return. If count is missing or 0, all variables are returned.
+   * The number of variables to return. If count is missing or 0, all variables are
+   * returned.
    */
   count?: number;
 
   /**
    * Specifies details on how to format the Variable values.
-   * The attribute is only honored by a debug adapter if the capability 'supportsValueFormattingOptions' is true.
+   * The attribute is only honored by a debug adapter if the capability
+   * 'supportsValueFormattingOptions' is true.
    */
   format?: ValueFormat;
 }
@@ -2010,27 +2102,31 @@ interface SetVariableResponse extends Response {
     value: string;
 
     /**
-     * The type of the new value. Typically shown in the UI when hovering over the value.
+     * The type of the new value. Typically shown in the UI when hovering over the
+     * value.
      */
     type?: string;
 
     /**
-     * If variablesReference is > 0, the new value is structured and its children can be retrieved by passing variablesReference to the VariablesRequest.
-     * The value should be less than or equal to 2147483647 (2^31 - 1).
+     * If variablesReference is > 0, the new value is structured and its children can
+     * be retrieved by passing variablesReference to the VariablesRequest.
+     * The value should be less than or equal to 2147483647 (2^31-1).
      */
     variablesReference?: number;
 
     /**
      * The number of named child variables.
-     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks.
-     * The value should be less than or equal to 2147483647 (2^31 - 1).
+     * The client can use this optional information to present the variables in a paged
+     * UI and fetch them in chunks.
+     * The value should be less than or equal to 2147483647 (2^31-1).
      */
     namedVariables?: number;
 
     /**
      * The number of indexed child variables.
-     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks.
-     * The value should be less than or equal to 2147483647 (2^31 - 1).
+     * The client can use this optional information to present the variables in a paged
+     * UI and fetch them in chunks.
+     * The value should be less than or equal to 2147483647 (2^31-1).
      */
     indexedVariables?: number;
   };
@@ -2055,13 +2151,15 @@ Arguments for 'source' request.
 ```typescript
 interface SourceArguments {
   /**
-   * Specifies the source content to load. Either source.path or source.sourceReference must be specified.
+   * Specifies the source content to load. Either source.path or
+   * source.sourceReference must be specified.
    */
   source?: Source;
 
   /**
    * The reference to the source. This is the same as source.sourceReference.
-   * This is provided for backward compatibility since old backends do not understand the 'source' attribute.
+   * This is provided for backward compatibility since old backends do not understand
+   * the 'source' attribute.
    */
   sourceReference: number;
 }
@@ -2169,7 +2267,8 @@ interface ModulesArguments {
   startModule?: number;
 
   /**
-   * The number of modules to return. If moduleCount is not specified or 0, all modules are returned.
+   * The number of modules to return. If moduleCount is not specified or 0, all
+   * modules are returned.
    */
   moduleCount?: number;
 }
@@ -2255,7 +2354,8 @@ interface EvaluateArguments {
   expression: string;
 
   /**
-   * Evaluate the expression in the scope of this stack frame. If not specified, the expression is evaluated in the global scope.
+   * Evaluate the expression in the scope of this stack frame. If not specified, the
+   * expression is evaluated in the global scope.
    */
   frameId?: number;
 
@@ -2265,15 +2365,18 @@ interface EvaluateArguments {
    * 'watch': evaluate is run in a watch.
    * 'repl': evaluate is run from REPL console.
    * 'hover': evaluate is run from a data hover.
-   * 'clipboard': evaluate is run to generate the value that will be stored in the clipboard.
-   * The attribute is only honored by a debug adapter if the capability 'supportsClipboardContext' is true.
+   * 'clipboard': evaluate is run to generate the value that will be stored in the
+   * clipboard.
+   * The attribute is only honored by a debug adapter if the capability
+   * 'supportsClipboardContext' is true.
    * etc.
    */
   context?: 'watch' | 'repl' | 'hover' | 'clipboard' | string;
 
   /**
    * Specifies details on how to format the Evaluate result.
-   * The attribute is only honored by a debug adapter if the capability 'supportsValueFormattingOptions' is true.
+   * The attribute is only honored by a debug adapter if the capability
+   * 'supportsValueFormattingOptions' is true.
    */
   format?: ValueFormat;
 }
@@ -2292,39 +2395,48 @@ interface EvaluateResponse extends Response {
 
     /**
      * The optional type of the evaluate result.
-     * This attribute should only be returned by a debug adapter if the client has passed the value true for the 'supportsVariableType' capability of the 'initialize' request.
+     * This attribute should only be returned by a debug adapter if the client has
+     * passed the value true for the 'supportsVariableType' capability of the
+     * 'initialize' request.
      */
     type?: string;
 
     /**
-     * Properties of a evaluate result that can be used to determine how to render the result in the UI.
+     * Properties of a evaluate result that can be used to determine how to render the
+     * result in the UI.
      */
     presentationHint?: VariablePresentationHint;
 
     /**
-     * If variablesReference is > 0, the evaluate result is structured and its children can be retrieved by passing variablesReference to the VariablesRequest.
-     * The value should be less than or equal to 2147483647 (2^31 - 1).
+     * If variablesReference is > 0, the evaluate result is structured and its children
+     * can be retrieved by passing variablesReference to the VariablesRequest.
+     * The value should be less than or equal to 2147483647 (2^31-1).
      */
     variablesReference: number;
 
     /**
      * The number of named child variables.
-     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks.
-     * The value should be less than or equal to 2147483647 (2^31 - 1).
+     * The client can use this optional information to present the variables in a paged
+     * UI and fetch them in chunks.
+     * The value should be less than or equal to 2147483647 (2^31-1).
      */
     namedVariables?: number;
 
     /**
      * The number of indexed child variables.
-     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks.
-     * The value should be less than or equal to 2147483647 (2^31 - 1).
+     * The client can use this optional information to present the variables in a paged
+     * UI and fetch them in chunks.
+     * The value should be less than or equal to 2147483647 (2^31-1).
      */
     indexedVariables?: number;
 
     /**
      * Optional memory reference to a location appropriate for this result.
-     * For pointer type eval results, this is generally a reference to the memory address contained in the pointer.
-     * This attribute should be returned by a debug adapter if the client has passed the value true for the 'supportsMemoryReferences' capability of the 'initialize' request.
+     * For pointer type eval results, this is generally a reference to the memory
+     * address contained in the pointer.
+     * This attribute should be returned by a debug adapter if the client has passed
+     * the value true for the 'supportsMemoryReferences' capability of the 'initialize'
+     * request.
      */
     memoryReference?: string;
   };
@@ -2363,7 +2475,8 @@ interface SetExpressionArguments {
   value: string;
 
   /**
-   * Evaluate the expressions in the scope of this stack frame. If not specified, the expressions are evaluated in the global scope.
+   * Evaluate the expressions in the scope of this stack frame. If not specified, the
+   * expressions are evaluated in the global scope.
    */
   frameId?: number;
 
@@ -2387,32 +2500,38 @@ interface SetExpressionResponse extends Response {
 
     /**
      * The optional type of the value.
-     * This attribute should only be returned by a debug adapter if the client has passed the value true for the 'supportsVariableType' capability of the 'initialize' request.
+     * This attribute should only be returned by a debug adapter if the client has
+     * passed the value true for the 'supportsVariableType' capability of the
+     * 'initialize' request.
      */
     type?: string;
 
     /**
-     * Properties of a value that can be used to determine how to render the result in the UI.
+     * Properties of a value that can be used to determine how to render the result in
+     * the UI.
      */
     presentationHint?: VariablePresentationHint;
 
     /**
-     * If variablesReference is > 0, the value is structured and its children can be retrieved by passing variablesReference to the VariablesRequest.
-     * The value should be less than or equal to 2147483647 (2^31 - 1).
+     * If variablesReference is > 0, the value is structured and its children can be
+     * retrieved by passing variablesReference to the VariablesRequest.
+     * The value should be less than or equal to 2147483647 (2^31-1).
      */
     variablesReference?: number;
 
     /**
      * The number of named child variables.
-     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks.
-     * The value should be less than or equal to 2147483647 (2^31 - 1).
+     * The client can use this optional information to present the variables in a paged
+     * UI and fetch them in chunks.
+     * The value should be less than or equal to 2147483647 (2^31-1).
      */
     namedVariables?: number;
 
     /**
      * The number of indexed child variables.
-     * The client can use this optional information to present the variables in a paged UI and fetch them in chunks.
-     * The value should be less than or equal to 2147483647 (2^31 - 1).
+     * The client can use this optional information to present the variables in a paged
+     * UI and fetch them in chunks.
+     * The value should be less than or equal to 2147483647 (2^31-1).
      */
     indexedVariables?: number;
   };
@@ -2535,12 +2654,14 @@ Arguments for 'completions' request.
 ```typescript
 interface CompletionsArguments {
   /**
-   * Returns completions in the scope of this stack frame. If not specified, the completions are returned for the global scope.
+   * Returns completions in the scope of this stack frame. If not specified, the
+   * completions are returned for the global scope.
    */
   frameId?: number;
 
   /**
-   * One or more source lines. Typically this is the text a user has typed into the debug console before he asked for completion.
+   * One or more source lines. Typically this is the text a user has typed into the
+   * debug console before he asked for completion.
    */
   text: string;
 
@@ -2550,7 +2671,8 @@ interface CompletionsArguments {
   column: number;
 
   /**
-   * An optional line for which to determine the completion proposals. If missing the first line of the text is assumed.
+   * An optional line for which to determine the completion proposals. If missing the
+   * first line of the text is assumed.
    */
   line?: number;
 }
@@ -2650,7 +2772,8 @@ interface ReadMemoryArguments {
   memoryReference: string;
 
   /**
-   * Optional offset (in bytes) to be applied to the reference location before reading data. Can be negative.
+   * Optional offset (in bytes) to be applied to the reference location before
+   * reading data. Can be negative.
    */
   offset?: number;
 
@@ -2674,8 +2797,10 @@ interface ReadMemoryResponse extends Response {
     address: string;
 
     /**
-     * The number of unreadable bytes encountered after the last successfully read byte.
-     * This can be used to determine the number of bytes that must be skipped before a subsequent 'readMemory' request will succeed.
+     * The number of unreadable bytes encountered after the last successfully read
+     * byte.
+     * This can be used to determine the number of bytes that must be skipped before a
+     * subsequent 'readMemory' request will succeed.
      */
     unreadableBytes?: number;
 
@@ -2707,28 +2832,35 @@ Arguments for 'disassemble' request.
 ```typescript
 interface DisassembleArguments {
   /**
-   * Memory reference to the base location containing the instructions to disassemble.
+   * Memory reference to the base location containing the instructions to
+   * disassemble.
    */
   memoryReference: string;
 
   /**
-   * Optional offset (in bytes) to be applied to the reference location before disassembling. Can be negative.
+   * Optional offset (in bytes) to be applied to the reference location before
+   * disassembling. Can be negative.
    */
   offset?: number;
 
   /**
-   * Optional offset (in instructions) to be applied after the byte offset (if any) before disassembling. Can be negative.
+   * Optional offset (in instructions) to be applied after the byte offset (if any)
+   * before disassembling. Can be negative.
    */
   instructionOffset?: number;
 
   /**
-   * Number of instructions to disassemble starting at the specified location and offset.
-   * An adapter must return exactly this number of instructions - any unavailable instructions should be replaced with an implementation-defined 'invalid instruction' value.
+   * Number of instructions to disassemble starting at the specified location and
+   * offset.
+   * An adapter must return exactly this number of instructions - any unavailable
+   * instructions should be replaced with an implementation-defined 'invalid
+   * instruction' value.
    */
   instructionCount: number;
 
   /**
-   * If true, the adapter should attempt to resolve memory addresses and other values to symbolic names.
+   * If true, the adapter should attempt to resolve memory addresses and other values
+   * to symbolic names.
    */
   resolveSymbols?: boolean;
 }
@@ -2772,12 +2904,14 @@ interface Capabilities {
   supportsConditionalBreakpoints?: boolean;
 
   /**
-   * The debug adapter supports breakpoints that break execution after a specified number of hits.
+   * The debug adapter supports breakpoints that break execution after a specified
+   * number of hits.
    */
   supportsHitConditionalBreakpoints?: boolean;
 
   /**
-   * The debug adapter supports a (side effect free) evaluate request for data hovers.
+   * The debug adapter supports a (side effect free) evaluate request for data
+   * hovers.
    */
   supportsEvaluateForHovers?: boolean;
 
@@ -2787,7 +2921,8 @@ interface Capabilities {
   exceptionBreakpointFilters?: ExceptionBreakpointsFilter[];
 
   /**
-   * The debug adapter supports stepping back via the 'stepBack' and 'reverseContinue' requests.
+   * The debug adapter supports stepping back via the 'stepBack' and
+   * 'reverseContinue' requests.
    */
   supportsStepBack?: boolean;
 
@@ -2817,7 +2952,8 @@ interface Capabilities {
   supportsCompletionsRequest?: boolean;
 
   /**
-   * The set of characters that should trigger completion in a REPL. If not specified, the UI should assume the '.' character.
+   * The set of characters that should trigger completion in a REPL. If not
+   * specified, the UI should assume the '.' character.
    */
   completionTriggerCharacters?: string[];
 
@@ -2837,17 +2973,21 @@ interface Capabilities {
   supportedChecksumAlgorithms?: ChecksumAlgorithm[];
 
   /**
-   * The debug adapter supports the 'restart' request. In this case a client should not implement 'restart' by terminating and relaunching the adapter but by calling the RestartRequest.
+   * The debug adapter supports the 'restart' request. In this case a client should
+   * not implement 'restart' by terminating and relaunching the adapter but by
+   * calling the RestartRequest.
    */
   supportsRestartRequest?: boolean;
 
   /**
-   * The debug adapter supports 'exceptionOptions' on the setExceptionBreakpoints request.
+   * The debug adapter supports 'exceptionOptions' on the setExceptionBreakpoints
+   * request.
    */
   supportsExceptionOptions?: boolean;
 
   /**
-   * The debug adapter supports a 'format' attribute on the stackTraceRequest, variablesRequest, and evaluateRequest.
+   * The debug adapter supports a 'format' attribute on the stackTraceRequest,
+   * variablesRequest, and evaluateRequest.
    */
   supportsValueFormattingOptions?: boolean;
 
@@ -2857,12 +2997,15 @@ interface Capabilities {
   supportsExceptionInfoRequest?: boolean;
 
   /**
-   * The debug adapter supports the 'terminateDebuggee' attribute on the 'disconnect' request.
+   * The debug adapter supports the 'terminateDebuggee' attribute on the 'disconnect'
+   * request.
    */
   supportTerminateDebuggee?: boolean;
 
   /**
-   * The debug adapter supports the delayed loading of parts of the stack, which requires that both the 'startFrame' and 'levels' arguments and the 'totalFrames' result of the 'StackTrace' request are supported.
+   * The debug adapter supports the delayed loading of parts of the stack, which
+   * requires that both the 'startFrame' and 'levels' arguments and the 'totalFrames'
+   * result of the 'StackTrace' request are supported.
    */
   supportsDelayedStackTraceLoading?: boolean;
 
@@ -2872,7 +3015,8 @@ interface Capabilities {
   supportsLoadedSourcesRequest?: boolean;
 
   /**
-   * The debug adapter supports logpoints by interpreting the 'logMessage' attribute of the SourceBreakpoint.
+   * The debug adapter supports logpoints by interpreting the 'logMessage' attribute
+   * of the SourceBreakpoint.
    */
   supportsLogPoints?: boolean;
 
@@ -2917,12 +3061,14 @@ interface Capabilities {
   supportsBreakpointLocationsRequest?: boolean;
 
   /**
-   * The debug adapter supports the 'clipboard' context value in the 'evaluate' request.
+   * The debug adapter supports the 'clipboard' context value in the 'evaluate'
+   * request.
    */
   supportsClipboardContext?: boolean;
 
   /**
-   * The debug adapter supports stepping granularities (argument 'granularity') for the stepping requests.
+   * The debug adapter supports stepping granularities (argument 'granularity') for
+   * the stepping requests.
    */
   supportsSteppingGranularity?: boolean;
 
@@ -2940,7 +3086,8 @@ An ExceptionBreakpointsFilter is shown in the UI as an option for configuring ho
 ```typescript
 interface ExceptionBreakpointsFilter {
   /**
-   * The internal ID of the filter. This value is passed to the setExceptionBreakpoints request.
+   * The internal ID of the filter. This value is passed to the
+   * setExceptionBreakpoints request.
    */
   filter: string;
 
@@ -2969,12 +3116,14 @@ interface Message {
 
   /**
    * A format string for the message. Embedded variables have the form '{name}'.
-   * If variable name starts with an underscore character, the variable does not contain user data (PII) and can be safely used for telemetry purposes.
+   * If variable name starts with an underscore character, the variable does not
+   * contain user data (PII) and can be safely used for telemetry purposes.
    */
   format: string;
 
   /**
-   * An object used as a dictionary for looking up the variables in the format string.
+   * An object used as a dictionary for looking up the variables in the format
+   * string.
    */
   variables?: { [key: string]: string; };
 
@@ -3034,7 +3183,8 @@ interface Module {
    * optional but recommended attributes.
    * always try to use these first before introducing additional attributes.
    * 
-   * Logical full path to the module. The exact definition is implementation defined, but usually this would be a full path to the on-disk file for the module.
+   * Logical full path to the module. The exact definition is implementation defined,
+   * but usually this would be a full path to the on-disk file for the module.
    */
   path?: string;
 
@@ -3044,7 +3194,8 @@ interface Module {
   isOptimized?: boolean;
 
   /**
-   * True if the module is considered 'user code' by a debugger that supports 'Just My Code'.
+   * True if the module is considered 'user code' by a debugger that supports 'Just
+   * My Code'.
    */
   isUserCode?: boolean;
 
@@ -3054,12 +3205,14 @@ interface Module {
   version?: string;
 
   /**
-   * User understandable description of if symbols were found for the module (ex: 'Symbols Loaded', 'Symbols not found', etc.
+   * User understandable description of if symbols were found for the module (ex:
+   * 'Symbols Loaded', 'Symbols not found', etc.
    */
   symbolStatus?: string;
 
   /**
-   * Logical full path to the symbol file. The exact definition is implementation defined.
+   * Logical full path to the symbol file. The exact definition is implementation
+   * defined.
    */
   symbolFilePath?: string;
 
@@ -3096,7 +3249,8 @@ interface ColumnDescriptor {
   label: string;
 
   /**
-   * Format to use for the rendered values in this column. TBD how the format strings looks like.
+   * Format to use for the rendered values in this column. TBD how the format strings
+   * looks like.
    */
   format?: string;
 
@@ -3152,44 +3306,52 @@ It is returned from the debug adapter as part of a StackFrame and it is used by 
 ```typescript
 interface Source {
   /**
-   * The short name of the source. Every source returned from the debug adapter has a name.
+   * The short name of the source. Every source returned from the debug adapter has a
+   * name.
    * When sending a source to the debug adapter this name is optional.
    */
   name?: string;
 
   /**
    * The path of the source to be shown in the UI.
-   * It is only used to locate and load the content of the source if no sourceReference is specified (or its value is 0).
+   * It is only used to locate and load the content of the source if no
+   * sourceReference is specified (or its value is 0).
    */
   path?: string;
 
   /**
-   * If sourceReference > 0 the contents of the source must be retrieved through the SourceRequest (even if a path is specified).
-   * A sourceReference is only valid for a session, so it must not be used to persist a source.
-   * The value should be less than or equal to 2147483647 (2^31 - 1).
+   * If sourceReference > 0 the contents of the source must be retrieved through the
+   * SourceRequest (even if a path is specified).
+   * A sourceReference is only valid for a session, so it must not be used to persist
+   * a source.
+   * The value should be less than or equal to 2147483647 (2^31-1).
    */
   sourceReference?: number;
 
   /**
    * An optional hint for how to present the source in the UI.
-   * A value of 'deemphasize' can be used to indicate that the source is not available or that it is skipped on stepping.
+   * A value of 'deemphasize' can be used to indicate that the source is not
+   * available or that it is skipped on stepping.
    * Values: 'normal', 'emphasize', 'deemphasize', etc.
    */
   presentationHint?: 'normal' | 'emphasize' | 'deemphasize';
 
   /**
-   * The (optional) origin of this source: possible values 'internal module', 'inlined content from source map', etc.
+   * The (optional) origin of this source: possible values 'internal module',
+   * 'inlined content from source map', etc.
    */
   origin?: string;
 
   /**
-   * An optional list of sources that are related to this source. These may be the source that generated this source.
+   * An optional list of sources that are related to this source. These may be the
+   * source that generated this source.
    */
   sources?: Source[];
 
   /**
    * Optional data that a debug adapter might want to loop through the client.
-   * The client should leave the data intact and persist it across sessions. The client should not interpret the data.
+   * The client should leave the data intact and persist it across sessions. The
+   * client should not interpret the data.
    */
   adapterData?: any;
 
@@ -3208,7 +3370,8 @@ A Stackframe contains the source location.
 interface StackFrame {
   /**
    * An identifier for the stack frame. It must be unique across all threads.
-   * This id can be used to retrieve the scopes of the frame with the 'scopesRequest' or to restart the execution of a stackframe.
+   * This id can be used to retrieve the scopes of the frame with the 'scopesRequest'
+   * or to restart the execution of a stackframe.
    */
   id: number;
 
@@ -3223,12 +3386,14 @@ interface StackFrame {
   source?: Source;
 
   /**
-   * The line within the file of the frame. If source is null or doesn't exist, line is 0 and must be ignored.
+   * The line within the file of the frame. If source is null or doesn't exist, line
+   * is 0 and must be ignored.
    */
   line: number;
 
   /**
-   * The column within the line. If source is null or doesn't exist, column is 0 and must be ignored.
+   * The column within the line. If source is null or doesn't exist, column is 0 and
+   * must be ignored.
    */
   column: number;
 
@@ -3254,7 +3419,9 @@ interface StackFrame {
 
   /**
    * An optional hint for how to present this frame in the UI.
-   * A value of 'label' can be used to indicate that the frame is an artificial frame that is used as a visual label or separator. A value of 'subtle' can be used to change the appearance of a frame in a 'subtle' way.
+   * A value of 'label' can be used to indicate that the frame is an artificial frame
+   * that is used as a visual label or separator. A value of 'subtle' can be used to
+   * change the appearance of a frame in a 'subtle' way.
    * Values: 'normal', 'label', 'subtle', etc.
    */
   presentationHint?: 'normal' | 'label' | 'subtle';
@@ -3268,39 +3435,46 @@ A Scope is a named container for variables. Optionally a scope can map to a sour
 ```typescript
 interface Scope {
   /**
-   * Name of the scope such as 'Arguments', 'Locals', or 'Registers'. This string is shown in the UI as is and can be translated.
+   * Name of the scope such as 'Arguments', 'Locals', or 'Registers'. This string is
+   * shown in the UI as is and can be translated.
    */
   name: string;
 
   /**
-   * An optional hint for how to present this scope in the UI. If this attribute is missing, the scope is shown with a generic UI.
+   * An optional hint for how to present this scope in the UI. If this attribute is
+   * missing, the scope is shown with a generic UI.
    * Values: 
    * 'arguments': Scope contains method arguments.
    * 'locals': Scope contains local variables.
-   * 'registers': Scope contains registers. Only a single 'registers' scope should be returned from a 'scopes' request.
+   * 'registers': Scope contains registers. Only a single 'registers' scope should be
+   * returned from a 'scopes' request.
    * etc.
    */
   presentationHint?: 'arguments' | 'locals' | 'registers' | string;
 
   /**
-   * The variables of this scope can be retrieved by passing the value of variablesReference to the VariablesRequest.
+   * The variables of this scope can be retrieved by passing the value of
+   * variablesReference to the VariablesRequest.
    */
   variablesReference: number;
 
   /**
    * The number of named variables in this scope.
-   * The client can use this optional information to present the variables in a paged UI and fetch them in chunks.
+   * The client can use this optional information to present the variables in a paged
+   * UI and fetch them in chunks.
    */
   namedVariables?: number;
 
   /**
    * The number of indexed variables in this scope.
-   * The client can use this optional information to present the variables in a paged UI and fetch them in chunks.
+   * The client can use this optional information to present the variables in a paged
+   * UI and fetch them in chunks.
    */
   indexedVariables?: number;
 
   /**
-   * If true, the number of variables in this scope is large or expensive to retrieve.
+   * If true, the number of variables in this scope is large or expensive to
+   * retrieve.
    */
   expensive: boolean;
 
@@ -3353,46 +3527,57 @@ interface Variable {
   name: string;
 
   /**
-   * The variable's value. This can be a multi-line text, e.g. for a function the body of a function.
+   * The variable's value. This can be a multi-line text, e.g. for a function the
+   * body of a function.
    */
   value: string;
 
   /**
-   * The type of the variable's value. Typically shown in the UI when hovering over the value.
-   * This attribute should only be returned by a debug adapter if the client has passed the value true for the 'supportsVariableType' capability of the 'initialize' request.
+   * The type of the variable's value. Typically shown in the UI when hovering over
+   * the value.
+   * This attribute should only be returned by a debug adapter if the client has
+   * passed the value true for the 'supportsVariableType' capability of the
+   * 'initialize' request.
    */
   type?: string;
 
   /**
-   * Properties of a variable that can be used to determine how to render the variable in the UI.
+   * Properties of a variable that can be used to determine how to render the
+   * variable in the UI.
    */
   presentationHint?: VariablePresentationHint;
 
   /**
-   * Optional evaluatable name of this variable which can be passed to the 'EvaluateRequest' to fetch the variable's value.
+   * Optional evaluatable name of this variable which can be passed to the
+   * 'EvaluateRequest' to fetch the variable's value.
    */
   evaluateName?: string;
 
   /**
-   * If variablesReference is > 0, the variable is structured and its children can be retrieved by passing variablesReference to the VariablesRequest.
+   * If variablesReference is > 0, the variable is structured and its children can be
+   * retrieved by passing variablesReference to the VariablesRequest.
    */
   variablesReference: number;
 
   /**
    * The number of named child variables.
-   * The client can use this optional information to present the children in a paged UI and fetch them in chunks.
+   * The client can use this optional information to present the children in a paged
+   * UI and fetch them in chunks.
    */
   namedVariables?: number;
 
   /**
    * The number of indexed child variables.
-   * The client can use this optional information to present the children in a paged UI and fetch them in chunks.
+   * The client can use this optional information to present the children in a paged
+   * UI and fetch them in chunks.
    */
   indexedVariables?: number;
 
   /**
-   * Optional memory reference for the variable if the variable represents executable code, such as a function pointer.
-   * This attribute is only required if the client has passed the value true for the 'supportsMemoryReferences' capability of the 'initialize' request.
+   * Optional memory reference for the variable if the variable represents executable
+   * code, such as a function pointer.
+   * This attribute is only required if the client has passed the value true for the
+   * 'supportsMemoryReferences' capability of the 'initialize' request.
    */
   memoryReference?: string;
 }
@@ -3405,7 +3590,8 @@ Optional properties of a variable that can be used to determine how to render th
 ```typescript
 interface VariablePresentationHint {
   /**
-   * The kind of variable. Before introducing additional values, try to use the listed values.
+   * The kind of variable. Before introducing additional values, try to use the
+   * listed values.
    * Values: 
    * 'property': Indicates that the object is a property.
    * 'method': Indicates that the object is a method.
@@ -3416,7 +3602,8 @@ interface VariablePresentationHint {
    * 'innerClass': Indicates that the object is an inner class.
    * 'interface': Indicates that the object is an interface.
    * 'mostDerivedClass': Indicates that the object is the most derived class.
-   * 'virtual': Indicates that the object is virtual, that means it is a synthetic object introducedby the
+   * 'virtual': Indicates that the object is virtual, that means it is a synthetic
+   * object introducedby the
    * adapter for rendering purposes, e.g. an index range for large arrays.
    * 'dataBreakpoint': Indicates that a data breakpoint is registered for the object.
    * etc.
@@ -3424,21 +3611,24 @@ interface VariablePresentationHint {
   kind?: 'property' | 'method' | 'class' | 'data' | 'event' | 'baseClass' | 'innerClass' | 'interface' | 'mostDerivedClass' | 'virtual' | 'dataBreakpoint' | string;
 
   /**
-   * Set of attributes represented as an array of strings. Before introducing additional values, try to use the listed values.
+   * Set of attributes represented as an array of strings. Before introducing
+   * additional values, try to use the listed values.
    * Values: 
    * 'static': Indicates that the object is static.
    * 'constant': Indicates that the object is a constant.
    * 'readOnly': Indicates that the object is read only.
    * 'rawString': Indicates that the object is a raw string.
    * 'hasObjectId': Indicates that the object can have an Object ID created for it.
-   * 'canHaveObjectId': Indicates that the object has an Object ID associated with it.
+   * 'canHaveObjectId': Indicates that the object has an Object ID associated with
+   * it.
    * 'hasSideEffects': Indicates that the evaluation had side effects.
    * etc.
    */
   attributes?: ('static' | 'constant' | 'readOnly' | 'rawString' | 'hasObjectId' | 'canHaveObjectId' | 'hasSideEffects' | string)[];
 
   /**
-   * Visibility of variable. Before introducing additional values, try to use the listed values.
+   * Visibility of variable. Before introducing additional values, try to use the
+   * listed values.
    * Values: 'public', 'private', 'protected', 'internal', 'final', etc.
    */
   visibility?: 'public' | 'private' | 'protected' | 'internal' | 'final' | string;
@@ -3491,21 +3681,25 @@ interface SourceBreakpoint {
 
   /**
    * An optional expression for conditional breakpoints.
-   * It is only honored by a debug adapter if the capability 'supportsConditionalBreakpoints' is true.
+   * It is only honored by a debug adapter if the capability
+   * 'supportsConditionalBreakpoints' is true.
    */
   condition?: string;
 
   /**
-   * An optional expression that controls how many hits of the breakpoint are ignored.
+   * An optional expression that controls how many hits of the breakpoint are
+   * ignored.
    * The backend is expected to interpret the expression as needed.
-   * The attribute is only honored by a debug adapter if the capability 'supportsHitConditionalBreakpoints' is true.
+   * The attribute is only honored by a debug adapter if the capability
+   * 'supportsHitConditionalBreakpoints' is true.
    */
   hitCondition?: string;
 
   /**
    * If this attribute exists and is non-empty, the backend must not 'break' (stop)
    * but log the message instead. Expressions within {} are interpolated.
-   * The attribute is only honored by a debug adapter if the capability 'supportsLogPoints' is true.
+   * The attribute is only honored by a debug adapter if the capability
+   * 'supportsLogPoints' is true.
    */
   logMessage?: string;
 }
@@ -3524,14 +3718,17 @@ interface FunctionBreakpoint {
 
   /**
    * An optional expression for conditional breakpoints.
-   * It is only honored by a debug adapter if the capability 'supportsConditionalBreakpoints' is true.
+   * It is only honored by a debug adapter if the capability
+   * 'supportsConditionalBreakpoints' is true.
    */
   condition?: string;
 
   /**
-   * An optional expression that controls how many hits of the breakpoint are ignored.
+   * An optional expression that controls how many hits of the breakpoint are
+   * ignored.
    * The backend is expected to interpret the expression as needed.
-   * The attribute is only honored by a debug adapter if the capability 'supportsHitConditionalBreakpoints' is true.
+   * The attribute is only honored by a debug adapter if the capability
+   * 'supportsHitConditionalBreakpoints' is true.
    */
   hitCondition?: string;
 }
@@ -3553,7 +3750,8 @@ Properties of a data breakpoint passed to the setDataBreakpoints request.
 ```typescript
 interface DataBreakpoint {
   /**
-   * An id representing the data. This id is returned from the dataBreakpointInfo request.
+   * An id representing the data. This id is returned from the dataBreakpointInfo
+   * request.
    */
   dataId: string;
 
@@ -3568,7 +3766,8 @@ interface DataBreakpoint {
   condition?: string;
 
   /**
-   * An optional expression that controls how many hits of the breakpoint are ignored.
+   * An optional expression that controls how many hits of the breakpoint are
+   * ignored.
    * The backend is expected to interpret the expression as needed.
    */
   hitCondition?: string;
@@ -3583,7 +3782,8 @@ Properties of a breakpoint passed to the setInstructionBreakpoints request
 interface InstructionBreakpoint {
   /**
    * The instruction reference of the breakpoint.
-   * This should be a memory or instruction pointer reference from an EvaluateResponse, Variable, StackFrame, GotoTarget, or Breakpoint.
+   * This should be a memory or instruction pointer reference from an
+   * EvaluateResponse, Variable, StackFrame, GotoTarget, or Breakpoint.
    */
   instructionReference: string;
 
@@ -3595,14 +3795,17 @@ interface InstructionBreakpoint {
 
   /**
    * An optional expression for conditional breakpoints.
-   * It is only honored by a debug adapter if the capability 'supportsConditionalBreakpoints' is true.
+   * It is only honored by a debug adapter if the capability
+   * 'supportsConditionalBreakpoints' is true.
    */
   condition?: string;
 
   /**
-   * An optional expression that controls how many hits of the breakpoint are ignored.
+   * An optional expression that controls how many hits of the breakpoint are
+   * ignored.
    * The backend is expected to interpret the expression as needed.
-   * The attribute is only honored by a debug adapter if the capability 'supportsHitConditionalBreakpoints' is true.
+   * The attribute is only honored by a debug adapter if the capability
+   * 'supportsHitConditionalBreakpoints' is true.
    */
   hitCondition?: string;
 }
@@ -3615,7 +3818,8 @@ Information about a Breakpoint created in setBreakpoints, setFunctionBreakpoints
 ```typescript
 interface Breakpoint {
   /**
-   * An optional identifier for the breakpoint. It is needed if breakpoint events are used to update or remove breakpoints.
+   * An optional identifier for the breakpoint. It is needed if breakpoint events are
+   * used to update or remove breakpoints.
    */
   id?: number;
 
@@ -3626,7 +3830,8 @@ interface Breakpoint {
 
   /**
    * An optional message about the state of the breakpoint.
-   * This is shown to the user and can be used to explain why a breakpoint could not be verified.
+   * This is shown to the user and can be used to explain why a breakpoint could not
+   * be verified.
    */
   message?: string;
 
@@ -3741,7 +3946,8 @@ interface GotoTarget {
   endColumn?: number;
 
   /**
-   * Optional memory reference for the instruction pointer value represented by this target.
+   * Optional memory reference for the instruction pointer value represented by this
+   * target.
    */
   instructionPointerReference?: string;
 }
@@ -3754,7 +3960,8 @@ CompletionItems are the suggestions returned from the CompletionsRequest.
 ```typescript
 interface CompletionItem {
   /**
-   * The label of this completion item. By default this is also the text that is inserted when selecting this completion.
+   * The label of this completion item. By default this is also the text that is
+   * inserted when selecting this completion.
    */
   label: string;
 
@@ -3764,36 +3971,44 @@ interface CompletionItem {
   text?: string;
 
   /**
-   * A string that should be used when comparing this item with other items. When `falsy` the label is used.
+   * A string that should be used when comparing this item with other items. When
+   * `falsy` the label is used.
    */
   sortText?: string;
 
   /**
-   * The item's type. Typically the client uses this information to render the item in the UI with an icon.
+   * The item's type. Typically the client uses this information to render the item
+   * in the UI with an icon.
    */
   type?: CompletionItemType;
 
   /**
-   * This value determines the location (in the CompletionsRequest's 'text' attribute) where the completion text is added.
-   * If missing the text is added at the location specified by the CompletionsRequest's 'column' attribute.
+   * This value determines the location (in the CompletionsRequest's 'text'
+   * attribute) where the completion text is added.
+   * If missing the text is added at the location specified by the
+   * CompletionsRequest's 'column' attribute.
    */
   start?: number;
 
   /**
-   * This value determines how many characters are overwritten by the completion text.
-   * If missing the value 0 is assumed which results in the completion text being inserted.
+   * This value determines how many characters are overwritten by the completion
+   * text.
+   * If missing the value 0 is assumed which results in the completion text being
+   * inserted.
    */
   length?: number;
 
   /**
-   * Determines the start of the new selection after the text has been inserted (or replaced).
+   * Determines the start of the new selection after the text has been inserted (or
+   * replaced).
    * The start position must in the range 0 and length of the completion text.
    * If omitted the selection starts at the end of the completion text.
    */
   selectionStart?: number;
 
   /**
-   * Determines the length of the new selection after the text has been inserted (or replaced).
+   * Determines the length of the new selection after the text has been inserted (or
+   * replaced).
    * The selection can not extend beyond the bounds of the completion text.
    * If omitted the length is assumed to be 0.
    */
@@ -3887,7 +4102,8 @@ interface StackFrameFormat extends ValueFormat {
   module?: boolean;
 
   /**
-   * Includes all stack frames, including those the debug adapter might otherwise hide.
+   * Includes all stack frames, including those the debug adapter might otherwise
+   * hide.
    */
   includeAll?: boolean;
 }
@@ -3900,8 +4116,10 @@ An ExceptionOptions assigns configuration options to a set of exceptions.
 ```typescript
 interface ExceptionOptions {
   /**
-   * A path that selects a single or multiple exceptions in a tree. If 'path' is missing, the whole tree is selected.
-   * By convention the first segment of the path is a category that is used to group exceptions in the UI.
+   * A path that selects a single or multiple exceptions in a tree. If 'path' is
+   * missing, the whole tree is selected.
+   * By convention the first segment of the path is a category that is used to group
+   * exceptions in the UI.
    */
   path?: ExceptionPathSegment[];
 
@@ -3940,7 +4158,8 @@ it matches anything except the names provided if 'negate' is true.
 ```typescript
 interface ExceptionPathSegment {
   /**
-   * If false or missing this segment matches the names provided, otherwise it matches anything except the names provided.
+   * If false or missing this segment matches the names provided, otherwise it
+   * matches anything except the names provided.
    */
   negate?: boolean;
 
@@ -3973,7 +4192,8 @@ interface ExceptionDetails {
   fullTypeName?: string;
 
   /**
-   * Optional expression that can be evaluated in the current scope to obtain the exception object.
+   * Optional expression that can be evaluated in the current scope to obtain the
+   * exception object.
    */
   evaluateName?: string;
 
@@ -3996,34 +4216,40 @@ Represents a single disassembled instruction.
 ```typescript
 interface DisassembledInstruction {
   /**
-   * The address of the instruction. Treated as a hex value if prefixed with '0x', or as a decimal value otherwise.
+   * The address of the instruction. Treated as a hex value if prefixed with '0x', or
+   * as a decimal value otherwise.
    */
   address: string;
 
   /**
-   * Optional raw bytes representing the instruction and its operands, in an implementation-defined format.
+   * Optional raw bytes representing the instruction and its operands, in an
+   * implementation-defined format.
    */
   instructionBytes?: string;
 
   /**
-   * Text representing the instruction and its operands, in an implementation-defined format.
+   * Text representing the instruction and its operands, in an implementation-defined
+   * format.
    */
   instruction: string;
 
   /**
-   * Name of the symbol that corresponds with the location of this instruction, if any.
+   * Name of the symbol that corresponds with the location of this instruction, if
+   * any.
    */
   symbol?: string;
 
   /**
    * Source location that corresponds to this instruction, if any.
    * Should always be set (if available) on the first instruction returned,
-   * but can be omitted afterwards if this instruction maps to the same source file as the previous instruction.
+   * but can be omitted afterwards if this instruction maps to the same source file
+   * as the previous instruction.
    */
   location?: Source;
 
   /**
-   * The line within the source location that corresponds to this instruction, if any.
+   * The line within the source location that corresponds to this instruction, if
+   * any.
    */
   line?: number;
 
