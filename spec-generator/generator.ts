@@ -206,7 +206,7 @@ function Enum(typeName: string, definition: P.StringType): string {
 
 function _Enum(typeName: string, definition: P.StringType): string {
 	const x = enumAsOrType(definition._enum, true);
-limit	return breakLines(`${indent()}export type ${typeName} = ${x};`, ' | ', `    | `) + `\n`;
+	return breakLines(`${indent()}export type ${typeName} = ${x};`, ' | ', `    | `) + `\n`;
 }
 
 function enumAsOrType(enm: string[], open = false) {
