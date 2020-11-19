@@ -766,7 +766,8 @@ interface RunInTerminalRequestArguments {
   title?: string;
 
   /**
-   * Working directory of the command.
+   * Working directory for the command. For non-empty, valid paths this
+   * typically results in execution of a change directory command.
    */
   cwd: string;
 

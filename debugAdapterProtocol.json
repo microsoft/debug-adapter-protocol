@@ -716,7 +716,7 @@
 				},
 				"cwd": {
 					"type": "string",
-					"description": "Working directory of the command."
+					"description": "Working directory for the command. For non-empty, valid paths this typically results in execution of a change directory command."
 				},
 				"args": {
 					"type": "array",
