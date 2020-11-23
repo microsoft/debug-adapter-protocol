@@ -169,6 +169,8 @@
       anchor: Types_ExceptionBreakpointsFilter
     - title: ExceptionDetails
       anchor: Types_ExceptionDetails
+    - title: ExceptionFilterOptions
+      anchor: Types_ExceptionFilterOptions
     - title: ExceptionOptions
       anchor: Types_ExceptionOptions
     - title: ExceptionPathSegment

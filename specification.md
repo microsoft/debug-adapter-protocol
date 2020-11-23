@@ -1345,10 +1345,19 @@ Arguments for 'setExceptionBreakpoints' request.
 ```typescript
 interface SetExceptionBreakpointsArguments {
   /**
-   * IDs of checked exception options. The set of IDs is returned via the
-   * 'exceptionBreakpointFilters' capability.
+   * Set of exception filters specified by their ID. The set of all possible
+   * exception filters is defined by the 'exceptionBreakpointFilters'
+   * capability.
    */
   filters: string[];
+
+  /**
+   * Set of exception filters and their options. The set of all possible
+   * exception filters is defined by the 'exceptionBreakpointFilters'
+   * capability. This attribute is only honored by a debug adapter if the
+   * capability 'supportsExceptionFilterOptions' is true.
+   */
+  filterOptions?: ExceptionFilterOptions[];
 
   /**
    * Configuration options for selected exceptions.
@@ -2930,7 +2939,8 @@ interface Capabilities {
   supportsEvaluateForHovers?: boolean;
 
   /**
-   * Available filters or options for the setExceptionBreakpoints request.
+   * Available exception filter options for the 'setExceptionBreakpoints'
+   * request.
    */
   exceptionBreakpointFilters?: ExceptionBreakpointsFilter[];
 
@@ -3091,30 +3101,43 @@ interface Capabilities {
    * references.
    */
   supportsInstructionBreakpoints?: boolean;
+
+  /**
+   * The debug adapter supports 'filterOptions' as an argument on the
+   * 'setExceptionBreakpoints' request.
+   */
+  supportsExceptionFilterOptions?: boolean;
 }
 ```
 
 ### <a name="Types_ExceptionBreakpointsFilter" class="anchor"></a>ExceptionBreakpointsFilter
 
-An ExceptionBreakpointsFilter is shown in the UI as an option for configuring how exceptions are dealt with.
+An ExceptionBreakpointsFilter is shown in the UI as an filter option for configuring how exceptions are dealt with.
 
 ```typescript
 interface ExceptionBreakpointsFilter {
   /**
-   * The internal ID of the filter. This value is passed to the
-   * setExceptionBreakpoints request.
+   * The internal ID of the filter option. This value is passed to the
+   * 'setExceptionBreakpoints' request.
    */
   filter: string;
 
   /**
-   * The name of the filter. This will be shown in the UI.
+   * The name of the filter option. This will be shown in the UI.
    */
   label: string;
 
   /**
-   * Initial value of the filter. If not specified a value 'false' is assumed.
+   * Initial value of the filter option. If not specified a value 'false' is
+   * assumed.
    */
   default?: boolean;
+
+  /**
+   * Controls whether a condition can be specified for this filter option. If
+   * false or missing, a condition can not be set.
+   */
+  supportsCondition?: boolean;
 }
 ```
 
@@ -4136,6 +4159,27 @@ interface StackFrameFormat extends ValueFormat {
    * otherwise hide.
    */
   includeAll?: boolean;
+}
+```
+
+### <a name="Types_ExceptionFilterOptions" class="anchor"></a>ExceptionFilterOptions
+
+An ExceptionFilterOptions is used to specify an exception filter together with a condition for the setExceptionsFilter request.
+
+```typescript
+interface ExceptionFilterOptions {
+  /**
+   * ID of an exception filter returned by the 'exceptionBreakpointFilters'
+   * capability.
+   */
+  filterId: string;
+
+  /**
+   * An optional expression for conditional exceptions.
+   * The exception will break into the debugger if the result of the condition
+   * is true.
+   */
+  condition?: string;
 }
 ```
 

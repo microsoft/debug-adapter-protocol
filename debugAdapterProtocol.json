@@ -1256,7 +1256,14 @@
 					"items": {
 						"type": "string"
 					},
-					"description": "IDs of checked exception options. The set of IDs is returned via the 'exceptionBreakpointFilters' capability."
+					"description": "Set of exception filters specified by their ID. The set of all possible exception filters is defined by the 'exceptionBreakpointFilters' capability."
+				},
+				"filterOptions": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/ExceptionFilterOptions"
+					},
+					"description": "Set of exception filters and their options. The set of all possible exception filters is defined by the 'exceptionBreakpointFilters' capability. This attribute is only honored by a debug adapter if the capability 'supportsExceptionFilterOptions' is true."
 				},
 				"exceptionOptions": {
 					"type": "array",
@@ -2833,7 +2840,7 @@
 					"items": {
 						"$ref": "#/definitions/ExceptionBreakpointsFilter"
 					},
-					"description": "Available filters or options for the setExceptionBreakpoints request."
+					"description": "Available exception filter options for the 'setExceptionBreakpoints' request."
 				},
 				"supportsStepBack": {
 					"type": "boolean",
@@ -2959,25 +2966,33 @@
 				"supportsInstructionBreakpoints": {
 					"type": "boolean",
 					"description": "The debug adapter supports adding breakpoints based on instruction references."
+				},
+				"supportsExceptionFilterOptions": {
+					"type": "boolean",
+					"description": "The debug adapter supports 'filterOptions' as an argument on the 'setExceptionBreakpoints' request."
 				}
 			}
 		},
 
 		"ExceptionBreakpointsFilter": {
 			"type": "object",
-			"description": "An ExceptionBreakpointsFilter is shown in the UI as an option for configuring how exceptions are dealt with.",
+			"description": "An ExceptionBreakpointsFilter is shown in the UI as an filter option for configuring how exceptions are dealt with.",
 			"properties": {
 				"filter": {
 					"type": "string",
-					"description": "The internal ID of the filter. This value is passed to the setExceptionBreakpoints request."
+					"description": "The internal ID of the filter option. This value is passed to the 'setExceptionBreakpoints' request."
 				},
 				"label": {
 					"type": "string",
-					"description": "The name of the filter. This will be shown in the UI."
+					"description": "The name of the filter option. This will be shown in the UI."
 				},
 				"default": {
 					"type": "boolean",
-					"description": "Initial value of the filter. If not specified a value 'false' is assumed."
+					"description": "Initial value of the filter option. If not specified a value 'false' is assumed."
+				},
+				"supportsCondition": {
+					"type": "boolean",
+					"description": "Controls whether a condition can be specified for this filter option. If false or missing, a condition can not be set."
 				}
 			},
 			"required": [ "filter", "label" ]
@@ -3725,6 +3740,22 @@
 					}
 				}
 			}]
+		},
+
+		"ExceptionFilterOptions": {
+			"type": "object",
+			"description": "An ExceptionFilterOptions is used to specify an exception filter together with a condition for the setExceptionsFilter request.",
+			"properties": {
+				"filterId": {
+					"type": "string",
+					"description": "ID of an exception filter returned by the 'exceptionBreakpointFilters' capability."
+				},
+				"condition": {
+					"type": "string",
+					"description": "An optional expression for conditional exceptions.\nThe exception will break into the debugger if the result of the condition is true."
+				}
+			},
+			"required": [ "filterId" ]
 		},
 
 		"ExceptionOptions": {
