@@ -1347,7 +1347,7 @@ interface SetExceptionBreakpointsArguments {
   /**
    * Set of exception filters specified by their ID. The set of all possible
    * exception filters is defined by the 'exceptionBreakpointFilters'
-   * capability.
+   * capability. The 'filter' and 'filterOptions' sets are additive.
    */
   filters: string[];
 
@@ -1355,7 +1355,8 @@ interface SetExceptionBreakpointsArguments {
    * Set of exception filters and their options. The set of all possible
    * exception filters is defined by the 'exceptionBreakpointFilters'
    * capability. This attribute is only honored by a debug adapter if the
-   * capability 'supportsExceptionFilterOptions' is true.
+   * capability 'supportsExceptionFilterOptions' is true. The 'filter' and
+   * 'filterOptions' sets are additive.
    */
   filterOptions?: ExceptionFilterOptions[];
 
