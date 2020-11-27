@@ -1906,7 +1906,9 @@ interface PauseResponse extends Response {
 
 ### <a name="Requests_StackTrace" class="anchor"></a>:leftwards_arrow_with_hook: StackTrace Request
 
-The request returns a stacktrace from the current execution state.
+The request returns a stacktrace from the current execution state of a given thread.
+
+A client can request all stack frames by omitting the startFrame and levels arguments. For performance conscious clients stack frames can be retrieved in a piecemeal way with the startFrame and levels arguments. The response of the stackTrace request may contain a totalFrames property that hints at the total number of frames in the stack. If a client needs this total number upfront, it can issue a request for a single (first) frame and depending on the value of totalFrames decide how to proceed. In any case a client should be prepared to receive less frames than requested, which is an indication that the end of the stack has been reached.
 
 ```typescript
 interface StackTraceRequest extends Request {
@@ -1960,7 +1962,12 @@ interface StackTraceResponse extends Response {
     stackFrames: StackFrame[];
 
     /**
-     * The total number of frames available.
+     * The total number of frames available in the stack. If omitted or if
+     * totalFrames is larger than the available frames, a client is expected to
+     * request frames until a request returns less frames than requested (which
+     * indicates the end of the stack). Returning monotonically increasing
+     * totalFrames values for subsequent requests can be used to enforce paging
+     * in the client.
      */
     totalFrames?: number;
   };
