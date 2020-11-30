@@ -8,6 +8,7 @@ sectionid: changelog
 
 * 1.43.x:
   * Add support for conditional exceptions. With this the `setExceptionBreakpoints` request got a new property `filterOptions` for setting the exception filters and their conditions. The corresponding capability is `supportsExceptionFilterOptions`.
+  * Clarify the description of the `stackTrace` request and its `totalFrames` property.
   * Clarify the description of the `cwd` property of the `runInTerminal` request: a client is only expected to execute a change directory command if `cwd` contains a non-empty, valid path.
 
 * 1.42.x:
