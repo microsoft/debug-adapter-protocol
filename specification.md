@@ -1909,7 +1909,7 @@ interface PauseResponse extends Response {
 
 The request returns a stacktrace from the current execution state of a given thread.
 
-A client can request all stack frames by omitting the startFrame and levels arguments. For performance conscious clients stack frames can be retrieved in a piecemeal way with the startFrame and levels arguments. The response of the stackTrace request may contain a totalFrames property that hints at the total number of frames in the stack. If a client needs this total number upfront, it can issue a request for a single (first) frame and depending on the value of totalFrames decide how to proceed. In any case a client should be prepared to receive less frames than requested, which is an indication that the end of the stack has been reached.
+A client can request all stack frames by omitting the startFrame and levels arguments. For performance conscious clients and if the debug adapter's 'supportsDelayedStackTraceLoading' capability is true, stack frames can be retrieved in a piecemeal way with the startFrame and levels arguments. The response of the stackTrace request may contain a totalFrames property that hints at the total number of frames in the stack. If a client needs this total number upfront, it can issue a request for a single (first) frame and depending on the value of totalFrames decide how to proceed. In any case a client should be prepared to receive less frames than requested, which is an indication that the end of the stack has been reached.
 
 ```typescript
 interface StackTraceRequest extends Request {
@@ -3036,7 +3036,7 @@ interface Capabilities {
 
   /**
    * The debug adapter supports the delayed loading of parts of the stack, which
-   * requires that both the 'startFrame' and 'levels' arguments and the
+   * requires that both the 'startFrame' and 'levels' arguments and an optional
    * 'totalFrames' result of the 'StackTrace' request are supported.
    */
   supportsDelayedStackTraceLoading?: boolean;
