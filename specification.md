@@ -3656,7 +3656,8 @@ interface VariablePresentationHint {
    * synthetic object introducedby the
    * adapter for rendering purposes, e.g. an index range for large arrays.
    * 'dataBreakpoint': Deprecated: Indicates that a data breakpoint is
-   * registered for the object.
+   * registered for the object. The 'hasDataBreakpoint' attribute should
+   * generally be used instead.
    * etc.
    */
   kind?: 'property' | 'method' | 'class' | 'data' | 'event' | 'baseClass'

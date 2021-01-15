@@ -3361,7 +3361,7 @@
 						"Indicates that the object is an interface.",
 						"Indicates that the object is the most derived class.",
 						"Indicates that the object is virtual, that means it is a synthetic object introducedby the\nadapter for rendering purposes, e.g. an index range for large arrays.",
-						"Deprecated: Indicates that a data breakpoint is registered for the object."
+						"Deprecated: Indicates that a data breakpoint is registered for the object. The 'hasDataBreakpoint' attribute should generally be used instead."
 					]
 				},
 				"attributes": {
