@@ -27,6 +27,7 @@ The following table lists the known debug adapters that implement the Debug Adap
 [Debugger for .NET Core](https://github.com/Samsung/netcoredbg)|[@ayuckhulk](https://github.com/ayuckhulk)|[Samsung/netcoredbg](https://github.com/Samsung/netcoredbg)
 [Debugger for PhantomJS](https://marketplace.visualstudio.com/items?itemName=iradul.debugger-for-phantomjs)|[@iradul](https://github.com/iradul)|[iradul/vscode-phantomjs-debug](https://github.com/iradul/vscode-phantomjs-debug)
 [Debugger for Unity](https://marketplace.visualstudio.com/items?itemName=Unity.unity-debug)|[@lukaszunity](https://github.com/lukaszunity) [@miniwolf](https://github.com/miniwolf)|[Unity-Technologies/vscode-unity-debug](https://github.com/Unity-Technologies/vscode-unity-debug)
+[DeZog - Z80 Assembly Debugger](https://marketplace.visualstudio.com/items?itemName=maziac.dezog)|[@maziac](https://github.com/maziac)|[maziac/DeZog](https://github.com/maziac/dezog)
 [Duktape Debugger](https://marketplace.visualstudio.com/items?itemName=HaroldBrenes.duk-debug)|[@svaarala](https://github.com/svaarala)|[svaarala/duktape](https://github.com/svaarala/duktape)
 [Firefox Remote Debug](https://marketplace.visualstudio.com/items?itemName=yurydelendik.firefox-debug)|[@yurydelendik](https://github.com/yurydelendik)|[yurydelendik/vscode-ff-debug](https://github.com/yurydelendik/vscode-ff-debug)
 [Flash](https://marketplace.visualstudio.com/items?itemName=vshaxe.haxe-debug)|[@vshaxe](https://github.com/vshaxe/)|[vshaxe/flash-debugger](https://github.com/vshaxe/flash-debugger)
