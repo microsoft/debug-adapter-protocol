@@ -6,6 +6,9 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.44.x:
+  * Deprecated the value `dataBreakpoint` of `VariablePresentationHint.kind`. Instead a new value `hasDataBreakpoint` has been added to the `VariablePresentationHint.attribute`.
+
 * 1.43.x:
   * Add support for conditional exceptions. With this the `setExceptionBreakpoints` request got a new property `filterOptions` for setting the exception filters and their conditions. The corresponding capability is `supportsExceptionFilterOptions`.
   * Clarify the description of the `stackTrace` request and its `totalFrames` property.
