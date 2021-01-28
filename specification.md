@@ -3655,8 +3655,9 @@ interface VariablePresentationHint {
    * 'virtual': Indicates that the object is virtual, that means it is a
    * synthetic object introducedby the
    * adapter for rendering purposes, e.g. an index range for large arrays.
-   * 'dataBreakpoint': Indicates that a data breakpoint is registered for the
-   * object.
+   * 'dataBreakpoint': Deprecated: Indicates that a data breakpoint is
+   * registered for the object. The 'hasDataBreakpoint' attribute should
+   * generally be used instead.
    * etc.
    */
   kind?: 'property' | 'method' | 'class' | 'data' | 'event' | 'baseClass'
@@ -3676,10 +3677,12 @@ interface VariablePresentationHint {
    * 'canHaveObjectId': Indicates that the object has an Object ID associated
    * with it.
    * 'hasSideEffects': Indicates that the evaluation had side effects.
+   * 'hasDataBreakpoint': Indicates that the object has its value tracked by a
+   * data breakpoint.
    * etc.
    */
   attributes?: ('static' | 'constant' | 'readOnly' | 'rawString' | 'hasObjectId'
-      | 'canHaveObjectId' | 'hasSideEffects' | string)[];
+      | 'canHaveObjectId' | 'hasSideEffects' | 'hasDataBreakpoint' | string)[];
 
   /**
    * Visibility of variable. Before introducing additional values, try to use
