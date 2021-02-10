@@ -7,6 +7,8 @@ sectionid: changelog
 #### All notable changes to the specification will be documented in this file.
 
 * 1.45.x:
+  * Add new UI attribute `description` and `conditionDescription` to the `ExceptionBreakpointsFilter`. With these clients can display additional information about exception breakpoints.
+  * Improved description for `setExceptionBreakpoints` request by adding guidance for what an adapter should do if the user inputs an invalid exception breakpoint condition.
   * Add new optional boolean property `canRestart` to the stack frame. It indicated whether the stack frame can be restarted with the `restart`request.
 
 * 1.44.x:

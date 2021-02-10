@@ -1331,6 +1331,8 @@ If an exception is configured to break, a 'stopped' event is fired (with reason 
 
 Clients should only call this request if the capability 'exceptionBreakpointFilters' returns one or more filters.
 
+If a filter or filter option is invalid (e.g. due to an invalid 'condition'), the request should fail with an 'ErrorResponse' explaining the problem(s).
+
 ```typescript
 interface SetExceptionBreakpointsRequest extends Request {
   command: 'setExceptionBreakpoints';
@@ -3136,6 +3138,12 @@ interface ExceptionBreakpointsFilter {
   label: string;
 
   /**
+   * An optional help text providing additional information about the exception
+   * filter. This string is typically shown as a hover and must be translated.
+   */
+  description?: string;
+
+  /**
    * Initial value of the filter option. If not specified a value 'false' is
    * assumed.
    */
@@ -3146,6 +3154,13 @@ interface ExceptionBreakpointsFilter {
    * false or missing, a condition can not be set.
    */
   supportsCondition?: boolean;
+
+  /**
+   * An optional help text providing information about the condition. This
+   * string is shown as a placeholder text for a text box and must be
+   * translated.
+   */
+  conditionDescription?: string;
 }
 ```
 

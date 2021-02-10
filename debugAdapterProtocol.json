@@ -1234,7 +1234,7 @@
 		"SetExceptionBreakpointsRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The request configures the debuggers response to thrown exceptions.\nIf an exception is configured to break, a 'stopped' event is fired (with reason 'exception').\nClients should only call this request if the capability 'exceptionBreakpointFilters' returns one or more filters.",
+				"description": "The request configures the debuggers response to thrown exceptions.\nIf an exception is configured to break, a 'stopped' event is fired (with reason 'exception').\nClients should only call this request if the capability 'exceptionBreakpointFilters' returns one or more filters.\nIf a filter or filter option is invalid (e.g. due to an invalid 'condition'), the request should fail with an 'ErrorResponse' explaining the problem(s).",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -2986,6 +2986,10 @@
 					"type": "string",
 					"description": "The name of the filter option. This will be shown in the UI."
 				},
+				"description": {
+					"type": "string",
+					"description": "An optional help text providing additional information about the exception filter. This string is typically shown as a hover and must be translated."
+				},
 				"default": {
 					"type": "boolean",
 					"description": "Initial value of the filter option. If not specified a value 'false' is assumed."
@@ -2993,6 +2997,10 @@
 				"supportsCondition": {
 					"type": "boolean",
 					"description": "Controls whether a condition can be specified for this filter option. If false or missing, a condition can not be set."
+				},
+				"conditionDescription": {
+					"type": "string",
+					"description": "An optional help text providing information about the condition. This string is shown as the placeholder text for a text box and must be translated."
 				}
 			},
 			"required": [ "filter", "label" ]
