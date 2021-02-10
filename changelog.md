@@ -6,6 +6,9 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.45.x:
+  * Add new optional boolean property `canRestart` to the stack frame. It indicated whether the stack frame can be restarted with the `restart`request.
+
 * 1.44.x:
   * Deprecated the value `dataBreakpoint` of `VariablePresentationHint.kind`. Instead a new value `hasDataBreakpoint` has been added to the `VariablePresentationHint.attribute`.
 

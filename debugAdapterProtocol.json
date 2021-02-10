@@ -3223,6 +3223,10 @@
 					"type": "integer",
 					"description": "An optional end column of the range covered by the stack frame."
 				},
+				"canRestart": {
+					"type": "boolean",
+					"description": "Indicates whether this frame can be restarted with the 'restart' request. Clients should only use this if the debug adapter supports the 'restart' request (capability 'supportsRestartRequest' is true)."
+				},
 				"instructionPointerReference": {
 					"type": "string",
 					"description": "Optional memory reference for the current instruction pointer in this frame."

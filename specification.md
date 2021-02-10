@@ -3457,6 +3457,13 @@ interface StackFrame {
   endColumn?: number;
 
   /**
+   * Indicates whether this frame can be restarted with the 'restart' request.
+   * Clients should only use this if the debug adapter supports the 'restart'
+   * request (capability 'supportsRestartRequest' is true).
+   */
+  canRestart?: boolean;
+
+  /**
    * Optional memory reference for the current instruction pointer in this
    * frame.
    */
