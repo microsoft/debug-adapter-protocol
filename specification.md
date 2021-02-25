@@ -3157,7 +3157,7 @@ interface ExceptionBreakpointsFilter {
 
   /**
    * An optional help text providing information about the condition. This
-   * string is shown as a placeholder text for a text box and must be
+   * string is shown as the placeholder text for a text box and must be
    * translated.
    */
   conditionDescription?: string;
