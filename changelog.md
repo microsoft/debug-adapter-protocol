@@ -6,6 +6,9 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.46.x:
+  * Add an optional attribute `hitBreakpointIds` to the `stopped` event which contains the ids of the breakpoints that triggered the event.
+
 * 1.45.x:
   * Add new UI attribute `description` and `conditionDescription` to the `ExceptionBreakpointsFilter`. With these clients can display additional information about exception breakpoints.
   * Improved description for `setExceptionBreakpoints` request by adding guidance for what an adapter should do if the user inputs an invalid exception breakpoint condition.

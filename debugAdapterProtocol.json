@@ -214,6 +214,13 @@
 							"allThreadsStopped": {
 								"type": "boolean",
 								"description": "If 'allThreadsStopped' is true, a debug adapter can announce that all threads have stopped.\n- The client should use this information to enable that all threads can be expanded to access their stacktraces.\n- If the attribute is missing or false, only the thread with the given threadId can be expanded."
+							},
+							"hitBreakpointIds": {
+								"type": "array",
+								"items": {
+									"type": "integer"
+								},
+								"description": "Ids of the breakpoints that triggered the event. In most cases there will be only a single breakpoint but here are some examples for multiple breakpoints:\n- Different types of breakpoints map to the same location.\n- Multiple source breakpoints get collapsed to the same instruction by the compiler/runtime.\n- Multiple function breakpoints with different function names map to the same location."
 							}
 						},
 						"required": [ "reason" ]
