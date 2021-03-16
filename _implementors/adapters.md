@@ -49,6 +49,7 @@ The following table lists the known debug adapters that implement the Debug Adap
 [Mono Debug](https://marketplace.visualstudio.com/items?itemName=ms-vscode.mono-debug)|[@weinand](https://github.com/weinand)|[Microsoft/vscode-mono-debug](https://github.com/Microsoft/vscode-mono-debug)
 [NativeScript](https://marketplace.visualstudio.com/items?itemName=Telerik.nativescript)|[@ivanbuhov](https://github.com/ivanbuhov)|[NativeScript/nativescript-vscode-extension](https://github.com/NativeScript/nativescript-vscode-extension/)
 [Node Debug](https://github.com/Microsoft/vscode-node-debug)|[@weinand](https://github.com/weinand)|[Microsoft/vscode-node-debug](https://github.com/Microsoft/vscode-node-debug)
+[OneScript Debug](https://marketplace.visualstudio.com/items?itemName=EvilBeaver.oscript-debug)|[@EvilBeaver](https://github.com/EvilBeaver)|[EvilBeaver/OneScript](https://github.com/EvilBeaver/OneScript)
 [Papyrus](https://marketplace.visualstudio.com/items?itemName=joelday.papyrus-lang-vscode)|[@joelday](https://github.com/joelday)|[joelday/papyrus-debug-server](https://github.com/joelday/papyrus-debug-server)
 [Perl Debug](https://marketplace.visualstudio.com/items?itemName=mortenhenriksen.perl-debug)|[@raix](https://github.com/raix)|[raix/vscode-perl-debug](https://github.com/raix/vscode-perl-debug)
 [Perl::LanguageServer](https://marketplace.visualstudio.com/items?itemName=richterger.perl)|[@richterger](https://github.com/richterger)|[richterger/Perl-LanguageServer](https://github.com/richterger/Perl-LanguageServer)
