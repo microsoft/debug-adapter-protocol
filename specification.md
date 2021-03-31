@@ -11,6 +11,8 @@ toc: true
 
 The Debug Adapter Protocol defines the protocol used between an editor or IDE and a debugger or runtime.
 
+Machine-readable JSON schema can be found [here](./debugAdapterProtocol.json).
+
 The change history of the specification can be found [here](./changelog).
 ## <a name="Base_Protocol" class="anchor"></a>Base Protocol
 
