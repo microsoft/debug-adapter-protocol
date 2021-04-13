@@ -64,7 +64,9 @@ function MarkDown(schema: IProtocol): string {
 	s += Header(1, schema.title);
 	s += description(schema);
 
-	s += 'The change history of the specification can be found [here](./changelog).';
+	s += 'A machine-readable JSON schema can be found [here](./debugAdapterProtocol.json).\n\n';
+
+	s += 'The change history of the specification lives [here](./changelog).\n';
 
 	for (let typeName in schema.definitions) {
 

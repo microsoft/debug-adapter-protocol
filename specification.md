@@ -13,7 +13,8 @@ The Debug Adapter Protocol defines the protocol used between an editor or IDE an
 
 Machine-readable JSON schema can be found [here](./debugAdapterProtocol.json).
 
-The change history of the specification can be found [here](./changelog).
+The change history of the specification lives [here](./changelog).
+
 ## <a name="Base_Protocol" class="anchor"></a>Base Protocol
 
 ### <a name="Base_Protocol_ProtocolMessage" class="anchor"></a>ProtocolMessage
@@ -109,7 +110,7 @@ interface Response extends ProtocolMessage {
    * This raw error might be interpreted by the frontend and is not shown in the
    * UI.
    * Some predefined values exist.
-   * Values: 
+   * Values:
    * 'cancelled': request was cancelled.
    * etc.
    */
@@ -398,7 +399,7 @@ interface OutputEvent extends Event {
 
     /**
      * Support for keeping an output log organized by grouping related messages.
-     * Values: 
+     * Values:
      * 'start': Start a new group in expanded mode. Subsequent output events are
      * members of the group and should be shown indented.
      * The 'output' attribute becomes the name of the group and is not indented.
@@ -547,7 +548,7 @@ interface ProcessEvent extends Event {
 
     /**
      * Describes how the debug engine started debugging this process.
-     * Values: 
+     * Values:
      * 'launch': Process was launched under the debugger.
      * 'attach': Debugger attached to an existing process.
      * 'attachForSuspendedLaunch': A project launcher component has launched a
@@ -1396,10 +1397,10 @@ For backward compatibility both the 'breakpoints' array and the enclosing 'body'
 interface SetExceptionBreakpointsResponse extends Response {
   body?: {
     /**
-     * Information about the breakpoints.
+     * Information about the exception breakpoints or filters.
      * The breakpoints returned are in the same order as the elements of the
-     * 'filters', 'filterOptions', 'exceptionOptions' array in the arguments. If
-     * both 'filters' and 'filterOptions' are given, the returned array must
+     * 'filters', 'filterOptions', 'exceptionOptions' arrays in the arguments.
+     * If both 'filters' and 'filterOptions' are given, the returned array must
      * start with 'filters' information first, followed by 'filterOptions'
      * information.
      */
@@ -1525,7 +1526,7 @@ interface SetDataBreakpointsResponse extends Response {
 
 ### <a name="Requests_SetInstructionBreakpoints" class="anchor"></a>:leftwards_arrow_with_hook: SetInstructionBreakpoints Request
 
-Replaces all existing instruction breakpoints. Typically, instruction breakpoints would be set from a diassembly window. 
+Replaces all existing instruction breakpoints. Typically, instruction breakpoints would be set from a diassembly window.
 
 To clear all instruction breakpoints, specify an empty array.
 
@@ -2421,7 +2422,7 @@ interface EvaluateArguments {
 
   /**
    * The context in which the evaluate request is run.
-   * Values: 
+   * Values:
    * 'watch': evaluate is run in a watch.
    * 'repl': evaluate is run from REPL console.
    * 'hover': evaluate is run from a data hover.
@@ -3274,7 +3275,7 @@ interface Module {
   /**
    * optional but recommended attributes.
    * always try to use these first before introducing additional attributes.
-   * 
+   *
    * Logical full path to the module. The exact definition is implementation
    * defined, but usually this would be a full path to the on-disk file for the
    * module.
@@ -3544,7 +3545,7 @@ interface Scope {
   /**
    * An optional hint for how to present this scope in the UI. If this attribute
    * is missing, the scope is shown with a generic UI.
-   * Values: 
+   * Values:
    * 'arguments': Scope contains method arguments.
    * 'locals': Scope contains local variables.
    * 'registers': Scope contains registers. Only a single 'registers' scope
@@ -3693,7 +3694,7 @@ interface VariablePresentationHint {
   /**
    * The kind of variable. Before introducing additional values, try to use the
    * listed values.
-   * Values: 
+   * Values:
    * 'property': Indicates that the object is a property.
    * 'method': Indicates that the object is a method.
    * 'class': Indicates that the object is a class.
@@ -3718,7 +3719,7 @@ interface VariablePresentationHint {
   /**
    * Set of attributes represented as an array of strings. Before introducing
    * additional values, try to use the listed values.
-   * Values: 
+   * Values:
    * 'static': Indicates that the object is static.
    * 'constant': Indicates that the object is a constant.
    * 'readOnly': Indicates that the object is read only.
@@ -3989,7 +3990,7 @@ interface Breakpoint {
 ### <a name="Types_SteppingGranularity" class="anchor"></a>SteppingGranularity
 
 The granularity of one 'step' in the stepping requests 'next', 'stepIn', 'stepOut', and 'stepBack'.
-Values: 
+Values:
 - 'statement': The step should allow the program to run until the current statement has finished executing.
 The meaning of a statement is determined by the adapter and it may be considered equivalent to a line.
 For example 'for(int i = 0; i < 10; i++) could be considered to have 3 statements 'int i = 0', 'i < 10', and 'i++'.
@@ -4411,7 +4412,7 @@ interface DisassembledInstruction {
 ### <a name="Types_InvalidatedAreas" class="anchor"></a>InvalidatedAreas
 
 Logical areas that can be invalidated by the 'invalidated' event.
-Values: 
+Values:
 - 'all': All previously fetched data has become invalid and needs to be refetched.
 - 'stacks': Previously fetched stack related data has become invalid and needs to be refetched.
 - 'threads': Previously fetched thread related data has become invalid and needs to be refetched.
