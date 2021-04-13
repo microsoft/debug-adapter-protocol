@@ -6,6 +6,9 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.47.x:
+  * The `setExceptionBreakpoints` can now optionally return an array of `Breakpoint`s as the other `setXxxxBreakpoints` do. This allows clients to show validation error messages for individual exception breakpoints or filters.
+
 * 1.46.x:
   * Add an optional attribute `hitBreakpointIds` to the `stopped` event which contains the ids of the breakpoints that triggered the event.
 

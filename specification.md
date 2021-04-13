@@ -1345,8 +1345,6 @@ If an exception is configured to break, a 'stopped' event is fired (with reason 
 
 Clients should only call this request if the capability 'exceptionBreakpointFilters' returns one or more filters.
 
-If a filter or filter option is invalid (e.g. due to an invalid 'condition'), the request should fail with an 'ErrorResponse' explaining the problem(s).
-
 ```typescript
 interface SetExceptionBreakpointsRequest extends Request {
   command: 'setExceptionBreakpoints';
@@ -1385,11 +1383,28 @@ interface SetExceptionBreakpointsArguments {
 }
 ```
 
-Response to 'setExceptionBreakpoints' request. This is just an acknowledgement, so no body field is required.
+Response to 'setExceptionBreakpoints' request.
+
+The response contains an array of Breakpoint objects with information about each exception breakpoint or filter. The Breakpoint objects are in the same order as the elements of the 'filters', 'filterOptions', 'exceptionOptions' arrays given as arguments. If both 'filters' and 'filterOptions' are given, the returned array must start with 'filters' information first, followed by 'filterOptions' information.
+
+The mandatory 'verified' property of a Breakpoint object signals whether the exception breakpoint or filter could be successfully created and whether the optional condition or hit count expressions are valid. In case of an error the 'message' property explains the problem. An optional 'id' property can be used to introduce a unique ID for the exception breakpoint or filter so that it can be updated subsequently by sending breakpoint events.
+
+For backward compatibility both the 'breakpoints' array and the enclosing 'body' are optional. If these elements are missing a client will not be able to show problems for individual exception breakpoints or filters.
 
 <a name="Types_SetExceptionBreakpointsResponse" class="anchor"></a>
 ```typescript
 interface SetExceptionBreakpointsResponse extends Response {
+  body?: {
+    /**
+     * Information about the breakpoints.
+     * The breakpoints returned are in the same order as the elements of the
+     * 'filters', 'filterOptions', 'exceptionOptions' array in the arguments. If
+     * both 'filters' and 'filterOptions' are given, the returned array must
+     * start with 'filters' information first, followed by 'filterOptions'
+     * information.
+     */
+    breakpoints?: Breakpoint[];
+  };
 }
 ```
 
