@@ -317,6 +317,9 @@ function propertyType(prop: any): string {
 	if (prop.$ref) {
 		return getRef(prop.$ref);
 	}
+	if (Array.isArray(prop.oneOf)) {
+		return (prop.oneOf as any[]).map(t => propertyType(t)).join(' | ')
+	}
 	switch (prop.type) {
 		case 'array':
 			const s = propertyType(prop.items);
