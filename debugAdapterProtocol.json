@@ -971,7 +971,16 @@
 		},
 		"RestartArguments": {
 			"type": "object",
-			"description": "Arguments for 'restart' request."
+			"description": "Arguments for 'restart' request.",
+			"properties": {
+				"arguments": {
+					"oneOf": [
+						{ "$ref": "#/definitions/LaunchRequestArguments" },
+						{ "$ref": "#/definitions/AttachRequestArguments" }
+					],
+					"description": "The latest version of the 'launch' or 'attach' configuration."
+				}
+			}
 		},
 		"RestartResponse": {
 			"allOf": [ { "$ref": "#/definitions/Response" }, {
