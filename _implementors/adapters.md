@@ -63,6 +63,7 @@ The following table lists the known debug adapters that implement the Debug Adap
 [Ruby Byebug (VSCode)](https://marketplace.visualstudio.com/items?itemName=ethan-reesor.vscode-byebug)|[Ethan Reesor](https://gitlab.com/firelizzard)|[firelizzard/vscode-byebug](https://gitlab.com/firelizzard/vscode-byebug)
 [SWF](https://marketplace.visualstudio.com/items?itemName=bowlerhatllc.vscode-nextgenas)|[@joshtynjala](https://github.com/joshtynjala)|[BowlerHatLLC/vscode-nextgenas](https://github.com/BowlerHatLLC/vscode-nextgenas)
 [VDM-SL, VDM++, VDM-RT](https://github.com/nickbattle/vdmj/tree/master/LSP)|[@nickbattle](https://github.com/nickbattle)|[VDMJ-DAP](https://github.com/nickbattle/vdmj/tree/master/lsp)
+[ESP32 Debugger](https://github.com/espressif/esp-debug-adapter)|[@espressif](https://github.com/espressif)|[esp_debug_adapter](https://github.com/espressif/esp-debug-adapter)
 {: .table .table-bordered .table-responsive}
 
 *If you are missing a debug adapter implementation please create a pull request in GitHub against this markdown [document](https://github.com/Microsoft/debug-adapter-protocol/blob/gh-pages/_implementors/adapters.md)*
