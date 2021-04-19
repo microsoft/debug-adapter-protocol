@@ -1112,6 +1112,15 @@ interface DisconnectArguments {
    * 'supportTerminateDebuggee' is true.
    */
   terminateDebuggee?: boolean;
+
+  /**
+   * Indicates whether the debuggee should stay suspended when the debugger is
+   * disconnected.
+   * If unspecified, the debuggee should resume execution.
+   * The attribute is only honored by a debug adapter if the capability
+   * 'supportSuspendDebuggee' is true.
+   */
+  suspendDebuggee?: boolean;
 }
 ```
 
@@ -3069,6 +3078,12 @@ interface Capabilities {
    * 'disconnect' request.
    */
   supportTerminateDebuggee?: boolean;
+
+  /**
+   * The debug adapter supports the 'suspendDebuggee' attribute on the
+   * 'disconnect' request.
+   */
+  supportSuspendDebuggee?: boolean;
 
   /**
    * The debug adapter supports the delayed loading of parts of the stack, which

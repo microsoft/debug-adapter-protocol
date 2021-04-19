@@ -1016,6 +1016,10 @@
 				"terminateDebuggee": {
 					"type": "boolean",
 					"description": "Indicates whether the debuggee should be terminated when the debugger is disconnected.\nIf unspecified, the debug adapter is free to do whatever it thinks is best.\nThe attribute is only honored by a debug adapter if the capability 'supportTerminateDebuggee' is true."
+				},
+				"suspendDebuggee": {
+					"type": "boolean",
+					"description": "Indicates whether the debuggee should stay suspended when the debugger is disconnected.\nIf unspecified, the debuggee should resume execution.\nThe attribute is only honored by a debug adapter if the capability 'supportSuspendDebuggee' is true."
 				}
 			}
 		},
@@ -2940,6 +2944,10 @@
 				"supportTerminateDebuggee": {
 					"type": "boolean",
 					"description": "The debug adapter supports the 'terminateDebuggee' attribute on the 'disconnect' request."
+				},
+				"supportSuspendDebuggee": {
+					"type": "boolean",
+					"description": "The debug adapter supports the 'suspendDebuggee' attribute on the 'disconnect' request."
 				},
 				"supportsDelayedStackTraceLoading": {
 					"type": "boolean",

@@ -9,6 +9,7 @@ sectionid: changelog
 * 1.47.x:
   * The `setExceptionBreakpoints` can now optionally return an array of `Breakpoint`s as the other `setXxxxBreakpoints` do. This allows clients to show validation error messages for individual exception breakpoints or filters.
   * The `restart` request got a new optional parameter `arguments` where a client can pass the latest version of a launch or attach configuration.
+  * Adds a new optional argument `suspendDebuggee` to the `disconnect` request. If a debug adapter has opted into this feature with the 'supportSuspendDebuggee' capability, a client can use this to control whether the debuggee should be suspended when the debugger is disconnected.
 
 * 1.46.x:
   * Add an optional attribute `hitBreakpointIds` to the `stopped` event which contains the ids of the breakpoints that triggered the event.
