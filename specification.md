@@ -2892,6 +2892,77 @@ interface ReadMemoryResponse extends Response {
 }
 ```
 
+### <a name="Requests_WriteMemory" class="anchor"></a>:leftwards_arrow_with_hook: WriteMemory Request
+
+Writes bytes to memory at the provided location.
+
+Clients should only call this request if the capability 'supportsWriteMemoryRequest' is true.
+
+```typescript
+interface WriteMemoryRequest extends Request {
+  command: 'writeMemory';
+
+  arguments: WriteMemoryArguments;
+}
+```
+
+Arguments for 'writeMemory' request.
+
+<a name="Types_WriteMemoryArguments" class="anchor"></a>
+```typescript
+interface WriteMemoryArguments {
+  /**
+   * Memory reference to the base location to which data should be written.
+   */
+  memoryReference: string;
+
+  /**
+   * Optional offset (in bytes) to be applied to the reference location before
+   * writing data. Can be negative.
+   */
+  offset?: number;
+
+  /**
+   * Optional property to control partial writes. If true, the debug adapter
+   * should attempt to write memory even if the entire memory region is not
+   * writable. In such a case the debug adapter should stop after hitting the
+   * first byte of memory that cannot be written and return the number of bytes
+   * written in the response via the 'offset' and 'bytesWritten' properties.
+   * If false or missing, a debug adapter should attempt to verify the region is
+   * writable before writing, and fail the response if it is not.
+   */
+  allowPartial?: boolean;
+
+  /**
+   * Bytes to write, encoded using base64.
+   */
+  data: string;
+}
+```
+
+Response to 'writeMemory' request.
+
+<a name="Types_WriteMemoryResponse" class="anchor"></a>
+```typescript
+interface WriteMemoryResponse extends Response {
+  body?: {
+    /**
+     * Optional property that should be returned when 'allowPartial' is true to
+     * indicate the offset of the first byte of data successfully written. Can
+     * be negative.
+     */
+    offset?: number;
+
+    /**
+     * Optional property that should be returned when 'allowPartial' is true to
+     * indicate the number of bytes starting from address that were successfully
+     * written.
+     */
+    bytesWritten?: number;
+  };
+}
+```
+
 ### <a name="Requests_Disassemble" class="anchor"></a>:leftwards_arrow_with_hook: Disassemble Request
 
 Disassembles code stored at the provided location.
@@ -3131,6 +3202,11 @@ interface Capabilities {
    * The debug adapter supports the 'readMemory' request.
    */
   supportsReadMemoryRequest?: boolean;
+
+  /**
+   * The debug adapter supports the 'writeMemory' request.
+   */
+  supportsWriteMemoryRequest?: boolean;
 
   /**
    * The debug adapter supports the 'disassemble' request.

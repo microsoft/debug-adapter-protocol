@@ -133,6 +133,8 @@
       anchor: Requests_Threads
     - title: Variables
       anchor: Requests_Variables
+    - title: WriteMemory
+      anchor: Requests_WriteMemory
   - title: Reverse Requests
     anchor: Reverse_Requests
     children:
