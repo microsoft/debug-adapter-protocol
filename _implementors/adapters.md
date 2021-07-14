@@ -12,7 +12,7 @@ The following table lists the known debug adapters that implement the Debug Adap
 |---------|------------|------------|
 [Android](https://marketplace.visualstudio.com/items?itemName=adelphes.android-dev-ext)|[@adelphes](https://github.com/adelphes)| [adelphes/android-dev-ext](https://github.com/adelphes/android-dev-ext)
 [Apex](https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode-apex-debugger)|[@ntotten](https://github.com/ntotten)| [forcedotcom/salesforcedx-vscode](https://github.com/forcedotcom/salesforcedx-vscode)
-| Ballerina | [Ballerina.io](https://ballerina.io/) | [ballerina-platform/ballerina-lang](https://github.com/ballerina-platform/ballerina-lang/) |
+| [Ballerina](https://marketplace.visualstudio.com/items?itemName=wso2.ballerina) | [Ballerina.io](https://ballerina.io/) | [ballerina-platform/ballerina-lang](https://github.com/ballerina-platform/ballerina-lang/) |
 [C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)|[@WardenGnaw](https://github.com/WardenGnaw)| [Microsoft/vscode-cpptools](https://github.com/Microsoft/vscode-cpptools)
 [C#](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp)|[@gregg-miskelly](https://github.com/gregg-miskelly)|[OmniSharp/omnisharp-vscode](https://github.com/OmniSharp/omnisharp-vscode)
 [Cordova Tools](https://marketplace.visualstudio.com/items?itemName=vsmobile.cordova-tools)|[@MSLaguana](https://github.com/MSLaguana)|[Microsoft/vscode-cordova](https://github.com/Microsoft/vscode-cordova)
