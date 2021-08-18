@@ -6,6 +6,9 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.49.x:
+  * Add `memory` event and a corresponding **client** capability `supportsMemoryEvent`.
+
 * 1.48.x:
   * Add guidance for the case that a debug adapter implements both `setVariable` and `setExpression` and clients need to decide which request to use.
   * Add `writeMemory` request and a corresponding `supportsWriteMemoryRequest` capability.
@@ -13,7 +16,7 @@ sectionid: changelog
 * 1.47.x:
   * The `setExceptionBreakpoints` can now optionally return an array of `Breakpoint`s as the other `setXxxxBreakpoints` do. This allows clients to show validation error messages for individual exception breakpoints or filters.
   * The `restart` request got a new optional parameter `arguments` where a client can pass the latest version of a launch or attach configuration.
-  * Adds a new optional argument `suspendDebuggee` to the `disconnect` request. If a debug adapter has opted into this feature with the 'supportSuspendDebuggee' capability, a client can use this to control whether the debuggee should be suspended when the debugger is disconnected.
+  * Adds a new optional argument `suspendDebuggee` to the `disconnect` request. If a debug adapter has opted into this feature with the `supportSuspendDebuggee` capability, a client can use this to control whether the debuggee should be suspended when the debugger is disconnected.
 
 * 1.46.x:
   * Add an optional attribute `hitBreakpointIds` to the `stopped` event which contains the ids of the breakpoints that triggered the event.

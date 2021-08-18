@@ -32,6 +32,8 @@
       anchor: Events_Invalidated
     - title: LoadedSource
       anchor: Events_LoadedSource
+    - title: Memory
+      anchor: Events_Memory
     - title: Module
       anchor: Events_Module
     - title: Output
