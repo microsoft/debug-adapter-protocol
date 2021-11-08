@@ -57,11 +57,11 @@ function MarkDown(schema: IProtocol): string {
 	s += 'layout: specification\n';
 	s += 'sectionid: specification\n';
 	s += 'toc: true\n';
+	s += `schemaTitle: ${schema.title}\n`;
 	s += '---\n\n';
 
 	s += '<!--- Auto-generated from json schema. Do not edit! -->\n\n';
 
-	s += Header(1, schema.title);
 	s += description(schema);
 
 	s += 'A machine-readable JSON schema can be found [here](./debugAdapterProtocol.json).\n\n';
