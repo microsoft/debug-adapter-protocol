@@ -426,6 +426,13 @@ pre[class=highlight] {
 	}
 }
 
+@media (max-width: 991px) {
+	.dap-sidebar {
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+	}
+}
+
 .navbar-brand h1 {
     font-size: 18px;
     font-weight: bold;
@@ -434,15 +441,15 @@ pre[class=highlight] {
 
 .nav .nav-link {
 	color: #2753e3 !important;
-  }  
+  }
 
 .nav .nav-link:hover {
 	color: #1034a8 !important;
-}  
+}
 
-a { 
+a {
 	color: #2753e3;
-}  
+}
 
 a:hover {
 	color: #1034a8
