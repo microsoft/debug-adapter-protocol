@@ -75,8 +75,10 @@ h2 {
 
 .anchor {
 	display: block;
-	padding-top: 100px;
-	margin-top: -100px;
+}
+
+h3 .anchor {
+	scroll-margin-top: 70px;
 }
 
 pre[class=highlight] {
