@@ -77,10 +77,6 @@ h2 {
 	display: block;
 }
 
-h3 .anchor {
-	scroll-margin-top: 70px;
-}
-
 pre[class=highlight] {
 	padding: 9.5px;
 	overflow: auto;
@@ -425,6 +421,10 @@ pre[class=highlight] {
 		z-index: 1000;
 		height: calc(100vh - 110px);
 		overflow: auto;
+	}
+
+	h3 .anchor {
+		scroll-margin-top: 70px;
 	}
 }
 
