@@ -159,8 +159,11 @@ function Header(level: number, text: string, short?: string): string {
 		node= new OutlineNode(outline2, label);
 	}
 
-	let anchor = node.anchor ? `<a name="${node.anchor}" class="anchor"></a>` : '';
-	return `${'#'.repeat(level)} ${anchor}${text}\n\n`;
+	if (level > 1) {
+		let anchor = node.anchor ? `<a name="${node.anchor}" class="anchor"></a>` : '';
+		return `${'#'.repeat(level)} ${anchor}${text}\n\n`;
+	}
+	return '';
 }
 
 function description(c: P.Commentable): string {

@@ -8,8 +8,6 @@ schemaTitle: Debug Adapter Protocol
 
 <!--- Auto-generated from json schema. Do not edit! -->
 
-# Debug Adapter Protocol
-
 The Debug Adapter Protocol defines the protocol used between an editor or IDE and a debugger or runtime.
 
 A machine-readable JSON schema can be found [here](./debugAdapterProtocol.json).
