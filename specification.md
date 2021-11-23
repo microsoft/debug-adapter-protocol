@@ -14,9 +14,9 @@ A machine-readable JSON schema can be found [here](./debugAdapterProtocol.json).
 
 The change history of the specification lives [here](./changelog).
 
-## <a name="Base_Protocol" class="anchor"></a>Base Protocol
+## Base Protocol
 
-### <a name="Base_Protocol_ProtocolMessage" class="anchor"></a>ProtocolMessage
+### ProtocolMessage
 
 Base class of requests, responses, and events.
 
@@ -36,7 +36,7 @@ interface ProtocolMessage {
 }
 ```
 
-### <a name="Base_Protocol_Request" class="anchor"></a>Request
+### Request
 
 A client or debug adapter initiated request.
 
@@ -56,7 +56,7 @@ interface Request extends ProtocolMessage {
 }
 ```
 
-### <a name="Base_Protocol_Event" class="anchor"></a>Event
+### Event
 
 A debug adapter initiated event.
 
@@ -76,7 +76,7 @@ interface Event extends ProtocolMessage {
 }
 ```
 
-### <a name="Base_Protocol_Response" class="anchor"></a>Response
+### Response
 
 Response for a request.
 
@@ -123,7 +123,7 @@ interface Response extends ProtocolMessage {
 }
 ```
 
-### <a name="Base_Protocol_ErrorResponse" class="anchor"></a>ErrorResponse
+### ErrorResponse
 
 On error (whenever 'success' is false), the body can provide more details.
 
@@ -138,7 +138,7 @@ interface ErrorResponse extends Response {
 }
 ```
 
-### <a name="Base_Protocol_Cancel" class="anchor"></a>:leftwards_arrow_with_hook: Cancel Request
+### :leftwards_arrow_with_hook: Cancel Request
 
 The 'cancel' request is used by the frontend in two situations:
 - to indicate that it is no longer interested in the result produced by a specific request issued earlier
@@ -386,10 +386,25 @@ interface OutputEvent extends Event {
 
   body: {
     /**
-     * The output category. If not specified, 'console' is assumed.
-     * Values: 'console', 'stdout', 'stderr', 'telemetry', etc.
+     * The output category. If not specified or if the category is not
+     * understand by the client, 'console' is assumed.
+     * Values: 
+     * 'console': Show the output in the client's default message UI, e.g. a
+     * 'debug console'. This category should only be used for informational
+     * output from the debugger (as opposed to the debuggee).
+     * 'important': A hint for the client to show the ouput in the client's UI
+     * for important and highly visible information, e.g. as a popup
+     * notification. This category should only be used for important messages
+     * from the debugger (as opposed to the debuggee). Since this category value
+     * is a hint, clients might ignore the hint and assume the 'console'
+     * category.
+     * 'stdout': Show the output as normal program output from the debuggee.
+     * 'stderr': Show the output as error program output from the debuggee.
+     * 'telemetry': Send the output to telemetry instead of showing it to the
+     * user.
+     * etc.
      */
-    category?: 'console' | 'stdout' | 'stderr' | 'telemetry' | string;
+    category?: 'console' | 'important' | 'stdout' | 'stderr' | 'telemetry' | string;
 
     /**
      * The output to report.

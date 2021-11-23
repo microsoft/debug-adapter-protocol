@@ -348,8 +348,15 @@
 						"properties": {
 							"category": {
 								"type": "string",
-								"description": "The output category. If not specified, 'console' is assumed.",
-								"_enum": [ "console", "stdout", "stderr", "telemetry" ]
+								"description": "The output category. If not specified or if the category is not understand by the client, 'console' is assumed.",
+								"_enum": [ "console", "important", "stdout", "stderr", "telemetry" ],
+								"enumDescriptions": [
+									"Show the output in the client's default message UI, e.g. a 'debug console'. This category should only be used for informational output from the debugger (as opposed to the debuggee).",
+									"A hint for the client to show the ouput in the client's UI for important and highly visible information, e.g. as a popup notification. This category should only be used for important messages from the debugger (as opposed to the debuggee). Since this category value is a hint, clients might ignore the hint and assume the 'console' category.",
+									"Show the output as normal program output from the debuggee.",
+									"Show the output as error program output from the debuggee.",
+									"Send the output to telemetry instead of showing it to the user."
+								]
 							},
 							"output": {
 								"type": "string",

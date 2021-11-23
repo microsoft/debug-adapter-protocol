@@ -6,6 +6,9 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.50.x:
+  * Add a new category `important` to  the `output` event. This is a hint for clients to show the message with a highly visible UI.
+
 * 1.49.x:
   * Add `memory` event and a corresponding **client** capability `supportsMemoryEvent`.
 
