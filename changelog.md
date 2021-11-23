@@ -8,6 +8,9 @@ sectionid: changelog
 
 * 1.50.x:
   * Add a new category `important` to  the `output` event. This is a hint for clients to show the message with a highly visible UI.
+  * Clarify the description of all execution control requests (`continue`, `next`, `stepIn`, `stepOut`, `stepBack`, `reverseContinue`)
+  * Add a new capability `supportsSingleThreadExecutionRequests` to indicate that the execution control requests support the `singleThread` property.
+  * Add a new optional `singleThread` property to all execution control requests.
 
 * 1.49.x:
   * Add `memory` event and a corresponding **client** capability `supportsMemoryEvent`.

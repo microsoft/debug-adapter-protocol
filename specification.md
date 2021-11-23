@@ -1634,7 +1634,7 @@ interface SetInstructionBreakpointsResponse extends Response {
 
 ### <a name="Requests_Continue" class="anchor"></a>:leftwards_arrow_with_hook: Continue Request
 
-The request starts the debuggee to run again.
+The request resumes execution of all threads. If the debug adapter supports single thread execution (see capability 'supportsSingleThreadExecutionRequests') setting the 'singleThread' argument to true resumes only the specified thread. If not all threads were resumed, the 'allThreadsContinued' attribute of the response must be set to false.
 
 ```typescript
 interface ContinueRequest extends Request {
@@ -1650,12 +1650,17 @@ Arguments for 'continue' request.
 ```typescript
 interface ContinueArguments {
   /**
-   * Continue execution for the specified thread (if possible).
-   * If the backend cannot continue on a single thread but will continue on all
-   * threads, it should set the 'allThreadsContinued' attribute in the response
-   * to true.
+   * Specifies the active thread. If the debug adapter supports single thread
+   * execution (see 'supportsSingleThreadExecutionRequests') and the optional
+   * argument 'singleThread' is true, only the thread with this ID is resumed.
    */
   threadId: number;
+
+  /**
+   * If this optional flag is true, execution is resumed only for the thread
+   * with given 'threadId'.
+   */
+  singleThread?: boolean;
 }
 ```
 
@@ -1666,10 +1671,9 @@ Response to 'continue' request.
 interface ContinueResponse extends Response {
   body: {
     /**
-     * If true, the 'continue' request has ignored the specified thread and
-     * continued all threads instead.
-     * If this attribute is missing a value of 'true' is assumed for backward
-     * compatibility.
+     * The value true (or a missing property) signals to the client that all
+     * threads have been resumed. The value false must be returned if not all
+     * threads were resumed.
      */
     allThreadsContinued?: boolean;
   };
@@ -1678,7 +1682,9 @@ interface ContinueResponse extends Response {
 
 ### <a name="Requests_Next" class="anchor"></a>:leftwards_arrow_with_hook: Next Request
 
-The request starts the debuggee to run again for one step.
+The request executes one step (in the given granularity) for the specified thread and allows all other threads to run freely by resuming them.
+
+If the debug adapter supports single thread execution (see capability 'supportsSingleThreadExecutionRequests') setting the 'singleThread' argument to true prevents other suspended threads from resuming.
 
 The debug adapter first sends the response and then a 'stopped' event (with reason 'step') after the step has completed.
 
@@ -1696,9 +1702,15 @@ Arguments for 'next' request.
 ```typescript
 interface NextArguments {
   /**
-   * Execute 'next' for this thread.
+   * Specifies the thread for which to resume execution for one step (of the
+   * given granularity).
    */
   threadId: number;
+
+  /**
+   * If this optional flag is true, all other suspended threads are not resumed.
+   */
+  singleThread?: boolean;
 
   /**
    * Optional granularity to step. If no granularity is specified, a granularity
@@ -1718,9 +1730,11 @@ interface NextResponse extends Response {
 
 ### <a name="Requests_StepIn" class="anchor"></a>:leftwards_arrow_with_hook: StepIn Request
 
-The request starts the debuggee to step into a function/method if possible.
+The request resumes the given thread to step into a function/method and allows all other threads to run freely by resuming them.
 
-If it cannot step into a target, 'stepIn' behaves like 'next'.
+If the debug adapter supports single thread execution (see capability 'supportsSingleThreadExecutionRequests') setting the 'singleThread' argument to true prevents other suspended threads from resuming.
+
+If the request cannot step into a target, 'stepIn' behaves like the 'next' request.
 
 The debug adapter first sends the response and then a 'stopped' event (with reason 'step') after the step has completed.
 
@@ -1744,9 +1758,15 @@ Arguments for 'stepIn' request.
 ```typescript
 interface StepInArguments {
   /**
-   * Execute 'stepIn' for this thread.
+   * Specifies the thread for which to resume execution for one step-into (of
+   * the given granularity).
    */
   threadId: number;
+
+  /**
+   * If this optional flag is true, all other suspended threads are not resumed.
+   */
+  singleThread?: boolean;
 
   /**
    * Optional id of the target to step into.
@@ -1771,7 +1791,9 @@ interface StepInResponse extends Response {
 
 ### <a name="Requests_StepOut" class="anchor"></a>:leftwards_arrow_with_hook: StepOut Request
 
-The request starts the debuggee to run again for one step.
+The request resumes the given thread to step out (return) from a function/method and allows all other threads to run freely by resuming them.
+
+If the debug adapter supports single thread execution (see capability 'supportsSingleThreadExecutionRequests') setting the 'singleThread' argument to true prevents other suspended threads from resuming.
 
 The debug adapter first sends the response and then a 'stopped' event (with reason 'step') after the step has completed.
 
@@ -1789,9 +1811,15 @@ Arguments for 'stepOut' request.
 ```typescript
 interface StepOutArguments {
   /**
-   * Execute 'stepOut' for this thread.
+   * Specifies the thread for which to resume execution for one step-out (of the
+   * given granularity).
    */
   threadId: number;
+
+  /**
+   * If this optional flag is true, all other suspended threads are not resumed.
+   */
+  singleThread?: boolean;
 
   /**
    * Optional granularity to step. If no granularity is specified, a granularity
@@ -1811,7 +1839,9 @@ interface StepOutResponse extends Response {
 
 ### <a name="Requests_StepBack" class="anchor"></a>:leftwards_arrow_with_hook: StepBack Request
 
-The request starts the debuggee to run one step backwards.
+The request executes one backward step (in the given granularity) for the specified thread and allows all other threads to run backward freely by resuming them.
+
+If the debug adapter supports single thread execution (see capability 'supportsSingleThreadExecutionRequests') setting the 'singleThread' argument to true prevents other suspended threads from resuming.
 
 The debug adapter first sends the response and then a 'stopped' event (with reason 'step') after the step has completed.
 
@@ -1831,9 +1861,15 @@ Arguments for 'stepBack' request.
 ```typescript
 interface StepBackArguments {
   /**
-   * Execute 'stepBack' for this thread.
+   * Specifies the thread for which to resume execution for one step backwards
+   * (of the given granularity).
    */
   threadId: number;
+
+  /**
+   * If this optional flag is true, all other suspended threads are not resumed.
+   */
+  singleThread?: boolean;
 
   /**
    * Optional granularity to step. If no granularity is specified, a granularity
@@ -1853,7 +1889,7 @@ interface StepBackResponse extends Response {
 
 ### <a name="Requests_ReverseContinue" class="anchor"></a>:leftwards_arrow_with_hook: ReverseContinue Request
 
-The request starts the debuggee to run backward.
+The request resumes backward execution of all threads. If the debug adapter supports single thread execution (see capability 'supportsSingleThreadExecutionRequests') setting the 'singleThread' argument to true resumes only the specified thread. If not all threads were resumed, the 'allThreadsContinued' attribute of the response must be set to false.
 
 Clients should only call this request if the capability 'supportsStepBack' is true.
 
@@ -1871,9 +1907,17 @@ Arguments for 'reverseContinue' request.
 ```typescript
 interface ReverseContinueArguments {
   /**
-   * Execute 'reverseContinue' for this thread.
+   * Specifies the active thread. If the debug adapter supports single thread
+   * execution (see 'supportsSingleThreadExecutionRequests') and the optional
+   * argument 'singleThread' is true, only the thread with this ID is resumed.
    */
   threadId: number;
+
+  /**
+   * If this optional flag is true, backward execution is resumed only for the
+   * thread with given 'threadId'.
+   */
+  singleThread?: boolean;
 }
 ```
 
@@ -3296,6 +3340,13 @@ interface Capabilities {
    * 'setExceptionBreakpoints' request.
    */
   supportsExceptionFilterOptions?: boolean;
+
+  /**
+   * The debug adapter supports the 'singleThread' property on the execution
+   * requests ('continue', 'next', 'stepIn', 'stepOut', 'reverseContinue',
+   * 'stepBack').
+   */
+  supportsSingleThreadExecutionRequests?: boolean;
 }
 ```
 
