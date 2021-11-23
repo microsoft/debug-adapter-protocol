@@ -1,5 +1,20 @@
-- title: Base Protocol
+- title: Debug Adapter Protocol
   children:
+  - title: Base Protocol
+    anchor: Base_Protocol
+    children:
+    - title: Cancel
+      anchor: Base_Protocol_Cancel
+    - title: ErrorResponse
+      anchor: Base_Protocol_ErrorResponse
+    - title: Event
+      anchor: Base_Protocol_Event
+    - title: ProtocolMessage
+      anchor: Base_Protocol_ProtocolMessage
+    - title: Request
+      anchor: Base_Protocol_Request
+    - title: Response
+      anchor: Base_Protocol_Response
   - title: Events
     anchor: Events
     children:

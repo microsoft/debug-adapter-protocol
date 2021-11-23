@@ -8,15 +8,17 @@ schemaTitle: Debug Adapter Protocol
 
 <!--- Auto-generated from json schema. Do not edit! -->
 
+# Debug Adapter Protocol
+
 The Debug Adapter Protocol defines the protocol used between an editor or IDE and a debugger or runtime.
 
 A machine-readable JSON schema can be found [here](./debugAdapterProtocol.json).
 
 The change history of the specification lives [here](./changelog).
 
-## Base Protocol
+## <a name="Base_Protocol" class="anchor"></a>Base Protocol
 
-### ProtocolMessage
+### <a name="Base_Protocol_ProtocolMessage" class="anchor"></a>ProtocolMessage
 
 Base class of requests, responses, and events.
 
@@ -36,7 +38,7 @@ interface ProtocolMessage {
 }
 ```
 
-### Request
+### <a name="Base_Protocol_Request" class="anchor"></a>Request
 
 A client or debug adapter initiated request.
 
@@ -56,7 +58,7 @@ interface Request extends ProtocolMessage {
 }
 ```
 
-### Event
+### <a name="Base_Protocol_Event" class="anchor"></a>Event
 
 A debug adapter initiated event.
 
@@ -76,7 +78,7 @@ interface Event extends ProtocolMessage {
 }
 ```
 
-### Response
+### <a name="Base_Protocol_Response" class="anchor"></a>Response
 
 Response for a request.
 
@@ -123,7 +125,7 @@ interface Response extends ProtocolMessage {
 }
 ```
 
-### ErrorResponse
+### <a name="Base_Protocol_ErrorResponse" class="anchor"></a>ErrorResponse
 
 On error (whenever 'success' is false), the body can provide more details.
 
@@ -138,7 +140,7 @@ interface ErrorResponse extends Response {
 }
 ```
 
-### :leftwards_arrow_with_hook: Cancel Request
+### <a name="Base_Protocol_Cancel" class="anchor"></a>:leftwards_arrow_with_hook: Cancel Request
 
 The 'cancel' request is used by the frontend in two situations:
 - to indicate that it is no longer interested in the result produced by a specific request issued earlier
