@@ -1499,7 +1499,7 @@ interface DataBreakpointInfoArguments {
 
   /**
    * The name of the Variable's child to obtain data breakpoint information for.
-   * If variablesReference isn’t provided, this can be an expression.
+   * If variablesReference isn't provided, this can be an expression.
    */
   name: string;
 }

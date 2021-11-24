@@ -1385,7 +1385,7 @@
 				},
 				"name": {
 					"type": "string",
-					"description": "The name of the Variable's child to obtain data breakpoint information for.\nIf variablesReference isn’t provided, this can be an expression."
+					"description": "The name of the Variable's child to obtain data breakpoint information for.\nIf variablesReference isn't provided, this can be an expression."
 				}
 			},
 			"required": [ "name" ]
