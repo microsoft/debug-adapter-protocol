@@ -65,6 +65,7 @@ The following table lists the known debug adapters that implement the Debug Adap
 [Ruby](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby)|[@rebornix](https://github.com/rebornix)|[rubyide/vscode-ruby](https://github.com/rubyide/vscode-ruby)
 [Ruby Byebug](https://rubygems.org/gems/byebug-dap)|[Ethan Reesor](https://gitlab.com/firelizzard)|[firelizzard/byebug-dap](https://gitlab.com/firelizzard/byebug-dap)
 [Ruby Byebug (VSCode)](https://marketplace.visualstudio.com/items?itemName=ethan-reesor.vscode-byebug)|[Ethan Reesor](https://gitlab.com/firelizzard)|[firelizzard/vscode-byebug](https://gitlab.com/firelizzard/vscode-byebug)
+[VSCode rdbg Ruby Debugger](https://marketplace.visualstudio.com/items?itemName=KoichiSasada.vscode-rdbg)|[@ko1](https://github.com/ko1)|[ruby/vscode-rdbg](https://github.com/ruby/vscode-rdbg)
 [Rust (for embedded)](https://github.com/probe-rs/vscode)|[probe.rs community](https://github.com/probe-rs)|[probe-rs/probe-rs](https://github.com/probe-rs/probe-rs)
 [SWF](https://marketplace.visualstudio.com/items?itemName=bowlerhatllc.vscode-nextgenas)|[@joshtynjala](https://github.com/joshtynjala)|[BowlerHatLLC/vscode-nextgenas](https://github.com/BowlerHatLLC/vscode-nextgenas)
 [VDM-SL, VDM++, VDM-RT](https://github.com/nickbattle/vdmj/tree/master/LSP)|[@nickbattle](https://github.com/nickbattle)|[VDMJ-DAP](https://github.com/nickbattle/vdmj/tree/master/lsp)
