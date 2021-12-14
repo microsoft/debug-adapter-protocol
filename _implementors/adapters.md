@@ -50,7 +50,7 @@ The following table lists the known debug adapters that implement the Debug Adap
 [Mock Debug](https://marketplace.visualstudio.com/items?itemName=andreweinand.mock-debug)|[@weinand](https://github.com/weinand)|[Microsoft/vscode-mock-debug](https://github.com/Microsoft/vscode-mock-debug)
 [Mono Debug](https://marketplace.visualstudio.com/items?itemName=ms-vscode.mono-debug)|[@weinand](https://github.com/weinand)|[Microsoft/vscode-mono-debug](https://github.com/Microsoft/vscode-mono-debug)
 [NativeScript](https://marketplace.visualstudio.com/items?itemName=Telerik.nativescript)|[@ivanbuhov](https://github.com/ivanbuhov)|[NativeScript/nativescript-vscode-extension](https://github.com/NativeScript/nativescript-vscode-extension/)
-[Node Debug](https://github.com/Microsoft/vscode-node-debug)|[@weinand](https://github.com/weinand)|[Microsoft/vscode-node-debug](https://github.com/Microsoft/vscode-node-debug)]
+[Node Debug](https://github.com/Microsoft/vscode-node-debug)|[@weinand](https://github.com/weinand)|[Microsoft/vscode-node-debug](https://github.com/Microsoft/vscode-node-debug)
 [OCaml Earlybird](https://marketplace.visualstudio.com/items?itemName=hackwaly.ocamlearlybird)|[@hackwaly](https://github.com/hackwaly)|[hackwaly/ocamlearlybird](https://github.com/hackwaly/ocamlearlybird)
 [OneScript Debug](https://marketplace.visualstudio.com/items?itemName=EvilBeaver.oscript-debug)|[@EvilBeaver](https://github.com/EvilBeaver)|[EvilBeaver/OneScript](https://github.com/EvilBeaver/OneScript)
 [Papyrus](https://marketplace.visualstudio.com/items?itemName=joelday.papyrus-lang-vscode)|[@joelday](https://github.com/joelday)|[joelday/papyrus-debug-server](https://github.com/joelday/papyrus-debug-server)
