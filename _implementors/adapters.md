@@ -11,9 +11,9 @@ The following table lists the known debug adapters that implement the Debug Adap
 | Adapter | Maintainer | Repository |
 |---------|------------|------------|
 [Android](https://marketplace.visualstudio.com/items?itemName=adelphes.android-dev-ext)|[@adelphes](https://github.com/adelphes)| [adelphes/android-dev-ext](https://github.com/adelphes/android-dev-ext)
-[Apex](https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode-apex-debugger)|[@ntotten](https://github.com/ntotten)| [forcedotcom/salesforcedx-vscode](https://github.com/forcedotcom/salesforcedx-vscode)
-| [Ballerina](https://marketplace.visualstudio.com/items?itemName=wso2.ballerina) | [Ballerina.io](https://ballerina.io/) | [ballerina-platform/ballerina-lang](https://github.com/ballerina-platform/ballerina-lang/) |
-[C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)|[@WardenGnaw](https://github.com/WardenGnaw)| [Microsoft/vscode-cpptools](https://github.com/Microsoft/vscode-cpptools)
+[Apex](https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode-apex-debugger)|[@ntotten](https://github.com/ntotten)|[forcedotcom/salesforcedx-vscode(https://github.com/forcedotcom/salesforcedx-vscode)
+[Ballerina](https://marketplace.visualstudio.com/items?itemName=wso2.ballerina)|[Ballerina.io](https://ballerina.io/)|[ballerina-platform/ballerina-lang](https://github.com/ballerina-platform/ballerina-lang/) |
+[C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)|[@WardenGnaw](https://github.com/WardenGnaw)|[Microsoft/vscode-cpptools](https://github.com/Microsoft/vscode-cpptools)
 [C#](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp)|[@gregg-miskelly](https://github.com/gregg-miskelly)|[OmniSharp/omnisharp-vscode](https://github.com/OmniSharp/omnisharp-vscode)
 [Cordova Tools](https://marketplace.visualstudio.com/items?itemName=vsmobile.cordova-tools)|[@MSLaguana](https://github.com/MSLaguana)|[Microsoft/vscode-cordova](https://github.com/Microsoft/vscode-cordova)
 [Dart](https://marketplace.visualstudio.com/items?itemName=Dart-Code.dart-code)|[@DanTup](https://github.com/DanTup) [@devoncarew](https://github.com/devoncarew)|[Dart-Code/Dart-Code](https://github.com/Dart-Code/Dart-Code)
@@ -31,6 +31,7 @@ The following table lists the known debug adapters that implement the Debug Adap
 [Duktape Debugger](https://marketplace.visualstudio.com/items?itemName=HaroldBrenes.duk-debug)|[@svaarala](https://github.com/svaarala)|[svaarala/duktape](https://github.com/svaarala/duktape)
 [Emulicious Debugger](https://marketplace.visualstudio.com/items?itemName=emulicious.emulicious-debugger)|[@Calindro](https://github.com/Calindro)|[Calindro/emulicious-debugger](https://github.com/Calindro/emulicious-debugger)
 [Erlang](https://marketplace.visualstudio.com/items?itemName=erlang-ls.erlang-ls)|[@robertoaloi](https://github.com/robertoaloi) and [Contributors](https://github.com/erlang-ls/erlang_ls/graphs/contributors)|[erlang-ls/erlang_ls](https://github.com/erlang-ls/erlang_ls)
+[ESP32 Debugger](https://github.com/espressif/esp-debug-adapter)|[@espressif](https://github.com/espressif)|[esp_debug_adapter](https://github.com/espressif/esp-debug-adapter)
 [Firefox Remote Debug](https://marketplace.visualstudio.com/items?itemName=yurydelendik.firefox-debug)|[@yurydelendik](https://github.com/yurydelendik)|[yurydelendik/vscode-ff-debug](https://github.com/yurydelendik/vscode-ff-debug)
 [Flash](https://marketplace.visualstudio.com/items?itemName=vshaxe.haxe-debug)|[@vshaxe](https://github.com/vshaxe/)|[vshaxe/flash-debugger](https://github.com/vshaxe/flash-debugger)
 [Go](https://marketplace.visualstudio.com/items?itemName=golang.Go)|[@golang/tools-team](https://github.com/orgs/golang/teams/tools-team)|[golang/vscode-go](https://github.com/golang/vscode-go)
@@ -65,11 +66,10 @@ The following table lists the known debug adapters that implement the Debug Adap
 [Ruby](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby)|[@rebornix](https://github.com/rebornix)|[rubyide/vscode-ruby](https://github.com/rubyide/vscode-ruby)
 [Ruby Byebug](https://rubygems.org/gems/byebug-dap)|[Ethan Reesor](https://gitlab.com/firelizzard)|[firelizzard/byebug-dap](https://gitlab.com/firelizzard/byebug-dap)
 [Ruby Byebug (VSCode)](https://marketplace.visualstudio.com/items?itemName=ethan-reesor.vscode-byebug)|[Ethan Reesor](https://gitlab.com/firelizzard)|[firelizzard/vscode-byebug](https://gitlab.com/firelizzard/vscode-byebug)
-[VSCode rdbg Ruby Debugger](https://marketplace.visualstudio.com/items?itemName=KoichiSasada.vscode-rdbg)|[@ko1](https://github.com/ko1)|[ruby/vscode-rdbg](https://github.com/ruby/vscode-rdbg)
 [Rust (for embedded)](https://github.com/probe-rs/vscode)|[probe.rs community](https://github.com/probe-rs)|[probe-rs/probe-rs](https://github.com/probe-rs/probe-rs)
 [SWF](https://marketplace.visualstudio.com/items?itemName=bowlerhatllc.vscode-nextgenas)|[@joshtynjala](https://github.com/joshtynjala)|[BowlerHatLLC/vscode-nextgenas](https://github.com/BowlerHatLLC/vscode-nextgenas)
 [VDM-SL, VDM++, VDM-RT](https://github.com/nickbattle/vdmj/tree/master/LSP)|[@nickbattle](https://github.com/nickbattle)|[VDMJ-DAP](https://github.com/nickbattle/vdmj/tree/master/lsp)
-[ESP32 Debugger](https://github.com/espressif/esp-debug-adapter)|[@espressif](https://github.com/espressif)|[esp_debug_adapter](https://github.com/espressif/esp-debug-adapter)
+[VSCode rdbg Ruby Debugger](https://marketplace.visualstudio.com/items?itemName=KoichiSasada.vscode-rdbg)|[@ko1](https://github.com/ko1)|[ruby/vscode-rdbg](https://github.com/ruby/vscode-rdbg)
 {: .table .table-bordered .table-responsive}
 
 *If you are missing a debug adapter implementation please create a pull request in GitHub against this markdown [document](https://github.com/Microsoft/debug-adapter-protocol/blob/gh-pages/_implementors/adapters.md)*
