@@ -19,7 +19,8 @@ The following table lists the known development tools (IDEs) that implement the 
 | Vim                           | vimspector   | [Ben Jackson](https://github.com/puremourning) | [vimspector](https://github.com/puremourning/vimspector), [vim](https://github.com/vim/vim)
 | Neovim                        | neovim       | [@mfussenegger](https://github.com/mfussenegger) | [nvim-dap](https://github.com/mfussenegger/nvim-dap), [neovim](https://github.com/neovim/neovim)
 | Cloud Studio                  | cloudstudio  | [CODING](https://studio.dev.tencent.com/) 
-| JCIDE                         | JCIDE        | [JavaCardOS](https://www.javacardos.com/)   | [JCIDE](https://www.javacardos.com/tools)|
+| JCIDE                         | JCIDE        | [JavaCardOS](https://www.javacardos.com/)   | [JCIDE](https://www.javacardos.com/tools)
+| OpenSumi                      | OpenSumi     | [OpenSumi](https://github.com/opensumi)   | [opensumi/core](https://github.com/opensumi/core)|
 {: .table .table-bordered .table-responsive}
 
 The "client ID" is the identifier that a development tool sends to the debug adapter as part of the [**initialize**](../../specification#Requests_Initialize) request.
