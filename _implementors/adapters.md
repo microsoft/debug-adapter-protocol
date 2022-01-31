@@ -30,6 +30,7 @@ The following table lists the known debug adapters that implement the Debug Adap
 [DeZog - Z80 Assembly Debugger](https://marketplace.visualstudio.com/items?itemName=maziac.dezog)|[@maziac](https://github.com/maziac)|[maziac/DeZog](https://github.com/maziac/dezog)
 [Duktape Debugger](https://marketplace.visualstudio.com/items?itemName=HaroldBrenes.duk-debug)|[@svaarala](https://github.com/svaarala)|[svaarala/duktape](https://github.com/svaarala/duktape)
 [Emulicious Debugger](https://marketplace.visualstudio.com/items?itemName=emulicious.emulicious-debugger)|[@Calindro](https://github.com/Calindro)|[Calindro/emulicious-debugger](https://github.com/Calindro/emulicious-debugger)
+[Elixir](https://marketplace.visualstudio.com/items?itemName=JakeBecker.elixir-ls)|[Elixir LSP](https://github.com/elixir-lsp)|[elixir-lsp/elixir-ls](https://github.com/elixir-lsp/elixir-ls)
 [Erlang](https://marketplace.visualstudio.com/items?itemName=erlang-ls.erlang-ls)|[@robertoaloi](https://github.com/robertoaloi) and [Contributors](https://github.com/erlang-ls/erlang_ls/graphs/contributors)|[erlang-ls/erlang_ls](https://github.com/erlang-ls/erlang_ls)
 [ESP32 Debugger](https://github.com/espressif/esp-debug-adapter)|[@espressif](https://github.com/espressif)|[esp_debug_adapter](https://github.com/espressif/esp-debug-adapter)
 [Firefox Remote Debug](https://marketplace.visualstudio.com/items?itemName=yurydelendik.firefox-debug)|[@yurydelendik](https://github.com/yurydelendik)|[yurydelendik/vscode-ff-debug](https://github.com/yurydelendik/vscode-ff-debug)
