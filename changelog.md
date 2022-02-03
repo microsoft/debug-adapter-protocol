@@ -6,6 +6,9 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.52.X:
+  * clarify comment for `Variable.value`.
+
 * 1.51.x:
   * Add a new category `important` to  the `output` event. This is a hint for clients to show the message with a highly visible UI.
   * Clarify the description of all execution control requests (`continue`, `next`, `stepIn`, `stepOut`, `stepBack`, `reverseContinue`)
