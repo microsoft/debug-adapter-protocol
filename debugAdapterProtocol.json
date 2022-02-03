@@ -3830,6 +3830,10 @@
 					"type": "string",
 					"description": "A string that should be used when comparing this item with other items. When `falsy` the label is used."
 				},
+				"detail": {
+					"type": "string",
+					"description": "A human-readable string with additional information about this item, like type or symbol information."
+				},
 				"type": {
 					"$ref": "#/definitions/CompletionItemType",
 					"description": "The item's type. Typically the client uses this information to render the item in the UI with an icon."

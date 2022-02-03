@@ -4295,6 +4295,12 @@ interface CompletionItem {
   sortText?: string;
 
   /**
+   * A human-readable string with additional information about this item, like
+   * type or symbol information.
+   */
+  detail?: string;
+
+  /**
    * The item's type. Typically the client uses this information to render the
    * item in the UI with an icon.
    */
