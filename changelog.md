@@ -6,8 +6,10 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
-* 1.52.X:
+* 1.53.X:
   * Add a new `detail` property on the CompletionItem
+
+* 1.52.X:
   * clarify comment for `Variable.value`.
 
 * 1.51.x:
