@@ -11,6 +11,7 @@ The following table lists the known debug adapters that implement the Debug Adap
 | Adapter | Maintainer | Repository |
 |---------|------------|------------|
 [Android](https://marketplace.visualstudio.com/items?itemName=adelphes.android-dev-ext)|[@adelphes](https://github.com/adelphes)| [adelphes/android-dev-ext](https://github.com/adelphes/android-dev-ext)
+[Apache Camel](https://github.com/camel-tooling/camel-debug-adapter)|[contributors](https://github.com/camel-tooling/camel-debug-adapter/graphs/contributors)|[camel-tooling/camel-debug-adapter](https://github.com/camel-tooling/camel-debug-adapter)
 [Apex](https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode-apex-debugger)|[@ntotten](https://github.com/ntotten)|[forcedotcom/salesforcedx-vscode](https://github.com/forcedotcom/salesforcedx-vscode)
 [Ballerina](https://marketplace.visualstudio.com/items?itemName=wso2.ballerina)|[Ballerina.io](https://ballerina.io/)|[ballerina-platform/ballerina-lang](https://github.com/ballerina-platform/ballerina-lang/) |
 [C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)|[@WardenGnaw](https://github.com/WardenGnaw)|[Microsoft/vscode-cpptools](https://github.com/Microsoft/vscode-cpptools)
