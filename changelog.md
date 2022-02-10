@@ -6,6 +6,9 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.54.X:
+  * Add a new boolean property `lazy`  on the `VariablePresentationHint`. Clients can use that flag to present the variable with a UI that supports a specific gesture to trigger its evaluation.
+
 * 1.53.X:
   * Add a new `detail` property on the CompletionItem
 
