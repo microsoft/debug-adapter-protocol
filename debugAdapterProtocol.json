@@ -3573,6 +3573,10 @@
 					"description": "Visibility of variable. Before introducing additional values, try to use the listed values.",
 					"type": "string",
 					"_enum": [ "public", "private", "protected", "internal", "final" ]
+				},
+				"lazy": {
+					"description": "If true clients can present the variable with a UI that supports a specific gesture to trigger its evaluation.",
+					"type": "boolean"
 				}
 			}
 		},
