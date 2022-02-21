@@ -69,6 +69,7 @@ The following table lists the known debug adapters that implement the Debug Adap
 [Ruby Byebug](https://rubygems.org/gems/byebug-dap)|[Ethan Reesor](https://gitlab.com/firelizzard)|[firelizzard/byebug-dap](https://gitlab.com/firelizzard/byebug-dap)
 [Ruby Byebug (VSCode)](https://marketplace.visualstudio.com/items?itemName=ethan-reesor.vscode-byebug)|[Ethan Reesor](https://gitlab.com/firelizzard)|[firelizzard/vscode-byebug](https://gitlab.com/firelizzard/vscode-byebug)
 [Rust (for embedded)](https://github.com/probe-rs/vscode)|[probe.rs community](https://github.com/probe-rs)|[probe-rs/probe-rs](https://github.com/probe-rs/probe-rs)
+[SWI-Prolog](https://github.com/eshelyaron/debug_adapter)|[@eshelyaron](https://github.com/eshelyaron)|[swipl_debug_adapter](https://github.com/eshelyaron/debug_adapter)
 [SWF](https://marketplace.visualstudio.com/items?itemName=bowlerhatllc.vscode-nextgenas)|[@joshtynjala](https://github.com/joshtynjala)|[BowlerHatLLC/vscode-nextgenas](https://github.com/BowlerHatLLC/vscode-nextgenas)
 [VDM-SL, VDM++, VDM-RT](https://github.com/nickbattle/vdmj/tree/master/LSP)|[@nickbattle](https://github.com/nickbattle)|[VDMJ-DAP](https://github.com/nickbattle/vdmj/tree/master/lsp)
 [VSCode rdbg Ruby Debugger](https://marketplace.visualstudio.com/items?itemName=KoichiSasada.vscode-rdbg)|[@ko1](https://github.com/ko1)|[ruby/vscode-rdbg](https://github.com/ruby/vscode-rdbg)
