@@ -3940,7 +3940,7 @@
 
 		"ExceptionFilterOptions": {
 			"type": "object",
-			"description": "An ExceptionFilterOptions is used to specify an exception filter together with a condition for the setExceptionsFilter request.",
+			"description": "An ExceptionFilterOptions is used to specify an exception filter together with a condition for the 'setExceptionBreakpoints' request.",
 			"properties": {
 				"filterId": {
 					"type": "string",
