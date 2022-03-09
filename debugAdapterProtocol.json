@@ -2417,18 +2417,19 @@
 				},
 				"context": {
 					"type": "string",
-					"_enum": [ "watch", "repl", "hover", "clipboard" ],
+					"_enum": [ "variables", "watch", "repl", "hover", "clipboard" ],
 					"enumDescriptions": [
-						"evaluate is run in a watch.",
-						"evaluate is run from REPL console.",
-						"evaluate is run from a data hover.",
-						"evaluate is run to generate the value that will be stored in the clipboard.\nThe attribute is only honored by a debug adapter if the capability 'supportsClipboardContext' is true."
+						"evaluate is called from a variables view context.",
+						"evaluate is called from a watch view context.",
+						"evaluate is called from a REPL context.",
+						"evaluate is called to generate the debug hover contents.\nThis value should only be used if the capability 'supportsEvaluateForHovers' is true.",
+						"evaluate is called to generate clipboard contents.\nThis value should only be used if the capability 'supportsClipboardContext' is true."
 					],
-					"description": "The context in which the evaluate request is run."
+					"description": "The context in which the evaluate request is used."
 				},
 				"format": {
 					"$ref": "#/definitions/ValueFormat",
-					"description": "Specifies details on how to format the Evaluate result.\nThe attribute is only honored by a debug adapter if the capability 'supportsValueFormattingOptions' is true."
+					"description": "Specifies details on how to format the result.\nThe attribute is only honored by a debug adapter if the capability 'supportsValueFormattingOptions' is true."
 				}
 			},
 			"required": [ "expression" ]

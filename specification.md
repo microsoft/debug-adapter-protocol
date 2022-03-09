@@ -2530,21 +2530,23 @@ interface EvaluateArguments {
   frameId?: number;
 
   /**
-   * The context in which the evaluate request is run.
+   * The context in which the evaluate request is used.
    * Values: 
-   * 'watch': evaluate is run in a watch.
-   * 'repl': evaluate is run from REPL console.
-   * 'hover': evaluate is run from a data hover.
-   * 'clipboard': evaluate is run to generate the value that will be stored in
-   * the clipboard.
-   * The attribute is only honored by a debug adapter if the capability
-   * 'supportsClipboardContext' is true.
+   * 'variables': evaluate is called from a variables view context.
+   * 'watch': evaluate is called from a watch view context.
+   * 'repl': evaluate is called from a REPL context.
+   * 'hover': evaluate is called to generate the debug hover contents.
+   * This value should only be used if the capability
+   * 'supportsEvaluateForHovers' is true.
+   * 'clipboard': evaluate is called to generate clipboard contents.
+   * This value should only be used if the capability 'supportsClipboardContext'
+   * is true.
    * etc.
    */
-  context?: 'watch' | 'repl' | 'hover' | 'clipboard' | string;
+  context?: 'variables' | 'watch' | 'repl' | 'hover' | 'clipboard' | string;
 
   /**
-   * Specifies details on how to format the Evaluate result.
+   * Specifies details on how to format the result.
    * The attribute is only honored by a debug adapter if the capability
    * 'supportsValueFormattingOptions' is true.
    */
@@ -4451,7 +4453,7 @@ interface StackFrameFormat extends ValueFormat {
 
 ### <a name="Types_ExceptionFilterOptions" class="anchor"></a>ExceptionFilterOptions
 
-An ExceptionFilterOptions is used to specify an exception filter together with a condition for the setExceptionsFilter request.
+An ExceptionFilterOptions is used to specify an exception filter together with a condition for the 'setExceptionBreakpoints' request.
 
 ```typescript
 interface ExceptionFilterOptions {

@@ -6,6 +6,10 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.55.X:
+  * Add missing value `variables` to the `context` argument of the `evaluate`request.
+  * Fix a mistake in the description of the `ExceptionFilterOptions` type.
+
 * 1.54.X:
   * Add a new boolean property `lazy`  on the `VariablePresentationHint`. Clients can use that flag to present the variable with a UI that supports a specific gesture to trigger its evaluation.
 
