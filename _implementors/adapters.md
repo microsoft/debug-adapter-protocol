@@ -15,6 +15,7 @@ The following table lists the known debug adapters that implement the Debug Adap
 [Apex](https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode-apex-debugger)|[@ntotten](https://github.com/ntotten)|[forcedotcom/salesforcedx-vscode](https://github.com/forcedotcom/salesforcedx-vscode)
 [Ballerina](https://marketplace.visualstudio.com/items?itemName=wso2.ballerina)|[Ballerina.io](https://ballerina.io/)|[ballerina-platform/ballerina-lang](https://github.com/ballerina-platform/ballerina-lang/) |
 [C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)|[@WardenGnaw](https://github.com/WardenGnaw)|[Microsoft/vscode-cpptools](https://github.com/Microsoft/vscode-cpptools)
+[C/C++/Rust](https://marketplace.visualstudio.com/items?itemName=marus25.cortex-debug)|[@Marus](https://github.com/Marus)|[Marus/cortex-debug](https://github.com/Marus/cortex-debug)
 [C#](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp)|[@gregg-miskelly](https://github.com/gregg-miskelly)|[OmniSharp/omnisharp-vscode](https://github.com/OmniSharp/omnisharp-vscode)
 [Cordova Tools](https://marketplace.visualstudio.com/items?itemName=vsmobile.cordova-tools)|[@MSLaguana](https://github.com/MSLaguana)|[Microsoft/vscode-cordova](https://github.com/Microsoft/vscode-cordova)
 [Dart](https://marketplace.visualstudio.com/items?itemName=Dart-Code.dart-code)|[@DanTup](https://github.com/DanTup) [@devoncarew](https://github.com/devoncarew)|[Dart-Code/Dart-Code](https://github.com/Dart-Code/Dart-Code)
