@@ -435,6 +435,10 @@ pre[class=highlight] {
 	}
 }
 
+.dap-sidebar .card {
+	padding-top: 1px;
+}
+
 .navbar-brand h1 {
     font-size: 18px;
     font-weight: bold;
@@ -451,6 +455,11 @@ pre[class=highlight] {
 
 a {
 	color: #2753e3;
+}
+
+a h3 {
+	padding-top: 2px;
+	padding-bottom: 2px;
 }
 
 a:hover {
