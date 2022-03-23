@@ -7,6 +7,7 @@ sectionid: changelog
 #### All notable changes to the specification will be documented in this file.
 
 * 1.55.X:
+  * Improved descriptions for `terminate` and `disconnect` requests.
   * Add missing value `variables` to the `context` argument of the `evaluate`request.
   * Fix a mistake in the description of the `ExceptionFilterOptions` type.
 
