@@ -37,7 +37,7 @@ The following table lists the known debug adapters that implement the Debug Adap
 [ESP32 Debugger](https://github.com/espressif/esp-debug-adapter)|[@espressif](https://github.com/espressif)|[esp_debug_adapter](https://github.com/espressif/esp-debug-adapter)
 [Firefox Remote Debug](https://marketplace.visualstudio.com/items?itemName=yurydelendik.firefox-debug)|[@yurydelendik](https://github.com/yurydelendik)|[yurydelendik/vscode-ff-debug](https://github.com/yurydelendik/vscode-ff-debug)
 [Flash](https://marketplace.visualstudio.com/items?itemName=vshaxe.haxe-debug)|[@vshaxe](https://github.com/vshaxe/)|[vshaxe/flash-debugger](https://github.com/vshaxe/flash-debugger)
-[Go](https://github.com/go-delve/delve/tree/master/Documentation/api/dap)|[Delve](https://github.com/go-delve)|[go-delve/delve](https://github.com/go-delve/delve)
+[Go](https://github.com/go-delve/delve/tree/master/Documentation/api/dap)| [@polinasok](https://github.com/polinasok) and [Delve](https://github.com/go-delve)|[go-delve/delve](https://github.com/go-delve/delve)
 [Harbour](https://marketplace.visualstudio.com/items?itemName=aperricone.harbour)|[@APerricone](https://github.com/APerricone)|[APerricone/harbourCodeExtension](https://github.com/APerricone/harbourCodeExtension)
 [HashLink](https://marketplace.visualstudio.com/items?itemName=HaxeFoundation.haxe-hl)|[@vshaxe](https://github.com/vshaxe/)|[vshaxe/hashlink-debugger](https://github.com/vshaxe/hashlink-debugger)
 [Haskell GHCi debug viewer Phoityne](https://marketplace.visualstudio.com/items?itemName=phoityne.phoityne-vscode)|[@phoityne](https://github.com/phoityne)|[phoityne/phoityne-vscode](https://github.com/phoityne/phoityne-vscode)
