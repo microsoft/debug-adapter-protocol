@@ -40,7 +40,6 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [Firefox Remote Debug](https://github.com/yurydelendik/vscode-ff-debug)|[@yurydelendik](https://github.com/yurydelendik)|[VS Code](https://marketplace.visualstudio.com/items?itemName=yurydelendik.firefox-debug)
 [Flash](https://github.com/vshaxe/flash-debugger)|[@vshaxe](https://github.com/vshaxe/)|[VS Code](https://marketplace.visualstudio.com/items?itemName=vshaxe.haxe-debug)
 [Go Delve Debugger](https://github.com/go-delve/delve/tree/master/service/dap)| [@polinasok](https://github.com/polinasok) and [Delve](https://github.com/go-delve)| [DAP Server](https://github.com/go-delve/delve/tree/master/Documentation/api/dap), [VS Code](https://github.com/golang/vscode-go/blob/master/docs/debugging.md)
-
 [Harbour](https://github.com/APerricone/harbourCodeExtension)|[@APerricone](https://github.com/APerricone)|[VS Code](https://marketplace.visualstudio.com/items?itemName=aperricone.harbour)
 [HashLink](https://github.com/vshaxe/hashlink-debugger)|[@vshaxe](https://github.com/vshaxe/)|[VS Code](https://marketplace.visualstudio.com/items?itemName=HaxeFoundation.haxe-hl)
 [Haskell GHCi debug viewer Phoityne](https://github.com/phoityne/phoityne-vscode)|[@phoityne](https://github.com/phoityne)|[VS Code](https://marketplace.visualstudio.com/items?itemName=phoityne.phoityne-vscode)
