@@ -387,12 +387,12 @@ interface OutputEvent extends Event {
   body: {
     /**
      * The output category. If not specified or if the category is not
-     * understand by the client, 'console' is assumed.
+     * understood by the client, 'console' is assumed.
      * Values: 
      * 'console': Show the output in the client's default message UI, e.g. a
      * 'debug console'. This category should only be used for informational
      * output from the debugger (as opposed to the debuggee).
-     * 'important': A hint for the client to show the ouput in the client's UI
+     * 'important': A hint for the client to show the output in the client's UI
      * for important and highly visible information, e.g. as a popup
      * notification. This category should only be used for important messages
      * from the debugger (as opposed to the debuggee). Since this category value
@@ -1589,7 +1589,7 @@ interface SetDataBreakpointsResponse extends Response {
 
 ### <a name="Requests_SetInstructionBreakpoints" class="anchor"></a>:leftwards_arrow_with_hook: SetInstructionBreakpoints Request
 
-Replaces all existing instruction breakpoints. Typically, instruction breakpoints would be set from a diassembly window. 
+Replaces all existing instruction breakpoints. Typically, instruction breakpoints would be set from a disassembly window. 
 
 To clear all instruction breakpoints, specify an empty array.
 
@@ -3912,7 +3912,7 @@ interface VariablePresentationHint {
    * 'interface': Indicates that the object is an interface.
    * 'mostDerivedClass': Indicates that the object is the most derived class.
    * 'virtual': Indicates that the object is virtual, that means it is a
-   * synthetic object introducedby the
+   * synthetic object introduced by the
    * adapter for rendering purposes, e.g. an index range for large arrays.
    * 'dataBreakpoint': Deprecated: Indicates that a data breakpoint is
    * registered for the object. The 'hasDataBreakpoint' attribute should

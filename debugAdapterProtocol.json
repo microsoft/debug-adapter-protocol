@@ -348,11 +348,11 @@
 						"properties": {
 							"category": {
 								"type": "string",
-								"description": "The output category. If not specified or if the category is not understand by the client, 'console' is assumed.",
+								"description": "The output category. If not specified or if the category is not understood by the client, 'console' is assumed.",
 								"_enum": [ "console", "important", "stdout", "stderr", "telemetry" ],
 								"enumDescriptions": [
 									"Show the output in the client's default message UI, e.g. a 'debug console'. This category should only be used for informational output from the debugger (as opposed to the debuggee).",
-									"A hint for the client to show the ouput in the client's UI for important and highly visible information, e.g. as a popup notification. This category should only be used for important messages from the debugger (as opposed to the debuggee). Since this category value is a hint, clients might ignore the hint and assume the 'console' category.",
+									"A hint for the client to show the output in the client's UI for important and highly visible information, e.g. as a popup notification. This category should only be used for important messages from the debugger (as opposed to the debuggee). Since this category value is a hint, clients might ignore the hint and assume the 'console' category.",
 									"Show the output as normal program output from the debuggee.",
 									"Show the output as error program output from the debuggee.",
 									"Send the output to telemetry instead of showing it to the user."
@@ -1483,7 +1483,7 @@
 				{ "$ref": "#/definitions/Request" },
 				{
 					"type": "object",
-					"description": "Replaces all existing instruction breakpoints. Typically, instruction breakpoints would be set from a diassembly window. \nTo clear all instruction breakpoints, specify an empty array.\nWhen an instruction breakpoint is hit, a 'stopped' event (with reason 'instruction breakpoint') is generated.\nClients should only call this request if the capability 'supportsInstructionBreakpoints' is true.",
+					"description": "Replaces all existing instruction breakpoints. Typically, instruction breakpoints would be set from a disassembly window. \nTo clear all instruction breakpoints, specify an empty array.\nWhen an instruction breakpoint is hit, a 'stopped' event (with reason 'instruction breakpoint') is generated.\nClients should only call this request if the capability 'supportsInstructionBreakpoints' is true.",
 					"properties": {
 						"command": {
 						"type": "string",
@@ -3548,7 +3548,7 @@
 						"Indicates that the object is an inner class.",
 						"Indicates that the object is an interface.",
 						"Indicates that the object is the most derived class.",
-						"Indicates that the object is virtual, that means it is a synthetic object introducedby the\nadapter for rendering purposes, e.g. an index range for large arrays.",
+						"Indicates that the object is virtual, that means it is a synthetic object introduced by the\nadapter for rendering purposes, e.g. an index range for large arrays.",
 						"Deprecated: Indicates that a data breakpoint is registered for the object. The 'hasDataBreakpoint' attribute should generally be used instead."
 					]
 				},
