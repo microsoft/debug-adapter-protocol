@@ -77,6 +77,7 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [SWF](https://github.com/BowlerHatLLC/vscode-nextgenas)|[@joshtynjala](https://github.com/joshtynjala)|[VS Code](https://marketplace.visualstudio.com/items?itemName=bowlerhatllc.vscode-nextgenas)
 [VDM-SL, VDM++, VDM-RT](https://github.com/nickbattle/vdmj/tree/master/lsp)|[@nickbattle](https://github.com/nickbattle)|[VS Code](https://marketplace.visualstudio.com/items?itemName=jonaskrask.vdm-vscode)
 [VSCode rdbg Ruby Debugger](https://github.com/ruby/vscode-rdbg)|[@ko1](https://github.com/ko1)|[VS Code](https://marketplace.visualstudio.com/items?itemName=KoichiSasada.vscode-rdbg)
+[TLA+](https://github.com/tlaplus/vscode-tlaplus)|[@lemmy](https://github.com/lemmy)|[VS Code](https://marketplace.visualstudio.com/items?itemName=alygin.vscode-tlaplus-nightly)
 {: .table .table-bordered .table-responsive}
 
 *If you are missing a debug adapter implementation please create a pull request in GitHub against this markdown [document](https://github.com/Microsoft/debug-adapter-protocol/blob/gh-pages/_implementors/adapters.md)*
