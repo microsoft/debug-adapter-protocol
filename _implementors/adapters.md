@@ -13,7 +13,7 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 | Adapter | Maintainer | Usage |
 |---------|------------|-------|
 [Android](https://github.com/adelphes/android-dev-ext)|[@adelphes](https://github.com/adelphes)|[VS Code](https://marketplace.visualstudio.com/items?itemName=adelphes.android-dev-ext)
-[Apache Camel](https://github.com/camel-tooling/camel-debug-adapter)|[contributors](https://github.com/camel-tooling/camel-debug-adapter/graphs/contributors)|[VS Code](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-debug-adapter-apache-camel)
+[Apache Camel](https://github.com/camel-tooling/camel-debug-adapter)|[contributors](https://github.com/camel-tooling/camel-debug-adapter/graphs/contributors)|[VS Code](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-debug-adapter-apache-camel), [Eclipse](https://marketplace.eclipse.org/content/textual-debugging-apache-camel)
 [Apex](https://github.com/forcedotcom/salesforcedx-vscode)|[@ntotten](https://github.com/ntotten)|[VS Code](https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode-apex-debugger)
 [Ballerina](https://github.com/ballerina-platform/ballerina-lang/)|[Ballerina.io](https://ballerina.io/)|[VS Code](https://marketplace.visualstudio.com/items?itemName=wso2.ballerina) |
 [C/C++](https://github.com/Microsoft/vscode-cpptools)|[@WardenGnaw](https://github.com/WardenGnaw)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
