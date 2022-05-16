@@ -72,7 +72,7 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [Ruby](https://github.com/rubyide/vscode-ruby)|[@rebornix](https://github.com/rebornix)|[VS Code](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby)
 [Ruby Byebug](https://rubygems.org/gems/byebug-dap)|[Ethan Reesor](https://gitlab.com/firelizzard)|
 [Ruby Byebug (VSCode)](https://gitlab.com/firelizzard/vscode-byebug)|[Ethan Reesor](https://gitlab.com/firelizzard)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ethan-reesor.vscode-byebug)
-[Rust (for embedded)](https://github.com/probe-rs/vscode)|[probe.rs community](https://github.com/probe-rs)|[VS Code](https://probe.rs/docs/tools/vscode/)
+[Rust (for embedded)](https://github.com/probe-rs/vscode)|[probe.rs community](https://github.com/probe-rs)|[VS Code](https://probe.rs/docs/tools/vscode/), [Eclipse](https://marketplace.eclipse.org/content/eclipse-corrosion-rust-editing-and-debugging)
 [SWI-Prolog](https://github.com/eshelyaron/debug_adapter)|[@eshelyaron](https://github.com/eshelyaron)|[SWI and Emacs](https://github.com/eshelyaron/debug_adapter#installation)
 [SWF](https://github.com/BowlerHatLLC/vscode-nextgenas)|[@joshtynjala](https://github.com/joshtynjala)|[VS Code](https://marketplace.visualstudio.com/items?itemName=bowlerhatllc.vscode-nextgenas)
 [TLA+](https://github.com/tlaplus/vscode-tlaplus)|[@lemmy](https://github.com/lemmy)|[VS Code](https://marketplace.visualstudio.com/items?itemName=alygin.vscode-tlaplus-nightly)
