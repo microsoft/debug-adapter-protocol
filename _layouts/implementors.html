@@ -22,7 +22,7 @@ layout: default
         <div class="col-md-12 col-lg-8" role="navigation" aria-label="Main">
             <nav id="small-nav" class="docs-nav d-lg-none">
                 <h4>Topics</h4>
-                <select id="small-nav-dropdown">
+                <select id="small-nav-dropdown" aria-label="topics">
                     {% assign sorted = site.implementors | sort: 'index' %}
                     {% for post in sorted %}
                     <option value="{{ post.url | prepend: site.baseurl }}" {% if page.title==post.title %}selected{% endif %} >{{ post.shortTitle }}</option>
