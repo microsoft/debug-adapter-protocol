@@ -129,7 +129,7 @@
 		"CancelRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The 'cancel' request is used by the frontend in two situations:\n- to indicate that it is no longer interested in the result produced by a specific request issued earlier\n- to cancel a progress sequence. Clients should only call this request if the capability 'supportsCancelRequest' is true.\nThis request has a hint characteristic: a debug adapter can only be expected to make a 'best effort' in honouring this request but there are no guarantees.\nThe 'cancel' request may return an error if it could not cancel an operation but a frontend should refrain from presenting this error to end users.\nA frontend client should only call this request if the capability 'supportsCancelRequest' is true.\nThe request that got canceled still needs to send a response back. This can either be a normal result ('success' attribute true) or an error response ('success' attribute false and the 'message' set to 'cancelled').\nReturning partial results from a cancelled request is possible but please note that a frontend client has no generic way for detecting that a response is partial or not.\nThe progress that got cancelled still needs to send a 'progressEnd' event back.\n A client should not assume that progress just got cancelled after sending the 'cancel' request.",
+				"description": "The 'cancel' request is used by the frontend in two situations:\n- to indicate that it is no longer interested in the result produced by a specific request issued earlier\n- to cancel a progress sequence. Clients should only call this request if the capability 'supportsCancelRequest' is true.\nThis request has a hint characteristic: a debug adapter can only be expected to make a 'best effort' in honouring this request but there are no guarantees.\nThe 'cancel' request may return an error if it could not cancel an operation but a frontend should refrain from presenting this error to end users.\nA frontend client should only call this request if the capability 'supportsCancelRequest' is true.\nThe request that got cancelled still needs to send a response back. This can either be a normal result ('success' attribute true) or an error response ('success' attribute false and the 'message' set to 'cancelled').\nReturning partial results from a cancelled request is possible but please note that a frontend client has no generic way for detecting that a response is partial or not.\nThe progress that got cancelled still needs to send a 'progressEnd' event back.\n A client should not assume that progress just got cancelled after sending the 'cancel' request.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -167,7 +167,7 @@
 			"allOf": [ { "$ref": "#/definitions/Event" }, {
 				"type": "object",
 				"title": "Events",
-				"description": "This event indicates that the debug adapter is ready to accept configuration requests (e.g. SetBreakpointsRequest, SetExceptionBreakpointsRequest).\nA debug adapter is expected to send this event when it is ready to accept configuration requests (but not before the 'initialize' request has finished).\nThe sequence of events/requests is as follows:\n- adapters sends 'initialized' event (after the 'initialize' request has returned)\n- frontend sends zero or more 'setBreakpoints' requests\n- frontend sends one 'setFunctionBreakpoints' request (if capability 'supportsFunctionBreakpoints' is true)\n- frontend sends a 'setExceptionBreakpoints' request if one or more 'exceptionBreakpointFilters' have been defined (or if 'supportsConfigurationDoneRequest' is not defined or false)\n- frontend sends other future configuration requests\n- frontend sends one 'configurationDone' request to indicate the end of the configuration.",
+				"description": "This event indicates that the debug adapter is ready to accept configuration requests (e.g. SetBreakpointsRequest, SetExceptionBreakpointsRequest).\nA debug adapter is expected to send this event when it is ready to accept configuration requests (but not before the 'initialize' request has finished).\nThe sequence of events/requests is as follows:\n- adapters sends 'initialized' event (after the 'initialize' request has returned)\n- frontend sends zero or more 'setBreakpoints' requests\n- frontend sends one 'setFunctionBreakpoints' request (if capability 'supportsFunctionBreakpoints' is true)\n- frontend sends a 'setExceptionBreakpoints' request if one or more 'exceptionBreakpointFilters' have been defined (or if 'supportsConfigurationDoneRequest' is not true)\n- frontend sends other future configuration requests\n- frontend sends one 'configurationDone' request to indicate the end of the configuration.",
 				"properties": {
 					"event": {
 						"type": "string",
@@ -369,7 +369,7 @@
 								"enumDescriptions": [
 									"Start a new group in expanded mode. Subsequent output events are members of the group and should be shown indented.\nThe 'output' attribute becomes the name of the group and is not indented.",
 									"Start a new group in collapsed mode. Subsequent output events are members of the group and should be shown indented (as soon as the group is expanded).\nThe 'output' attribute becomes the name of the group and is not indented.",
-									"End the current group and decreases the indentation of subsequent output events.\nA non empty 'output' attribute is shown as the unindented end of the group."
+									"End the current group and decrease the indentation of subsequent output events.\nA nonempty 'output' attribute is shown as the unindented end of the group."
 								]
 							},
 							"variablesReference": {
@@ -419,7 +419,7 @@
 							},
 							"breakpoint": {
 								"$ref": "#/definitions/Breakpoint",
-								"description": "The 'id' attribute is used to find the target breakpoint and the other attributes are used as the new values."
+								"description": "The 'id' attribute is used to find the target breakpoint, the other attributes are used as the new values."
 							}
 						},
 						"required": [ "reason", "breakpoint" ]
@@ -586,7 +586,7 @@
 							},
 							"cancellable": {
 								"type": "boolean",
-								"description": "If true, the request that reports progress may be canceled with a 'cancel' request.\nSo this property basically controls whether the client should use UX that supports cancellation.\nClients that don't support cancellation are allowed to ignore the setting."
+								"description": "If true, the request that reports progress may be cancelled with a 'cancel' request.\nSo this property basically controls whether the client should use UX that supports cancellation.\nClients that don't support cancellation are allowed to ignore the setting."
 							},
 							"message": {
 								"type": "string",
@@ -607,7 +607,7 @@
 		"ProgressUpdateEvent": {
 			"allOf": [ { "$ref": "#/definitions/Event" }, {
 				"type": "object",
-				"description": "The event signals that the progress reporting needs to updated with a new message and/or percentage.\nThe client does not have to update the UI immediately, but the clients needs to keep track of the message and/or percentage values.\nThis event should only be sent if the client has passed the value true for the 'supportsProgressReporting' capability of the 'initialize' request.",
+				"description": "The event signals that the progress reporting needs to be updated with a new message and/or percentage.\nThe client does not have to update the UI immediately, but the clients needs to keep track of the message and/or percentage values.\nThis event should only be sent if the client has passed the value true for the 'supportsProgressReporting' capability of the 'initialize' request.",
 				"properties": {
 					"event": {
 						"type": "string",
@@ -678,7 +678,7 @@
 						"properties": {
 							"areas": {
 								"type": "array",
-								"description": "Optional set of logical areas that got invalidated. This property has a hint characteristic: a client can only be expected to make a 'best effort' in honouring the areas but there are no guarantees. If this property is missing, empty, or if values are not understand the client should assume a single value 'all'.",
+								"description": "Optional set of logical areas that got invalidated. This property has a hint characteristic: a client can only be expected to make a 'best effort' in honouring the areas but there are no guarantees. If this property is missing, empty, or if values are not understood, the client should assume a single value 'all'.",
 								"items": {
 									"$ref": "#/definitions/InvalidatedAreas"
 								}
@@ -701,7 +701,7 @@
 		"MemoryEvent": {
 			"allOf": [ { "$ref": "#/definitions/Event" }, {
 				"type": "object",
-				"description": "This event indicates that some memory range has been updated. It should only be sent if the debug adapter has received a value true for the `supportsMemoryEvent` capability of the `initialize` request.\nClients typically react to the event by re-issuing a `readMemory` request if they show the memory identified by the `memoryReference` and if the updated memory range overlaps the displayed range. Clients should not make assumptions how individual memory references relate to each other, so they should not assume that they are part of a single continuous address range and might overlap.\nDebug adapters can use this event to indicate that the contents of a memory range has changed due to some other DAP request like `setVariable` or `setExpression`. Debug adapters are not expected to emit this event for each and every memory change of a running program, because that information is typically not available from debuggers and it would flood clients with too many events.",
+				"description": "This event indicates that some memory range has been updated. It should only be sent if the debug adapter has received a value true for the `supportsMemoryEvent` capability of the `initialize` request.\nClients typically react to the event by re-issuing a `readMemory` request if they show the memory identified by the `memoryReference` and if the updated memory range overlaps the displayed range. Clients should not make assumptions how individual memory references relate to each other, so they should not assume that they are part of a single continuous address range and might overlap.\nDebug adapters can use this event to indicate that the contents of a memory range has changed due to some other request like `setVariable` or `setExpression`. Debug adapters are not expected to emit this event for each and every memory change of a running program, because that information is typically not available from debuggers and it would flood clients with too many events.",
 				"properties": {
 					"event": {
 						"type": "string",
@@ -832,7 +832,7 @@
 				},
 				"clientName": {
 					"type": "string",
-					"description": "The human readable name of the (frontend) client using this adapter."
+					"description": "The human-readable name of the (frontend) client using this adapter."
 				},
 				"adapterID": {
 					"type": "string",
@@ -948,7 +948,7 @@
 			"properties": {
 				"noDebug": {
 					"type": "boolean",
-					"description": "If noDebug is true the launch request should launch the program without enabling debugging."
+					"description": "If noDebug is true, the launch request should launch the program without enabling debugging."
 				},
 				"__restart": {
 					"type": [ "array", "boolean", "integer", "null", "number", "object", "string" ],
@@ -1297,7 +1297,7 @@
 		"SetExceptionBreakpointsRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The request configures the debuggers response to thrown exceptions.\nIf an exception is configured to break, a 'stopped' event is fired (with reason 'exception').\nClients should only call this request if the capability 'exceptionBreakpointFilters' returns one or more filters.",
+				"description": "The request configures the debugger's response to thrown exceptions.\nIf an exception is configured to break, a 'stopped' event is fired (with reason 'exception').\nClients should only call this request if the capability 'exceptionBreakpointFilters' returns one or more filters.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -1538,7 +1538,7 @@
 		"ContinueRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The request resumes execution of all threads. If the debug adapter supports single thread execution (see capability 'supportsSingleThreadExecutionRequests') setting the 'singleThread' argument to true resumes only the specified thread. If not all threads were resumed, the 'allThreadsContinued' attribute of the response must be set to false.",
+				"description": "The request resumes execution of all threads. If the debug adapter supports single thread execution (see capability 'supportsSingleThreadExecutionRequests'), setting the 'singleThread' argument to true resumes only the specified thread. If not all threads were resumed, the 'allThreadsContinued' attribute of the response must be set to false.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -1588,7 +1588,7 @@
 		"NextRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The request executes one step (in the given granularity) for the specified thread and allows all other threads to run freely by resuming them.\nIf the debug adapter supports single thread execution (see capability 'supportsSingleThreadExecutionRequests') setting the 'singleThread' argument to true prevents other suspended threads from resuming.\nThe debug adapter first sends the response and then a 'stopped' event (with reason 'step') after the step has completed.",
+				"description": "The request executes one step (in the given granularity) for the specified thread and allows all other threads to run freely by resuming them.\nIf the debug adapter supports single thread execution (see capability 'supportsSingleThreadExecutionRequests'), setting the 'singleThread' argument to true prevents other suspended threads from resuming.\nThe debug adapter first sends the response and then a 'stopped' event (with reason 'step') after the step has completed.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -1630,7 +1630,7 @@
 		"StepInRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The request resumes the given thread to step into a function/method and allows all other threads to run freely by resuming them.\nIf the debug adapter supports single thread execution (see capability 'supportsSingleThreadExecutionRequests') setting the 'singleThread' argument to true prevents other suspended threads from resuming.\nIf the request cannot step into a target, 'stepIn' behaves like the 'next' request.\nThe debug adapter first sends the response and then a 'stopped' event (with reason 'step') after the step has completed.\nIf there are multiple function/method calls (or other targets) on the source line,\nthe optional argument 'targetId' can be used to control into which target the 'stepIn' should occur.\nThe list of possible targets for a given source line can be retrieved via the 'stepInTargets' request.",
+				"description": "The request resumes the given thread to step into a function/method and allows all other threads to run freely by resuming them.\nIf the debug adapter supports single thread execution (see capability 'supportsSingleThreadExecutionRequests'), setting the 'singleThread' argument to true prevents other suspended threads from resuming.\nIf the request cannot step into a target, 'stepIn' behaves like the 'next' request.\nThe debug adapter first sends the response and then a 'stopped' event (with reason 'step') after the step has completed.\nIf there are multiple function/method calls (or other targets) on the source line,\nthe optional argument 'targetId' can be used to control into which target the 'stepIn' should occur.\nThe list of possible targets for a given source line can be retrieved via the 'stepInTargets' request.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -1676,7 +1676,7 @@
 		"StepOutRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The request resumes the given thread to step out (return) from a function/method and allows all other threads to run freely by resuming them.\nIf the debug adapter supports single thread execution (see capability 'supportsSingleThreadExecutionRequests') setting the 'singleThread' argument to true prevents other suspended threads from resuming.\nThe debug adapter first sends the response and then a 'stopped' event (with reason 'step') after the step has completed.",
+				"description": "The request resumes the given thread to step out (return) from a function/method and allows all other threads to run freely by resuming them.\nIf the debug adapter supports single thread execution (see capability 'supportsSingleThreadExecutionRequests'), setting the 'singleThread' argument to true prevents other suspended threads from resuming.\nThe debug adapter first sends the response and then a 'stopped' event (with reason 'step') after the step has completed.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -1718,7 +1718,7 @@
 		"StepBackRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The request executes one backward step (in the given granularity) for the specified thread and allows all other threads to run backward freely by resuming them.\nIf the debug adapter supports single thread execution (see capability 'supportsSingleThreadExecutionRequests') setting the 'singleThread' argument to true prevents other suspended threads from resuming.\nThe debug adapter first sends the response and then a 'stopped' event (with reason 'step') after the step has completed.\nClients should only call this request if the capability 'supportsStepBack' is true.",
+				"description": "The request executes one backward step (in the given granularity) for the specified thread and allows all other threads to run backward freely by resuming them.\nIf the debug adapter supports single thread execution (see capability 'supportsSingleThreadExecutionRequests'), setting the 'singleThread' argument to true prevents other suspended threads from resuming.\nThe debug adapter first sends the response and then a 'stopped' event (with reason 'step') after the step has completed.\nClients should only call this request if the capability 'supportsStepBack' is true.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -1760,7 +1760,7 @@
 		"ReverseContinueRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The request resumes backward execution of all threads. If the debug adapter supports single thread execution (see capability 'supportsSingleThreadExecutionRequests') setting the 'singleThread' argument to true resumes only the specified thread. If not all threads were resumed, the 'allThreadsContinued' attribute of the response must be set to false.\nClients should only call this request if the capability 'supportsStepBack' is true.",
+				"description": "The request resumes backward execution of all threads. If the debug adapter supports single thread execution (see capability 'supportsSingleThreadExecutionRequests'), setting the 'singleThread' argument to true resumes only the specified thread. If not all threads were resumed, the 'allThreadsContinued' attribute of the response must be set to false.\nClients should only call this request if the capability 'supportsStepBack' is true.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -1833,7 +1833,7 @@
 		"GotoRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The request sets the location where the debuggee will continue to run.\nThis makes it possible to skip the execution of code or to executed code again.\nThe code between the current location and the goto target is not executed but skipped.\nThe debug adapter first sends the response and then a 'stopped' event with reason 'goto'.\nClients should only call this request if the capability 'supportsGotoTargetsRequest' is true (because only then goto targets exist that can be passed as arguments).",
+				"description": "The request sets the location where the debuggee will continue to run.\nThis makes it possible to skip the execution of code or to execute code again.\nThe code between the current location and the goto target is not executed but skipped.\nThe debug adapter first sends the response and then a 'stopped' event with reason 'goto'.\nClients should only call this request if the capability 'supportsGotoTargetsRequest' is true (because only then goto targets exist that can be passed as arguments).",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -1905,7 +1905,7 @@
 		"StackTraceRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The request returns a stacktrace from the current execution state of a given thread.\nA client can request all stack frames by omitting the startFrame and levels arguments. For performance conscious clients and if the debug adapter's 'supportsDelayedStackTraceLoading' capability is true, stack frames can be retrieved in a piecemeal way with the startFrame and levels arguments. The response of the stackTrace request may contain a totalFrames property that hints at the total number of frames in the stack. If a client needs this total number upfront, it can issue a request for a single (first) frame and depending on the value of totalFrames decide how to proceed. In any case a client should be prepared to receive less frames than requested, which is an indication that the end of the stack has been reached.",
+				"description": "The request returns a stacktrace from the current execution state of a given thread.\nA client can request all stack frames by omitting the startFrame and levels arguments. For performance-conscious clients and if the debug adapter's 'supportsDelayedStackTraceLoading' capability is true, stack frames can be retrieved in a piecemeal way with the startFrame and levels arguments. The response of the stackTrace request may contain a totalFrames property that hints at the total number of frames in the stack. If a client needs this total number upfront, it can issue a request for a single (first) frame and depending on the value of totalFrames decide how to proceed. In any case a client should be prepared to receive fewer frames than requested, which is an indication that the end of the stack has been reached.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -2205,7 +2205,7 @@
 							},
 							"mimeType": {
 								"type": "string",
-								"description": "Optional content type (mime type) of the source."
+								"description": "Optional content type (MIME type) of the source."
 							}
 						},
 						"required": [ "content" ]
@@ -2390,7 +2390,7 @@
 		"EvaluateRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "Evaluates the given expression in the context of the top most stack frame.\nThe expression has access to any variables and arguments that are in scope.",
+				"description": "Evaluates the given expression in the context of the topmost stack frame.\nThe expression has access to any variables and arguments that are in scope.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -2452,7 +2452,7 @@
 							},
 							"presentationHint": {
 								"$ref": "#/definitions/VariablePresentationHint",
-								"description": "Properties of a evaluate result that can be used to determine how to render the result in the UI."
+								"description": "Properties of an evaluate result that can be used to determine how to render the result in the UI."
 							},
 							"variablesReference": {
 								"type": "integer",
@@ -3252,7 +3252,7 @@
 				},
 				"symbolStatus": {
 					"type": "string",
-					"description": "User understandable description of if symbols were found for the module (ex: 'Symbols Loaded', 'Symbols not found', etc."
+					"description": "User-understandable description of if symbols were found for the module (ex: 'Symbols Loaded', 'Symbols not found', etc."
 				},
 				"symbolFilePath": {
 					"type": "string",
@@ -3323,7 +3323,7 @@
 				},
 				"name": {
 					"type": "string",
-					"description": "A name of the thread."
+					"description": "The name of the thread."
 				}
 			},
 			"required": [ "id", "name" ]
@@ -3496,7 +3496,7 @@
 				},
 				"value": {
 					"type": "string",
-					"description": "The variable's value.\nThis can be a multi-line text, e.g. for a function the body of a function.\nFor structured variables (which do not have a simple value), it is recommended to provide a one line representation of the structured object. This helps to identify the structured object in the collapsed state when its children are not yet visible.\nAn empty string can be used if no value should be shown in the UI."
+					"description": "The variable's value.\nThis can be a multi-line text, e.g. for a function the body of a function.\nFor structured variables (which do not have a simple value), it is recommended to provide a one-line representation of the structured object. This helps to identify the structured object in the collapsed state when its children are not yet visible.\nAn empty string can be used if no value should be shown in the UI."
 				},
 				"type": {
 					"type": "string",
@@ -3718,7 +3718,7 @@
 				},
 				"verified": {
 					"type": "boolean",
-					"description": "If true breakpoint could be set (but not necessarily at the desired location)."
+					"description": "If true, the breakpoint could be set (but not necessarily at the desired location)."
 				},
 				"message": {
 					"type": "string",
