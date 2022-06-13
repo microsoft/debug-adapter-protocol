@@ -129,7 +129,7 @@
 		"CancelRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The 'cancel' request is used by the frontend in two situations:\n- to indicate that it is no longer interested in the result produced by a specific request issued earlier\n- to cancel a progress sequence. Clients should only call this request if the capability 'supportsCancelRequest' is true.\nThis request has a hint characteristic: a debug adapter can only be expected to make a 'best effort' in honouring this request but there are no guarantees.\nThe 'cancel' request may return an error if it could not cancel an operation but a frontend should refrain from presenting this error to end users.\nA frontend client should only call this request if the capability 'supportsCancelRequest' is true.\nThe request that got cancelled still needs to send a response back. This can either be a normal result ('success' attribute true)\nor an error response ('success' attribute false and the 'message' set to 'cancelled').\nReturning partial results from a cancelled request is possible but please note that a frontend client has no generic way for detecting that a response is partial or not.\n The progress that got cancelled still needs to send a 'progressEnd' event back.\n A client should not assume that progress just got cancelled after sending the 'cancel' request.",
+				"description": "The 'cancel' request is used by the frontend in two situations:\n- to indicate that it is no longer interested in the result produced by a specific request issued earlier\n- to cancel a progress sequence. Clients should only call this request if the capability 'supportsCancelRequest' is true.\nThis request has a hint characteristic: a debug adapter can only be expected to make a 'best effort' in honouring this request but there are no guarantees.\nThe 'cancel' request may return an error if it could not cancel an operation but a frontend should refrain from presenting this error to end users.\nA frontend client should only call this request if the capability 'supportsCancelRequest' is true.\nThe request that got cancelled still needs to send a response back. This can either be a normal result ('success' attribute true) or an error response ('success' attribute false and the 'message' set to 'cancelled').\nReturning partial results from a cancelled request is possible but please note that a frontend client has no generic way for detecting that a response is partial or not.\nThe progress that got cancelled still needs to send a 'progressEnd' event back.\n A client should not assume that progress just got cancelled after sending the 'cancel' request.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -563,7 +563,7 @@
 		"ProgressStartEvent": {
 			"allOf": [ { "$ref": "#/definitions/Event" }, {
 				"type": "object",
-				"description": "The event signals that a long running operation is about to start and\nprovides additional information for the client to set up a corresponding progress and cancellation UI.\nThe client is free to delay the showing of the UI in order to reduce flicker.\nThis event should only be sent if the client has passed the value true for the 'supportsProgressReporting' capability of the 'initialize' request.",
+				"description": "The event signals that a long running operation is about to start and provides additional information for the client to set up a corresponding progress and cancellation UI.\nThe client is free to delay the showing of the UI in order to reduce flicker.\nThis event should only be sent if the client has passed the value true for the 'supportsProgressReporting' capability of the 'initialize' request.",
 				"properties": {
 					"event": {
 						"type": "string",
@@ -582,7 +582,7 @@
 							},
 							"requestId": {
 								"type": "integer",
-								"description": "The request ID that this progress report is related to. If specified a debug adapter is expected to emit\nprogress events for the long running request until the request has been either completed or cancelled.\nIf the request ID is omitted, the progress report is assumed to be related to some general activity of the debug adapter."
+								"description": "The request ID that this progress report is related to. If specified a debug adapter is expected to emit progress events for the long running request until the request has been either completed or cancelled.\nIf the request ID is omitted, the progress report is assumed to be related to some general activity of the debug adapter."
 							},
 							"cancellable": {
 								"type": "boolean",
@@ -809,7 +809,7 @@
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
 				"title": "Requests",
-				"description": "The 'initialize' request is sent as the first request from the client to the debug adapter\nin order to configure it with client capabilities and to retrieve capabilities from the debug adapter.\nUntil the debug adapter has responded to with an 'initialize' response, the client must not send any additional requests or events to the debug adapter.\nIn addition the debug adapter is not allowed to send any requests or events to the client until it has responded with an 'initialize' response.\nThe 'initialize' request may only be sent once.",
+				"description": "The 'initialize' request is sent as the first request from the client to the debug adapter in order to configure it with client capabilities and to retrieve capabilities from the debug adapter.\nUntil the debug adapter has responded to with an 'initialize' response, the client must not send any additional requests or events to the debug adapter.\nIn addition the debug adapter is not allowed to send any requests or events to the client until it has responded with an 'initialize' response.\nThe 'initialize' request may only be sent once.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -3224,7 +3224,7 @@
 
 		"Module": {
 			"type": "object",
-			"description": "A Module object represents a row in the modules view.\nTwo attributes are mandatory: an id identifies a module in the modules view and is used in a ModuleEvent for identifying a module for adding, updating or deleting.\nThe name is used to minimally render the module in the UI.\n\nAdditional attributes can be added to the module. They will show up in the module View if they have a corresponding ColumnDescriptor.\n\nTo avoid an unnecessary proliferation of additional attributes with similar semantics but different names\nwe recommend to re-use attributes from the 'recommended' list below first, and only introduce new attributes if nothing appropriate could be found.",
+			"description": "A Module object represents a row in the modules view.\nTwo attributes are mandatory: an id identifies a module in the modules view and is used in a ModuleEvent for identifying a module for adding, updating or deleting.\nThe name is used to minimally render the module in the UI.\n\nAdditional attributes can be added to the module. They will show up in the module View if they have a corresponding ColumnDescriptor.\n\nTo avoid an unnecessary proliferation of additional attributes with similar semantics but different names, we recommend to re-use attributes from the 'recommended' list below first, and only introduce new attributes if nothing appropriate could be found.",
 			"properties": {
 				"id": {
 					"type": ["integer", "string"],
@@ -3548,7 +3548,7 @@
 						"Indicates that the object is an inner class.",
 						"Indicates that the object is an interface.",
 						"Indicates that the object is the most derived class.",
-						"Indicates that the object is virtual, that means it is a synthetic object introduced by the\nadapter for rendering purposes, e.g. an index range for large arrays.",
+						"Indicates that the object is virtual, that means it is a synthetic object introduced by the adapter for rendering purposes, e.g. an index range for large arrays.",
 						"Deprecated: Indicates that a data breakpoint is registered for the object. The 'hasDataBreakpoint' attribute should generally be used instead."
 					]
 				},
@@ -3982,7 +3982,7 @@
 
 		"ExceptionPathSegment": {
 			"type": "object",
-			"description": "An ExceptionPathSegment represents a segment in a path that is used to match leafs or nodes in a tree of exceptions.\nIf a segment consists of more than one name, it matches the names provided if 'negate' is false or missing or\nit matches anything except the names provided if 'negate' is true.",
+			"description": "An ExceptionPathSegment represents a segment in a path that is used to match leafs or nodes in a tree of exceptions.\nIf a segment consists of more than one name, it matches the names provided if 'negate' is false or missing, or it matches anything except the names provided if 'negate' is true.",
 			"properties": {
 				"negate": {
 					"type": "boolean",
