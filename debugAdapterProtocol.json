@@ -92,7 +92,7 @@
 					},
 					"message": {
 						"type": "string",
-						"description": "Contains the raw error in short form if 'success' is false.\nThis raw error might be interpreted by the frontend and is not shown in the UI.\nSome predefined values exist.",
+						"description": "Contains the raw error in short form if 'success' is false.\nThis raw error might be interpreted by the client and is not shown in the UI.\nSome predefined values exist.",
 						"_enum": [ "cancelled" ],
 						"enumDescriptions": [
 							"request was cancelled."
@@ -129,7 +129,7 @@
 		"CancelRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The 'cancel' request is used by the frontend in two situations:\n- to indicate that it is no longer interested in the result produced by a specific request issued earlier\n- to cancel a progress sequence. Clients should only call this request if the capability 'supportsCancelRequest' is true.\nThis request has a hint characteristic: a debug adapter can only be expected to make a 'best effort' in honouring this request but there are no guarantees.\nThe 'cancel' request may return an error if it could not cancel an operation but a frontend should refrain from presenting this error to end users.\nA frontend client should only call this request if the capability 'supportsCancelRequest' is true.\nThe request that got cancelled still needs to send a response back. This can either be a normal result ('success' attribute true) or an error response ('success' attribute false and the 'message' set to 'cancelled').\nReturning partial results from a cancelled request is possible but please note that a frontend client has no generic way for detecting that a response is partial or not.\nThe progress that got cancelled still needs to send a 'progressEnd' event back.\n A client should not assume that progress just got cancelled after sending the 'cancel' request.",
+				"description": "The 'cancel' request is used by the client in two situations:\n- to indicate that it is no longer interested in the result produced by a specific request issued earlier\n- to cancel a progress sequence. Clients should only call this request if the capability 'supportsCancelRequest' is true.\nThis request has a hint characteristic: a debug adapter can only be expected to make a 'best effort' in honouring this request but there are no guarantees.\nThe 'cancel' request may return an error if it could not cancel an operation but a client should refrain from presenting this error to end users.\nA client should only call this request if the capability 'supportsCancelRequest' is true.\nThe request that got cancelled still needs to send a response back. This can either be a normal result ('success' attribute true) or an error response ('success' attribute false and the 'message' set to 'cancelled').\nReturning partial results from a cancelled request is possible but please note that a client has no generic way for detecting that a response is partial or not.\nThe progress that got cancelled still needs to send a 'progressEnd' event back.\n A client should not assume that progress just got cancelled after sending the 'cancel' request.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -167,7 +167,7 @@
 			"allOf": [ { "$ref": "#/definitions/Event" }, {
 				"type": "object",
 				"title": "Events",
-				"description": "This event indicates that the debug adapter is ready to accept configuration requests (e.g. SetBreakpointsRequest, SetExceptionBreakpointsRequest).\nA debug adapter is expected to send this event when it is ready to accept configuration requests (but not before the 'initialize' request has finished).\nThe sequence of events/requests is as follows:\n- adapters sends 'initialized' event (after the 'initialize' request has returned)\n- frontend sends zero or more 'setBreakpoints' requests\n- frontend sends one 'setFunctionBreakpoints' request (if capability 'supportsFunctionBreakpoints' is true)\n- frontend sends a 'setExceptionBreakpoints' request if one or more 'exceptionBreakpointFilters' have been defined (or if 'supportsConfigurationDoneRequest' is not true)\n- frontend sends other future configuration requests\n- frontend sends one 'configurationDone' request to indicate the end of the configuration.",
+				"description": "This event indicates that the debug adapter is ready to accept configuration requests (e.g. SetBreakpointsRequest, SetExceptionBreakpointsRequest).\nA debug adapter is expected to send this event when it is ready to accept configuration requests (but not before the 'initialize' request has finished).\nThe sequence of events/requests is as follows:\n- adapters sends 'initialized' event (after the 'initialize' request has returned)\n- client sends zero or more 'setBreakpoints' requests\n- client sends one 'setFunctionBreakpoints' request (if capability 'supportsFunctionBreakpoints' is true)\n- client sends a 'setExceptionBreakpoints' request if one or more 'exceptionBreakpointFilters' have been defined (or if 'supportsConfigurationDoneRequest' is not true)\n- client sends other future configuration requests\n- client sends one 'configurationDone' request to indicate the end of the configuration.",
 				"properties": {
 					"event": {
 						"type": "string",
@@ -205,7 +205,7 @@
 							},
 							"preserveFocusHint": {
 								"type": "boolean",
-								"description": "A value of true hints to the frontend that this event should not change the focus."
+								"description": "A value of true hints to the client that this event should not change the focus."
 							},
 							"text": {
 								"type": "string",
@@ -539,7 +539,7 @@
 		"CapabilitiesEvent": {
 			"allOf": [ { "$ref": "#/definitions/Event" }, {
 				"type": "object",
-				"description": "The event indicates that one or more capabilities have changed.\nSince the capabilities are dependent on the frontend and its UI, it might not be possible to change that at random times (or too late).\nConsequently this event has a hint characteristic: a frontend can only be expected to make a 'best effort' in honouring individual capabilities but there are no guarantees.\nOnly changed capabilities need to be included, all other capabilities keep their values.",
+				"description": "The event indicates that one or more capabilities have changed.\nSince the capabilities are dependent on the client and its UI, it might not be possible to change that at random times (or too late).\nConsequently this event has a hint characteristic: a client can only be expected to make a 'best effort' in honouring individual capabilities but there are no guarantees.\nOnly changed capabilities need to be included, all other capabilities keep their values.",
 				"properties": {
 					"event": {
 						"type": "string",
@@ -828,11 +828,11 @@
 			"properties": {
 				"clientID": {
 					"type": "string",
-					"description": "The ID of the (frontend) client using this adapter."
+					"description": "The ID of the client using this adapter."
 				},
 				"clientName": {
 					"type": "string",
-					"description": "The human-readable name of the (frontend) client using this adapter."
+					"description": "The human-readable name of the client using this adapter."
 				},
 				"adapterID": {
 					"type": "string",
@@ -840,7 +840,7 @@
 				},
 				"locale": {
 					"type": "string",
-					"description": "The ISO-639 locale of the (frontend) client using this adapter, e.g. en-US or de-CH."
+					"description": "The ISO-639 locale of the client using this adapter, e.g. en-US or de-CH."
 				},
 				"linesStartAt1": {
 					"type": "boolean",
@@ -1411,7 +1411,7 @@
 								"items": {
 									"$ref": "#/definitions/DataBreakpointAccessType"
 								},
-								"description": "Optional attribute listing the available access types for a potential data breakpoint. A UI frontend could surface this information."
+								"description": "Optional attribute listing the available access types for a potential data breakpoint. A UI client could surface this information."
 							},
 							"canPersist": {
 								"type": "boolean",
