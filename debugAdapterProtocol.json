@@ -3624,11 +3624,11 @@
 				},
 				"hitCondition": {
 					"type": "string",
-					"description": "An optional expression that controls how many hits of the breakpoint are ignored.\nThe backend is expected to interpret the expression as needed.\nThe attribute is only honored by a debug adapter if the capability 'supportsHitConditionalBreakpoints' is true."
+					"description": "An optional expression that controls how many hits of the breakpoint are ignored.\nThe debug adapter is expected to interpret the expression as needed.\nThe attribute is only honored by a debug adapter if the capability 'supportsHitConditionalBreakpoints' is true."
 				},
 				"logMessage": {
 					"type": "string",
-					"description": "If this attribute exists and is non-empty, the backend must not 'break' (stop)\nbut log the message instead. Expressions within {} are interpolated.\nThe attribute is only honored by a debug adapter if the capability 'supportsLogPoints' is true."
+					"description": "If this attribute exists and is non-empty, the debug adapter must not 'break' (stop)\nbut log the message instead. Expressions within {} are interpolated.\nThe attribute is only honored by a debug adapter if the capability 'supportsLogPoints' is true."
 				}
 			},
 			"required": [ "line" ]
@@ -3648,7 +3648,7 @@
 				},
 				"hitCondition": {
 					"type": "string",
-					"description": "An optional expression that controls how many hits of the breakpoint are ignored.\nThe backend is expected to interpret the expression as needed.\nThe attribute is only honored by a debug adapter if the capability 'supportsHitConditionalBreakpoints' is true."
+					"description": "An optional expression that controls how many hits of the breakpoint are ignored.\nThe debug adapter is expected to interpret the expression as needed.\nThe attribute is only honored by a debug adapter if the capability 'supportsHitConditionalBreakpoints' is true."
 				}
 			},
 			"required": [ "name" ]
@@ -3678,7 +3678,7 @@
 				},
 				"hitCondition": {
 					"type": "string",
-					"description": "An optional expression that controls how many hits of the breakpoint are ignored.\nThe backend is expected to interpret the expression as needed."
+					"description": "An optional expression that controls how many hits of the breakpoint are ignored.\nThe debug adapter is expected to interpret the expression as needed."
 				}
 			},
 			"required": [ "dataId" ]
@@ -3702,7 +3702,7 @@
 				},
 				"hitCondition": {
 					"type": "string",
-					"description": "An optional expression that controls how many hits of the breakpoint are ignored.\nThe backend is expected to interpret the expression as needed.\nThe attribute is only honored by a debug adapter if the capability 'supportsHitConditionalBreakpoints' is true."
+					"description": "An optional expression that controls how many hits of the breakpoint are ignored.\nThe debug adapter is expected to interpret the expression as needed.\nThe attribute is only honored by a debug adapter if the capability 'supportsHitConditionalBreakpoints' is true."
 				}
 			},
 			"required": [ "instructionReference" ]
