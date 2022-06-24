@@ -2768,7 +2768,7 @@
 							},
 							"description": {
 								"type": "string",
-								"description": "Descriptive text for the exception provided by the debug adapter."
+								"description": "Descriptive text for the exception."
 							},
 							"breakMode": {
 								"$ref": "#/definitions/ExceptionBreakMode",
