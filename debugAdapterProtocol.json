@@ -3236,7 +3236,7 @@
 				},
 				"path": {
 					"type": "string",
-					"description": "optional but recommended attributes.\nalways try to use these first before introducing additional attributes.\n\nLogical full path to the module. The exact definition is implementation defined, but usually this would be a full path to the on-disk file for the module."
+					"description": "Logical full path to the module. The exact definition is implementation defined, but usually this would be a full path to the on-disk file for the module."
 				},
 				"isOptimized": {
 					"type": "boolean",
