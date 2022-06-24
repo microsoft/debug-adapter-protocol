@@ -3778,6 +3778,22 @@
 				"label": {
 					"type": "string",
 					"description": "The name of the stepIn target (shown in the UI)."
+				},
+				"line": {
+					"type": "integer",
+					"description": "An optional line of the step in target."
+				},
+				"column": {
+					"type": "integer",
+					"description": "An optional column of the step in target."
+				},
+				"endLine": {
+					"type": "integer",
+					"description": "An optional end line of the range covered by the step in target."
+				},
+				"endColumn": {
+					"type": "integer",
+					"description": "An optional end column of the range covered by the step in target."
 				}
 			},
 			"required": [ "id", "label" ]
