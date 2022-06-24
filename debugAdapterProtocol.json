@@ -3352,7 +3352,7 @@
 				},
 				"origin": {
 					"type": "string",
-					"description": "The (optional) origin of this source: possible values 'internal module', 'inlined content from source map', etc."
+					"description": "The optional origin of this source. For example, 'internal module', 'inlined content from source map', etc."
 				},
 				"sources": {
 					"type": "array",
