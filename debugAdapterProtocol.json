@@ -2186,7 +2186,7 @@
 				},
 				"sourceReference": {
 					"type": "integer",
-					"description": "The reference to the source. This is the same as source.sourceReference.\nThis is provided for backward compatibility since old backends do not understand the 'source' attribute."
+					"description": "The reference to the source. This is the same as source.sourceReference.\nThis is provided for backward compatibility since old clients do not understand the 'source' attribute."
 				}
 			},
 			"required": [ "sourceReference" ]
