@@ -8,6 +8,10 @@ sectionid: changelog
 
 * 1.56.X:
   * Add additional information to the `StepInTarget`
+  * Clarification around wording for "clients"
+  * Clarification around "falsey" in `CompletionItem.text`
+  * Specify checksums to be given a hexadecimal strings, and timestamps as RFC 3339 date strings
+  * Make wording on source.origin more clear to be non-exhaustive
 
 * 1.55.X:
   * Improved descriptions for `terminate` and `disconnect` requests.
