@@ -18,11 +18,7 @@ Detailled steps:
 1. If this is a feature that VS Code would want to implement, open a corresponding issue in the VS Code repo.
 1. Updating the npm modules:
     1. Whenever there are worthwhile DAP changes, copy the [DAP JSON schema](https://github.com/microsoft/debug-adapter-protocol/blob/gh-pages/debugAdapterProtocol.json) as `debugProtocol.json` into [`vscode-debugadapter-node`](https://github.com/microsoft/vscode-debugadapter-node) and run the `Generate debugProtocol.ts` launch configuration to update the `DebugProtocol` TypeScript module.
-    1. Enter the `protocol` directory, update the `version` in the package.json to a pre-release version like `1.53.0-pre.1`, and `npm publish --tag next`. Wait a bit for npm to propagate these changes.
-    1. Enter the `adapter` directory, update the `version` in the package.json to a pre-release version _and_ the pre-release version of `@vscode/debugprotocol`, `npm install`, and `npm publish --tag next`.
-    1. Enter the `testsupport` directory, update the `version` in the package.json to a pre-release version _and_ the pre-release version of `@vscode/debugprotocol`, `npm install`, and `npm publish --tag next`.
-    1. Adopt the three new npm modules in [Mock Debug](https://github.com/microsoft/vscode-mock-debug) to verify that they still work. 
-    1. Commit and push the version changes.
-    1. At the end of each VS Code iteration (typically Wednesday of endgame week), publish the final version of the three npm packages by removing the pre-release part of the version numbers in the three package.json files and publish them with `npm publish`.
-    1. Commit and push the version changes.
-
+    1. Run `npm run version -- preminor --preid pre` in the repo, which will publish a prerelease tag. This will get automatically built by CI.
+    1. Adopt the three new npm modules in [Mock Debug](https://github.com/microsoft/vscode-mock-debug) to verify that they still work.
+    1. Commit and push the version changes to Mock Debug.
+    1. At the end of each VS Code iteration (typically Wednesday of endgame week), publish the final version of the three npm packages by running `npm run version -- minor`.
