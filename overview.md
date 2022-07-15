@@ -130,7 +130,7 @@ It is not necessary to return an explicit `false` for unsupported capabilities.
 After the debug adapter has been initialized, it is ready to accept requests for starting debugging.
 Two requests exist for this:
 - [**launch**](./specification#Requests_Launch) request: the debug adapter launches the program ("debuggee") in debug mode and then starts to communicate with it.
-Since the debug adapter is responsible for the debuggee, it should provide options for the end user to interact with the debuggee.
+Since the debug adapter is responsible for launching the debuggee, it should provide a mechanism for the end user to configure the debuggee. For example, passing arguments or specifying a working directory.
    - Debug adapters are free to launch the debuggee however they choose. Typically the debuggee is launched as a child process and its output channels are connected to a client's debug console via [**output**](./specification.md#Events_Output) events. However, this has certain limitations, such as not being able to write to the terminal device directly and not being able to accept standard input. For those cases, launching the debuggee in a terminal is preferable. A debug adapter can use the the [**runInTerminal**](./specification#Reverse_Requests_RunInTerminal) request to ask the client to launch the debuggee in a terminal that is integrated into the client or in a terminal that runs outside of the client (but still configured and managed from the client).
 - [**attach**](./specification#Requests_Attach) request: the debug adapter connects to an already running program. Here the end user is responsible for launching and terminating the program.
 
