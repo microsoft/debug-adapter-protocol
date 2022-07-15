@@ -131,10 +131,7 @@ After the debug adapter has been initialized, it is ready to accept requests for
 Two requests exist for this:
 - [**launch**](./specification#Requests_Launch) request: the debug adapter launches the program ("debuggee") in debug mode and then starts to communicate with it.
 Since the debug adapter is responsible for the debuggee, it should provide options for the end user to interact with the debuggee.
-Basically there are three options how the debuggee can be launched. Two of the options are available to the debug adapter via the [**RunInTerminal**](./specification#Reverse_Requests_RunInTerminal) request.
-  - the **_debug console_**: this is an interactive REPL environment which allows the user to evaluate expressions in the context of the debuggee. Program output shows up in the debug console too, but the program cannot read input through it (because of the REPL functionality).
-  - an **_integrated terminal_**: this is a terminal emulator integrated in the development tool. It supports the usual terminal control codes and supports reading program input.
-  - in an **_external terminal_**: similar to the integrated terminal, but the terminal runs outside of the development tool.
+   - Debug adapters are free to launch the debuggee however they choose. Typically the debuggee is launched as a child process and its output channels are connected to a client's debug console via [**output**](./specification.md#Events_Output) events. However, this has certain limitations, such as not being able to write to the terminal device directly and not being able to accept standard input. For those cases, launching the debuggee in a terminal is preferable. A debug adapter can use the the [**runInTerminal**](./specification#Reverse_Requests_RunInTerminal) request to ask the client to launch the debuggee in a terminal that is integrated into the client or in a terminal that runs outside of the client (but still configured and managed from the client).
 - [**attach**](./specification#Requests_Attach) request: the debug adapter connects to an already running program. Here the end user is responsible for launching and terminating the program.
 
 Since arguments for both requests are highly dependent on a specific debugger and debug adapter implementation, the Debug Adapter Protocol does not specify any arguments for these requests.
