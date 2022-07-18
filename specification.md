@@ -798,7 +798,7 @@ This request should only be called if the client has passed the value true for t
 
 Client implementations of runInTerminal are free to run the command however they choose including issuing the command to a command line interpreter (aka 'shell'). Argument strings passed to the runInTerminal request must arrive verbatim in the command to be run. As a consequence, clients which use a shell are responsible for escaping any special shell characters in the argument strings to prevent them from being interpreted (and modified) by the shell
 
-Some users may wish to take advantage of shell processing in the argument strings. For clients which implement runInTerminal using an intermediary shell, the argsCanBeInterpretedByShell property can be set to true. In this case the client is requested not to escape any special shell characters in the argument strings.
+Some users may wish to take advantage of shell processing in the argument strings. For clients which implement runInTerminal using an intermediary shell, the 'argsCanBeInterpretedByShell' property can be set to true. In this case the client is requested not to escape any special shell characters in the argument strings.
 
 ```typescript
 interface RunInTerminalRequest extends Request {
