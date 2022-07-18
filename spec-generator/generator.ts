@@ -233,9 +233,14 @@ function enumDescriptions(c: P.Commentable, markdown: boolean) {
 			for (let i = 0; i < e.length; i++) {
 				description += `\n${bullet}'${e[i]}': ${c.enumDescriptions[i]}`;
 			}
-			description += '\netc.';
+			if (c._enum) {
+				description += '\netc.';
+			}
 		} else {
-			description += `${e.map(v => `'${v}'`).join(', ')}, etc.`;
+			description += `${e.map(v => `'${v}'`).join(', ')}`;
+			if (c._enum) {
+				description += ', etc.';
+			}
 		}
 	}
 	return description;
