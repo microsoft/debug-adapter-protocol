@@ -805,17 +805,6 @@ interface RunInTerminalRequest extends Request {
   command: 'runInTerminal';
 
   arguments: RunInTerminalRequestArguments;
-
-  /**
-   * This property should only be set if the client has passed the value true
-   * for the 'supportsArgsCanBeInterpretedByShell' capability of the
-   * 'initialize' request. If the client uses an intermediary shell to launch
-   * the application, then the client must not attempt to escape characters with
-   * special meanings for the shell. The user is fully responsible for escaping
-   * as needed and that arguments using special characters may not be portable
-   * across shells.
-   */
-  argsCanBeInterpretedByShell?: boolean;
 }
 ```
 
@@ -851,6 +840,17 @@ interface RunInTerminalRequestArguments {
    * environment.
    */
   env?: { [key: string]: string | null; };
+
+  /**
+   * This property should only be set if the client has passed the value true
+   * for the 'supportsArgsCanBeInterpretedByShell' capability of the
+   * 'initialize' request. If the client uses an intermediary shell to launch
+   * the application, then the client must not attempt to escape characters with
+   * special meanings for the shell. The user is fully responsible for escaping
+   * as needed and that arguments using special characters may not be portable
+   * across shells.
+   */
+  argsCanBeInterpretedByShell?: boolean;
 }
 ```
 
