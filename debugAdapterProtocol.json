@@ -14,7 +14,7 @@
 			"properties": {
 				"seq": {
 					"type": "integer",
-					"description": "Sequence number (also known as message ID). For protocol messages of type 'request' this ID can be used to cancel the request."
+					"description": "Sequence number of the message (also known as message ID). It is used to order requests, responses, and events, and to associate requests with their corresponding responses. For protocol messages of type 'request' the sequence number can be used to cancel the request."
 				},
 				"type": {
 					"type": "string",
