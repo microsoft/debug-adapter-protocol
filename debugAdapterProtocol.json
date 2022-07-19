@@ -781,7 +781,7 @@
 				},
 				"argsCanBeInterpretedByShell": {
 					"type": "boolean",
-					"description": "This property should only be set if the cotrresponding capability `supportsArgsCanBeInterpretedByShell` is true. If the client uses an intermediary shell to launch the application, then the client must not attempt to escape characters with special meanings for the shell. The user is fully responsible for escaping as needed and that arguments using special characters may not be portable across shells."
+					"description": "This property should only be set if the corresponding capability `supportsArgsCanBeInterpretedByShell` is true. If the client uses an intermediary shell to launch the application, then the client must not attempt to escape characters with special meanings for the shell. The user is fully responsible for escaping as needed and that arguments using special characters may not be portable across shells."
 				}
 			},
 			"required": [ "args", "cwd" ]
@@ -2489,7 +2489,7 @@
 		"SetExpressionRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "Evaluates the given `value` expression and assigns it to the `expression` which must be a modifiable l-value.\nThe expressions have access to any variables and arguments that are in scope of the specified frame.\nClients should only call this request if the corresponding capability `supportsSetExpression` is true.\nIf a debug adapter implements both setExpression and setVariable, a client will only use `setExpression` if the variable has an `evaluateName` property.",
+				"description": "Evaluates the given `value` expression and assigns it to the `expression` which must be a modifiable l-value.\nThe expressions have access to any variables and arguments that are in scope of the specified frame.\nClients should only call this request if the corresponding capability `supportsSetExpression` is true.\nIf a debug adapter implements both setExpression and setVariable, a client uses `setExpression` if the variable has an `evaluateName` property.",
 				"properties": {
 					"command": {
 						"type": "string",
