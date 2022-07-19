@@ -1,0 +1,217 @@
+- title: Debug Adapter Protocol
+  children:
+  - title: Base Protocol
+    anchor: Base_Protocol
+    children:
+    - title: Cancel
+      anchor: Base_Protocol_Cancel
+    - title: ErrorResponse
+      anchor: Base_Protocol_ErrorResponse
+    - title: Event
+      anchor: Base_Protocol_Event
+    - title: ProtocolMessage
+      anchor: Base_Protocol_ProtocolMessage
+    - title: Request
+      anchor: Base_Protocol_Request
+    - title: Response
+      anchor: Base_Protocol_Response
+  - title: Events
+    anchor: Events
+    children:
+    - title: Breakpoint
+      anchor: Events_Breakpoint
+    - title: Capabilities
+      anchor: Events_Capabilities
+    - title: Continued
+      anchor: Events_Continued
+    - title: Exited
+      anchor: Events_Exited
+    - title: Initialized
+      anchor: Events_Initialized
+    - title: Invalidated
+      anchor: Events_Invalidated
+    - title: LoadedSource
+      anchor: Events_LoadedSource
+    - title: Memory
+      anchor: Events_Memory
+    - title: Module
+      anchor: Events_Module
+    - title: Output
+      anchor: Events_Output
+    - title: Process
+      anchor: Events_Process
+    - title: ProgressEnd
+      anchor: Events_ProgressEnd
+    - title: ProgressStart
+      anchor: Events_ProgressStart
+    - title: ProgressUpdate
+      anchor: Events_ProgressUpdate
+    - title: Stopped
+      anchor: Events_Stopped
+    - title: Terminated
+      anchor: Events_Terminated
+    - title: Thread
+      anchor: Events_Thread
+  - title: Requests
+    anchor: Requests
+    children:
+    - title: Attach
+      anchor: Requests_Attach
+    - title: BreakpointLocations
+      anchor: Requests_BreakpointLocations
+    - title: Completions
+      anchor: Requests_Completions
+    - title: ConfigurationDone
+      anchor: Requests_ConfigurationDone
+    - title: Continue
+      anchor: Requests_Continue
+    - title: DataBreakpointInfo
+      anchor: Requests_DataBreakpointInfo
+    - title: Disassemble
+      anchor: Requests_Disassemble
+    - title: Disconnect
+      anchor: Requests_Disconnect
+    - title: Evaluate
+      anchor: Requests_Evaluate
+    - title: ExceptionInfo
+      anchor: Requests_ExceptionInfo
+    - title: Goto
+      anchor: Requests_Goto
+    - title: GotoTargets
+      anchor: Requests_GotoTargets
+    - title: Initialize
+      anchor: Requests_Initialize
+    - title: Launch
+      anchor: Requests_Launch
+    - title: LoadedSources
+      anchor: Requests_LoadedSources
+    - title: Modules
+      anchor: Requests_Modules
+    - title: Next
+      anchor: Requests_Next
+    - title: Pause
+      anchor: Requests_Pause
+    - title: ReadMemory
+      anchor: Requests_ReadMemory
+    - title: Restart
+      anchor: Requests_Restart
+    - title: RestartFrame
+      anchor: Requests_RestartFrame
+    - title: ReverseContinue
+      anchor: Requests_ReverseContinue
+    - title: Scopes
+      anchor: Requests_Scopes
+    - title: SetBreakpoints
+      anchor: Requests_SetBreakpoints
+    - title: SetDataBreakpoints
+      anchor: Requests_SetDataBreakpoints
+    - title: SetExceptionBreakpoints
+      anchor: Requests_SetExceptionBreakpoints
+    - title: SetExpression
+      anchor: Requests_SetExpression
+    - title: SetFunctionBreakpoints
+      anchor: Requests_SetFunctionBreakpoints
+    - title: SetInstructionBreakpoints
+      anchor: Requests_SetInstructionBreakpoints
+    - title: SetVariable
+      anchor: Requests_SetVariable
+    - title: Source
+      anchor: Requests_Source
+    - title: StackTrace
+      anchor: Requests_StackTrace
+    - title: StepBack
+      anchor: Requests_StepBack
+    - title: StepIn
+      anchor: Requests_StepIn
+    - title: StepInTargets
+      anchor: Requests_StepInTargets
+    - title: StepOut
+      anchor: Requests_StepOut
+    - title: Terminate
+      anchor: Requests_Terminate
+    - title: TerminateThreads
+      anchor: Requests_TerminateThreads
+    - title: Threads
+      anchor: Requests_Threads
+    - title: Variables
+      anchor: Requests_Variables
+    - title: WriteMemory
+      anchor: Requests_WriteMemory
+  - title: Reverse Requests
+    anchor: Reverse_Requests
+    children:
+    - title: RunInTerminal
+      anchor: Reverse_Requests_RunInTerminal
+  - title: Types
+    anchor: Types
+    children:
+    - title: Breakpoint
+      anchor: Types_Breakpoint
+    - title: BreakpointLocation
+      anchor: Types_BreakpointLocation
+    - title: Capabilities
+      anchor: Types_Capabilities
+    - title: Checksum
+      anchor: Types_Checksum
+    - title: ChecksumAlgorithm
+      anchor: Types_ChecksumAlgorithm
+    - title: ColumnDescriptor
+      anchor: Types_ColumnDescriptor
+    - title: CompletionItem
+      anchor: Types_CompletionItem
+    - title: CompletionItemType
+      anchor: Types_CompletionItemType
+    - title: DataBreakpoint
+      anchor: Types_DataBreakpoint
+    - title: DataBreakpointAccessType
+      anchor: Types_DataBreakpointAccessType
+    - title: DisassembledInstruction
+      anchor: Types_DisassembledInstruction
+    - title: ExceptionBreakMode
+      anchor: Types_ExceptionBreakMode
+    - title: ExceptionBreakpointsFilter
+      anchor: Types_ExceptionBreakpointsFilter
+    - title: ExceptionDetails
+      anchor: Types_ExceptionDetails
+    - title: ExceptionFilterOptions
+      anchor: Types_ExceptionFilterOptions
+    - title: ExceptionOptions
+      anchor: Types_ExceptionOptions
+    - title: ExceptionPathSegment
+      anchor: Types_ExceptionPathSegment
+    - title: FunctionBreakpoint
+      anchor: Types_FunctionBreakpoint
+    - title: GotoTarget
+      anchor: Types_GotoTarget
+    - title: InstructionBreakpoint
+      anchor: Types_InstructionBreakpoint
+    - title: InvalidatedAreas
+      anchor: Types_InvalidatedAreas
+    - title: Message
+      anchor: Types_Message
+    - title: Module
+      anchor: Types_Module
+    - title: ModulesViewDescriptor
+      anchor: Types_ModulesViewDescriptor
+    - title: Scope
+      anchor: Types_Scope
+    - title: Source
+      anchor: Types_Source
+    - title: SourceBreakpoint
+      anchor: Types_SourceBreakpoint
+    - title: StackFrame
+      anchor: Types_StackFrame
+    - title: StackFrameFormat
+      anchor: Types_StackFrameFormat
+    - title: StepInTarget
+      anchor: Types_StepInTarget
+    - title: SteppingGranularity
+      anchor: Types_SteppingGranularity
+    - title: Thread
+      anchor: Types_Thread
+    - title: ValueFormat
+      anchor: Types_ValueFormat
+    - title: Variable
+      anchor: Types_Variable
+    - title: VariablePresentationHint
+      anchor: Types_VariablePresentationHint
