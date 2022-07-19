@@ -734,7 +734,7 @@
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
 				"title": "Reverse Requests",
-				"description": "This optional request is sent from the debug adapter to the client to run a command in a terminal.\nThis is typically used to launch the debuggee in a terminal provided by the client.\nThis request should only be called if the corresponding capability `supportsRunInTerminalRequest` is true.",
+				"description": "This optional request is sent from the debug adapter to the client to run a command in a terminal.\nThis is typically used to launch the debuggee in a terminal provided by the client.\nThis request should only be called if the corresponding capability `supportsRunInTerminalRequest` is true.\nClient implementations of `runInTerminal` are free to run the command however they choose including issuing the command to a command line interpreter (aka 'shell'). Argument strings passed to the `runInTerminal` request must arrive verbatim in the command to be run. As a consequence, clients which use a shell are responsible for escaping any special shell characters in the argument strings to prevent them from being interpreted (and modified) by the shell.\nSome users may wish to take advantage of shell processing in the argument strings. For clients which implement `runInTerminal` using an intermediary shell, the `argsCanBeInterpretedByShell` property can be set to true. In this case the client is requested not to escape any special shell characters in the argument strings.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -778,6 +778,10 @@
 						"type": [ "string", "null" ],
 						"description": "Proper values must be strings. A value of `null` removes the variable from the environment."
 					}
+				},
+				"argsCanBeInterpretedByShell": {
+					"type": "boolean",
+					"description": "This property should only be set if the client has passed the value true for the 'supportsArgsCanBeInterpretedByShell' capability of the 'initialize' request. If the client uses an intermediary shell to launch the application, then the client must not attempt to escape characters with special meanings for the shell. The user is fully responsible for escaping as needed and that arguments using special characters may not be portable across shells."
 				}
 			},
 			"required": [ "args", "cwd" ]
@@ -882,6 +886,10 @@
 				"supportsMemoryEvent": {
 					"type": "boolean",
 					"description": "Client supports the memory event."
+				},
+				"supportsArgsCanBeInterpretedByShell": {
+					"type": "boolean",
+					"description": "Client supports the 'argsCanBeInterpretedByShell' attribute on the 'runInTerminal' request."
 				}
 			},
 			"required": [ "adapterID" ]
