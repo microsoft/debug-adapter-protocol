@@ -971,6 +971,12 @@ interface InitializeRequestArguments {
    * Client supports the memory event.
    */
   supportsMemoryEvent?: boolean;
+
+  /**
+   * Client supports the 'argsCanBeInterpretedByShell' attribute on the
+   * 'runInTerminal' request.
+   */
+  supportsArgsCanBeInterpretedByShell?: boolean;
 }
 ```
 
@@ -3356,12 +3362,6 @@ interface Capabilities {
    * 'stepBack').
    */
   supportsSingleThreadExecutionRequests?: boolean;
-
-  /**
-   * The debug adapter supports the 'argsCanBeInterpretedByShell' attribute on
-   * the 'runInTerminal' request.
-   */
-  supportsArgsCanBeInterpretedByShell?: boolean;
 }
 ```
 

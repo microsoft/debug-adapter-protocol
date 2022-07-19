@@ -886,6 +886,10 @@
 				"supportsMemoryEvent": {
 					"type": "boolean",
 					"description": "Client supports the memory event."
+				},
+				"supportsArgsCanBeInterpretedByShell": {
+					"type": "boolean",
+					"description": "Client supports the 'argsCanBeInterpretedByShell' attribute on the 'runInTerminal' request."
 				}
 			},
 			"required": [ "adapterID" ]
@@ -3150,10 +3154,6 @@
 				"supportsSingleThreadExecutionRequests": {
 					"type": "boolean",
 					"description": "The debug adapter supports the 'singleThread' property on the execution requests ('continue', 'next', 'stepIn', 'stepOut', 'reverseContinue', 'stepBack')."
-				},
-				"supportsArgsCanBeInterpretedByShell": {
-					"type": "boolean",
-					"description": "The debug adapter supports the 'argsCanBeInterpretedByShell' attribute on the 'runInTerminal' request."
 				}
 			}
 		},
