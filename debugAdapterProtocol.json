@@ -220,7 +220,7 @@
 								"items": {
 									"type": "integer"
 								},
-								"description": "Ids of the breakpoints that triggered the event. In most cases there will be only a single breakpoint but here are some examples for multiple breakpoints:\n- Different types of breakpoints map to the same location.\n- Multiple source breakpoints get collapsed to the same instruction by the compiler/runtime.\n- Multiple function breakpoints with different function names map to the same location."
+								"description": "Ids of the breakpoints that triggered the event. In most cases there is only a single breakpoint but here are some examples for multiple breakpoints:\n- Different types of breakpoints map to the same location.\n- Multiple source breakpoints get collapsed to the same instruction by the compiler/runtime.\n- Multiple function breakpoints with different function names map to the same location."
 							}
 						},
 						"required": [ "reason" ]
@@ -390,7 +390,7 @@
 							},
 							"data": {
 								"type": [ "array", "boolean", "integer", "null", "number" , "object", "string" ],
-								"description": "Optional data to report. For the 'telemetry' category the data will be sent to telemetry, for the other categories the data is shown in JSON format."
+								"description": "Optional data to report. For the 'telemetry' category the data is sent to telemetry, for the other categories the data is shown in JSON format."
 							}
 						},
 						"required": ["output"]
@@ -507,7 +507,7 @@
 								},
 								"systemProcessId": {
 									"type": "integer",
-									"description": "The system process id of the debugged process. This property will be missing for non-system processes."
+									"description": "The system process id of the debugged process. This property is missing for non-system processes."
 								},
 								"isLocalProcess": {
 									"type": "boolean",
@@ -594,7 +594,7 @@
 							},
 							"percentage": {
 								"type": "number",
-								"description": "Optional progress percentage to display (value range: 0 to 100). If omitted no percentage will be shown."
+								"description": "Optional progress percentage to display (value range: 0 to 100). If omitted no percentage is shown."
 							}
 						},
 						"required": [ "progressId", "title" ]
@@ -626,7 +626,7 @@
 							},
 							"percentage": {
 								"type": "number",
-								"description": "Optional progress percentage to display (value range: 0 to 100). If omitted no percentage will be shown."
+								"description": "Optional progress percentage to display (value range: 0 to 100). If omitted no percentage is shown."
 							}
 						},
 						"required": [ "progressId" ]
@@ -999,7 +999,7 @@
 		"RestartRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "Restarts a debug session. Clients should only call this request if the capability 'supportsRestartRequest' is true.\nIf the capability is missing or has the value false, a typical client will emulate 'restart' by terminating the debug adapter first and then launching it anew.",
+				"description": "Restarts a debug session. Clients should only call this request if the capability 'supportsRestartRequest' is true.\nIf the capability is missing or has the value false, a typical client emulates 'restart' by terminating the debug adapter first and then launching it anew.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -1076,7 +1076,7 @@
 		"TerminateRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The 'terminate' request is sent from the client to the debug adapter in order to shut down the debuggee gracefully. Clients should only call this request if the capability 'supportsTerminateRequest' is true.\nTypically a debug adapter implements 'terminate' by sending a software signal which the debuggee intercepts in order to clean things up properly before terminating itself.\nPlease note that this request does not directly affect the state of the debug session: if the debuggee decides to veto the graceful shutdown for any reason by not terminating itself, then the debug session will just continue.\nClients can surface the 'terminate' request as an explicit command or they can integrate it into a two stage Stop command that first sends 'terminate' to request a graceful shutdown, and if that fails uses 'disconnect' for a forceful shutdown.",
+				"description": "The 'terminate' request is sent from the client to the debug adapter in order to shut down the debuggee gracefully. Clients should only call this request if the capability 'supportsTerminateRequest' is true.\nTypically a debug adapter implements 'terminate' by sending a software signal which the debuggee intercepts in order to clean things up properly before terminating itself.\nPlease note that this request does not directly affect the state of the debug session: if the debuggee decides to veto the graceful shutdown for any reason by not terminating itself, then the debug session just continues.\nClients can surface the 'terminate' request as an explicit command or they can integrate it into a two stage Stop command that first sends 'terminate' to request a graceful shutdown, and if that fails uses 'disconnect' for a forceful shutdown.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -1341,7 +1341,7 @@
 		"SetExceptionBreakpointsResponse": {
 			"allOf": [ { "$ref": "#/definitions/Response" }, {
 				"type": "object",
-				"description": "Response to 'setExceptionBreakpoints' request.\nThe response contains an array of Breakpoint objects with information about each exception breakpoint or filter. The Breakpoint objects are in the same order as the elements of the 'filters', 'filterOptions', 'exceptionOptions' arrays given as arguments. If both 'filters' and 'filterOptions' are given, the returned array must start with 'filters' information first, followed by 'filterOptions' information.\nThe mandatory 'verified' property of a Breakpoint object signals whether the exception breakpoint or filter could be successfully created and whether the optional condition or hit count expressions are valid. In case of an error the 'message' property explains the problem. An optional 'id' property can be used to introduce a unique ID for the exception breakpoint or filter so that it can be updated subsequently by sending breakpoint events.\nFor backward compatibility both the 'breakpoints' array and the enclosing 'body' are optional. If these elements are missing a client will not be able to show problems for individual exception breakpoints or filters.",
+				"description": "Response to 'setExceptionBreakpoints' request.\nThe response contains an array of Breakpoint objects with information about each exception breakpoint or filter. The Breakpoint objects are in the same order as the elements of the 'filters', 'filterOptions', 'exceptionOptions' arrays given as arguments. If both 'filters' and 'filterOptions' are given, the returned array must start with 'filters' information first, followed by 'filterOptions' information.\nThe mandatory 'verified' property of a Breakpoint object signals whether the exception breakpoint or filter could be successfully created and whether the optional condition or hit count expressions are valid. In case of an error the 'message' property explains the problem. An optional 'id' property can be used to introduce a unique ID for the exception breakpoint or filter so that it can be updated subsequently by sending breakpoint events.\nFor backward compatibility both the 'breakpoints' array and the enclosing 'body' are optional. If these elements are missing a client is not able to show problems for individual exception breakpoints or filters.",
 				"properties": {
 					"body": {
 						"type": "object",
@@ -2088,7 +2088,7 @@
 		"SetVariableRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "Set the variable with the given name in the variable container to a new value. Clients should only call this request if the capability 'supportsSetVariable' is true.\nIf a debug adapter implements both setVariable and setExpression, a client will only use setExpression if the variable has an evaluateName property.",
+				"description": "Set the variable with the given name in the variable container to a new value. Clients should only call this request if the capability 'supportsSetVariable' is true.\nIf a debug adapter implements both setVariable and setExpression, a client only uses setExpression if the variable has an evaluateName property.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -2481,7 +2481,7 @@
 		"SetExpressionRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "Evaluates the given 'value' expression and assigns it to the 'expression' which must be a modifiable l-value.\nThe expressions have access to any variables and arguments that are in scope of the specified frame.\nClients should only call this request if the capability 'supportsSetExpression' is true.\nIf a debug adapter implements both setExpression and setVariable, a client will only use setExpression if the variable has an evaluateName property.",
+				"description": "Evaluates the given 'value' expression and assigns it to the 'expression' which must be a modifiable l-value.\nThe expressions have access to any variables and arguments that are in scope of the specified frame.\nClients should only call this request if the capability 'supportsSetExpression' is true.\nIf a debug adapter implements both setExpression and setVariable, a client only uses setExpression if the variable has an evaluateName property.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -2835,7 +2835,7 @@
 							},
 							"unreadableBytes": {
 								"type": "integer",
-								"description": "The number of unreadable bytes encountered after the last successfully read byte.\nThis can be used to determine the number of bytes that must be skipped before a subsequent 'readMemory' request will succeed."
+								"description": "The number of unreadable bytes encountered after the last successfully read byte.\nThis can be used to determine the number of bytes that must be skipped before a subsequent 'readMemory' request succeeds."
 							},
 							"data": {
 								"type": "string",
@@ -3160,7 +3160,7 @@
 				},
 				"label": {
 					"type": "string",
-					"description": "The name of the filter option. This will be shown in the UI."
+					"description": "The name of the filter option. This is shown in the UI."
 				},
 				"description": {
 					"type": "string",
@@ -3224,7 +3224,7 @@
 
 		"Module": {
 			"type": "object",
-			"description": "A Module object represents a row in the modules view.\nTwo attributes are mandatory: an id identifies a module in the modules view and is used in a ModuleEvent for identifying a module for adding, updating or deleting.\nThe name is used to minimally render the module in the UI.\n\nAdditional attributes can be added to the module. They will show up in the module View if they have a corresponding ColumnDescriptor.\n\nTo avoid an unnecessary proliferation of additional attributes with similar semantics but different names, we recommend to re-use attributes from the 'recommended' list below first, and only introduce new attributes if nothing appropriate could be found.",
+			"description": "A Module object represents a row in the modules view.\nTwo attributes are mandatory: an id identifies a module in the modules view and is used in a ModuleEvent for identifying a module for adding, updating or deleting.\nThe name is used to minimally render the module in the UI.\n\nAdditional attributes can be added to the module. They show up in the module View if they have a corresponding ColumnDescriptor.\n\nTo avoid an unnecessary proliferation of additional attributes with similar semantics but different names, we recommend to re-use attributes from the 'recommended' list below first, and only introduce new attributes if nothing appropriate could be found.",
 			"properties": {
 				"id": {
 					"type": ["integer", "string"],
@@ -3576,7 +3576,7 @@
 					"_enum": [ "public", "private", "protected", "internal", "final" ]
 				},
 				"lazy": {
-					"description": "If true, clients can present the variable with a UI that supports a specific gesture to trigger its evaluation.\nThis mechanism can be used for properties that require executing code when retrieving their value and where the code execution can be expensive and/or produce side-effects. A typical example are properties based on a getter function.\nPlease note that in addition to the 'lazy' flag, the variable's 'variablesReference' must refer to a variable that will provide the value through another 'variable' request.",
+					"description": "If true, clients can present the variable with a UI that supports a specific gesture to trigger its evaluation.\nThis mechanism can be used for properties that require executing code when retrieving their value and where the code execution can be expensive and/or produce side-effects. A typical example are properties based on a getter function.\nPlease note that in addition to the 'lazy' flag, the variable's 'variablesReference' must refer to a variable that provides the value through another 'variable' request.",
 					"type": "boolean"
 				}
 			}
@@ -3965,7 +3965,7 @@
 				},
 				"condition": {
 					"type": "string",
-					"description": "An optional expression for conditional exceptions.\nThe exception will break into the debugger if the result of the condition is true."
+					"description": "An optional expression for conditional exceptions.\nThe exception breaks into the debugger if the result of the condition is true."
 				}
 			},
 			"required": [ "filterId" ]
