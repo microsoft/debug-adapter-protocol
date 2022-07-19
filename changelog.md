@@ -6,6 +6,9 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.57.X:
+  * Add the `argsCanBeInterpretedByShell` property to the `RunInTerminalRequest`
+
 * 1.56.X:
   * Add additional information to the `StepInTarget`
   * Clarification around wording for "clients"
