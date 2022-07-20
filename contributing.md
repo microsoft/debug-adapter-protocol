@@ -17,7 +17,7 @@ Detailed steps:
 1. Run `node spec-generator` (after `npm install && npm run compile` in the subdirectory) to automatically update the documentation. Commit it to the `main` branch.
 1. If this is a feature that VS Code would want to implement, open a corresponding issue in the VS Code repo.
 1. Updating the npm modules:
-    1. Whenever there are worthwhile DAP changes, copy the [DAP JSON schema](https://github.com/microsoft/debug-adapter-protocol/blob/gh-pages/debugAdapterProtocol.json) as `debugProtocol.json` into [`vscode-debugadapter-node`](https://github.com/microsoft/vscode-debugadapter-node) and run the `Generate debugProtocol.ts` launch configuration to update the `DebugProtocol` TypeScript module.
+    1. Whenever there are worthwhile DAP changes, pull the updated DAP schema by running `npm run sync-dap` or `npm run sync-next-dap` and run the `Generate debugProtocol.ts` launch configuration to update the `DebugProtocol` TypeScript module.
     1. Run `npm run version -- preminor --preid pre` in the repo, which will publish a prerelease tag. This will get automatically built by CI.
     1. Adopt the three new npm modules in [Mock Debug](https://github.com/microsoft/vscode-mock-debug) to verify that they still work.
     1. Commit and push the version changes to Mock Debug.
