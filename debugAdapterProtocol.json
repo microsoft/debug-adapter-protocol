@@ -197,7 +197,7 @@
 							},
 							"description": {
 								"type": "string",
-								"description": "The full reason for the event, e.g. 'Paused on exception'. This string is shown in the UI as is and must be translated."
+								"description": "The full reason for the event, e.g. 'Paused on exception'. This string is shown in the UI as is and can be translated."
 							},
 							"threadId": {
 								"type": "integer",
@@ -574,7 +574,7 @@
 						"properties": {
 							"progressId": {
 								"type": "string",
-								"description": "An ID that must be used in subsequent `progressUpdate` and `progressEnd` events to make them refer to the same progress reporting.\nIDs must be unique within a debug session."
+								"description": "An ID that can be used in subsequent `progressUpdate` and `progressEnd` events to make them refer to the same progress reporting.\nIDs must be unique within a debug session."
 							},
 							"title": {
 								"type": "string",
@@ -776,7 +776,7 @@
 					"description": "Environment key-value pairs that are added to or removed from the default environment.",
 					"additionalProperties": {
 						"type": [ "string", "null" ],
-						"description": "Proper values must be strings. A value of `null` removes the variable from the environment."
+						"description": "A string is a proper value for an environment variable. The value `null` removes the variable from the environment."
 					}
 				},
 				"argsCanBeInterpretedByShell": {
@@ -813,7 +813,7 @@
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
 				"title": "Requests",
-				"description": "The `initialize` request is sent as the first request from the client to the debug adapter in order to configure it with client capabilities and to retrieve capabilities from the debug adapter.\nUntil the debug adapter has responded to with an `initialize` response, the client must not send any additional requests or events to the debug adapter.\nIn addition the debug adapter is not allowed to send any requests or events to the client until it has responded with an `initialize` response.\nThe `initialize` request may only be sent once.",
+				"description": "The `initialize` request is sent as the first request from the client to the debug adapter in order to configure it with client capabilities and to retrieve capabilities from the debug adapter.\nUntil the debug adapter has responded with an `initialize` response, the client must not send any additional requests or events to the debug adapter.\nIn addition the debug adapter is not allowed to send any requests or events to the client until it has responded with an `initialize` response.\nThe `initialize` request may only be sent once.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -1546,7 +1546,7 @@
 		"ContinueRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The request resumes execution of all threads. If the debug adapter supports single thread execution (see capability `supportsSingleThreadExecutionRequests`), setting the `singleThread` argument to true resumes only the specified thread. If not all threads were resumed, the `allThreadsContinued` attribute of the response must be set to false.",
+				"description": "The request resumes execution of all threads. If the debug adapter supports single thread execution (see capability `supportsSingleThreadExecutionRequests`), setting the `singleThread` argument to true resumes only the specified thread. If not all threads were resumed, the `allThreadsContinued` attribute of the response should be set to false.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -1584,7 +1584,7 @@
 						"properties": {
 							"allThreadsContinued": {
 								"type": "boolean",
-								"description": "The value true (or a missing property) signals to the client that all threads have been resumed. The value false must be returned if not all threads were resumed."
+								"description": "The value true (or a missing property) signals to the client that all threads have been resumed. The value false indicates that not all threads were resumed."
 							}
 						}
 					}
@@ -1768,7 +1768,7 @@
 		"ReverseContinueRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The request resumes backward execution of all threads. If the debug adapter supports single thread execution (see capability `supportsSingleThreadExecutionRequests`), setting the `singleThread` argument to true resumes only the specified thread. If not all threads were resumed, the `allThreadsContinued` attribute of the response must be set to false.\nClients should only call this request if the corresponding capability `supportsStepBack` is true.",
+				"description": "The request resumes backward execution of all threads. If the debug adapter supports single thread execution (see capability `supportsSingleThreadExecutionRequests`), setting the `singleThread` argument to true resumes only the specified thread. If not all threads were resumed, the `allThreadsContinued` attribute of the response should be set to false.\nClients should only call this request if the corresponding capability `supportsStepBack` is true.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -2843,7 +2843,7 @@
 							},
 							"unreadableBytes": {
 								"type": "integer",
-								"description": "The number of unreadable bytes encountered after the last successfully read byte.\nThis can be used to determine the number of bytes that must be skipped before a subsequent `readMemory` request succeeds."
+								"description": "The number of unreadable bytes encountered after the last successfully read byte.\nThis can be used to determine the number of bytes that should be skipped before a subsequent `readMemory` request succeeds."
 							},
 							"data": {
 								"type": "string",
@@ -2951,7 +2951,7 @@
 				},
 				"instructionCount": {
 					"type": "integer",
-					"description": "Number of instructions to disassemble starting at the specified location and offset.\nAn adapter must return exactly this number of instructions - any unavailable instructions should be replaced with an implementation-defined `invalid instruction` value."
+					"description": "Number of instructions to disassemble starting at the specified location and offset.\nAn adapter must return exactly this number of instructions - any unavailable instructions should be replaced with an implementation-defined 'invalid instruction' value."
 				},
 				"resolveSymbols": {
 					"type": "boolean",
@@ -3172,7 +3172,7 @@
 				},
 				"description": {
 					"type": "string",
-					"description": "A help text providing additional information about the exception filter. This string is typically shown as a hover and must be translated."
+					"description": "A help text providing additional information about the exception filter. This string is typically shown as a hover and can be translated."
 				},
 				"default": {
 					"type": "boolean",
@@ -3184,7 +3184,7 @@
 				},
 				"conditionDescription": {
 					"type": "string",
-					"description": "A help text providing information about the condition. This string is shown as the placeholder text for a text box and must be translated."
+					"description": "A help text providing information about the condition. This string is shown as the placeholder text for a text box and can be translated."
 				}
 			},
 			"required": [ "filter", "label" ]
@@ -3207,7 +3207,7 @@
 					"description": "An object used as a dictionary for looking up the variables in the format string.",
 					"additionalProperties": {
 						"type": "string",
-						"description": "Values must be strings."
+						"description": "All dictionary values must be strings."
 					}
 				},
 				"sendTelemetry": {
@@ -3351,7 +3351,7 @@
 				},
 				"sourceReference": {
 					"type": "integer",
-					"description": "If sourceReference > 0 the contents of the source must be retrieved through the SourceRequest (even if a path is specified).\nA sourceReference is only valid for a session, so it must not be used to persist a source.\nThe value should be less than or equal to 2147483647 (2^31-1)."
+					"description": "If the value > 0 the contents of the source must be retrieved through the `source` request (even if a path is specified).\nA `sourceReference` is only valid for a session, so it can not be used to persist a source.\nThe value should be less than or equal to 2147483647 (2^31-1)."
 				},
 				"presentationHint": {
 					"type": "string",
@@ -3401,11 +3401,11 @@
 				},
 				"line": {
 					"type": "integer",
-					"description": "The line within the file of the frame. If source is null or doesn't exist, line is 0 and must be ignored."
+					"description": "The line within the source of the frame. If the source attribute is missing or doesn't exist, line is 0 and should be ignored by the client."
 				},
 				"column": {
 					"type": "integer",
-					"description": "The column within the line. If source is null or doesn't exist, column is 0 and must be ignored."
+					"description": "The column within the line. If source attribute is missing or doesn't exist, column is 0 and should be ignored by the client."
 				},
 				"endLine": {
 					"type": "integer",
@@ -3584,7 +3584,7 @@
 					"_enum": [ "public", "private", "protected", "internal", "final" ]
 				},
 				"lazy": {
-					"description": "If true, clients can present the variable with a UI that supports a specific gesture to trigger its evaluation.\nThis mechanism can be used for properties that require executing code when retrieving their value and where the code execution can be expensive and/or produce side-effects. A typical example are properties based on a getter function.\nPlease note that in addition to the `lazy` flag, the variable's `variablesReference` must refer to a variable that will provide the value through another `variable` request.",
+					"description": "If true, clients can present the variable with a UI that supports a specific gesture to trigger its evaluation.\nThis mechanism can be used for properties that require executing code when retrieving their value and where the code execution can be expensive and/or produce side-effects. A typical example are properties based on a getter function.\nPlease note that in addition to the `lazy` flag, the variable's `variablesReference` is expected to refer to a variable that will provide the value through another `variable` request.",
 					"type": "boolean"
 				}
 			}
@@ -3877,7 +3877,7 @@
 				},
 				"selectionStart": {
 					"type": "integer",
-					"description": "Determines the start of the new selection after the text has been inserted (or replaced).\nThe start position must in the range 0 and length of the completion text.\nIf omitted the selection starts at the end of the completion text."
+					"description": "Determines the start of the new selection after the text has been inserted (or replaced).\nThe start position must be in the range 0 and length of the completion text.\nIf omitted the selection starts at the end of the completion text."
 				},
 				"selectionLength": {
 					"type": "integer",
