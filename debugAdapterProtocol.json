@@ -100,7 +100,7 @@
 					},
 					"body": {
 						"type": [ "array", "boolean", "integer", "null", "number" , "object", "string" ],
-						"description": "Contains request result if success is true and optional error details if success is false."
+						"description": "Contains request result if success is true and error details if success is false."
 					}
 				},
 				"required": [ "type", "request_seq", "success", "command" ]
@@ -117,7 +117,7 @@
 						"properties": {
 							"error": {
 								"$ref": "#/definitions/Message",
-								"description": "An optional, structured error message."
+								"description": "A structured error message."
 							}
 						}
 					}
@@ -378,19 +378,19 @@
 							},
 							"source": {
 								"$ref": "#/definitions/Source",
-								"description": "An optional source location where the output was produced."
+								"description": "The source location where the output was produced."
 							},
 							"line": {
 								"type": "integer",
-								"description": "An optional source location line where the output was produced."
+								"description": "The source location's line where the output was produced."
 							},
 							"column": {
 								"type": "integer",
-								"description": "An optional source location column where the output was produced."
+								"description": "The source location's column where the output was produced."
 							},
 							"data": {
 								"type": [ "array", "boolean", "integer", "null", "number" , "object", "string" ],
-								"description": "Optional data to report. For the `telemetry` category the data is sent to telemetry, for the other categories the data is shown in JSON format."
+								"description": "Additional data to report. For the `telemetry` category the data is sent to telemetry, for the other categories the data is shown in JSON format."
 							}
 						},
 						"required": ["output"]
@@ -578,7 +578,7 @@
 							},
 							"title": {
 								"type": "string",
-								"description": "Mandatory (short) title of the progress reporting. Shown in the UI to describe the long running operation."
+								"description": "Short title of the progress reporting. Shown in the UI to describe the long running operation."
 							},
 							"requestId": {
 								"type": "integer",
@@ -590,11 +590,11 @@
 							},
 							"message": {
 								"type": "string",
-								"description": "Optional, more detailed progress message."
+								"description": "More detailed progress message."
 							},
 							"percentage": {
 								"type": "number",
-								"description": "Optional progress percentage to display (value range: 0 to 100). If omitted no percentage is shown."
+								"description": "Progress percentage to display (value range: 0 to 100). If omitted no percentage is shown."
 							}
 						},
 						"required": [ "progressId", "title" ]
@@ -622,11 +622,11 @@
 							},
 							"message": {
 								"type": "string",
-								"description": "Optional, more detailed progress message. If omitted, the previous message (if any) is used."
+								"description": "More detailed progress message. If omitted, the previous message (if any) is used."
 							},
 							"percentage": {
 								"type": "number",
-								"description": "Optional progress percentage to display (value range: 0 to 100). If omitted no percentage is shown."
+								"description": "Progress percentage to display (value range: 0 to 100). If omitted no percentage is shown."
 							}
 						},
 						"required": [ "progressId" ]
@@ -639,7 +639,7 @@
 		"ProgressEndEvent": {
 			"allOf": [ { "$ref": "#/definitions/Event" }, {
 				"type": "object",
-				"description": "The event signals the end of the progress reporting with an optional final message.\nThis event should only be sent if the corresponding capability `supportsProgressReporting` is true.",
+				"description": "The event signals the end of the progress reporting with a final message.\nThis event should only be sent if the corresponding capability `supportsProgressReporting` is true.",
 				"properties": {
 					"event": {
 						"type": "string",
@@ -654,7 +654,7 @@
 							},
 							"message": {
 								"type": "string",
-								"description": "Optional, more detailed progress message. If omitted, the previous message (if any) is used."
+								"description": "More detailed progress message. If omitted, the previous message (if any) is used."
 							}
 						},
 						"required": [ "progressId" ]
@@ -678,7 +678,7 @@
 						"properties": {
 							"areas": {
 								"type": "array",
-								"description": "Optional set of logical areas that got invalidated. This property has a hint characteristic: a client can only be expected to make a 'best effort' in honouring the areas but there are no guarantees. If this property is missing, empty, or if values are not understood, the client should assume a single value `all`.",
+								"description": "Set of logical areas that got invalidated. This property has a hint characteristic: a client can only be expected to make a 'best effort' in honouring the areas but there are no guarantees. If this property is missing, empty, or if values are not understood, the client should assume a single value `all`.",
 								"items": {
 									"$ref": "#/definitions/InvalidatedAreas"
 								}
@@ -734,7 +734,7 @@
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
 				"title": "Reverse Requests",
-				"description": "This optional request is sent from the debug adapter to the client to run a command in a terminal.\nThis is typically used to launch the debuggee in a terminal provided by the client.\nThis request should only be called if the corresponding capability `supportsRunInTerminalRequest` is true.\nClient implementations of `runInTerminal` are free to run the command however they choose including issuing the command to a command line interpreter (aka 'shell'). Argument strings passed to the `runInTerminal` request must arrive verbatim in the command to be run. As a consequence, clients which use a shell are responsible for escaping any special shell characters in the argument strings to prevent them from being interpreted (and modified) by the shell.\nSome users may wish to take advantage of shell processing in the argument strings. For clients which implement `runInTerminal` using an intermediary shell, the `argsCanBeInterpretedByShell` property can be set to true. In this case the client is requested not to escape any special shell characters in the argument strings.",
+				"description": "This request is sent from the debug adapter to the client to run a command in a terminal.\nThis is typically used to launch the debuggee in a terminal provided by the client.\nThis request should only be called if the corresponding capability `supportsRunInTerminalRequest` is true.\nClient implementations of `runInTerminal` are free to run the command however they choose including issuing the command to a command line interpreter (aka 'shell'). Argument strings passed to the `runInTerminal` request must arrive verbatim in the command to be run. As a consequence, clients which use a shell are responsible for escaping any special shell characters in the argument strings to prevent them from being interpreted (and modified) by the shell.\nSome users may wish to take advantage of shell processing in the argument strings. For clients which implement `runInTerminal` using an intermediary shell, the `argsCanBeInterpretedByShell` property can be set to true. In this case the client is requested not to escape any special shell characters in the argument strings.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -758,7 +758,7 @@
 				},
 				"title": {
 					"type": "string",
-					"description": "Optional title of the terminal."
+					"description": "Title of the terminal."
 				},
 				"cwd": {
 					"type": "string",
@@ -861,7 +861,7 @@
 				},
 				"supportsVariableType": {
 					"type": "boolean",
-					"description": "Client supports the optional type attribute for variables."
+					"description": "Client supports the `type` attribute for variables."
 				},
 				"supportsVariablePaging": {
 					"type": "boolean",
@@ -889,7 +889,7 @@
 				},
 				"supportsArgsCanBeInterpretedByShell": {
 					"type": "boolean",
-					"description": "Client supports the 'argsCanBeInterpretedByShell' attribute on the 'runInTerminal' request."
+					"description": "Client supports the `argsCanBeInterpretedByShell` attribute on the `runInTerminal` request."
 				}
 			},
 			"required": [ "adapterID" ]
@@ -910,7 +910,7 @@
 		"ConfigurationDoneRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "This optional request indicates that the client has finished initialization of the debug adapter.\nSo it is the last request in the sequence of configuration requests (which was started by the `initialized` event).\nClients should only call this request if the corresponding capability `supportsConfigurationDoneRequest` is true.",
+				"description": "This request indicates that the client has finished initialization of the debug adapter.\nSo it is the last request in the sequence of configuration requests (which was started by the `initialized` event).\nClients should only call this request if the corresponding capability `supportsConfigurationDoneRequest` is true.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -960,7 +960,7 @@
 				},
 				"__restart": {
 					"type": [ "array", "boolean", "integer", "null", "number", "object", "string" ],
-					"description": "Optional data from the previous, restarted session.\nThe data is sent as the `restart` attribute of the `terminated` event.\nThe client should leave the data intact."
+					"description": "Arbitrary data from the previous, restarted session.\nThe data is sent as the `restart` attribute of the `terminated` event.\nThe client should leave the data intact."
 				}
 			}
 		},
@@ -993,7 +993,7 @@
 			"properties": {
 				"__restart": {
 					"type": [ "array", "boolean", "integer", "null", "number", "object", "string" ],
-					"description": "Optional data from the previous, restarted session.\nThe data is sent as the `restart` attribute of the `terminated` event.\nThe client should leave the data intact."
+					"description": "Arbitrary data from the previous, restarted session.\nThe data is sent as the `restart` attribute of the `terminated` event.\nThe client should leave the data intact."
 				}
 			}
 		},
@@ -1043,7 +1043,7 @@
 		"DisconnectRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The `disconnect` request asks the debug adapter to disconnect from the debuggee (thus ending the debug session) and then to shut down itself (the debug adapter).\nIn addition, the debug adapter must terminate the debuggee if it was started with the `launch` request. If an `attach` request was used to connect to the debuggee, then the debug adapter must not terminate the debuggee.\nThis implicit behavior of when to terminate the debuggee can be overridden with the optional argument `terminateDebuggee` (which is only supported by a debug adapter if the corresponding capability `supportTerminateDebuggee` is true).",
+				"description": "The `disconnect` request asks the debug adapter to disconnect from the debuggee (thus ending the debug session) and then to shut down itself (the debug adapter).\nIn addition, the debug adapter must terminate the debuggee if it was started with the `launch` request. If an `attach` request was used to connect to the debuggee, then the debug adapter must not terminate the debuggee.\nThis implicit behavior of when to terminate the debuggee can be overridden with the `terminateDebuggee` argument (which is only supported by a debug adapter if the corresponding capability `supportTerminateDebuggee` is true).",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -1145,15 +1145,15 @@
 				},
 				"column": {
 					"type": "integer",
-					"description": "Optional start column of range to search possible breakpoint locations in. If no start column is given, the first column in the start line is assumed."
+					"description": "Start column of range to search possible breakpoint locations in. If no start column is given, the first column in the start line is assumed."
 				},
 				"endLine": {
 					"type": "integer",
-					"description": "Optional end line of range to search possible breakpoint locations in. If no end line is given, then the end line is assumed to be the start line."
+					"description": "End line of range to search possible breakpoint locations in. If no end line is given, then the end line is assumed to be the start line."
 				},
 				"endColumn": {
 					"type": "integer",
-					"description": "Optional end column of range to search possible breakpoint locations in. If no end column is given, then it is assumed to be in the last column of the end line."
+					"description": "End column of range to search possible breakpoint locations in. If no end column is given, then it is assumed to be in the last column of the end line."
 				}
 			},
 			"required": [ "source", "line" ]
@@ -1349,7 +1349,7 @@
 		"SetExceptionBreakpointsResponse": {
 			"allOf": [ { "$ref": "#/definitions/Response" }, {
 				"type": "object",
-				"description": "Response to `setExceptionBreakpoints` request.\nThe response contains an array of `Breakpoint` objects with information about each exception breakpoint or filter. The `Breakpoint` objects are in the same order as the elements of the `filters`, `filterOptions`, `exceptionOptions` arrays given as arguments. If both `filters` and `filterOptions` are given, the returned array must start with `filters` information first, followed by `filterOptions` information.\nThe mandatory `verified` property of a `Breakpoint` object signals whether the exception breakpoint or filter could be successfully created and whether the optional condition or hit count expressions are valid. In case of an error the `message` property explains the problem. An optional `id` property can be used to introduce a unique ID for the exception breakpoint or filter so that it can be updated subsequently by sending breakpoint events.\nFor backward compatibility both the `breakpoints` array and the enclosing `body` are optional. If these elements are missing a client is not able to show problems for individual exception breakpoints or filters.",
+				"description": "Response to `setExceptionBreakpoints` request.\nThe response contains an array of `Breakpoint` objects with information about each exception breakpoint or filter. The `Breakpoint` objects are in the same order as the elements of the `filters`, `filterOptions`, `exceptionOptions` arrays given as arguments. If both `filters` and `filterOptions` are given, the returned array must start with `filters` information first, followed by `filterOptions` information.\nThe `verified` property of a `Breakpoint` object signals whether the exception breakpoint or filter could be successfully created and whether the condition or hit count expressions are valid. In case of an error the `message` property explains the problem. The `id` property can be used to introduce a unique ID for the exception breakpoint or filter so that it can be updated subsequently by sending breakpoint events.\nFor backward compatibility both the `breakpoints` array and the enclosing `body` are optional. If these elements are missing a client is not able to show problems for individual exception breakpoints or filters.",
 				"properties": {
 					"body": {
 						"type": "object",
@@ -1419,11 +1419,11 @@
 								"items": {
 									"$ref": "#/definitions/DataBreakpointAccessType"
 								},
-								"description": "Optional attribute listing the available access types for a potential data breakpoint. A UI client could surface this information."
+								"description": "Attribute lists the available access types for a potential data breakpoint. A UI client could surface this information."
 							},
 							"canPersist": {
 								"type": "boolean",
-								"description": "Optional attribute indicating that a potential data breakpoint could be persisted across sessions."
+								"description": "Attribute indicates that a potential data breakpoint could be persisted across sessions."
 							}
 						},
 						"required": [ "dataId", "description" ]
@@ -1565,11 +1565,11 @@
 			"properties": {
 				"threadId": {
 					"type": "integer",
-					"description": "Specifies the active thread. If the debug adapter supports single thread execution (see `supportsSingleThreadExecutionRequests`) and the optional argument `singleThread` is true, only the thread with this ID is resumed."
+					"description": "Specifies the active thread. If the debug adapter supports single thread execution (see `supportsSingleThreadExecutionRequests`) and the argument `singleThread` is true, only the thread with this ID is resumed."
 				},
 				"singleThread": {
 					"type": "boolean",
-					"description": "If this optional flag is true, execution is resumed only for the thread with given `threadId`."
+					"description": "If this flag is true, execution is resumed only for the thread with given `threadId`."
 				}
 			},
 			"required": [ "threadId" ]
@@ -1619,11 +1619,11 @@
 				},
 				"singleThread": {
 					"type": "boolean",
-					"description": "If this optional flag is true, all other suspended threads are not resumed."
+					"description": "If this flag is true, all other suspended threads are not resumed."
 				},
 				"granularity": {
 					"$ref": "#/definitions/SteppingGranularity",
-					"description": "Optional granularity to step. If no granularity is specified, a granularity of `statement` is assumed."
+					"description": "Stepping granularity. If no granularity is specified, a granularity of `statement` is assumed."
 				}
 			},
 			"required": [ "threadId" ]
@@ -1638,7 +1638,7 @@
 		"StepInRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The request resumes the given thread to step into a function/method and allows all other threads to run freely by resuming them.\nIf the debug adapter supports single thread execution (see capability `supportsSingleThreadExecutionRequests`), setting the `singleThread` argument to true prevents other suspended threads from resuming.\nIf the request cannot step into a target, `stepIn` behaves like the `next` request.\nThe debug adapter first sends the response and then a `stopped` event (with reason `step`) after the step has completed.\nIf there are multiple function/method calls (or other targets) on the source line,\nthe optional argument `targetId` can be used to control into which target the `stepIn` should occur.\nThe list of possible targets for a given source line can be retrieved via the `stepInTargets` request.",
+				"description": "The request resumes the given thread to step into a function/method and allows all other threads to run freely by resuming them.\nIf the debug adapter supports single thread execution (see capability `supportsSingleThreadExecutionRequests`), setting the `singleThread` argument to true prevents other suspended threads from resuming.\nIf the request cannot step into a target, `stepIn` behaves like the `next` request.\nThe debug adapter first sends the response and then a `stopped` event (with reason `step`) after the step has completed.\nIf there are multiple function/method calls (or other targets) on the source line,\nthe argument `targetId` can be used to control into which target the `stepIn` should occur.\nThe list of possible targets for a given source line can be retrieved via the `stepInTargets` request.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -1661,15 +1661,15 @@
 				},
 				"singleThread": {
 					"type": "boolean",
-					"description": "If this optional flag is true, all other suspended threads are not resumed."
+					"description": "If this flag is true, all other suspended threads are not resumed."
 				},
 				"targetId": {
 					"type": "integer",
-					"description": "Optional id of the target to step into."
+					"description": "Id of the target to step into."
 				},
 				"granularity": {
 					"$ref": "#/definitions/SteppingGranularity",
-					"description": "Optional granularity to step. If no granularity is specified, a granularity of `statement` is assumed."
+					"description": "Stepping granularity. If no granularity is specified, a granularity of `statement` is assumed."
 				}
 			},
 			"required": [ "threadId" ]
@@ -1707,11 +1707,11 @@
 				},
 				"singleThread": {
 					"type": "boolean",
-					"description": "If this optional flag is true, all other suspended threads are not resumed."
+					"description": "If this flag is true, all other suspended threads are not resumed."
 				},
 				"granularity": {
 					"$ref": "#/definitions/SteppingGranularity",
-					"description": "Optional granularity to step. If no granularity is specified, a granularity of `statement` is assumed."
+					"description": "Stepping granularity. If no granularity is specified, a granularity of `statement` is assumed."
 				}
 			},
 			"required": [ "threadId" ]
@@ -1749,11 +1749,11 @@
 				},
 				"singleThread": {
 					"type": "boolean",
-					"description": "If this optional flag is true, all other suspended threads are not resumed."
+					"description": "If this flag is true, all other suspended threads are not resumed."
 				},
 				"granularity": {
 					"$ref": "#/definitions/SteppingGranularity",
-					"description": "Optional granularity to step. If no granularity is specified, a granularity of `statement` is assumed."
+					"description": "Stepping granularity to step. If no granularity is specified, a granularity of `statement` is assumed."
 				}
 			},
 			"required": [ "threadId" ]
@@ -1787,11 +1787,11 @@
 			"properties": {
 				"threadId": {
 					"type": "integer",
-					"description": "Specifies the active thread. If the debug adapter supports single thread execution (see `supportsSingleThreadExecutionRequests`) and the optional argument `singleThread` is true, only the thread with this ID is resumed."
+					"description": "Specifies the active thread. If the debug adapter supports single thread execution (see `supportsSingleThreadExecutionRequests`) and the `singleThread` argument is true, only the thread with this ID is resumed."
 				},
 				"singleThread": {
 					"type": "boolean",
-					"description": "If this optional flag is true, backward execution is resumed only for the thread with given `threadId`."
+					"description": "If this flag is true, backward execution is resumed only for the thread with given `threadId`."
 				}
 
 			},
@@ -2029,7 +2029,7 @@
 		"VariablesRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "Retrieves all child variables for the given variable reference.\nAn optional filter can be used to limit the fetched children to either named or indexed children.",
+				"description": "Retrieves all child variables for the given variable reference.\nA filter can be used to limit the fetched children to either named or indexed children.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -2053,7 +2053,7 @@
 				"filter": {
 					"type": "string",
 					"enum": [ "indexed", "named" ],
-					"description": "Optional filter to limit the child variables to either named or indexed. If omitted, both types are fetched."
+					"description": "Filter to limit the child variables to either named or indexed. If omitted, both types are fetched."
 				},
 				"start": {
 					"type": "integer",
@@ -2154,11 +2154,11 @@
 							},
 							"namedVariables": {
 								"type": "integer",
-								"description": "The number of named child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks.\nThe value should be less than or equal to 2147483647 (2^31-1)."
+								"description": "The number of named child variables.\nThe client can use this information to present the variables in a paged UI and fetch them in chunks.\nThe value should be less than or equal to 2147483647 (2^31-1)."
 							},
 							"indexedVariables": {
 								"type": "integer",
-								"description": "The number of indexed child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks.\nThe value should be less than or equal to 2147483647 (2^31-1)."
+								"description": "The number of indexed child variables.\nThe client can use this information to present the variables in a paged UI and fetch them in chunks.\nThe value should be less than or equal to 2147483647 (2^31-1)."
 							}
 						},
 						"required": [ "value" ]
@@ -2213,7 +2213,7 @@
 							},
 							"mimeType": {
 								"type": "string",
-								"description": "Optional content type (MIME type) of the source."
+								"description": "Content type (MIME type) of the source."
 							}
 						},
 						"required": [ "content" ]
@@ -2456,7 +2456,7 @@
 							},
 							"type": {
 								"type": "string",
-								"description": "The optional type of the evaluate result.\nThis attribute should only be returned by a debug adapter if the ccorresponding capability  `supportsVariableType` is true."
+								"description": "The type of the evaluate result.\nThis attribute should only be returned by a debug adapter if the ccorresponding capability  `supportsVariableType` is true."
 							},
 							"presentationHint": {
 								"$ref": "#/definitions/VariablePresentationHint",
@@ -2468,15 +2468,15 @@
 							},
 							"namedVariables": {
 								"type": "integer",
-								"description": "The number of named child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks.\nThe value should be less than or equal to 2147483647 (2^31-1)."
+								"description": "The number of named child variables.\nThe client can use this information to present the variables in a paged UI and fetch them in chunks.\nThe value should be less than or equal to 2147483647 (2^31-1)."
 							},
 							"indexedVariables": {
 								"type": "integer",
-								"description": "The number of indexed child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks.\nThe value should be less than or equal to 2147483647 (2^31-1)."
+								"description": "The number of indexed child variables.\nThe client can use this information to present the variables in a paged UI and fetch them in chunks.\nThe value should be less than or equal to 2147483647 (2^31-1)."
 							},
 							"memoryReference": {
 								"type": "string",
-								"description": "Optional memory reference to a location appropriate for this result.\nFor pointer type eval results, this is generally a reference to the memory address contained in the pointer.\nThis attribute should be returned by a debug adapter if corresponding capability  `supportsMemoryReferences` is true."
+								"description": "A memory reference to a location appropriate for this result.\nFor pointer type eval results, this is generally a reference to the memory address contained in the pointer.\nThis attribute should be returned by a debug adapter if corresponding capability  `supportsMemoryReferences` is true."
 							}
 						},
 						"required": [ "result", "variablesReference" ]
@@ -2539,7 +2539,7 @@
 							},
 							"type": {
 								"type": "string",
-								"description": "The optional type of the value.\nThis attribute should only be returned by a debug adapter if the corresponding capability `supportsVariableType` is true."
+								"description": "The type of the value.\nThis attribute should only be returned by a debug adapter if the corresponding capability `supportsVariableType` is true."
 							},
 							"presentationHint": {
 								"$ref": "#/definitions/VariablePresentationHint",
@@ -2551,11 +2551,11 @@
 							},
 							"namedVariables": {
 								"type": "integer",
-								"description": "The number of named child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks.\nThe value should be less than or equal to 2147483647 (2^31-1)."
+								"description": "The number of named child variables.\nThe client can use this information to present the variables in a paged UI and fetch them in chunks.\nThe value should be less than or equal to 2147483647 (2^31-1)."
 							},
 							"indexedVariables": {
 								"type": "integer",
-								"description": "The number of indexed child variables.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks.\nThe value should be less than or equal to 2147483647 (2^31-1)."
+								"description": "The number of indexed child variables.\nThe client can use this information to present the variables in a paged UI and fetch them in chunks.\nThe value should be less than or equal to 2147483647 (2^31-1)."
 							}
 						},
 						"required": [ "value" ]
@@ -2645,7 +2645,7 @@
 				},
 				"column": {
 					"type": "integer",
-					"description": "An optional column location for which the goto targets are determined."
+					"description": "A column location for which the goto targets are determined."
 				}
 			},
 			"required": [ "source", "line" ]
@@ -2707,7 +2707,7 @@
 				},
 				"line": {
 					"type": "integer",
-					"description": "An optional line for which to determine the completion proposals. If missing the first line of the text is assumed."
+					"description": "A line for which to determine the completion proposals. If missing the first line of the text is assumed."
 				}
 			},
 			"required": [ "text", "column" ]
@@ -2820,7 +2820,7 @@
 				},
 				"offset": {
 					"type": "integer",
-					"description": "Optional offset (in bytes) to be applied to the reference location before reading data. Can be negative."
+					"description": "Offset (in bytes) to be applied to the reference location before reading data. Can be negative."
 				},
 				"count": {
 					"type": "integer",
@@ -2882,11 +2882,11 @@
 				},
 				"offset": {
 					"type": "integer",
-					"description": "Optional offset (in bytes) to be applied to the reference location before writing data. Can be negative."
+					"description": "Offset (in bytes) to be applied to the reference location before writing data. Can be negative."
 				},
 				"allowPartial": {
 					"type": "boolean",
-					"description": "Optional property to control partial writes. If true, the debug adapter should attempt to write memory even if the entire memory region is not writable. In such a case the debug adapter should stop after hitting the first byte of memory that cannot be written and return the number of bytes written in the response via the `offset` and `bytesWritten` properties.\nIf false or missing, a debug adapter should attempt to verify the region is writable before writing, and fail the response if it is not."
+					"description": "Property to control partial writes. If true, the debug adapter should attempt to write memory even if the entire memory region is not writable. In such a case the debug adapter should stop after hitting the first byte of memory that cannot be written and return the number of bytes written in the response via the `offset` and `bytesWritten` properties.\nIf false or missing, a debug adapter should attempt to verify the region is writable before writing, and fail the response if it is not."
 				},
 				"data": {
 					"type": "string",
@@ -2905,11 +2905,11 @@
 						"properties": {
 							"offset": {
 								"type": "integer",
-								"description": "Optional property that should be returned when `allowPartial` is true to indicate the offset of the first byte of data successfully written. Can be negative."
+								"description": "Property that should be returned when `allowPartial` is true to indicate the offset of the first byte of data successfully written. Can be negative."
 							},
 							"bytesWritten": {
 								"type": "integer",
-								"description": "Optional property that should be returned when `allowPartial` is true to indicate the number of bytes starting from address that were successfully written."
+								"description": "Property that should be returned when `allowPartial` is true to indicate the number of bytes starting from address that were successfully written."
 							}
 						}
 					}
@@ -2943,11 +2943,11 @@
 				},
 				"offset": {
 					"type": "integer",
-					"description": "Optional offset (in bytes) to be applied to the reference location before disassembling. Can be negative."
+					"description": "Offset (in bytes) to be applied to the reference location before disassembling. Can be negative."
 				},
 				"instructionOffset": {
 					"type": "integer",
-					"description": "Optional offset (in instructions) to be applied after the byte offset (if any) before disassembling. Can be negative."
+					"description": "Offset (in instructions) to be applied after the byte offset (if any) before disassembling. Can be negative."
 				},
 				"instructionCount": {
 					"type": "integer",
@@ -3089,7 +3089,7 @@
 				},
 				"supportsDelayedStackTraceLoading": {
 					"type": "boolean",
-					"description": "The debug adapter supports the delayed loading of parts of the stack, which requires that both the `startFrame` and `levels` arguments and an optional `totalFrames` result of the `StackTrace` request are supported."
+					"description": "The debug adapter supports the delayed loading of parts of the stack, which requires that both the `startFrame` and `levels` arguments and the `totalFrames` result of the `StackTrace` request are supported."
 				},
 				"supportsLoadedSourcesRequest": {
 					"type": "boolean",
@@ -3172,7 +3172,7 @@
 				},
 				"description": {
 					"type": "string",
-					"description": "An optional help text providing additional information about the exception filter. This string is typically shown as a hover and must be translated."
+					"description": "A help text providing additional information about the exception filter. This string is typically shown as a hover and must be translated."
 				},
 				"default": {
 					"type": "boolean",
@@ -3184,7 +3184,7 @@
 				},
 				"conditionDescription": {
 					"type": "string",
-					"description": "An optional help text providing information about the condition. This string is shown as the placeholder text for a text box and must be translated."
+					"description": "A help text providing information about the condition. This string is shown as the placeholder text for a text box and must be translated."
 				}
 			},
 			"required": [ "filter", "label" ]
@@ -3220,11 +3220,11 @@
 				},
 				"url": {
 					"type": "string",
-					"description": "An optional url where additional information about this message can be found."
+					"description": "A url where additional information about this message can be found."
 				},
 				"urlLabel": {
 					"type": "string",
-					"description": "An optional label that is presented to the user as the UI for opening the url."
+					"description": "A label that is presented to the user as the UI for opening the url."
 				}
 			},
 			"required": [ "id", "format" ]
@@ -3232,7 +3232,7 @@
 
 		"Module": {
 			"type": "object",
-			"description": "A Module object represents a row in the modules view.\nTwo attributes are mandatory: an id identifies a module in the modules view and is used in a ModuleEvent for identifying a module for adding, updating or deleting.\nThe name is used to minimally render the module in the UI.\n\nAdditional attributes can be added to the module. They show up in the module View if they have a corresponding ColumnDescriptor.\n\nTo avoid an unnecessary proliferation of additional attributes with similar semantics but different names, we recommend to re-use attributes from the 'recommended' list below first, and only introduce new attributes if nothing appropriate could be found.",
+			"description": "A Module object represents a row in the modules view.\nThe `id` attribute identifies a module in the modules view and is used in a `module` event for identifying a module for adding, updating or deleting.\nThe `name` attribute is used to minimally render the module in the UI.\n\nAdditional attributes can be added to the module. They show up in the module view if they have a corresponding `ColumnDescriptor`.\n\nTo avoid an unnecessary proliferation of additional attributes with similar semantics but different names, we recommend to re-use attributes from the 'recommended' list below first, and only introduce new attributes if nothing appropriate could be found.",
 			"properties": {
 				"id": {
 					"type": ["integer", "string"],
@@ -3355,23 +3355,23 @@
 				},
 				"presentationHint": {
 					"type": "string",
-					"description": "An optional hint for how to present the source in the UI.\nA value of `deemphasize` can be used to indicate that the source is not available or that it is skipped on stepping.",
+					"description": "A hint for how to present the source in the UI.\nA value of `deemphasize` can be used to indicate that the source is not available or that it is skipped on stepping.",
 					"enum": [ "normal", "emphasize", "deemphasize" ]
 				},
 				"origin": {
 					"type": "string",
-					"description": "The optional origin of this source. For example, 'internal module', 'inlined content from source map', etc."
+					"description": "The origin of this source. For example, 'internal module', 'inlined content from source map', etc."
 				},
 				"sources": {
 					"type": "array",
 					"items": {
 						"$ref": "#/definitions/Source"
 					},
-					"description": "An optional list of sources that are related to this source. These may be the source that generated this source."
+					"description": "A list of sources that are related to this source. These may be the source that generated this source."
 				},
 				"adapterData": {
 					"type": [ "array", "boolean", "integer", "null", "number", "object", "string" ],
-					"description": "Optional data that a debug adapter might want to loop through the client.\nThe client should leave the data intact and persist it across sessions. The client should not interpret the data."
+					"description": "Additional data that a debug adapter might want to loop through the client.\nThe client should leave the data intact and persist it across sessions. The client should not interpret the data."
 				},
 				"checksums": {
 					"type": "array",
@@ -3397,7 +3397,7 @@
 				},
 				"source": {
 					"$ref": "#/definitions/Source",
-					"description": "The optional source of the frame."
+					"description": "The source of the frame."
 				},
 				"line": {
 					"type": "integer",
@@ -3409,11 +3409,11 @@
 				},
 				"endLine": {
 					"type": "integer",
-					"description": "An optional end line of the range covered by the stack frame."
+					"description": "The end line of the range covered by the stack frame."
 				},
 				"endColumn": {
 					"type": "integer",
-					"description": "An optional end column of the range covered by the stack frame."
+					"description": "The end column of the range covered by the stack frame."
 				},
 				"canRestart": {
 					"type": "boolean",
@@ -3421,7 +3421,7 @@
 				},
 				"instructionPointerReference": {
 					"type": "string",
-					"description": "Optional memory reference for the current instruction pointer in this frame."
+					"description": "A memory reference for the current instruction pointer in this frame."
 				},
 				"moduleId": {
 					"type": ["integer", "string"],
@@ -3430,7 +3430,7 @@
 				"presentationHint": {
 					"type": "string",
 					"enum": [ "normal", "label", "subtle" ],
-					"description": "An optional hint for how to present this frame in the UI.\nA value of `label` can be used to indicate that the frame is an artificial frame that is used as a visual label or separator. A value of `subtle` can be used to change the appearance of a frame in a 'subtle' way."
+					"description": "A hint for how to present this frame in the UI.\nA value of `label` can be used to indicate that the frame is an artificial frame that is used as a visual label or separator. A value of `subtle` can be used to change the appearance of a frame in a 'subtle' way."
 				}
 			},
 			"required": [ "id", "name", "line", "column" ]
@@ -3446,7 +3446,7 @@
 				},
 				"presentationHint": {
 					"type": "string",
-					"description": "An optional hint for how to present this scope in the UI. If this attribute is missing, the scope is shown with a generic UI.",
+					"description": "A hint for how to present this scope in the UI. If this attribute is missing, the scope is shown with a generic UI.",
 					"_enum": [ "arguments", "locals", "registers" ],
 					"enumDescriptions": [
 						"Scope contains method arguments.",
@@ -3460,11 +3460,11 @@
 				},
 				"namedVariables": {
 					"type": "integer",
-					"description": "The number of named variables in this scope.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks."
+					"description": "The number of named variables in this scope.\nThe client can use this information to present the variables in a paged UI and fetch them in chunks."
 				},
 				"indexedVariables": {
 					"type": "integer",
-					"description": "The number of indexed variables in this scope.\nThe client can use this optional information to present the variables in a paged UI and fetch them in chunks."
+					"description": "The number of indexed variables in this scope.\nThe client can use this information to present the variables in a paged UI and fetch them in chunks."
 				},
 				"expensive": {
 					"type": "boolean",
@@ -3472,23 +3472,23 @@
 				},
 				"source": {
 					"$ref": "#/definitions/Source",
-					"description": "Optional source for this scope."
+					"description": "The source for this scope."
 				},
 				"line": {
 					"type": "integer",
-					"description": "Optional start line of the range covered by this scope."
+					"description": "The start line of the range covered by this scope."
 				},
 				"column": {
 					"type": "integer",
-					"description": "Optional start column of the range covered by this scope."
+					"description": "The start column of the range covered by this scope."
 				},
 				"endLine": {
 					"type": "integer",
-					"description": "Optional end line of the range covered by this scope."
+					"description": "The end line of the range covered by this scope."
 				},
 				"endColumn": {
 					"type": "integer",
-					"description": "Optional end column of the range covered by this scope."
+					"description": "The end column of the range covered by this scope."
 				}
 			},
 			"required": [ "name", "variablesReference", "expensive" ]
@@ -3496,7 +3496,7 @@
 
 		"Variable": {
 			"type": "object",
-			"description": "A Variable is a name/value pair.\nOptionally a variable can have a `type` that is shown if space permits or when hovering over the variable's name.\nAn optional `kind` is used to render additional properties of the variable, e.g. different icons can be used to indicate that a variable is public or private.\nIf the value is structured (has children), a handle is provided to retrieve the children with the VariablesRequest.\nIf the number of named or indexed children is large, the numbers should be returned via the optional `namedVariables` and `indexedVariables` attributes.\nThe client can use this optional information to present the children in a paged UI and fetch them in chunks.",
+			"description": "A Variable is a name/value pair.\nThe `type` attribute is shown if space permits or when hovering over the variable's name.\nThe `kind` attribute is used to render additional properties of the variable, e.g. different icons can be used to indicate that a variable is public or private.\nIf the value is structured (has children), a handle is provided to retrieve the children with the VariablesRequest.\nIf the number of named or indexed children is large, the numbers should be returned via the `namedVariables` and `indexedVariables` attributes.\nThe client can use this information to present the children in a paged UI and fetch them in chunks.",
 			"properties": {
 				"name": {
 					"type": "string",
@@ -3516,7 +3516,7 @@
 				},
 				"evaluateName": {
 					"type": "string",
-					"description": "Optional evaluatable name of this variable which can be passed to the `evaluate` request to fetch the variable's value."
+					"description": "The evaluatable name of this variable which can be passed to the `evaluate` request to fetch the variable's value."
 				},
 				"variablesReference": {
 					"type": "integer",
@@ -3524,15 +3524,15 @@
 				},
 				"namedVariables": {
 					"type": "integer",
-					"description": "The number of named child variables.\nThe client can use this optional information to present the children in a paged UI and fetch them in chunks."
+					"description": "The number of named child variables.\nThe client can use this information to present the children in a paged UI and fetch them in chunks."
 				},
 				"indexedVariables": {
 					"type": "integer",
-					"description": "The number of indexed child variables.\nThe client can use this optional information to present the children in a paged UI and fetch them in chunks."
+					"description": "The number of indexed child variables.\nThe client can use this information to present the children in a paged UI and fetch them in chunks."
 				},
 				"memoryReference": {
 					"type": "string",
-					"description": "Optional memory reference for the variable if the variable represents executable code, such as a function pointer.\nThis attribute is only required if the corresponding capability `supportsMemoryReferences` is true."
+					"description": "The memory reference for the variable if the variable represents executable code, such as a function pointer.\nThis attribute is only required if the corresponding capability `supportsMemoryReferences` is true."
 				}
 			},
 			"required": [ "name", "value", "variablesReference" ]
@@ -3540,7 +3540,7 @@
 
 		"VariablePresentationHint": {
 			"type": "object",
-			"description": "Optional properties of a variable that can be used to determine how to render the variable in the UI.",
+			"description": "Properties of a variable that can be used to determine how to render the variable in the UI.",
 			"properties": {
 				"kind": {
 					"description": "The kind of variable. Before introducing additional values, try to use the listed values.",
@@ -3600,15 +3600,15 @@
 				},
 				"column": {
 					"type": "integer",
-					"description": "Optional start column of breakpoint location."
+					"description": "The start column of breakpoint location."
 				},
 				"endLine": {
 					"type": "integer",
-					"description": "Optional end line of breakpoint location if the location covers a range."
+					"description": "The end line of breakpoint location if the location covers a range."
 				},
 				"endColumn": {
 					"type": "integer",
-					"description": "Optional end column of breakpoint location if the location covers a range."
+					"description": "The end column of breakpoint location if the location covers a range."
 				}
 			},
 			"required": [ "line" ]
@@ -3624,15 +3624,15 @@
 				},
 				"column": {
 					"type": "integer",
-					"description": "An optional source column of the breakpoint."
+					"description": "The source column of the breakpoint."
 				},
 				"condition": {
 					"type": "string",
-					"description": "An optional expression for conditional breakpoints.\nIt is only honored by a debug adapter if the corresponding capability `supportsConditionalBreakpoints` is true."
+					"description": "The expression for conditional breakpoints.\nIt is only honored by a debug adapter if the corresponding capability `supportsConditionalBreakpoints` is true."
 				},
 				"hitCondition": {
 					"type": "string",
-					"description": "An optional expression that controls how many hits of the breakpoint are ignored.\nThe debug adapter is expected to interpret the expression as needed.\nThe attribute is only honored by a debug adapter if the corresponding capability `supportsHitConditionalBreakpoints` is true."
+					"description": "The expression that controls how many hits of the breakpoint are ignored.\nThe debug adapter is expected to interpret the expression as needed.\nThe attribute is only honored by a debug adapter if the corresponding capability `supportsHitConditionalBreakpoints` is true."
 				},
 				"logMessage": {
 					"type": "string",
@@ -3652,11 +3652,11 @@
 				},
 				"condition": {
 					"type": "string",
-					"description": "An optional expression for conditional breakpoints.\nIt is only honored by a debug adapter if the corresponding capability `supportsConditionalBreakpoints` is true."
+					"description": "An expression for conditional breakpoints.\nIt is only honored by a debug adapter if the corresponding capability `supportsConditionalBreakpoints` is true."
 				},
 				"hitCondition": {
 					"type": "string",
-					"description": "An optional expression that controls how many hits of the breakpoint are ignored.\nThe debug adapter is expected to interpret the expression as needed.\nThe attribute is only honored by a debug adapter if the corresponding capability `supportsHitConditionalBreakpoints` is true."
+					"description": "An expression that controls how many hits of the breakpoint are ignored.\nThe debug adapter is expected to interpret the expression as needed.\nThe attribute is only honored by a debug adapter if the corresponding capability `supportsHitConditionalBreakpoints` is true."
 				}
 			},
 			"required": [ "name" ]
@@ -3682,11 +3682,11 @@
 				},
 				"condition": {
 					"type": "string",
-					"description": "An optional expression for conditional breakpoints."
+					"description": "An expression for conditional breakpoints."
 				},
 				"hitCondition": {
 					"type": "string",
-					"description": "An optional expression that controls how many hits of the breakpoint are ignored.\nThe debug adapter is expected to interpret the expression as needed."
+					"description": "An expression that controls how many hits of the breakpoint are ignored.\nThe debug adapter is expected to interpret the expression as needed."
 				}
 			},
 			"required": [ "dataId" ]
@@ -3702,15 +3702,15 @@
 				},
 				"offset": {
 					"type": "integer",
-					"description": "An optional offset from the instruction reference.\nThis can be negative."
+					"description": "The offset from the instruction reference.\nThis can be negative."
 				},
 				"condition": {
 					"type": "string",
-					"description": "An optional expression for conditional breakpoints.\nIt is only honored by a debug adapter if the corresponding capability `supportsConditionalBreakpoints` is true."
+					"description": "An expression for conditional breakpoints.\nIt is only honored by a debug adapter if the corresponding capability `supportsConditionalBreakpoints` is true."
 				},
 				"hitCondition": {
 					"type": "string",
-					"description": "An optional expression that controls how many hits of the breakpoint are ignored.\nThe debug adapter is expected to interpret the expression as needed.\nThe attribute is only honored by a debug adapter if the corresponding capability `supportsHitConditionalBreakpoints` is true."
+					"description": "An expression that controls how many hits of the breakpoint are ignored.\nThe debug adapter is expected to interpret the expression as needed.\nThe attribute is only honored by a debug adapter if the corresponding capability `supportsHitConditionalBreakpoints` is true."
 				}
 			},
 			"required": [ "instructionReference" ]
@@ -3722,7 +3722,7 @@
 			"properties": {
 				"id": {
 					"type": "integer",
-					"description": "An optional identifier for the breakpoint. It is needed if breakpoint events are used to update or remove breakpoints."
+					"description": "The identifier for the breakpoint. It is needed if breakpoint events are used to update or remove breakpoints."
 				},
 				"verified": {
 					"type": "boolean",
@@ -3730,7 +3730,7 @@
 				},
 				"message": {
 					"type": "string",
-					"description": "An optional message about the state of the breakpoint.\nThis is shown to the user and can be used to explain why a breakpoint could not be verified."
+					"description": "A message about the state of the breakpoint.\nThis is shown to the user and can be used to explain why a breakpoint could not be verified."
 				},
 				"source": {
 					"$ref": "#/definitions/Source",
@@ -3742,23 +3742,23 @@
 				},
 				"column": {
 					"type": "integer",
-					"description": "An optional start column of the actual range covered by the breakpoint."
+					"description": "The start column of the actual range covered by the breakpoint."
 				},
 				"endLine": {
 					"type": "integer",
-					"description": "An optional end line of the actual range covered by the breakpoint."
+					"description": "The end line of the actual range covered by the breakpoint."
 				},
 				"endColumn": {
 					"type": "integer",
-					"description": "An optional end column of the actual range covered by the breakpoint.\nIf no end line is given, then the end column is assumed to be in the start line."
+					"description": "The end column of the actual range covered by the breakpoint.\nIf no end line is given, then the end column is assumed to be in the start line."
 				},
 				"instructionReference": {
 					"type": "string",
-					"description": "An optional memory reference to where the breakpoint is set."
+					"description": "A memory reference to where the breakpoint is set."
 				},
 				"offset": {
 					"type": "integer",
-					"description": "An optional offset from the instruction reference.\nThis can be negative."
+					"description": "The offset from the instruction reference.\nThis can be negative."
 				}
 			},
 			"required": [ "verified" ]
@@ -3789,19 +3789,19 @@
 				},
 				"line": {
 					"type": "integer",
-					"description": "An optional line of the step in target."
+					"description": "The line of the step in target."
 				},
 				"column": {
 					"type": "integer",
-					"description": "An optional column of the step in target."
+					"description": "The column of the step in target."
 				},
 				"endLine": {
 					"type": "integer",
-					"description": "An optional end line of the range covered by the step in target."
+					"description": "The end line of the range covered by the step in target."
 				},
 				"endColumn": {
 					"type": "integer",
-					"description": "An optional end column of the range covered by the step in target."
+					"description": "The end column of the range covered by the step in target."
 				}
 			},
 			"required": [ "id", "label" ]
@@ -3825,19 +3825,19 @@
 				},
 				"column": {
 					"type": "integer",
-					"description": "An optional column of the goto target."
+					"description": "The column of the goto target."
 				},
 				"endLine": {
 					"type": "integer",
-					"description": "An optional end line of the range covered by the goto target."
+					"description": "The end line of the range covered by the goto target."
 				},
 				"endColumn": {
 					"type": "integer",
-					"description": "An optional end column of the range covered by the goto target."
+					"description": "The end column of the range covered by the goto target."
 				},
 				"instructionPointerReference": {
 					"type": "string",
-					"description": "Optional memory reference for the instruction pointer value represented by this target."
+					"description": "A memory reference for the instruction pointer value represented by this target."
 				}
 			},
 			"required": [ "id", "label", "line" ]
@@ -3869,7 +3869,7 @@
 				},
 				"start": {
 					"type": "integer",
-					"description": "This value determines the location (in the CompletionsRequest's `text` attribute) where the completion text is added.\nIf missing the text is added at the location specified by the CompletionsRequest's `column` attribute."
+					"description": "This value determines the location (in the `completions` request's `text` attribute) where the completion text is added.\nIf missing the text is added at the location specified by the `completions` request's `column` attribute."
 				},
 				"length": {
 					"type": "integer",
@@ -3973,7 +3973,7 @@
 				},
 				"condition": {
 					"type": "string",
-					"description": "An optional expression for conditional exceptions.\nThe exception breaks into the debugger if the result of the condition is true."
+					"description": "An expression for conditional exceptions.\nThe exception breaks into the debugger if the result of the condition is true."
 				}
 			},
 			"required": [ "filterId" ]
@@ -4041,7 +4041,7 @@
 				},
 				"evaluateName": {
 					"type": "string",
-					"description": "Optional expression that can be evaluated in the current scope to obtain the exception object."
+					"description": "An expression that can be evaluated in the current scope to obtain the exception object."
 				},
 				"stackTrace": {
 					"type": "string",
@@ -4067,7 +4067,7 @@
 				},
 				"instructionBytes": {
 					"type": "string",
-					"description": "Optional raw bytes representing the instruction and its operands, in an implementation-defined format."
+					"description": "Raw bytes representing the instruction and its operands, in an implementation-defined format."
 				},
 				"instruction": {
 					"type": "string",
