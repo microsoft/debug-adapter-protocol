@@ -6,6 +6,7 @@
 		"name": "Microsoft Corporation",
 		"email": "aweinand@microsoft.com"
 	},
+	"main": "out/generator.js",
 	"private": true,
 	"repository": {
 		"type": "git",
