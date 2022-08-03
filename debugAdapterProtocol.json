@@ -167,7 +167,7 @@
 			"allOf": [ { "$ref": "#/definitions/Event" }, {
 				"type": "object",
 				"title": "Events",
-				"description": "This event indicates that the debug adapter is ready to accept configuration requests (e.g. SetBreakpointsRequest, SetExceptionBreakpointsRequest).\nA debug adapter is expected to send this event when it is ready to accept configuration requests (but not before the `initialize` request has finished).\nThe sequence of events/requests is as follows:\n- adapters sends `initialized` event (after the `initialize` request has returned)\n- client sends zero or more `setBreakpoints` requests\n- client sends one `setFunctionBreakpoints` request (if corresponding capability `supportsFunctionBreakpoints` is true)\n- client sends a `setExceptionBreakpoints` request if one or more `exceptionBreakpointFilters` have been defined (or if `supportsConfigurationDoneRequest` is not true)\n- client sends other future configuration requests\n- client sends one `configurationDone` request to indicate the end of the configuration.",
+				"description": "This event indicates that the debug adapter is ready to accept configuration requests (e.g. `setBreakpoints`, `setExceptionBreakpoints`).\nA debug adapter is expected to send this event when it is ready to accept configuration requests (but not before the `initialize` request has finished).\nThe sequence of events/requests is as follows:\n- adapters sends `initialized` event (after the `initialize` request has returned)\n- client sends zero or more `setBreakpoints` requests\n- client sends one `setFunctionBreakpoints` request (if corresponding capability `supportsFunctionBreakpoints` is true)\n- client sends a `setExceptionBreakpoints` request if one or more `exceptionBreakpointFilters` have been defined (or if `supportsConfigurationDoneRequest` is not true)\n- client sends other future configuration requests\n- client sends one `configurationDone` request to indicate the end of the configuration.",
 				"properties": {
 					"event": {
 						"type": "string",
@@ -181,7 +181,7 @@
 		"StoppedEvent": {
 			"allOf": [ { "$ref": "#/definitions/Event" }, {
 				"type": "object",
-				"description": "The event indicates that the execution of the debuggee has stopped due to some condition.\nThis can be caused by a break point previously set, a stepping request has completed, by executing a debugger statement etc.",
+				"description": "The event indicates that the execution of the debuggee has stopped due to some condition.\nThis can be caused by a breakpoint previously set, a stepping request has completed, by executing a debugger statement etc.",
 				"properties": {
 					"event": {
 						"type": "string",
@@ -213,7 +213,7 @@
 							},
 							"allThreadsStopped": {
 								"type": "boolean",
-								"description": "If `allThreadsStopped` is true, a debug adapter can announce that all threads have stopped.\n- The client should use this information to enable that all threads can be expanded to access their stacktraces.\n- If the attribute is missing or false, only the thread with the given threadId can be expanded."
+								"description": "If `allThreadsStopped` is true, a debug adapter can announce that all threads have stopped.\n- The client should use this information to enable that all threads can be expanded to access their stacktraces.\n- If the attribute is missing or false, only the thread with the given `threadId` can be expanded."
 							},
 							"hitBreakpointIds": {
 								"type": "array",
@@ -296,7 +296,7 @@
 						"properties": {
 							"restart": {
 								"type": [ "array", "boolean", "integer", "null", "number", "object", "string" ],
-								"description": "A debug adapter may set `restart` to true (or to an arbitrary object) to request that the front end restarts the session.\nThe value is not interpreted by the client and passed unmodified as an attribute `__restart` to the `launch` and `attach` requests."
+								"description": "A debug adapter may set `restart` to true (or to an arbitrary object) to request that the client restarts the session.\nThe value is not interpreted by the client and passed unmodified as an attribute `__restart` to the `launch` and `attach` requests."
 							}
 						}
 					}
@@ -369,7 +369,7 @@
 								"enumDescriptions": [
 									"Start a new group in expanded mode. Subsequent output events are members of the group and should be shown indented.\nThe `output` attribute becomes the name of the group and is not indented.",
 									"Start a new group in collapsed mode. Subsequent output events are members of the group and should be shown indented (as soon as the group is expanded).\nThe `output` attribute becomes the name of the group and is not indented.",
-									"End the current group and decrease the indentation of subsequent output events.\nA nonempty `output` attribute is shown as the unindented end of the group."
+									"End the current group and decrease the indentation of subsequent output events.\nA non-empty `output` attribute is shown as the unindented end of the group."
 								]
 							},
 							"variablesReference": {
@@ -869,7 +869,7 @@
 				},
 				"supportsRunInTerminalRequest": {
 					"type": "boolean",
-					"description": "Client supports the runInTerminal request."
+					"description": "Client supports the `runInTerminal` request."
 				},
 				"supportsMemoryReferences": {
 					"type": "boolean",
@@ -881,11 +881,11 @@
 				},
 				"supportsInvalidatedEvent": {
 					"type": "boolean",
-					"description": "Client supports the invalidated event."
+					"description": "Client supports the `invalidated` event."
 				},
 				"supportsMemoryEvent": {
 					"type": "boolean",
-					"description": "Client supports the memory event."
+					"description": "Client supports the `memory` event."
 				},
 				"supportsArgsCanBeInterpretedByShell": {
 					"type": "boolean",
@@ -956,7 +956,7 @@
 			"properties": {
 				"noDebug": {
 					"type": "boolean",
-					"description": "If noDebug is true, the launch request should launch the program without enabling debugging."
+					"description": "If true, the launch request should launch the program without enabling debugging."
 				},
 				"__restart": {
 					"type": [ "array", "boolean", "integer", "null", "number", "object", "string" ],
@@ -974,7 +974,7 @@
 		"AttachRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The attach request is sent from the client to the debug adapter to attach to a debuggee that is already running.\nSince attaching is debugger/runtime specific, the arguments for this request are not part of this specification.",
+				"description": "The `attach` request is sent from the client to the debug adapter to attach to a debuggee that is already running.\nSince attaching is debugger/runtime specific, the arguments for this request are not part of this specification.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -1389,11 +1389,11 @@
 			"properties": {
 				"variablesReference": {
 					"type": "integer",
-					"description": "Reference to the Variable container if the data breakpoint is requested for a child of the container."
+					"description": "Reference to the variable container if the data breakpoint is requested for a child of the container."
 				},
 				"name": {
 					"type": "string",
-					"description": "The name of the variable's child to obtain data breakpoint information for.\nIf variablesReference isn't provided, this can be an expression."
+					"description": "The name of the variable's child to obtain data breakpoint information for.\nIf `variablesReference` isn't specified, this can be an expression."
 				}
 			},
 			"required": [ "name" ]
@@ -1408,7 +1408,7 @@
 						"properties": {
 							"dataId": {
 								"type": [ "string", "null" ],
-								"description": "An identifier for the data on which a data breakpoint can be registered with the setDataBreakpoints request or null if no data breakpoint is available."
+								"description": "An identifier for the data on which a data breakpoint can be registered with the `setDataBreakpoints` request or null if no data breakpoint is available."
 							},
 							"description": {
 								"type": "string",
@@ -1913,7 +1913,7 @@
 		"StackTraceRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "The request returns a stacktrace from the current execution state of a given thread.\nA client can request all stack frames by omitting the startFrame and levels arguments. For performance-conscious clients and if the corresponding capability `supportsDelayedStackTraceLoading` is true, stack frames can be retrieved in a piecemeal way with the startFrame and levels arguments. The response of the stackTrace request may contain a totalFrames property that hints at the total number of frames in the stack. If a client needs this total number upfront, it can issue a request for a single (first) frame and depending on the value of totalFrames decide how to proceed. In any case a client should be prepared to receive fewer frames than requested, which is an indication that the end of the stack has been reached.",
+				"description": "The request returns a stacktrace from the current execution state of a given thread.\nA client can request all stack frames by omitting the startFrame and levels arguments. For performance-conscious clients and if the corresponding capability `supportsDelayedStackTraceLoading` is true, stack frames can be retrieved in a piecemeal way with the `startFrame` and `levels` arguments. The response of the `stackTrace` request may contain a `totalFrames` property that hints at the total number of frames in the stack. If a client needs this total number upfront, it can issue a request for a single (first) frame and depending on the value of `totalFrames` decide how to proceed. In any case a client should be prepared to receive fewer frames than requested, which is an indication that the end of the stack has been reached.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -1966,7 +1966,7 @@
 							},
 							"totalFrames": {
 								"type": "integer",
-								"description": "The total number of frames available in the stack. If omitted or if totalFrames is larger than the available frames, a client is expected to request frames until a request returns less frames than requested (which indicates the end of the stack). Returning monotonically increasing totalFrames values for subsequent requests can be used to enforce paging in the client."
+								"description": "The total number of frames available in the stack. If omitted or if `totalFrames` is larger than the available frames, a client is expected to request frames until a request returns less frames than requested (which indicates the end of the stack). Returning monotonically increasing `totalFrames` values for subsequent requests can be used to enforce paging in the client."
 							}
 						},
 						"required": [ "stackFrames" ]
@@ -2150,7 +2150,7 @@
 							},
 							"variablesReference": {
 								"type": "integer",
-								"description": "If variablesReference is > 0, the new value is structured and its children can be retrieved by passing variablesReference to the VariablesRequest.\nThe value should be less than or equal to 2147483647 (2^31-1)."
+								"description": "If `variablesReference` is > 0, the new value is structured and its children can be retrieved by passing `variablesReference` to the `variables` request.\nThe value should be less than or equal to 2147483647 (2^31-1)."
 							},
 							"namedVariables": {
 								"type": "integer",
@@ -2190,11 +2190,11 @@
 			"properties": {
 				"source": {
 					"$ref": "#/definitions/Source",
-					"description": "Specifies the source content to load. Either source.path or source.sourceReference must be specified."
+					"description": "Specifies the source content to load. Either `source.path` or `source.sourceReference` must be specified."
 				},
 				"sourceReference": {
 					"type": "integer",
-					"description": "The reference to the source. This is the same as source.sourceReference.\nThis is provided for backward compatibility since old clients do not understand the `source` attribute."
+					"description": "The reference to the source. This is the same as `source.sourceReference`.\nThis is provided for backward compatibility since old clients do not understand the `source` attribute."
 				}
 			},
 			"required": [ "sourceReference" ]
@@ -2291,7 +2291,7 @@
 		"TerminateThreadsResponse": {
 			"allOf": [ { "$ref": "#/definitions/Response" }, {
 				"type": "object",
-				"description": "Response to `terminateThreads` request. This is just an acknowledgement, so no body field is required."
+				"description": "Response to `terminateThreads` request. This is just an acknowledgement, no body field is required."
 			}]
 		},
 
@@ -2321,7 +2321,7 @@
 				},
 				"moduleCount": {
 					"type": "integer",
-					"description": "The number of modules to return. If moduleCount is not specified or 0, all modules are returned."
+					"description": "The number of modules to return. If `moduleCount` is not specified or 0, all modules are returned."
 				}
 			}
 		},
@@ -2456,7 +2456,7 @@
 							},
 							"type": {
 								"type": "string",
-								"description": "The type of the evaluate result.\nThis attribute should only be returned by a debug adapter if the ccorresponding capability  `supportsVariableType` is true."
+								"description": "The type of the evaluate result.\nThis attribute should only be returned by a debug adapter if the corresponding capability `supportsVariableType` is true."
 							},
 							"presentationHint": {
 								"$ref": "#/definitions/VariablePresentationHint",
@@ -2464,7 +2464,7 @@
 							},
 							"variablesReference": {
 								"type": "integer",
-								"description": "If variablesReference is > 0, the evaluate result is structured and its children can be retrieved by passing variablesReference to the VariablesRequest.\nThe value should be less than or equal to 2147483647 (2^31-1)."
+								"description": "If `variablesReference` is > 0, the evaluate result is structured and its children can be retrieved by passing `variablesReference` to the `variables` request.\nThe value should be less than or equal to 2147483647 (2^31-1)."
 							},
 							"namedVariables": {
 								"type": "integer",
@@ -2476,7 +2476,7 @@
 							},
 							"memoryReference": {
 								"type": "string",
-								"description": "A memory reference to a location appropriate for this result.\nFor pointer type eval results, this is generally a reference to the memory address contained in the pointer.\nThis attribute should be returned by a debug adapter if corresponding capability  `supportsMemoryReferences` is true."
+								"description": "A memory reference to a location appropriate for this result.\nFor pointer type eval results, this is generally a reference to the memory address contained in the pointer.\nThis attribute should be returned by a debug adapter if corresponding capability `supportsMemoryReferences` is true."
 							}
 						},
 						"required": [ "result", "variablesReference" ]
@@ -2489,7 +2489,7 @@
 		"SetExpressionRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "Evaluates the given `value` expression and assigns it to the `expression` which must be a modifiable l-value.\nThe expressions have access to any variables and arguments that are in scope of the specified frame.\nClients should only call this request if the corresponding capability `supportsSetExpression` is true.\nIf a debug adapter implements both setExpression and setVariable, a client uses `setExpression` if the variable has an `evaluateName` property.",
+				"description": "Evaluates the given `value` expression and assigns it to the `expression` which must be a modifiable l-value.\nThe expressions have access to any variables and arguments that are in scope of the specified frame.\nClients should only call this request if the corresponding capability `supportsSetExpression` is true.\nIf a debug adapter implements both `setExpression` and `setVariable`, a client uses `setExpression` if the variable has an `evaluateName` property.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -2547,7 +2547,7 @@
 							},
 							"variablesReference": {
 								"type": "integer",
-								"description": "If variablesReference is > 0, the value is structured and its children can be retrieved by passing variablesReference to the VariablesRequest.\nThe value should be less than or equal to 2147483647 (2^31-1)."
+								"description": "If `variablesReference` is > 0, the value is structured and its children can be retrieved by passing `variablesReference` to the `variables` request.\nThe value should be less than or equal to 2147483647 (2^31-1)."
 							},
 							"namedVariables": {
 								"type": "integer",
@@ -2568,7 +2568,7 @@
 		"StepInTargetsRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "This request retrieves the possible stepIn targets for the specified stack frame.\nThese targets can be used in the `stepIn` request.\nClients should only call this request if the corresponding capability `supportsStepInTargetsRequest` is true.",
+				"description": "This request retrieves the possible step-in targets for the specified stack frame.\nThese targets can be used in the `stepIn` request.\nClients should only call this request if the corresponding capability `supportsStepInTargetsRequest` is true.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -2587,7 +2587,7 @@
 			"properties": {
 				"frameId": {
 					"type": "integer",
-					"description": "The stack frame for which to retrieve the possible stepIn targets."
+					"description": "The stack frame for which to retrieve the possible step-in targets."
 				}
 			},
 			"required": [ "frameId" ]
@@ -2605,7 +2605,7 @@
 								"items": {
 									"$ref": "#/definitions/StepInTarget"
 								},
-								"description": "The possible stepIn targets of the specified source location."
+								"description": "The possible step-in targets of the specified source location."
 							}
 						},
 						"required": [ "targets" ]
@@ -3005,7 +3005,7 @@
 				},
 				"supportsEvaluateForHovers": {
 					"type": "boolean",
-					"description": "The debug adapter supports a (side effect free) evaluate request for data hovers."
+					"description": "The debug adapter supports a (side effect free) `evaluate` request for data hovers."
 				},
 				"exceptionBreakpointFilters": {
 					"type": "array",
@@ -3065,15 +3065,15 @@
 				},
 				"supportsRestartRequest": {
 					"type": "boolean",
-					"description": "The debug adapter supports the `restart` request. In this case a client should not implement `restart` by terminating and relaunching the adapter but by calling the RestartRequest."
+					"description": "The debug adapter supports the `restart` request. In this case a client should not implement `restart` by terminating and relaunching the adapter but by calling the `restart` request."
 				},
 				"supportsExceptionOptions": {
 					"type": "boolean",
-					"description": "The debug adapter supports `exceptionOptions` on the setExceptionBreakpoints request."
+					"description": "The debug adapter supports `exceptionOptions` on the `setExceptionBreakpoints` request."
 				},
 				"supportsValueFormattingOptions": {
 					"type": "boolean",
-					"description": "The debug adapter supports a `format` attribute on the stackTraceRequest, variablesRequest, and evaluateRequest."
+					"description": "The debug adapter supports a `format` attribute on the `stackTrace`, `variables`, and `evaluate` requests."
 				},
 				"supportsExceptionInfoRequest": {
 					"type": "boolean",
@@ -3089,7 +3089,7 @@
 				},
 				"supportsDelayedStackTraceLoading": {
 					"type": "boolean",
-					"description": "The debug adapter supports the delayed loading of parts of the stack, which requires that both the `startFrame` and `levels` arguments and the `totalFrames` result of the `StackTrace` request are supported."
+					"description": "The debug adapter supports the delayed loading of parts of the stack, which requires that both the `startFrame` and `levels` arguments and the `totalFrames` result of the `stackTrace` request are supported."
 				},
 				"supportsLoadedSourcesRequest": {
 					"type": "boolean",
@@ -3097,7 +3097,7 @@
 				},
 				"supportsLogPoints": {
 					"type": "boolean",
-					"description": "The debug adapter supports logpoints by interpreting the `logMessage` attribute of the `SourceBreakpoint`."
+					"description": "The debug adapter supports log points by interpreting the `logMessage` attribute of the `SourceBreakpoint`."
 				},
 				"supportsTerminateThreadsRequest": {
 					"type": "boolean",
@@ -3160,7 +3160,7 @@
 
 		"ExceptionBreakpointsFilter": {
 			"type": "object",
-			"description": "An ExceptionBreakpointsFilter is shown in the UI as an filter option for configuring how exceptions are dealt with.",
+			"description": "An `ExceptionBreakpointsFilter` is shown in the UI as an filter option for configuring how exceptions are dealt with.",
 			"properties": {
 				"filter": {
 					"type": "string",
@@ -3176,7 +3176,7 @@
 				},
 				"default": {
 					"type": "boolean",
-					"description": "Initial value of the filter option. If not specified a value `false` is assumed."
+					"description": "Initial value of the filter option. If not specified a value false is assumed."
 				},
 				"supportsCondition": {
 					"type": "boolean",
@@ -3260,7 +3260,7 @@
 				},
 				"symbolStatus": {
 					"type": "string",
-					"description": "User-understandable description of if symbols were found for the module (ex: 'Symbols Loaded', 'Symbols not found', etc."
+					"description": "User-understandable description of if symbols were found for the module (ex: 'Symbols Loaded', 'Symbols not found', etc.)"
 				},
 				"symbolFilePath": {
 					"type": "string",
@@ -3280,7 +3280,7 @@
 
 		"ColumnDescriptor": {
 			"type": "object",
-			"description": "A ColumnDescriptor specifies what module attribute to show in a column of the ModulesView, how to format it,\nand what the column's label should be.\nIt is only used if the underlying UI actually supports this level of customization.",
+			"description": "A `ColumnDescriptor` specifies what module attribute to show in a column of the modules view, how to format it,\nand what the column's label should be.\nIt is only used if the underlying UI actually supports this level of customization.",
 			"properties": {
 				"attributeName": {
 					"type": "string",
@@ -3309,7 +3309,7 @@
 
 		"ModulesViewDescriptor": {
 			"type": "object",
-			"description": "The ModulesViewDescriptor is the container for all declarative configuration options of a ModuleView.\nFor now it only specifies the columns to be shown in the modules view.",
+			"description": "The ModulesViewDescriptor is the container for all declarative configuration options of a module view.\nFor now it only specifies the columns to be shown in the modules view.",
 			"properties": {
 				"columns": {
 					"type": "array",
@@ -3339,7 +3339,7 @@
 
 		"Source": {
 			"type": "object",
-			"description": "A Source is a descriptor for source code.\nIt is returned from the debug adapter as part of a StackFrame and it is used by clients when specifying breakpoints.",
+			"description": "A `Source` is a descriptor for source code.\nIt is returned from the debug adapter as part of a `StackFrame` and it is used by clients when specifying breakpoints.",
 			"properties": {
 				"name": {
 					"type": "string",
@@ -3347,11 +3347,11 @@
 				},
 				"path": {
 					"type": "string",
-					"description": "The path of the source to be shown in the UI.\nIt is only used to locate and load the content of the source if no sourceReference is specified (or its value is 0)."
+					"description": "The path of the source to be shown in the UI.\nIt is only used to locate and load the content of the source if no `sourceReference` is specified (or its value is 0)."
 				},
 				"sourceReference": {
 					"type": "integer",
-					"description": "If the value > 0 the contents of the source must be retrieved through the `source` request (even if a path is specified).\nA `sourceReference` is only valid for a session, so it can not be used to persist a source.\nThe value should be less than or equal to 2147483647 (2^31-1)."
+					"description": "If the value > 0 the contents of the source must be retrieved through the `source` request (even if a path is specified).\nSince a `sourceReference` is only valid for a session, it can not be used to persist a source.\nThe value should be less than or equal to 2147483647 (2^31-1)."
 				},
 				"presentationHint": {
 					"type": "string",
@@ -3401,11 +3401,11 @@
 				},
 				"line": {
 					"type": "integer",
-					"description": "The line within the source of the frame. If the source attribute is missing or doesn't exist, line is 0 and should be ignored by the client."
+					"description": "The line within the source of the frame. If the source attribute is missing or doesn't exist, `line` is 0 and should be ignored by the client."
 				},
 				"column": {
 					"type": "integer",
-					"description": "The column within the line. If source attribute is missing or doesn't exist, column is 0 and should be ignored by the client."
+					"description": "The column within the line. If source attribute is missing or doesn't exist, `column` is 0 and should be ignored by the client."
 				},
 				"endLine": {
 					"type": "integer",
@@ -3438,7 +3438,7 @@
 
 		"Scope": {
 			"type": "object",
-			"description": "A Scope is a named container for variables. Optionally a scope can map to a source or a range within a source.",
+			"description": "A `Scope` is a named container for variables. Optionally a scope can map to a source or a range within a source.",
 			"properties": {
 				"name": {
 					"type": "string",
@@ -3456,7 +3456,7 @@
 				},
 				"variablesReference": {
 					"type": "integer",
-					"description": "The variables of this scope can be retrieved by passing the value of variablesReference to the VariablesRequest."
+					"description": "The variables of this scope can be retrieved by passing the value of `variablesReference` to the `variables` request."
 				},
 				"namedVariables": {
 					"type": "integer",
@@ -3496,7 +3496,7 @@
 
 		"Variable": {
 			"type": "object",
-			"description": "A Variable is a name/value pair.\nThe `type` attribute is shown if space permits or when hovering over the variable's name.\nThe `kind` attribute is used to render additional properties of the variable, e.g. different icons can be used to indicate that a variable is public or private.\nIf the value is structured (has children), a handle is provided to retrieve the children with the VariablesRequest.\nIf the number of named or indexed children is large, the numbers should be returned via the `namedVariables` and `indexedVariables` attributes.\nThe client can use this information to present the children in a paged UI and fetch them in chunks.",
+			"description": "A Variable is a name/value pair.\nThe `type` attribute is shown if space permits or when hovering over the variable's name.\nThe `kind` attribute is used to render additional properties of the variable, e.g. different icons can be used to indicate that a variable is public or private.\nIf the value is structured (has children), a handle is provided to retrieve the children with the `variables` request.\nIf the number of named or indexed children is large, the numbers should be returned via the `namedVariables` and `indexedVariables` attributes.\nThe client can use this information to present the children in a paged UI and fetch them in chunks.",
 			"properties": {
 				"name": {
 					"type": "string",
@@ -3520,7 +3520,7 @@
 				},
 				"variablesReference": {
 					"type": "integer",
-					"description": "If variablesReference is > 0, the variable is structured and its children can be retrieved by passing variablesReference to the VariablesRequest."
+					"description": "If `variablesReference` is > 0, the variable is structured and its children can be retrieved by passing `variablesReference` to the `variables` request."
 				},
 				"namedVariables": {
 					"type": "integer",
@@ -3616,7 +3616,7 @@
 
 		"SourceBreakpoint": {
 			"type": "object",
-			"description": "Properties of a breakpoint or logpoint passed to the setBreakpoints request.",
+			"description": "Properties of a breakpoint or logpoint passed to the `setBreakpoints` request.",
 			"properties": {
 				"line": {
 					"type": "integer",
@@ -3644,7 +3644,7 @@
 
 		"FunctionBreakpoint": {
 			"type": "object",
-			"description": "Properties of a breakpoint passed to the setFunctionBreakpoints request.",
+			"description": "Properties of a breakpoint passed to the `setFunctionBreakpoints` request.",
 			"properties": {
 				"name": {
 					"type": "string",
@@ -3670,11 +3670,11 @@
 
 		"DataBreakpoint": {
 			"type": "object",
-			"description": "Properties of a data breakpoint passed to the setDataBreakpoints request.",
+			"description": "Properties of a data breakpoint passed to the `setDataBreakpoints` request.",
 			"properties": {
 				"dataId": {
 					"type": "string",
-					"description": "An id representing the data. This id is returned from the dataBreakpointInfo request."
+					"description": "An id representing the data. This id is returned from the `dataBreakpointInfo` request."
 				},
 				"accessType": {
 					"$ref": "#/definitions/DataBreakpointAccessType",
@@ -3694,11 +3694,11 @@
 
 		"InstructionBreakpoint": {
 			"type": "object",
-			"description": "Properties of a breakpoint passed to the setInstructionBreakpoints request",
+			"description": "Properties of a breakpoint passed to the `setInstructionBreakpoints` request",
 			"properties": {
 				"instructionReference": {
 					"type": "string",
-					"description": "The instruction reference of the breakpoint.\nThis should be a memory or instruction pointer reference from an EvaluateResponse, Variable, StackFrame, GotoTarget, or Breakpoint."
+					"description": "The instruction reference of the breakpoint.\nThis should be a memory or instruction pointer reference from an `EvaluateResponse`, `Variable`, `StackFrame`, `GotoTarget`, or `Breakpoint`."
 				},
 				"offset": {
 					"type": "integer",
@@ -3718,7 +3718,7 @@
 
 		"Breakpoint": {
 			"type": "object",
-			"description": "Information about a Breakpoint created in setBreakpoints, setFunctionBreakpoints, setInstructionBreakpoints, or setDataBreakpoints.",
+			"description": "Information about a breakpoint created in `setBreakpoints`, `setFunctionBreakpoints`, `setInstructionBreakpoints`, or `setDataBreakpoints` requests.",
 			"properties": {
 				"id": {
 					"type": "integer",
@@ -3777,31 +3777,31 @@
 
 		"StepInTarget": {
 			"type": "object",
-			"description": "A StepInTarget can be used in the `stepIn` request and determines into which single target the stepIn request should step.",
+			"description": "A `StepInTarget` can be used in the `stepIn` request and determines into which single target the stepIn request should step.",
 			"properties": {
 				"id": {
 					"type": "integer",
-					"description": "Unique identifier for a stepIn target."
+					"description": "Unique identifier for a step-in target."
 				},
 				"label": {
 					"type": "string",
-					"description": "The name of the stepIn target (shown in the UI)."
+					"description": "The name of the step-in target (shown in the UI)."
 				},
 				"line": {
 					"type": "integer",
-					"description": "The line of the step in target."
+					"description": "The line of the step-in target."
 				},
 				"column": {
 					"type": "integer",
-					"description": "The column of the step in target."
+					"description": "The column of the step-in target."
 				},
 				"endLine": {
 					"type": "integer",
-					"description": "The end line of the range covered by the step in target."
+					"description": "The end line of the range covered by the step-in target."
 				},
 				"endColumn": {
 					"type": "integer",
-					"description": "The end column of the range covered by the step in target."
+					"description": "The end column of the range covered by the step-in target."
 				}
 			},
 			"required": [ "id", "label" ]
@@ -3809,11 +3809,11 @@
 
 		"GotoTarget": {
 			"type": "object",
-			"description": "A GotoTarget describes a code location that can be used as a target in the `goto` request.\nThe possible goto targets can be determined via the `gotoTargets` request.",
+			"description": "A `GotoTarget` describes a code location that can be used as a target in the `goto` request.\nThe possible goto targets can be determined via the `gotoTargets` request.",
 			"properties": {
 				"id": {
 					"type": "integer",
-					"description": "Unique identifier for a goto target. This is used in the goto request."
+					"description": "Unique identifier for a goto target. This is used in the `goto` request."
 				},
 				"label": {
 					"type": "string",
@@ -3845,7 +3845,7 @@
 
 		"CompletionItem": {
 			"type": "object",
-			"description": "CompletionItems are the suggestions returned from the CompletionsRequest.",
+			"description": "`CompletionItems` are the suggestions returned from the `completions` request.",
 			"properties": {
 				"label": {
 					"type": "string",
@@ -3965,7 +3965,7 @@
 
 		"ExceptionFilterOptions": {
 			"type": "object",
-			"description": "An ExceptionFilterOptions is used to specify an exception filter together with a condition for the `setExceptionBreakpoints` request.",
+			"description": "An `ExceptionFilterOptions` is used to specify an exception filter together with a condition for the `setExceptionBreakpoints` request.",
 			"properties": {
 				"filterId": {
 					"type": "string",
@@ -3981,7 +3981,7 @@
 
 		"ExceptionOptions": {
 			"type": "object",
-			"description": "An ExceptionOptions assigns configuration options to a set of exceptions.",
+			"description": "An `ExceptionOptions` assigns configuration options to a set of exceptions.",
 			"properties": {
 				"path": {
 					"type": "array",
@@ -4006,7 +4006,7 @@
 
 		"ExceptionPathSegment": {
 			"type": "object",
-			"description": "An ExceptionPathSegment represents a segment in a path that is used to match leafs or nodes in a tree of exceptions.\nIf a segment consists of more than one name, it matches the names provided if `negate` is false or missing, or it matches anything except the names provided if `negate` is true.",
+			"description": "An `ExceptionPathSegment` represents a segment in a path that is used to match leafs or nodes in a tree of exceptions.\nIf a segment consists of more than one name, it matches the names provided if `negate` is false or missing, or it matches anything except the names provided if `negate` is true.",
 			"properties": {
 				"negate": {
 					"type": "boolean",
