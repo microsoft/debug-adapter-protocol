@@ -386,7 +386,7 @@
 							},
 							"column": {
 								"type": "integer",
-								"description": "The source location's column where the output was produced."
+								"description": "The position in `line` where the output was produced. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 							},
 							"data": {
 								"type": [ "array", "boolean", "integer", "null", "number" , "object", "string" ],
@@ -1145,7 +1145,7 @@
 				},
 				"column": {
 					"type": "integer",
-					"description": "Start column of range to search possible breakpoint locations in. If no start column is given, the first column in the start line is assumed."
+					"description": "Start position within `line` to search possible breakpoint locations in. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based. If no column is given, the first position in the start line is assumed."
 				},
 				"endLine": {
 					"type": "integer",
@@ -1153,7 +1153,7 @@
 				},
 				"endColumn": {
 					"type": "integer",
-					"description": "End column of range to search possible breakpoint locations in. If no end column is given, then it is assumed to be in the last column of the end line."
+					"description": "End position within `endLine` to search possible breakpoint locations in. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based. If no end column is given, the last position in the end line is assumed."
 				}
 			},
 			"required": [ "source", "line" ]
@@ -2645,7 +2645,7 @@
 				},
 				"column": {
 					"type": "integer",
-					"description": "A column location for which the goto targets are determined."
+					"description": "The position within `line` for which the goto targets are determined. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 				}
 			},
 			"required": [ "source", "line" ]
@@ -2699,11 +2699,11 @@
 				},
 				"text": {
 					"type": "string",
-					"description": "One or more source lines. Typically this is the text a user has typed into the debug console before he asked for completion."
+					"description": "One or more source lines. Typically this is the text users have typed into the debug console before they asked for completion."
 				},
 				"column": {
 					"type": "integer",
-					"description": "The character position for which to determine the completion proposals."
+					"description": "The position within `text` for which to determine the completion proposals. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 				},
 				"line": {
 					"type": "integer",
@@ -3405,7 +3405,7 @@
 				},
 				"column": {
 					"type": "integer",
-					"description": "The column within the line. If source attribute is missing or doesn't exist, `column` is 0 and should be ignored by the client."
+					"description": "Start position of the range covered by the stack frame. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based. If attribute `source` is missing or doesn't exist, `column` is 0 and should be ignored by the client."
 				},
 				"endLine": {
 					"type": "integer",
@@ -3413,7 +3413,7 @@
 				},
 				"endColumn": {
 					"type": "integer",
-					"description": "The end column of the range covered by the stack frame."
+					"description": "End position of the range covered by the stack frame. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 				},
 				"canRestart": {
 					"type": "boolean",
@@ -3480,7 +3480,7 @@
 				},
 				"column": {
 					"type": "integer",
-					"description": "The start column of the range covered by this scope."
+					"description": "Start position of the range covered by the scope. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 				},
 				"endLine": {
 					"type": "integer",
@@ -3488,7 +3488,7 @@
 				},
 				"endColumn": {
 					"type": "integer",
-					"description": "The end column of the range covered by this scope."
+					"description": "End position of the range covered by the scope. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 				}
 			},
 			"required": [ "name", "variablesReference", "expensive" ]
@@ -3600,7 +3600,7 @@
 				},
 				"column": {
 					"type": "integer",
-					"description": "The start column of breakpoint location."
+					"description": "The start position of a breakpoint location. Position is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 				},
 				"endLine": {
 					"type": "integer",
@@ -3608,7 +3608,7 @@
 				},
 				"endColumn": {
 					"type": "integer",
-					"description": "The end column of breakpoint location if the location covers a range."
+					"description": "The end position of a breakpoint location (if the location covers a range). Position is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 				}
 			},
 			"required": [ "line" ]
@@ -3624,7 +3624,7 @@
 				},
 				"column": {
 					"type": "integer",
-					"description": "The source column of the breakpoint."
+					"description": "Start position within source line of the breakpoint or logpoint. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 				},
 				"condition": {
 					"type": "string",
@@ -3742,7 +3742,7 @@
 				},
 				"column": {
 					"type": "integer",
-					"description": "The start column of the actual range covered by the breakpoint."
+					"description": "Start position of the source range covered by the breakpoint. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 				},
 				"endLine": {
 					"type": "integer",
@@ -3750,7 +3750,7 @@
 				},
 				"endColumn": {
 					"type": "integer",
-					"description": "The end column of the actual range covered by the breakpoint.\nIf no end line is given, then the end column is assumed to be in the start line."
+					"description": "End position of the source range covered by the breakpoint. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based.\nIf no end line is given, then the end column is assumed to be in the start line."
 				},
 				"instructionReference": {
 					"type": "string",
@@ -3777,7 +3777,7 @@
 
 		"StepInTarget": {
 			"type": "object",
-			"description": "A `StepInTarget` can be used in the `stepIn` request and determines into which single target the stepIn request should step.",
+			"description": "A `StepInTarget` can be used in the `stepIn` request and determines into which single target the `stepIn` request should step.",
 			"properties": {
 				"id": {
 					"type": "integer",
@@ -3793,7 +3793,7 @@
 				},
 				"column": {
 					"type": "integer",
-					"description": "The column of the step-in target."
+					"description": "Start position of the range covered by the step in target. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 				},
 				"endLine": {
 					"type": "integer",
@@ -3801,7 +3801,7 @@
 				},
 				"endColumn": {
 					"type": "integer",
-					"description": "The end column of the range covered by the step-in target."
+					"description": "End position of the range covered by the step in target. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 				}
 			},
 			"required": [ "id", "label" ]
@@ -3869,19 +3869,19 @@
 				},
 				"start": {
 					"type": "integer",
-					"description": "This value determines the location (in the `completions` request's `text` attribute) where the completion text is added.\nIf missing the text is added at the location specified by the `completions` request's `column` attribute."
+					"description": "Start position (within the `text` attribute of the `completions` request) where the completion text is added. The position is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based. If the start position is omitted the text is added at the location specified by the `column` attribute of the `completions` request."
 				},
 				"length": {
 					"type": "integer",
-					"description": "This value determines how many characters are overwritten by the completion text.\nIf missing the value 0 is assumed which results in the completion text being inserted."
+					"description": "Length determines how many characters are overwritten by the completion text and it is measured in UTF-16 code units. If missing the value 0 is assumed which results in the completion text being inserted."
 				},
 				"selectionStart": {
 					"type": "integer",
-					"description": "Determines the start of the new selection after the text has been inserted (or replaced).\nThe start position must be in the range 0 and length of the completion text.\nIf omitted the selection starts at the end of the completion text."
+					"description": "Determines the start of the new selection after the text has been inserted (or replaced). `selectionStart` is measured in UTF-16 code units and must be in the range 0 and length of the completion text. If omitted the selection starts at the end of the completion text."
 				},
 				"selectionLength": {
 					"type": "integer",
-					"description": "Determines the length of the new selection after the text has been inserted (or replaced).\nThe selection can not extend beyond the bounds of the completion text.\nIf omitted the length is assumed to be 0."
+					"description": "Determines the length of the new selection after the text has been inserted (or replaced) and it is measured in UTF-16 code units. The selection can not extend beyond the bounds of the completion text. If omitted the length is assumed to be 0."
 				}
 			},
 			"required": [ "label" ]
