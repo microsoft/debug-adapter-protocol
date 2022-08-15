@@ -6,6 +6,9 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.58.X:
+  * Specify the measurement unit of various `column` and "character positions" properties to be "UTF-16 code units".
+
 * 1.57.X:
   * Add the `argsCanBeInterpretedByShell` property to the `RunInTerminalRequest`
 
