@@ -63,7 +63,7 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [Papyrus](https://github.com/joelday/papyrus-debug-server)|[@joelday](https://github.com/joelday)|[VS Code](https://marketplace.visualstudio.com/items?itemName=joelday.papyrus-lang-vscode)
 [Perl Debug](https://github.com/raix/vscode-perl-debug)|[@raix](https://github.com/raix)|[VS Code](https://marketplace.visualstudio.com/items?itemName=mortenhenriksen.perl-debug)
 [Perl::LanguageServer](https://github.com/richterger/Perl-LanguageServer)|[@richterger](https://github.com/richterger)|[VS Code](https://marketplace.visualstudio.com/items?itemName=richterger.perl)
-[Php](https://github.com/felixfbecker/vscode-php-debug)|[@felixfbecker](https://github.com/felixfbecker)|[VS Code](https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-debug)
+[Php](https://github.com/xdebug/vscode-php-debug)|[@zobo](https://github.com/zobo)|[VS Code](https://marketplace.visualstudio.com/items?itemName=xdebug.php-debug)
 [PowerShell](https://github.com/PowerShell/vscode-powershell)|[@daviwil](https://github.com/daviwil) [@rkeithhill](https://github.com/rkeithhill)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.PowerShell)
 [Puppet](https://github.com/lingua-pupuli/puppet-editor-services)|[@glennsarti](https://github.com/glennsarti) [@jpogran](https://github.com/jpogran)|[VS Code](https://marketplace.visualstudio.com/items?itemName=jpogran.puppet-vscode)
 [Python](https://github.com/Microsoft/vscode-python)|[@DonJayamanne](https://github.com/DonJayamanne)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
