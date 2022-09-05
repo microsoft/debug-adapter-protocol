@@ -809,6 +809,43 @@
 			}]
 		},
 
+		"StartDebuggingRequest": {
+			"allOf": [ { "$ref": "#/definitions/Request" }, {
+				"type": "object",
+				"description": "This request is sent from the debug adapter to the client to start a new debug session of the same type as the caller.\nThis event should only be sent if the corresponding client capability `supportsStartDebuggingRequest` is true.\nA client implementation of `startDebugging` should start a new debug session (of the same type as the caller) in the same way as a debug session is started by the user. If the client supports hierarchical debug sessions, the newly created session can be treated as a child of the caller session.",
+				"properties": {
+					"command": {
+						"type": "string",
+						"enum": [ "startDebugging" ]
+					},
+					"arguments": {
+						"$ref": "#/definitions/StartDebuggingRequestArguments"
+					}
+				},
+				"required": [ "command", "arguments" ]
+			}]
+		},
+		"StartDebuggingRequestArguments": {
+			"type": "object",
+			"description": "Arguments for `startDebugging` request.",
+			"properties": {
+				"configuration": {
+					"oneOf": [
+						{ "$ref": "#/definitions/LaunchRequestArguments" },
+						{ "$ref": "#/definitions/AttachRequestArguments" }
+					],
+					"description": "Arguments passed to the new debug session. The arguments must only contain properties understood by the `launch` or `attach` requests of the debug adapter and they must not contain any client-specific properties (e.g. `type`) or client-specific features (e.g. substitutable 'variables')."
+				}
+			},
+			"required": [ "configuration" ]
+		},
+		"StartDebuggingResponse": {
+			"allOf": [ { "$ref": "#/definitions/Response" }, {
+				"type": "object",
+				"description": "Response to `startDebugging` request. This is just an acknowledgement, so no body field is required."
+			}]
+		},
+
 		"InitializeRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
@@ -890,6 +927,10 @@
 				"supportsArgsCanBeInterpretedByShell": {
 					"type": "boolean",
 					"description": "Client supports the `argsCanBeInterpretedByShell` attribute on the `runInTerminal` request."
+				},
+				"supportsStartDebuggingRequest": {
+					"type": "boolean",
+					"description": "Client supports the `startDebugging` request."
 				}
 			},
 			"required": [ "adapterID" ]

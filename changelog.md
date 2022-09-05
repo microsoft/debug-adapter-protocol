@@ -6,6 +6,9 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.59.X:
+  * Add a `startDebugging` reverse request which can be used to create additional debug sessions from within the debug adapter.
+
 * 1.58.X:
   * Specify the measurement unit of various `column` and "character positions" properties to be "UTF-16 code units".
 
