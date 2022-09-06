@@ -202,7 +202,7 @@ interface CancelResponse extends Response {
 
 ### <a name="Events_Initialized" class="anchor"></a>:arrow_left: Initialized Event
 
-This event indicates that the debug adapter is ready to accept configuration requests (e.g. SetBreakpointsRequest, SetExceptionBreakpointsRequest).
+This event indicates that the debug adapter is ready to accept configuration requests (e.g. `setBreakpoints`, `setExceptionBreakpoints`).
 
 A debug adapter is expected to send this event when it is ready to accept configuration requests (but not before the `initialize` request has finished).
 
@@ -224,7 +224,7 @@ interface InitializedEvent extends Event {
 
 The event indicates that the execution of the debuggee has stopped due to some condition.
 
-This can be caused by a break point previously set, a stepping request has completed, by executing a debugger statement etc.
+This can be caused by a breakpoint previously set, a stepping request has completed, by executing a debugger statement etc.
 
 ```typescript
 interface StoppedEvent extends Event {
@@ -271,7 +271,7 @@ interface StoppedEvent extends Event {
      * - The client should use this information to enable that all threads can
      * be expanded to access their stacktraces.
      * - If the attribute is missing or false, only the thread with the given
-     * threadId can be expanded.
+     * `threadId` can be expanded.
      */
     allThreadsStopped?: boolean;
 
@@ -345,7 +345,7 @@ interface TerminatedEvent extends Event {
   body?: {
     /**
      * A debug adapter may set `restart` to true (or to an arbitrary object) to
-     * request that the front end restarts the session.
+     * request that the client restarts the session.
      * The value is not interpreted by the client and passed unmodified as an
      * attribute `__restart` to the `launch` and `attach` requests.
      */
@@ -424,9 +424,8 @@ interface OutputEvent extends Event {
      * The `output` attribute becomes the name of the group and is not indented.
      * 'end': End the current group and decrease the indentation of subsequent
      * output events.
-     * A nonempty `output` attribute is shown as the unindented end of the
+     * A non-empty `output` attribute is shown as the unindented end of the
      * group.
-     * etc.
      */
     group?: 'start' | 'startCollapsed' | 'end';
 
@@ -449,7 +448,9 @@ interface OutputEvent extends Event {
     line?: number;
 
     /**
-     * The source location's column where the output was produced.
+     * The position in `line` where the output was produced. It is measured in
+     * UTF-16 code units and the client capability `columnsStartAt1` determines
+     * whether it is 0- or 1-based.
      */
     column?: number;
 
@@ -497,7 +498,7 @@ interface ModuleEvent extends Event {
   body: {
     /**
      * The reason for the event.
-     * Values: 'new', 'changed', 'removed', etc.
+     * Values: 'new', 'changed', 'removed'
      */
     reason: 'new' | 'changed' | 'removed';
 
@@ -521,7 +522,7 @@ interface LoadedSourceEvent extends Event {
   body: {
     /**
      * The reason for the event.
-     * Values: 'new', 'changed', 'removed', etc.
+     * Values: 'new', 'changed', 'removed'
      */
     reason: 'new' | 'changed' | 'removed';
 
@@ -567,7 +568,6 @@ interface ProcessEvent extends Event {
      * 'attach': Debugger attached to an existing process.
      * 'attachForSuspendedLaunch': A project launcher component has launched a
      * new process in a suspended state and then asked the debugger to attach.
-     * etc.
      */
     startMethod?: 'launch' | 'attach' | 'attachForSuspendedLaunch';
 
@@ -817,7 +817,7 @@ Arguments for `runInTerminal` request.
 interface RunInTerminalRequestArguments {
   /**
    * What kind of terminal to launch.
-   * Values: 'integrated', 'external', etc.
+   * Values: 'integrated', 'external'
    */
   kind?: 'integrated' | 'external';
 
@@ -949,7 +949,7 @@ interface InitializeRequestArguments {
   supportsVariablePaging?: boolean;
 
   /**
-   * Client supports the runInTerminal request.
+   * Client supports the `runInTerminal` request.
    */
   supportsRunInTerminalRequest?: boolean;
 
@@ -964,12 +964,12 @@ interface InitializeRequestArguments {
   supportsProgressReporting?: boolean;
 
   /**
-   * Client supports the invalidated event.
+   * Client supports the `invalidated` event.
    */
   supportsInvalidatedEvent?: boolean;
 
   /**
-   * Client supports the memory event.
+   * Client supports the `memory` event.
    */
   supportsMemoryEvent?: boolean;
 
@@ -1045,8 +1045,8 @@ Arguments for `launch` request. Additional attributes are implementation specifi
 ```typescript
 interface LaunchRequestArguments {
   /**
-   * If noDebug is true, the launch request should launch the program without
-   * enabling debugging.
+   * If true, the launch request should launch the program without enabling
+   * debugging.
    */
   noDebug?: boolean;
 
@@ -1069,7 +1069,7 @@ interface LaunchResponse extends Response {
 
 ### <a name="Requests_Attach" class="anchor"></a>:leftwards_arrow_with_hook: Attach Request
 
-The attach request is sent from the client to the debug adapter to attach to a debuggee that is already running.
+The `attach` request is sent from the client to the debug adapter to attach to a debuggee that is already running.
 
 Since attaching is debugger/runtime specific, the arguments for this request are not part of this specification.
 
@@ -1263,8 +1263,10 @@ interface BreakpointLocationsArguments {
   line: number;
 
   /**
-   * Start column of range to search possible breakpoint locations in. If no
-   * start column is given, the first column in the start line is assumed.
+   * Start position within `line` to search possible breakpoint locations in. It
+   * is measured in UTF-16 code units and the client capability
+   * `columnsStartAt1` determines whether it is 0- or 1-based. If no column is
+   * given, the first position in the start line is assumed.
    */
   column?: number;
 
@@ -1275,9 +1277,10 @@ interface BreakpointLocationsArguments {
   endLine?: number;
 
   /**
-   * End column of range to search possible breakpoint locations in. If no end
-   * column is given, then it is assumed to be in the last column of the end
-   * line.
+   * End position within `endLine` to search possible breakpoint locations in.
+   * It is measured in UTF-16 code units and the client capability
+   * `columnsStartAt1` determines whether it is 0- or 1-based. If no end column
+   * is given, the last position in the end line is assumed.
    */
   endColumn?: number;
 }
@@ -1506,14 +1509,14 @@ Arguments for `dataBreakpointInfo` request.
 ```typescript
 interface DataBreakpointInfoArguments {
   /**
-   * Reference to the Variable container if the data breakpoint is requested for
+   * Reference to the variable container if the data breakpoint is requested for
    * a child of the container.
    */
   variablesReference?: number;
 
   /**
    * The name of the variable's child to obtain data breakpoint information for.
-   * If variablesReference isn't provided, this can be an expression.
+   * If `variablesReference` isn't specified, this can be an expression.
    */
   name: string;
 }
@@ -1527,7 +1530,7 @@ interface DataBreakpointInfoResponse extends Response {
   body: {
     /**
      * An identifier for the data on which a data breakpoint can be registered
-     * with the setDataBreakpoints request or null if no data breakpoint is
+     * with the `setDataBreakpoints` request or null if no data breakpoint is
      * available.
      */
     dataId: string | null;
@@ -2062,7 +2065,7 @@ interface PauseResponse extends Response {
 
 The request returns a stacktrace from the current execution state of a given thread.
 
-A client can request all stack frames by omitting the startFrame and levels arguments. For performance-conscious clients and if the corresponding capability `supportsDelayedStackTraceLoading` is true, stack frames can be retrieved in a piecemeal way with the startFrame and levels arguments. The response of the stackTrace request may contain a totalFrames property that hints at the total number of frames in the stack. If a client needs this total number upfront, it can issue a request for a single (first) frame and depending on the value of totalFrames decide how to proceed. In any case a client should be prepared to receive fewer frames than requested, which is an indication that the end of the stack has been reached.
+A client can request all stack frames by omitting the startFrame and levels arguments. For performance-conscious clients and if the corresponding capability `supportsDelayedStackTraceLoading` is true, stack frames can be retrieved in a piecemeal way with the `startFrame` and `levels` arguments. The response of the `stackTrace` request may contain a `totalFrames` property that hints at the total number of frames in the stack. If a client needs this total number upfront, it can issue a request for a single (first) frame and depending on the value of `totalFrames` decide how to proceed. In any case a client should be prepared to receive fewer frames than requested, which is an indication that the end of the stack has been reached.
 
 ```typescript
 interface StackTraceRequest extends Request {
@@ -2117,11 +2120,11 @@ interface StackTraceResponse extends Response {
 
     /**
      * The total number of frames available in the stack. If omitted or if
-     * totalFrames is larger than the available frames, a client is expected to
-     * request frames until a request returns less frames than requested (which
-     * indicates the end of the stack). Returning monotonically increasing
-     * totalFrames values for subsequent requests can be used to enforce paging
-     * in the client.
+     * `totalFrames` is larger than the available frames, a client is expected
+     * to request frames until a request returns less frames than requested
+     * (which indicates the end of the stack). Returning monotonically
+     * increasing `totalFrames` values for subsequent requests can be used to
+     * enforce paging in the client.
      */
     totalFrames?: number;
   };
@@ -2194,7 +2197,7 @@ interface VariablesArguments {
   /**
    * Filter to limit the child variables to either named or indexed. If omitted,
    * both types are fetched.
-   * Values: 'indexed', 'named', etc.
+   * Values: 'indexed', 'named'
    */
   filter?: 'indexed' | 'named';
 
@@ -2291,9 +2294,9 @@ interface SetVariableResponse extends Response {
     type?: string;
 
     /**
-     * If variablesReference is > 0, the new value is structured and its
-     * children can be retrieved by passing variablesReference to the
-     * VariablesRequest.
+     * If `variablesReference` is > 0, the new value is structured and its
+     * children can be retrieved by passing `variablesReference` to the
+     * `variables` request.
      * The value should be less than or equal to 2147483647 (2^31-1).
      */
     variablesReference?: number;
@@ -2335,13 +2338,13 @@ Arguments for `source` request.
 ```typescript
 interface SourceArguments {
   /**
-   * Specifies the source content to load. Either source.path or
-   * source.sourceReference must be specified.
+   * Specifies the source content to load. Either `source.path` or
+   * `source.sourceReference` must be specified.
    */
   source?: Source;
 
   /**
-   * The reference to the source. This is the same as source.sourceReference.
+   * The reference to the source. This is the same as `source.sourceReference`.
    * This is provided for backward compatibility since old clients do not
    * understand the `source` attribute.
    */
@@ -2418,7 +2421,7 @@ interface TerminateThreadsArguments {
 }
 ```
 
-Response to `terminateThreads` request. This is just an acknowledgement, so no body field is required.
+Response to `terminateThreads` request. This is just an acknowledgement, no body field is required.
 
 <a name="Types_TerminateThreadsResponse" class="anchor"></a>
 ```typescript
@@ -2451,8 +2454,8 @@ interface ModulesArguments {
   startModule?: number;
 
   /**
-   * The number of modules to return. If moduleCount is not specified or 0, all
-   * modules are returned.
+   * The number of modules to return. If `moduleCount` is not specified or 0,
+   * all modules are returned.
    */
   moduleCount?: number;
 }
@@ -2582,7 +2585,7 @@ interface EvaluateResponse extends Response {
     /**
      * The type of the evaluate result.
      * This attribute should only be returned by a debug adapter if the
-     * ccorresponding capability  `supportsVariableType` is true.
+     * corresponding capability `supportsVariableType` is true.
      */
     type?: string;
 
@@ -2593,9 +2596,9 @@ interface EvaluateResponse extends Response {
     presentationHint?: VariablePresentationHint;
 
     /**
-     * If variablesReference is > 0, the evaluate result is structured and its
-     * children can be retrieved by passing variablesReference to the
-     * VariablesRequest.
+     * If `variablesReference` is > 0, the evaluate result is structured and its
+     * children can be retrieved by passing `variablesReference` to the
+     * `variables` request.
      * The value should be less than or equal to 2147483647 (2^31-1).
      */
     variablesReference: number;
@@ -2621,7 +2624,7 @@ interface EvaluateResponse extends Response {
      * For pointer type eval results, this is generally a reference to the
      * memory address contained in the pointer.
      * This attribute should be returned by a debug adapter if corresponding
-     * capability  `supportsMemoryReferences` is true.
+     * capability `supportsMemoryReferences` is true.
      */
     memoryReference?: string;
   };
@@ -2636,7 +2639,7 @@ The expressions have access to any variables and arguments that are in scope of 
 
 Clients should only call this request if the corresponding capability `supportsSetExpression` is true.
 
-If a debug adapter implements both setExpression and setVariable, a client uses `setExpression` if the variable has an `evaluateName` property.
+If a debug adapter implements both `setExpression` and `setVariable`, a client uses `setExpression` if the variable has an `evaluateName` property.
 
 ```typescript
 interface SetExpressionRequest extends Request {
@@ -2699,8 +2702,9 @@ interface SetExpressionResponse extends Response {
     presentationHint?: VariablePresentationHint;
 
     /**
-     * If variablesReference is > 0, the value is structured and its children
-     * can be retrieved by passing variablesReference to the VariablesRequest.
+     * If `variablesReference` is > 0, the value is structured and its children
+     * can be retrieved by passing `variablesReference` to the `variables`
+     * request.
      * The value should be less than or equal to 2147483647 (2^31-1).
      */
     variablesReference?: number;
@@ -2726,7 +2730,7 @@ interface SetExpressionResponse extends Response {
 
 ### <a name="Requests_StepInTargets" class="anchor"></a>:leftwards_arrow_with_hook: StepInTargets Request
 
-This request retrieves the possible stepIn targets for the specified stack frame.
+This request retrieves the possible step-in targets for the specified stack frame.
 
 These targets can be used in the `stepIn` request.
 
@@ -2746,7 +2750,7 @@ Arguments for `stepInTargets` request.
 ```typescript
 interface StepInTargetsArguments {
   /**
-   * The stack frame for which to retrieve the possible stepIn targets.
+   * The stack frame for which to retrieve the possible step-in targets.
    */
   frameId: number;
 }
@@ -2759,7 +2763,7 @@ Response to `stepInTargets` request.
 interface StepInTargetsResponse extends Response {
   body: {
     /**
-     * The possible stepIn targets of the specified source location.
+     * The possible step-in targets of the specified source location.
      */
     targets: StepInTarget[];
   };
@@ -2798,7 +2802,9 @@ interface GotoTargetsArguments {
   line: number;
 
   /**
-   * A column location for which the goto targets are determined.
+   * The position within `line` for which the goto targets are determined. It is
+   * measured in UTF-16 code units and the client capability `columnsStartAt1`
+   * determines whether it is 0- or 1-based.
    */
   column?: number;
 }
@@ -2844,13 +2850,15 @@ interface CompletionsArguments {
   frameId?: number;
 
   /**
-   * One or more source lines. Typically this is the text a user has typed into
-   * the debug console before he asked for completion.
+   * One or more source lines. Typically this is the text users have typed into
+   * the debug console before they asked for completion.
    */
   text: string;
 
   /**
-   * The character position for which to determine the completion proposals.
+   * The position within `text` for which to determine the completion proposals.
+   * It is measured in UTF-16 code units and the client capability
+   * `columnsStartAt1` determines whether it is 0- or 1-based.
    */
   column: number;
 
@@ -3165,7 +3173,7 @@ interface Capabilities {
   supportsHitConditionalBreakpoints?: boolean;
 
   /**
-   * The debug adapter supports a (side effect free) evaluate request for data
+   * The debug adapter supports a (side effect free) `evaluate` request for data
    * hovers.
    */
   supportsEvaluateForHovers?: boolean;
@@ -3231,19 +3239,19 @@ interface Capabilities {
   /**
    * The debug adapter supports the `restart` request. In this case a client
    * should not implement `restart` by terminating and relaunching the adapter
-   * but by calling the RestartRequest.
+   * but by calling the `restart` request.
    */
   supportsRestartRequest?: boolean;
 
   /**
    * The debug adapter supports `exceptionOptions` on the
-   * setExceptionBreakpoints request.
+   * `setExceptionBreakpoints` request.
    */
   supportsExceptionOptions?: boolean;
 
   /**
-   * The debug adapter supports a `format` attribute on the stackTraceRequest,
-   * variablesRequest, and evaluateRequest.
+   * The debug adapter supports a `format` attribute on the `stackTrace`,
+   * `variables`, and `evaluate` requests.
    */
   supportsValueFormattingOptions?: boolean;
 
@@ -3267,7 +3275,7 @@ interface Capabilities {
   /**
    * The debug adapter supports the delayed loading of parts of the stack, which
    * requires that both the `startFrame` and `levels` arguments and the
-   * `totalFrames` result of the `StackTrace` request are supported.
+   * `totalFrames` result of the `stackTrace` request are supported.
    */
   supportsDelayedStackTraceLoading?: boolean;
 
@@ -3277,7 +3285,7 @@ interface Capabilities {
   supportsLoadedSourcesRequest?: boolean;
 
   /**
-   * The debug adapter supports logpoints by interpreting the `logMessage`
+   * The debug adapter supports log points by interpreting the `logMessage`
    * attribute of the `SourceBreakpoint`.
    */
   supportsLogPoints?: boolean;
@@ -3362,7 +3370,7 @@ interface Capabilities {
 
 ### <a name="Types_ExceptionBreakpointsFilter" class="anchor"></a>ExceptionBreakpointsFilter
 
-An ExceptionBreakpointsFilter is shown in the UI as an filter option for configuring how exceptions are dealt with.
+An `ExceptionBreakpointsFilter` is shown in the UI as an filter option for configuring how exceptions are dealt with.
 
 ```typescript
 interface ExceptionBreakpointsFilter {
@@ -3384,7 +3392,7 @@ interface ExceptionBreakpointsFilter {
   description?: string;
 
   /**
-   * Initial value of the filter option. If not specified a value `false` is
+   * Initial value of the filter option. If not specified a value false is
    * assumed.
    */
   default?: boolean;
@@ -3502,7 +3510,7 @@ interface Module {
 
   /**
    * User-understandable description of if symbols were found for the module
-   * (ex: 'Symbols Loaded', 'Symbols not found', etc.
+   * (ex: 'Symbols Loaded', 'Symbols not found', etc.)
    */
   symbolStatus?: string;
 
@@ -3526,7 +3534,7 @@ interface Module {
 
 ### <a name="Types_ColumnDescriptor" class="anchor"></a>ColumnDescriptor
 
-A ColumnDescriptor specifies what module attribute to show in a column of the ModulesView, how to format it,
+A `ColumnDescriptor` specifies what module attribute to show in a column of the modules view, how to format it,
 
 and what the column's label should be.
 
@@ -3552,7 +3560,7 @@ interface ColumnDescriptor {
 
   /**
    * Datatype of values in this column. Defaults to `string` if not specified.
-   * Values: 'string', 'number', 'boolean', 'unixTimestampUTC', etc.
+   * Values: 'string', 'number', 'boolean', 'unixTimestampUTC'
    */
   type?: 'string' | 'number' | 'boolean' | 'unixTimestampUTC';
 
@@ -3565,7 +3573,7 @@ interface ColumnDescriptor {
 
 ### <a name="Types_ModulesViewDescriptor" class="anchor"></a>ModulesViewDescriptor
 
-The ModulesViewDescriptor is the container for all declarative configuration options of a ModuleView.
+The ModulesViewDescriptor is the container for all declarative configuration options of a module view.
 
 For now it only specifies the columns to be shown in the modules view.
 
@@ -3595,9 +3603,9 @@ interface Thread {
 
 ### <a name="Types_Source" class="anchor"></a>Source
 
-A Source is a descriptor for source code.
+A `Source` is a descriptor for source code.
 
-It is returned from the debug adapter as part of a StackFrame and it is used by clients when specifying breakpoints.
+It is returned from the debug adapter as part of a `StackFrame` and it is used by clients when specifying breakpoints.
 
 ```typescript
 interface Source {
@@ -3611,15 +3619,15 @@ interface Source {
   /**
    * The path of the source to be shown in the UI.
    * It is only used to locate and load the content of the source if no
-   * sourceReference is specified (or its value is 0).
+   * `sourceReference` is specified (or its value is 0).
    */
   path?: string;
 
   /**
    * If the value > 0 the contents of the source must be retrieved through the
    * `source` request (even if a path is specified).
-   * A `sourceReference` is only valid for a session, so it can not be used to
-   * persist a source.
+   * Since a `sourceReference` is only valid for a session, it can not be used
+   * to persist a source.
    * The value should be less than or equal to 2147483647 (2^31-1).
    */
   sourceReference?: number;
@@ -3628,7 +3636,7 @@ interface Source {
    * A hint for how to present the source in the UI.
    * A value of `deemphasize` can be used to indicate that the source is not
    * available or that it is skipped on stepping.
-   * Values: 'normal', 'emphasize', 'deemphasize', etc.
+   * Values: 'normal', 'emphasize', 'deemphasize'
    */
   presentationHint?: 'normal' | 'emphasize' | 'deemphasize';
 
@@ -3683,13 +3691,15 @@ interface StackFrame {
 
   /**
    * The line within the source of the frame. If the source attribute is missing
-   * or doesn't exist, line is 0 and should be ignored by the client.
+   * or doesn't exist, `line` is 0 and should be ignored by the client.
    */
   line: number;
 
   /**
-   * The column within the line. If source attribute is missing or doesn't
-   * exist, column is 0 and should be ignored by the client.
+   * Start position of the range covered by the stack frame. It is measured in
+   * UTF-16 code units and the client capability `columnsStartAt1` determines
+   * whether it is 0- or 1-based. If attribute `source` is missing or doesn't
+   * exist, `column` is 0 and should be ignored by the client.
    */
   column: number;
 
@@ -3699,7 +3709,9 @@ interface StackFrame {
   endLine?: number;
 
   /**
-   * The end column of the range covered by the stack frame.
+   * End position of the range covered by the stack frame. It is measured in
+   * UTF-16 code units and the client capability `columnsStartAt1` determines
+   * whether it is 0- or 1-based.
    */
   endColumn?: number;
 
@@ -3725,7 +3737,7 @@ interface StackFrame {
    * A value of `label` can be used to indicate that the frame is an artificial
    * frame that is used as a visual label or separator. A value of `subtle` can
    * be used to change the appearance of a frame in a 'subtle' way.
-   * Values: 'normal', 'label', 'subtle', etc.
+   * Values: 'normal', 'label', 'subtle'
    */
   presentationHint?: 'normal' | 'label' | 'subtle';
 }
@@ -3733,7 +3745,7 @@ interface StackFrame {
 
 ### <a name="Types_Scope" class="anchor"></a>Scope
 
-A Scope is a named container for variables. Optionally a scope can map to a source or a range within a source.
+A `Scope` is a named container for variables. Optionally a scope can map to a source or a range within a source.
 
 ```typescript
 interface Scope {
@@ -3757,7 +3769,7 @@ interface Scope {
 
   /**
    * The variables of this scope can be retrieved by passing the value of
-   * variablesReference to the VariablesRequest.
+   * `variablesReference` to the `variables` request.
    */
   variablesReference: number;
 
@@ -3792,7 +3804,9 @@ interface Scope {
   line?: number;
 
   /**
-   * The start column of the range covered by this scope.
+   * Start position of the range covered by the scope. It is measured in UTF-16
+   * code units and the client capability `columnsStartAt1` determines whether
+   * it is 0- or 1-based.
    */
   column?: number;
 
@@ -3802,7 +3816,9 @@ interface Scope {
   endLine?: number;
 
   /**
-   * The end column of the range covered by this scope.
+   * End position of the range covered by the scope. It is measured in UTF-16
+   * code units and the client capability `columnsStartAt1` determines whether
+   * it is 0- or 1-based.
    */
   endColumn?: number;
 }
@@ -3816,7 +3832,7 @@ The `type` attribute is shown if space permits or when hovering over the variabl
 
 The `kind` attribute is used to render additional properties of the variable, e.g. different icons can be used to indicate that a variable is public or private.
 
-If the value is structured (has children), a handle is provided to retrieve the children with the VariablesRequest.
+If the value is structured (has children), a handle is provided to retrieve the children with the `variables` request.
 
 If the number of named or indexed children is large, the numbers should be returned via the `namedVariables` and `indexedVariables` attributes.
 
@@ -3861,8 +3877,9 @@ interface Variable {
   evaluateName?: string;
 
   /**
-   * If variablesReference is > 0, the variable is structured and its children
-   * can be retrieved by passing variablesReference to the VariablesRequest.
+   * If `variablesReference` is > 0, the variable is structured and its children
+   * can be retrieved by passing `variablesReference` to the `variables`
+   * request.
    */
   variablesReference: number;
 
@@ -3975,7 +3992,9 @@ interface BreakpointLocation {
   line: number;
 
   /**
-   * The start column of breakpoint location.
+   * The start position of a breakpoint location. Position is measured in UTF-16
+   * code units and the client capability `columnsStartAt1` determines whether
+   * it is 0- or 1-based.
    */
   column?: number;
 
@@ -3985,7 +4004,9 @@ interface BreakpointLocation {
   endLine?: number;
 
   /**
-   * The end column of breakpoint location if the location covers a range.
+   * The end position of a breakpoint location (if the location covers a range).
+   * Position is measured in UTF-16 code units and the client capability
+   * `columnsStartAt1` determines whether it is 0- or 1-based.
    */
   endColumn?: number;
 }
@@ -3993,7 +4014,7 @@ interface BreakpointLocation {
 
 ### <a name="Types_SourceBreakpoint" class="anchor"></a>SourceBreakpoint
 
-Properties of a breakpoint or logpoint passed to the setBreakpoints request.
+Properties of a breakpoint or logpoint passed to the `setBreakpoints` request.
 
 ```typescript
 interface SourceBreakpoint {
@@ -4003,7 +4024,9 @@ interface SourceBreakpoint {
   line: number;
 
   /**
-   * The source column of the breakpoint.
+   * Start position within source line of the breakpoint or logpoint. It is
+   * measured in UTF-16 code units and the client capability `columnsStartAt1`
+   * determines whether it is 0- or 1-based.
    */
   column?: number;
 
@@ -4035,7 +4058,7 @@ interface SourceBreakpoint {
 
 ### <a name="Types_FunctionBreakpoint" class="anchor"></a>FunctionBreakpoint
 
-Properties of a breakpoint passed to the setFunctionBreakpoints request.
+Properties of a breakpoint passed to the `setFunctionBreakpoints` request.
 
 ```typescript
 interface FunctionBreakpoint {
@@ -4064,7 +4087,7 @@ interface FunctionBreakpoint {
 ### <a name="Types_DataBreakpointAccessType" class="anchor"></a>DataBreakpointAccessType
 
 This enumeration defines all possible access types for data breakpoints.
-Values: 'read', 'write', 'readWrite', etc.
+Values: 'read', 'write', 'readWrite'
 
 ```typescript
 type DataBreakpointAccessType = 'read' | 'write' | 'readWrite';
@@ -4072,13 +4095,13 @@ type DataBreakpointAccessType = 'read' | 'write' | 'readWrite';
 
 ### <a name="Types_DataBreakpoint" class="anchor"></a>DataBreakpoint
 
-Properties of a data breakpoint passed to the setDataBreakpoints request.
+Properties of a data breakpoint passed to the `setDataBreakpoints` request.
 
 ```typescript
 interface DataBreakpoint {
   /**
    * An id representing the data. This id is returned from the
-   * dataBreakpointInfo request.
+   * `dataBreakpointInfo` request.
    */
   dataId: string;
 
@@ -4102,14 +4125,15 @@ interface DataBreakpoint {
 
 ### <a name="Types_InstructionBreakpoint" class="anchor"></a>InstructionBreakpoint
 
-Properties of a breakpoint passed to the setInstructionBreakpoints request
+Properties of a breakpoint passed to the `setInstructionBreakpoints` request
 
 ```typescript
 interface InstructionBreakpoint {
   /**
    * The instruction reference of the breakpoint.
    * This should be a memory or instruction pointer reference from an
-   * EvaluateResponse, Variable, StackFrame, GotoTarget, or Breakpoint.
+   * `EvaluateResponse`, `Variable`, `StackFrame`, `GotoTarget`, or
+   * `Breakpoint`.
    */
   instructionReference: string;
 
@@ -4138,7 +4162,7 @@ interface InstructionBreakpoint {
 
 ### <a name="Types_Breakpoint" class="anchor"></a>Breakpoint
 
-Information about a Breakpoint created in setBreakpoints, setFunctionBreakpoints, setInstructionBreakpoints, or setDataBreakpoints.
+Information about a breakpoint created in `setBreakpoints`, `setFunctionBreakpoints`, `setInstructionBreakpoints`, or `setDataBreakpoints` requests.
 
 ```typescript
 interface Breakpoint {
@@ -4172,7 +4196,9 @@ interface Breakpoint {
   line?: number;
 
   /**
-   * The start column of the actual range covered by the breakpoint.
+   * Start position of the source range covered by the breakpoint. It is
+   * measured in UTF-16 code units and the client capability `columnsStartAt1`
+   * determines whether it is 0- or 1-based.
    */
   column?: number;
 
@@ -4182,7 +4208,9 @@ interface Breakpoint {
   endLine?: number;
 
   /**
-   * The end column of the actual range covered by the breakpoint.
+   * End position of the source range covered by the breakpoint. It is measured
+   * in UTF-16 code units and the client capability `columnsStartAt1` determines
+   * whether it is 0- or 1-based.
    * If no end line is given, then the end column is assumed to be in the start
    * line.
    */
@@ -4210,7 +4238,6 @@ The meaning of a statement is determined by the adapter and it may be considered
 For example 'for(int i = 0; i < 10; i++)' could be considered to have 3 statements 'int i = 0', 'i < 10', and 'i++'.
 - 'line': The step should allow the program to run until the current source line has executed.
 - 'instruction': The step should allow one instruction to execute (e.g. one x86 instruction).
-etc.
 
 ```typescript
 type SteppingGranularity = 'statement' | 'line' | 'instruction';
@@ -4218,37 +4245,41 @@ type SteppingGranularity = 'statement' | 'line' | 'instruction';
 
 ### <a name="Types_StepInTarget" class="anchor"></a>StepInTarget
 
-A StepInTarget can be used in the `stepIn` request and determines into which single target the stepIn request should step.
+A `StepInTarget` can be used in the `stepIn` request and determines into which single target the `stepIn` request should step.
 
 ```typescript
 interface StepInTarget {
   /**
-   * Unique identifier for a stepIn target.
+   * Unique identifier for a step-in target.
    */
   id: number;
 
   /**
-   * The name of the stepIn target (shown in the UI).
+   * The name of the step-in target (shown in the UI).
    */
   label: string;
 
   /**
-   * The line of the step in target.
+   * The line of the step-in target.
    */
   line?: number;
 
   /**
-   * The column of the step in target.
+   * Start position of the range covered by the step in target. It is measured
+   * in UTF-16 code units and the client capability `columnsStartAt1` determines
+   * whether it is 0- or 1-based.
    */
   column?: number;
 
   /**
-   * The end line of the range covered by the step in target.
+   * The end line of the range covered by the step-in target.
    */
   endLine?: number;
 
   /**
-   * The end column of the range covered by the step in target.
+   * End position of the range covered by the step in target. It is measured in
+   * UTF-16 code units and the client capability `columnsStartAt1` determines
+   * whether it is 0- or 1-based.
    */
   endColumn?: number;
 }
@@ -4256,14 +4287,14 @@ interface StepInTarget {
 
 ### <a name="Types_GotoTarget" class="anchor"></a>GotoTarget
 
-A GotoTarget describes a code location that can be used as a target in the `goto` request.
+A `GotoTarget` describes a code location that can be used as a target in the `goto` request.
 
 The possible goto targets can be determined via the `gotoTargets` request.
 
 ```typescript
 interface GotoTarget {
   /**
-   * Unique identifier for a goto target. This is used in the goto request.
+   * Unique identifier for a goto target. This is used in the `goto` request.
    */
   id: number;
 
@@ -4302,7 +4333,7 @@ interface GotoTarget {
 
 ### <a name="Types_CompletionItem" class="anchor"></a>CompletionItem
 
-CompletionItems are the suggestions returned from the CompletionsRequest.
+`CompletionItems` are the suggestions returned from the `completions` request.
 
 ```typescript
 interface CompletionItem {
@@ -4337,35 +4368,34 @@ interface CompletionItem {
   type?: CompletionItemType;
 
   /**
-   * This value determines the location (in the `completions` request's `text`
-   * attribute) where the completion text is added.
-   * If missing the text is added at the location specified by the `completions`
-   * request's `column` attribute.
+   * Start position (within the `text` attribute of the `completions` request)
+   * where the completion text is added. The position is measured in UTF-16 code
+   * units and the client capability `columnsStartAt1` determines whether it is
+   * 0- or 1-based. If the start position is omitted the text is added at the
+   * location specified by the `column` attribute of the `completions` request.
    */
   start?: number;
 
   /**
-   * This value determines how many characters are overwritten by the completion
-   * text.
-   * If missing the value 0 is assumed which results in the completion text
-   * being inserted.
+   * Length determines how many characters are overwritten by the completion
+   * text and it is measured in UTF-16 code units. If missing the value 0 is
+   * assumed which results in the completion text being inserted.
    */
   length?: number;
 
   /**
    * Determines the start of the new selection after the text has been inserted
-   * (or replaced).
-   * The start position must be in the range 0 and length of the completion
-   * text.
-   * If omitted the selection starts at the end of the completion text.
+   * (or replaced). `selectionStart` is measured in UTF-16 code units and must
+   * be in the range 0 and length of the completion text. If omitted the
+   * selection starts at the end of the completion text.
    */
   selectionStart?: number;
 
   /**
    * Determines the length of the new selection after the text has been inserted
-   * (or replaced).
-   * The selection can not extend beyond the bounds of the completion text.
-   * If omitted the length is assumed to be 0.
+   * (or replaced) and it is measured in UTF-16 code units. The selection can
+   * not extend beyond the bounds of the completion text. If omitted the length
+   * is assumed to be 0.
    */
   selectionLength?: number;
 }
@@ -4374,7 +4404,7 @@ interface CompletionItem {
 ### <a name="Types_CompletionItemType" class="anchor"></a>CompletionItemType
 
 Some predefined types for the CompletionItem. Please note that not all clients have specific icons for all of them.
-Values: 'method', 'function', 'constructor', 'field', 'variable', 'class', 'interface', 'module', 'property', 'unit', 'value', 'enum', 'keyword', 'snippet', 'text', 'color', 'file', 'reference', 'customcolor', etc.
+Values: 'method', 'function', 'constructor', 'field', 'variable', 'class', 'interface', 'module', 'property', 'unit', 'value', 'enum', 'keyword', 'snippet', 'text', 'color', 'file', 'reference', 'customcolor'
 
 ```typescript
 type CompletionItemType = 'method' | 'function' | 'constructor' | 'field'
@@ -4386,7 +4416,7 @@ type CompletionItemType = 'method' | 'function' | 'constructor' | 'field'
 ### <a name="Types_ChecksumAlgorithm" class="anchor"></a>ChecksumAlgorithm
 
 Names of checksum algorithms that may be supported by a debug adapter.
-Values: 'MD5', 'SHA1', 'SHA256', 'timestamp', etc.
+Values: 'MD5', 'SHA1', 'SHA256', 'timestamp'
 
 ```typescript
 type ChecksumAlgorithm = 'MD5' | 'SHA1' | 'SHA256' | 'timestamp';
@@ -4469,7 +4499,7 @@ interface StackFrameFormat extends ValueFormat {
 
 ### <a name="Types_ExceptionFilterOptions" class="anchor"></a>ExceptionFilterOptions
 
-An ExceptionFilterOptions is used to specify an exception filter together with a condition for the `setExceptionBreakpoints` request.
+An `ExceptionFilterOptions` is used to specify an exception filter together with a condition for the `setExceptionBreakpoints` request.
 
 ```typescript
 interface ExceptionFilterOptions {
@@ -4490,7 +4520,7 @@ interface ExceptionFilterOptions {
 
 ### <a name="Types_ExceptionOptions" class="anchor"></a>ExceptionOptions
 
-An ExceptionOptions assigns configuration options to a set of exceptions.
+An `ExceptionOptions` assigns configuration options to a set of exceptions.
 
 ```typescript
 interface ExceptionOptions {
@@ -4520,7 +4550,7 @@ always: always breaks,
 unhandled: breaks when exception unhandled,
 
 userUnhandled: breaks if the exception is not handled by user code.
-Values: 'never', 'always', 'unhandled', 'userUnhandled', etc.
+Values: 'never', 'always', 'unhandled', 'userUnhandled'
 
 ```typescript
 type ExceptionBreakMode = 'never' | 'always' | 'unhandled'
@@ -4529,7 +4559,7 @@ type ExceptionBreakMode = 'never' | 'always' | 'unhandled'
 
 ### <a name="Types_ExceptionPathSegment" class="anchor"></a>ExceptionPathSegment
 
-An ExceptionPathSegment represents a segment in a path that is used to match leafs or nodes in a tree of exceptions.
+An `ExceptionPathSegment` represents a segment in a path that is used to match leafs or nodes in a tree of exceptions.
 
 If a segment consists of more than one name, it matches the names provided if `negate` is false or missing, or it matches anything except the names provided if `negate` is true.
 
