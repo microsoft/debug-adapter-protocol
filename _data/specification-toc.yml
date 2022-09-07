@@ -142,6 +142,8 @@
     children:
     - title: RunInTerminal
       anchor: Reverse_Requests_RunInTerminal
+    - title: StartDebugging
+      anchor: Reverse_Requests_StartDebugging
   - title: Types
     anchor: Types
     children:
