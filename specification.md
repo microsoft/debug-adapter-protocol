@@ -609,7 +609,7 @@ The event signals that a long running operation is about to start and provides a
 
 The client is free to delay the showing of the UI in order to reduce flicker.
 
-This event should only be sent if the corresponding capability `supportsProgressReporting` is true
+This event should only be sent if the corresponding capability `supportsProgressReporting` is true.
 
 ```typescript
 interface ProgressStartEvent extends Event {
@@ -796,7 +796,7 @@ This request is sent from the debug adapter to the client to run a command in a 
 
 This is typically used to launch the debuggee in a terminal provided by the client.
 
-This request should only be called if the corresponding capability `supportsRunInTerminalRequest` is true.
+This request should only be called if the corresponding client capability `supportsRunInTerminalRequest` is true.
 
 Client implementations of `runInTerminal` are free to run the command however they choose including issuing the command to a command line interpreter (aka 'shell'). Argument strings passed to the `runInTerminal` request must arrive verbatim in the command to be run. As a consequence, clients which use a shell are responsible for escaping any special shell characters in the argument strings to prevent them from being interpreted (and modified) by the shell.
 
@@ -873,6 +873,45 @@ interface RunInTerminalResponse extends Response {
      */
     shellProcessId?: number;
   };
+}
+```
+
+### <a name="Reverse_Requests_StartDebugging" class="anchor"></a>:leftwards_arrow_with_hook: StartDebugging Request
+
+This request is sent from the debug adapter to the client to start a new debug session of the same type as the caller.
+
+This event should only be sent if the corresponding client capability `supportsStartDebuggingRequest` is true.
+
+A client implementation of `startDebugging` should start a new debug session (of the same type as the caller) in the same way that the caller's session was started. If the client supports hierarchical debug sessions, the newly created session can be treated as a child of the caller session.
+
+```typescript
+interface StartDebuggingRequest extends Request {
+  command: 'startDebugging';
+
+  arguments: StartDebuggingRequestArguments;
+}
+```
+
+Arguments for `startDebugging` request.
+
+<a name="Types_StartDebuggingRequestArguments" class="anchor"></a>
+```typescript
+interface StartDebuggingRequestArguments {
+  /**
+   * Arguments passed to the new debug session. The arguments must only contain
+   * properties understood by the `launch` or `attach` requests of the debug
+   * adapter and they must not contain any client-specific properties (e.g.
+   * `type`) or client-specific features (e.g. substitutable 'variables').
+   */
+  configuration: LaunchRequestArguments | AttachRequestArguments;
+}
+```
+
+Response to `startDebugging` request. This is just an acknowledgement, so no body field is required.
+
+<a name="Types_StartDebuggingResponse" class="anchor"></a>
+```typescript
+interface StartDebuggingResponse extends Response {
 }
 ```
 
@@ -978,6 +1017,11 @@ interface InitializeRequestArguments {
    * `runInTerminal` request.
    */
   supportsArgsCanBeInterpretedByShell?: boolean;
+
+  /**
+   * Client supports the `startDebugging` request.
+   */
+  supportsStartDebuggingRequest?: boolean;
 }
 ```
 
