@@ -609,7 +609,7 @@ The event signals that a long running operation is about to start and provides a
 
 The client is free to delay the showing of the UI in order to reduce flicker.
 
-This event should only be sent if the corresponding capability `supportsProgressReporting` is true
+This event should only be sent if the corresponding capability `supportsProgressReporting` is true.
 
 ```typescript
 interface ProgressStartEvent extends Event {
@@ -796,7 +796,7 @@ This request is sent from the debug adapter to the client to run a command in a 
 
 This is typically used to launch the debuggee in a terminal provided by the client.
 
-This request should only be called if the corresponding capability `supportsRunInTerminalRequest` is true.
+This request should only be called if the corresponding client capability `supportsRunInTerminalRequest` is true.
 
 Client implementations of `runInTerminal` are free to run the command however they choose including issuing the command to a command line interpreter (aka 'shell'). Argument strings passed to the `runInTerminal` request must arrive verbatim in the command to be run. As a consequence, clients which use a shell are responsible for escaping any special shell characters in the argument strings to prevent them from being interpreted (and modified) by the shell.
 
