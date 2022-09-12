@@ -149,7 +149,7 @@ The `cancel` request is used by the client in two situations:
 - to indicate that it is no longer interested in the result produced by a specific request issued earlier
 - to cancel a progress sequence. Clients should only call this request if the corresponding capability `supportsCancelRequest` is true.
 
-This request has a hint characteristic: a debug adapter can only be expected to make a 'best effort' in honouring this request but there are no guarantees.
+This request has a hint characteristic: a debug adapter can only be expected to make a 'best effort' in honoring this request but there are no guarantees.
 
 The `cancel` request may return an error if it could not cancel an operation but a client should refrain from presenting this error to end users.
 
@@ -586,7 +586,7 @@ The event indicates that one or more capabilities have changed.
 
 Since the capabilities are dependent on the client and its UI, it might not be possible to change that at random times (or too late).
 
-Consequently this event has a hint characteristic: a client can only be expected to make a 'best effort' in honouring individual capabilities but there are no guarantees.
+Consequently this event has a hint characteristic: a client can only be expected to make a 'best effort' in honoring individual capabilities but there are no guarantees.
 
 Only changed capabilities need to be included, all other capabilities keep their values.
 
@@ -736,7 +736,7 @@ interface InvalidatedEvent extends Event {
     /**
      * Set of logical areas that got invalidated. This property has a hint
      * characteristic: a client can only be expected to make a 'best effort' in
-     * honouring the areas but there are no guarantees. If this property is
+     * honoring the areas but there are no guarantees. If this property is
      * missing, empty, or if values are not understood, the client should assume
      * a single value `all`.
      */
