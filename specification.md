@@ -876,45 +876,6 @@ interface RunInTerminalResponse extends Response {
 }
 ```
 
-### <a name="Reverse_Requests_StartDebugging" class="anchor"></a>:leftwards_arrow_with_hook: StartDebugging Request
-
-This request is sent from the debug adapter to the client to start a new debug session of the same type as the caller.
-
-This event should only be sent if the corresponding client capability `supportsStartDebuggingRequest` is true.
-
-A client implementation of `startDebugging` should start a new debug session (of the same type as the caller) in the same way that the caller's session was started. If the client supports hierarchical debug sessions, the newly created session can be treated as a child of the caller session.
-
-```typescript
-interface StartDebuggingRequest extends Request {
-  command: 'startDebugging';
-
-  arguments: StartDebuggingRequestArguments;
-}
-```
-
-Arguments for `startDebugging` request.
-
-<a name="Types_StartDebuggingRequestArguments" class="anchor"></a>
-```typescript
-interface StartDebuggingRequestArguments {
-  /**
-   * Arguments passed to the new debug session. The arguments must only contain
-   * properties understood by the `launch` or `attach` requests of the debug
-   * adapter and they must not contain any client-specific properties (e.g.
-   * `type`) or client-specific features (e.g. substitutable 'variables').
-   */
-  configuration: LaunchRequestArguments | AttachRequestArguments;
-}
-```
-
-Response to `startDebugging` request. This is just an acknowledgement, so no body field is required.
-
-<a name="Types_StartDebuggingResponse" class="anchor"></a>
-```typescript
-interface StartDebuggingResponse extends Response {
-}
-```
-
 ## <a name="Requests" class="anchor"></a>Requests
 
 ### <a name="Requests_Initialize" class="anchor"></a>:leftwards_arrow_with_hook: Initialize Request
@@ -1017,11 +978,6 @@ interface InitializeRequestArguments {
    * `runInTerminal` request.
    */
   supportsArgsCanBeInterpretedByShell?: boolean;
-
-  /**
-   * Client supports the `startDebugging` request.
-   */
-  supportsStartDebuggingRequest?: boolean;
 }
 ```
 
