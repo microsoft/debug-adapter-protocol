@@ -369,10 +369,15 @@ function objectType(prop: any): string {
 			const required = prop.required ? prop.required.indexOf(propName) >= 0 : false;
 			s += property(propName, !required, prop.properties[propName]);
 		}
-
+		
 		s += closeBlock('}', false);
 		return s;
 	}
+
+	if (typeof prop.additionalProperties === 'boolean') {
+		return `{ [key: string]: any; }`;
+	}
+
 	if (prop.additionalProperties) {
 		return `{ [key: string]: ${orType(prop.additionalProperties.type)}; }`;
 	}
