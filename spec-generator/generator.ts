@@ -369,7 +369,7 @@ function objectType(prop: any): string {
 			const required = prop.required ? prop.required.indexOf(propName) >= 0 : false;
 			s += property(propName, !required, prop.properties[propName]);
 		}
-		
+
 		s += closeBlock('}', false);
 		return s;
 	}
