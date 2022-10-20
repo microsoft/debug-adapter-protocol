@@ -373,6 +373,11 @@ function objectType(prop: any): string {
 		s += closeBlock('}', false);
 		return s;
 	}
+
+	if (typeof prop.additionalProperties === 'boolean') {
+		return `{ [key: string]: any; }`;
+	}
+
 	if (prop.additionalProperties) {
 		return `{ [key: string]: ${orType(prop.additionalProperties.type)}; }`;
 	}
