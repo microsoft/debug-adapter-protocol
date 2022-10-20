@@ -880,7 +880,7 @@ interface RunInTerminalResponse extends Response {
 
 This request is sent from the debug adapter to the client to start a new debug session of the same type as the caller.
 
-This event should only be sent if the corresponding client capability `supportsStartDebuggingRequest` is true.
+This request should only be sent if the corresponding client capability `supportsStartDebuggingRequest` is true.
 
 A client implementation of `startDebugging` should start a new debug session (of the same type as the caller) in the same way that the caller's session was started. If the client supports hierarchical debug sessions, the newly created session can be treated as a child of the caller session.
 
