@@ -185,7 +185,7 @@ GEM
       jekyll (~> 3.3)
     minitest (5.11.3)
     net-dns (0.9.0)
-    nokogiri (1.13.8)
+    nokogiri (1.13.9)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     octokit (4.25.1)
