@@ -93,9 +93,10 @@
 					"message": {
 						"type": "string",
 						"description": "Contains the raw error in short form if `success` is false.\nThis raw error might be interpreted by the client and is not shown in the UI.\nSome predefined values exist.",
-						"_enum": [ "cancelled" ],
+						"_enum": [ "cancelled", "notStopped" ],
 						"enumDescriptions": [
-							"request was cancelled."
+							"the request was cancelled.",
+							"the request may be retried once the adapter is in a 'stopped' state."
 						]
 					},
 					"body": {
