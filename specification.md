@@ -2600,7 +2600,6 @@ interface EvaluateArguments {
   /**
    * The context in which the evaluate request is used.
    * Values: 
-   * 'variables': evaluate is called from a variables view context.
    * 'watch': evaluate is called from a watch view context.
    * 'repl': evaluate is called from a REPL context.
    * 'hover': evaluate is called to generate the debug hover contents.
@@ -2609,9 +2608,10 @@ interface EvaluateArguments {
    * 'clipboard': evaluate is called to generate clipboard contents.
    * This value should only be used if the corresponding capability
    * `supportsClipboardContext` is true.
+   * 'variables': evaluate is called from a variables view context.
    * etc.
    */
-  context?: 'variables' | 'watch' | 'repl' | 'hover' | 'clipboard' | string;
+  context?: 'watch' | 'repl' | 'hover' | 'clipboard' | 'variables' | string;
 
   /**
    * Specifies details on how to format the result.

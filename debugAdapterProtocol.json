@@ -2490,13 +2490,13 @@
 				},
 				"context": {
 					"type": "string",
-					"_enum": [ "variables", "watch", "repl", "hover", "clipboard" ],
+					"_enum": [ "watch", "repl", "hover", "clipboard", "variables" ],
 					"enumDescriptions": [
-						"evaluate is called from a variables view context.",
 						"evaluate is called from a watch view context.",
 						"evaluate is called from a REPL context.",
 						"evaluate is called to generate the debug hover contents.\nThis value should only be used if the corresponding capability `supportsEvaluateForHovers` is true.",
-						"evaluate is called to generate clipboard contents.\nThis value should only be used if the corresponding capability `supportsClipboardContext` is true."
+						"evaluate is called to generate clipboard contents.\nThis value should only be used if the corresponding capability `supportsClipboardContext` is true.",
+						"evaluate is called from a variables view context."
 					],
 					"description": "The context in which the evaluate request is used."
 				},
