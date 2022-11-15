@@ -184,6 +184,12 @@ Threads
 
 The value of variables can be modified through the [**setVariable**](./specification#Requests_SetVariable) request.
 
+#### Lifetime of Objects References
+
+Complex structural objects such as [`scopes`](./specification#Types_Scope) or [`variables`](./specification#Types_Variable) are not embedded directly in their containers ([`stack frames`](./specification#Types_StackFrame), [`scopes`](./specification#Types_Scope), [`variables`](./specification#Types_Variable)), but must be retrieved with separate [**scopes**](./specification#Requests_Scopes) and [**variables**](./specification#Requests_Variables) requests based on *object references*. An object reference is an integer in the open interval (0, 2<sup>31</sup>) assigned to objects by the debug adapter.
+
+To simplify the management of object references in debug adapters, their lifetime is limited to the current suspended state. Once execution resumes, object references become invalid and DAP clients must not use them. When execution is paused again, object references no longer refer to the same objects. This means that a debug adapter can easily use sequentially assigned integers for different objects and reset the counter to 1 when execution resumes.
+
 ### Supporting threads
 
 Whenever the generic debugger receives a [**stopped**](./specification#Events_Stopped) or a [**thread**](./specification#Events_Thread) event, the development tool requests all [`threads`](./specification#Types_Thread) that exist at that point in time. [**Thread**](./specification#Events_Thread) events are optional, but a debug adapter can send them to force the development tool to update the threads UI dynamically even when not in a stopped state. If a debug adapter decides not to emit [**Thread**](./specification#Events_Thread) events, the thread UI in the development tool will only update if a [**stopped**](./specification#Events_Stopped) event is received.

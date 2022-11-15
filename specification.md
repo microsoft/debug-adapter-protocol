@@ -115,10 +115,12 @@ interface Response extends ProtocolMessage {
    * UI.
    * Some predefined values exist.
    * Values: 
-   * 'cancelled': request was cancelled.
+   * 'cancelled': the request was cancelled.
+   * 'notStopped': the request may be retried once the adapter is in a 'stopped'
+   * state.
    * etc.
    */
-  message?: 'cancelled' | string;
+  message?: 'cancelled' | 'notStopped' | string;
 
   /**
    * Contains request result if success is true and error details if success is
@@ -432,8 +434,9 @@ interface OutputEvent extends Event {
     /**
      * If an attribute `variablesReference` exists and its value is > 0, the
      * output contains objects which can be retrieved by passing
-     * `variablesReference` to the `variables` request. The value should be less
-     * than or equal to 2147483647 (2^31-1).
+     * `variablesReference` to the `variables` request as long as execution
+     * remains suspended. See 'Lifetime of Object References' in the Overview
+     * section for details.
      */
     variablesReference?: number;
 
@@ -1561,7 +1564,9 @@ Arguments for `dataBreakpointInfo` request.
 interface DataBreakpointInfoArguments {
   /**
    * Reference to the variable container if the data breakpoint is requested for
-   * a child of the container.
+   * a child of the container. The `variablesReference` must have been obtained
+   * in the current suspended state. See 'Lifetime of Object References' in the
+   * Overview section for details.
    */
   variablesReference?: number;
 
@@ -1999,7 +2004,7 @@ interface ReverseContinueResponse extends Response {
 
 ### <a name="Requests_RestartFrame" class="anchor"></a>:leftwards_arrow_with_hook: RestartFrame Request
 
-The request restarts execution of the specified stackframe.
+The request restarts execution of the specified stack frame.
 
 The debug adapter first sends the response and then a `stopped` event (with reason `restart`) after the restart has completed.
 
@@ -2019,7 +2024,9 @@ Arguments for `restartFrame` request.
 ```typescript
 interface RestartFrameArguments {
   /**
-   * Restart this stackframe.
+   * Restart the stack frame identified by `frameId`. The `frameId` must have
+   * been obtained in the current suspended state. See 'Lifetime of Object
+   * References' in the Overview section for details.
    */
   frameId: number;
 }
@@ -2163,8 +2170,8 @@ Response to `stackTrace` request.
 interface StackTraceResponse extends Response {
   body: {
     /**
-     * The frames of the stackframe. If the array has length zero, there are no
-     * stackframes available.
+     * The frames of the stack frame. If the array has length zero, there are no
+     * stack frames available.
      * This means that there is no location information available.
      */
     stackFrames: StackFrame[];
@@ -2184,7 +2191,7 @@ interface StackTraceResponse extends Response {
 
 ### <a name="Requests_Scopes" class="anchor"></a>:leftwards_arrow_with_hook: Scopes Request
 
-The request returns the variable scopes for a given stackframe ID.
+The request returns the variable scopes for a given stack frame ID.
 
 ```typescript
 interface ScopesRequest extends Request {
@@ -2200,7 +2207,9 @@ Arguments for `scopes` request.
 ```typescript
 interface ScopesArguments {
   /**
-   * Retrieve the scopes for this stackframe.
+   * Retrieve the scopes for the stack frame identified by `frameId`. The
+   * `frameId` must have been obtained in the current suspended state. See
+   * 'Lifetime of Object References' in the Overview section for details.
    */
   frameId: number;
 }
@@ -2213,7 +2222,7 @@ Response to `scopes` request.
 interface ScopesResponse extends Response {
   body: {
     /**
-     * The scopes of the stackframe. If the array has length zero, there are no
+     * The scopes of the stack frame. If the array has length zero, there are no
      * scopes available.
      */
     scopes: Scope[];
@@ -2241,7 +2250,9 @@ Arguments for `variables` request.
 ```typescript
 interface VariablesArguments {
   /**
-   * The Variable reference.
+   * The variable for which to retrieve its children. The `variablesReference`
+   * must have been obtained in the current suspended state. See 'Lifetime of
+   * Object References' in the Overview section for details.
    */
   variablesReference: number;
 
@@ -2306,7 +2317,9 @@ Arguments for `setVariable` request.
 ```typescript
 interface SetVariableArguments {
   /**
-   * The reference of the variable container.
+   * The reference of the variable container. The `variablesReference` must have
+   * been obtained in the current suspended state. See 'Lifetime of Object
+   * References' in the Overview section for details.
    */
   variablesReference: number;
 
@@ -2347,8 +2360,8 @@ interface SetVariableResponse extends Response {
     /**
      * If `variablesReference` is > 0, the new value is structured and its
      * children can be retrieved by passing `variablesReference` to the
-     * `variables` request.
-     * The value should be less than or equal to 2147483647 (2^31-1).
+     * `variables` request as long as execution remains suspended. See 'Lifetime
+     * of Object References' in the Overview section for details.
      */
     variablesReference?: number;
 
@@ -2649,8 +2662,8 @@ interface EvaluateResponse extends Response {
     /**
      * If `variablesReference` is > 0, the evaluate result is structured and its
      * children can be retrieved by passing `variablesReference` to the
-     * `variables` request.
-     * The value should be less than or equal to 2147483647 (2^31-1).
+     * `variables` request as long as execution remains suspended. See 'Lifetime
+     * of Object References' in the Overview section for details.
      */
     variablesReference: number;
 
@@ -2753,10 +2766,10 @@ interface SetExpressionResponse extends Response {
     presentationHint?: VariablePresentationHint;
 
     /**
-     * If `variablesReference` is > 0, the value is structured and its children
-     * can be retrieved by passing `variablesReference` to the `variables`
-     * request.
-     * The value should be less than or equal to 2147483647 (2^31-1).
+     * If `variablesReference` is > 0, the evaluate result is structured and its
+     * children can be retrieved by passing `variablesReference` to the
+     * `variables` request as long as execution remains suspended. See 'Lifetime
+     * of Object References' in the Overview section for details.
      */
     variablesReference?: number;
 
@@ -3726,7 +3739,7 @@ interface StackFrame {
   /**
    * An identifier for the stack frame. It must be unique across all threads.
    * This id can be used to retrieve the scopes of the frame with the `scopes`
-   * request or to restart the execution of a stackframe.
+   * request or to restart the execution of a stack frame.
    */
   id: number;
 
@@ -3820,7 +3833,9 @@ interface Scope {
 
   /**
    * The variables of this scope can be retrieved by passing the value of
-   * `variablesReference` to the `variables` request.
+   * `variablesReference` to the `variables` request as long as execution
+   * remains suspended. See 'Lifetime of Object References' in the Overview
+   * section for details.
    */
   variablesReference: number;
 
@@ -3929,8 +3944,9 @@ interface Variable {
 
   /**
    * If `variablesReference` is > 0, the variable is structured and its children
-   * can be retrieved by passing `variablesReference` to the `variables`
-   * request.
+   * can be retrieved by passing `variablesReference` to the `variables` request
+   * as long as execution remains suspended. See 'Lifetime of Object References'
+   * in the Overview section for details.
    */
   variablesReference: number;
 

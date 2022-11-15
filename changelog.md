@@ -6,31 +6,34 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
-* 1.58.X:
+* 1.59.x:
+  * Clarify the lifetime of `variablesReference`.
+
+* 1.58.x:
   * Specify the measurement unit of various `column` and "character positions" properties to be "UTF-16 code units".
 
-* 1.57.X:
+* 1.57.x:
   * Add the `argsCanBeInterpretedByShell` property to the `RunInTerminalRequest`
 
-* 1.56.X:
+* 1.56.x:
   * Add additional information to the `StepInTarget`
   * Clarification around wording for "clients"
   * Clarification around "falsey" in `CompletionItem.text`
   * Specify checksums to be given a hexadecimal strings, and timestamps as RFC 3339 date strings
   * Make wording on source.origin more clear to be non-exhaustive
 
-* 1.55.X:
+* 1.55.x:
   * Improved descriptions for `terminate` and `disconnect` requests.
   * Add missing value `variables` to the `context` argument of the `evaluate`request.
   * Fix a mistake in the description of the `ExceptionFilterOptions` type.
 
-* 1.54.X:
+* 1.54.x:
   * Add a new boolean property `lazy`  on the `VariablePresentationHint`. Clients can use that flag to present the variable with a UI that supports a specific gesture to trigger its evaluation.
 
-* 1.53.X:
+* 1.53.x:
   * Add a new `detail` property on the CompletionItem
 
-* 1.52.X:
+* 1.52.x:
   * clarify comment for `Variable.value`.
 
 * 1.51.x:
