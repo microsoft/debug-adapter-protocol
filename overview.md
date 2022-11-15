@@ -186,9 +186,11 @@ The value of variables can be modified through the [**setVariable**](./specifica
 
 #### Lifetime of Objects References
 
-Complex structural objects such as [`scopes`](./specification#Types_Scope) or [`variables`](./specification#Types_Variable) are not embedded directly in their containers ([`stack frames`](./specification#Types_StackFrame), [`scopes`](./specification#Types_Scope), [`variables`](./specification#Types_Variable)), but must be retrieved with separate [**scopes**](./specification#Requests_Scopes) and [**variables**](./specification#Requests_Variables) requests based on *object references*. An object reference is an integer in the open interval (0, 2<sup>31</sup>) assigned to objects by the debug adapter.
+Some complex structural objects such as [`scopes`](./specification#Types_Scope) or [`variables`](./specification#Types_Variable) are not returned directly with their containers ([`stack frames`](./specification#Types_StackFrame), [`scopes`](./specification#Types_Scope), [`variables`](./specification#Types_Variable)), but must be retrieved with separate [**scopes**](./specification#Requests_Scopes) and [**variables**](./specification#Requests_Variables) requests based on *object references*. An object reference is an integer in the open interval (0, 2<sup>31</sup>) assigned to objects by the debug adapter.
 
 To simplify the management of object references in debug adapters, their lifetime is limited to the current suspended state. Once execution resumes, object references become invalid and DAP clients must not use them. When execution is paused again, object references no longer refer to the same objects. This means that a debug adapter can easily use sequentially assigned integers for different objects and reset the counter to 1 when execution resumes.
+
+Please note that other object references like `threadId` do not have limited lifetime because that would prevent something like the `pause` request from working in the running state.
 
 ### Supporting threads
 
