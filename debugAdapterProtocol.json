@@ -2912,7 +2912,7 @@
 							},
 							"data": {
 								"type": "string",
-								"description": "The bytes read from memory, encoded using base64."
+								"description": "The bytes read from memory, encoded using base64. If the decoded length of `data` is less than the requested `count` in the original `readMemoryRequest`, and `unreadableBytes` is zero or omitted, then the client should assume it's reached the end of readable memory."
 							}
 						},
 						"required": [ "address" ]
