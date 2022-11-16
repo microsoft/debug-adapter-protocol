@@ -8,6 +8,7 @@ sectionid: changelog
 
 * 1.59.x:
   * Clarify the lifetime of `variablesReference`.
+  * Clarify the default behavior when `kind` is omitted from the `RunInTerminalRequest`.
 
 * 1.58.x:
   * Specify the measurement unit of various `column` and "character positions" properties to be "UTF-16 code units".
