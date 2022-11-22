@@ -88,6 +88,8 @@ The content part contains the actual content of the message. The content part of
 
 The content part is encoded using `utf-8`.
 
+`integer`s defined in the protocol (JSON schema type `integer`) may be represented as 32 bit signed integers, although some properties disallow negative values. `number`s in the protocol (JSON schema type `number`) may be represented as 64 bit floating point numbers.
+
 #### Example:
 
 This example shows the JSON for the DAP [next](./specification#Requests_Next) request:
