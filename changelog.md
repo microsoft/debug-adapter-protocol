@@ -8,6 +8,7 @@ sectionid: changelog
 
 * 1.59.x:
   * Clarify the lifetime of `variablesReference`.
+  * Clarify end of file behavior for `readMemory`.
 
 * 1.58.x:
   * Specify the measurement unit of various `column` and "character positions" properties to be "UTF-16 code units".
