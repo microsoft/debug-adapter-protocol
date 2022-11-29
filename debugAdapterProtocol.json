@@ -1459,6 +1459,10 @@
 				"name": {
 					"type": "string",
 					"description": "The name of the variable's child to obtain data breakpoint information for.\nIf `variablesReference` isn't specified, this can be an expression."
+				},
+				"frameId": {
+					"type": "integer",
+					"description": "When `name` is an expression, evaluate it in the scope of this stack frame. If not specified, the expression is evaluated in the global scope. When `variablesReference` is specified, this property has no effect."
 				}
 			},
 			"required": [ "name" ]

@@ -7,6 +7,7 @@ sectionid: changelog
 #### All notable changes to the specification will be documented in this file.
 
 * 1.59.x:
+  * Add an optional `frameId` to the `DataBreakpointInfoRequest`
   * Clarify the lifetime of `variablesReference`.
   * Clarify end of file behavior for `readMemory`.
 
