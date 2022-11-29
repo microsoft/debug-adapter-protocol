@@ -1459,6 +1459,10 @@
 				"name": {
 					"type": "string",
 					"description": "The name of the variable's child to obtain data breakpoint information for.\nIf `variablesReference` isn't specified, this can be an expression."
+				},
+				"frameId": {
+					"type": "integer",
+					"description": "When `name` is an expression, evaluate it in the scope of this stack frame. If not specified, the expression is evaluated in the global scope. When `variablesReference` is specified, this property has no effect."
 				}
 			},
 			"required": [ "name" ]
@@ -2912,7 +2916,7 @@
 							},
 							"data": {
 								"type": "string",
-								"description": "The bytes read from memory, encoded using base64."
+								"description": "The bytes read from memory, encoded using base64. If the decoded length of `data` is less than the requested `count` in the original `readMemory` request, and `unreadableBytes` is zero or omitted, then the client should assume it's reached the end of readable memory."
 							}
 						},
 						"required": [ "address" ]
@@ -3261,7 +3265,7 @@
 			"properties": {
 				"id": {
 					"type": "integer",
-					"description": "Unique identifier for the message."
+					"description": "Unique (within a debug adapter implementation) identifier for the message. The purpose of these error IDs is to help extension authors that have the requirement that every user visible error message needs a corresponding error number, so that users or customer support can find information about the specific error more easily."
 				},
 				"format": {
 					"type": "string",

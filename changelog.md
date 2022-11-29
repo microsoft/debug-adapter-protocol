@@ -7,8 +7,10 @@ sectionid: changelog
 #### All notable changes to the specification will be documented in this file.
 
 * 1.59.x:
+  * Add an optional `frameId` to the `DataBreakpointInfoRequest`
   * Clarify the lifetime of `variablesReference`.
   * Clarify the default behavior when `kind` is omitted from the `RunInTerminalRequest`.
+  * Clarify end of file behavior for `readMemory`.
 
 * 1.58.x:
   * Specify the measurement unit of various `column` and "character positions" properties to be "UTF-16 code units".
