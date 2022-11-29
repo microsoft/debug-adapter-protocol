@@ -9,6 +9,7 @@ sectionid: changelog
 * 1.59.x:
   * Add an optional `frameId` to the `DataBreakpointInfoRequest`
   * Clarify the lifetime of `variablesReference`.
+  * Clarify the default behavior when `kind` is omitted from the `RunInTerminalRequest`.
   * Clarify end of file behavior for `readMemory`.
 
 * 1.58.x:

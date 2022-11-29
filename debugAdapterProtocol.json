@@ -755,7 +755,7 @@
 				"kind": {
 					"type": "string",
 					"enum": [ "integrated", "external" ],
-					"description": "What kind of terminal to launch."
+					"description": "What kind of terminal to launch. Defaults to `integrated` if not specified."
 				},
 				"title": {
 					"type": "string",
