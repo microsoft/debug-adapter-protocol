@@ -819,7 +819,7 @@ Arguments for `runInTerminal` request.
 ```typescript
 interface RunInTerminalRequestArguments {
   /**
-   * What kind of terminal to launch.
+   * What kind of terminal to launch. Defaults to `integrated` if not specified.
    * Values: 'integrated', 'external'
    */
   kind?: 'integrated' | 'external';
@@ -1575,6 +1575,13 @@ interface DataBreakpointInfoArguments {
    * If `variablesReference` isn't specified, this can be an expression.
    */
   name: string;
+
+  /**
+   * When `name` is an expression, evaluate it in the scope of this stack frame.
+   * If not specified, the expression is evaluated in the global scope. When
+   * `variablesReference` is specified, this property has no effect.
+   */
+  frameId?: number;
 }
 ```
 
@@ -3062,7 +3069,10 @@ interface ReadMemoryResponse extends Response {
     unreadableBytes?: number;
 
     /**
-     * The bytes read from memory, encoded using base64.
+     * The bytes read from memory, encoded using base64. If the decoded length
+     * of `data` is less than the requested `count` in the original `readMemory`
+     * request, and `unreadableBytes` is zero or omitted, then the client should
+     * assume it's reached the end of readable memory.
      */
     data?: string;
   };
@@ -3482,7 +3492,11 @@ A structured message object. Used to return errors from requests.
 ```typescript
 interface Message {
   /**
-   * Unique identifier for the message.
+   * Unique (within a debug adapter implementation) identifier for the message.
+   * The purpose of these error IDs is to help extension authors that have the
+   * requirement that every user visible error message needs a corresponding
+   * error number, so that users or customer support can find information about
+   * the specific error more easily.
    */
   id: number;
 
