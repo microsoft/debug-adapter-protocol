@@ -1,0 +1,7 @@
+{
+    "git.branchProtection": [
+        "main",
+        "gh-pages"
+    ],
+    "git.branchProtectionPrompt": "alwaysCommitToNewBranch",
+}

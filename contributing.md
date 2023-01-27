@@ -18,7 +18,8 @@ Detailed steps:
 1. If this is a feature that VS Code would want to implement, open a corresponding issue in the VS Code repo.
 1. Updating the npm modules:
     1. Whenever there are worthwhile DAP changes, pull the updated DAP schema by running `npm run sync-dap` or `npm run sync-next-dap` and run the `Generate debugProtocol.ts` launch configuration to update the `DebugProtocol` TypeScript module.
-    1. Run `npm run version -- preminor --preid pre` in the repo, which will publish a prerelease tag. This will get automatically built by CI.
+    1. Run `./bump-version.sh preminor --preid pre` in the repo, which will create a prerelease tag and a branch named `release/<version name>`rece.
+    1. Create a PR for the release branch. Once merged, packages will get automatically published by CI.
     1. Adopt the three new npm modules in [Mock Debug](https://github.com/microsoft/vscode-mock-debug) to verify that they still work.
     1. Commit and push the version changes to Mock Debug.
-    1. At the end of each VS Code iteration (typically Wednesday of endgame week), publish the final version of the three npm packages by running `npm run version -- minor`.
+    1. At the end of each VS Code iteration (typically Wednesday of endgame week), publish the final version of the three npm packages by running `./bump-version.sh minor` with steps 2-4 again.

@@ -6,6 +6,9 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.60.x
+  * Clarify the usage of `hitCondition` and `logMessage` in `SetBreakpointsRequest`
+
 * 1.59.x:
   * Add an optional `frameId` to the `DataBreakpointInfoRequest`
   * Clarify the lifetime of `variablesReference`.

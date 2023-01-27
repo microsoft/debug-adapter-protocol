@@ -4125,6 +4125,9 @@ interface SourceBreakpoint {
    * The debug adapter is expected to interpret the expression as needed.
    * The attribute is only honored by a debug adapter if the corresponding
    * capability `supportsHitConditionalBreakpoints` is true.
+   * If both this property and `condition` are specified, `hitCondition` should
+   * be evaluated only if the `condition` is met, and the debug adapter should
+   * stop only if both conditions are met.
    */
   hitCondition?: string;
 
@@ -4134,6 +4137,8 @@ interface SourceBreakpoint {
    * but log the message instead. Expressions within `{}` are interpolated.
    * The attribute is only honored by a debug adapter if the corresponding
    * capability `supportsLogPoints` is true.
+   * If either `hitCondition` or `condition` is specified, then the message
+   * should only be logged if those conditions are met.
    */
   logMessage?: string;
 }
