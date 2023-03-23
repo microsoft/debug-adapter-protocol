@@ -59,14 +59,20 @@
       anchor: Requests_Attach
     - title: BreakpointLocations
       anchor: Requests_BreakpointLocations
+    - title: CheckpointArguments
+      anchor: Requests_CheckpointArguments
     - title: Completions
       anchor: Requests_Completions
     - title: ConfigurationDone
       anchor: Requests_ConfigurationDone
     - title: Continue
       anchor: Requests_Continue
+    - title: CreateCheckpoint
+      anchor: Requests_CreateCheckpoint
     - title: DataBreakpointInfo
       anchor: Requests_DataBreakpointInfo
+    - title: DeleteCheckpoint
+      anchor: Requests_DeleteCheckpoint
     - title: Disassemble
       anchor: Requests_Disassemble
     - title: Disconnect
@@ -83,6 +89,8 @@
       anchor: Requests_Initialize
     - title: Launch
       anchor: Requests_Launch
+    - title: LoadCheckpoint
+      anchor: Requests_LoadCheckpoint
     - title: LoadedSources
       anchor: Requests_LoadedSources
     - title: Modules

@@ -6,6 +6,10 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.61.x
+  * Add `supportsCheckpointRequests` capability (`createCheckpoint`, `deleteCheckpoint` and 
+  `loadCheckpoint`).
+
 * 1.60.x
   * Clarify the usage of `hitCondition` and `logMessage` in `SetBreakpointsRequest`
 
