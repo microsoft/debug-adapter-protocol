@@ -3217,6 +3217,103 @@ interface DisassembleResponse extends Response {
 }
 ```
 
+### <a name="Requests_CreateCheckpoint" class="anchor"></a>:leftwards_arrow_with_hook: CreateCheckpoint Request
+
+Creates an identical copy of the process.
+
+Clients should only call this request if the corresponding capability `supportsCheckpointRequests` is true.
+
+```typescript
+interface CreateCheckpointRequest extends Request {
+  command: 'createCheckpoint';
+}
+```
+
+Response to `createCheckpoint` request.
+
+<a name="Types_CreateCheckpointResponse" class="anchor"></a>
+```typescript
+interface CreateCheckpointResponse extends Response {
+  body?: {
+    /**
+     * The newly created checkpoint ID.
+     */
+    checkpointId: number;
+  };
+}
+```
+
+### <a name="Requests_DeleteCheckpoint" class="anchor"></a>:leftwards_arrow_with_hook: DeleteCheckpoint Request
+
+Deletes the checkpoint with the ID provided.
+
+Clients should only call this request if the corresponding capability `supportsCheckpointRequests` is true.
+
+```typescript
+interface DeleteCheckpointRequest extends Request {
+  command: 'deleteCheckpoint';
+
+  arguments: CheckpointArguments;
+}
+```
+
+Response to `deleteCheckpoint` request.
+
+<a name="Types_DeleteCheckpointResponse" class="anchor"></a>
+```typescript
+interface DeleteCheckpointResponse extends Response {
+  body?: {
+    /**
+     * True if the ID of the checkpoint requested for deletion existed and was
+     * successfully deleted, False otherwise.
+     */
+    success: boolean;
+  };
+}
+```
+
+### <a name="Requests_LoadCheckpoint" class="anchor"></a>:leftwards_arrow_with_hook: LoadCheckpoint Request
+
+Loads the checkpoint with the ID provided.
+
+Clients should only call this request if the corresponding capability `supportsCheckpointRequests` is true.
+
+```typescript
+interface LoadCheckpointRequest extends Request {
+  command: 'loadCheckpoint';
+
+  arguments: CheckpointArguments;
+}
+```
+
+Response to `loadCheckpoint` request.
+
+<a name="Types_LoadCheckpointResponse" class="anchor"></a>
+```typescript
+interface LoadCheckpointResponse extends Response {
+  body?: {
+    /**
+     * True if the ID of the checkpoint requested for deletion existed and was
+     * successfully loaded, False otherwise.
+     */
+    success: boolean;
+  };
+}
+```
+
+### <a name="Requests_CheckpointArguments" class="anchor"></a>CheckpointArguments
+
+Arguments for `deleteCheckpoint` and `loadCheckpoint` requests.
+
+```typescript
+interface CheckpointArguments {
+  /**
+   * ID of the checkpoint refered to by the request.
+   */
+  checkpointId: number;
+}
+```
+
 ## <a name="Types" class="anchor"></a>Types
 
 ### <a name="Types_Capabilities" class="anchor"></a>Capabilities
@@ -3439,6 +3536,13 @@ interface Capabilities {
    * `stepBack`).
    */
   supportsSingleThreadExecutionRequests?: boolean;
+
+  /**
+   * The debug adapter supports the checkpoint-type requests
+   * (`CreateCheckpointRequest`, `DeleteCheckpointRequest` and
+   * `LoadCheckpointRequest`).
+   */
+  supportsCheckpointRequests?: boolean;
 }
 ```
 

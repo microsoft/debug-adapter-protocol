@@ -3051,6 +3051,117 @@
 			}]
 		},
 
+		"CreateCheckpointRequest": {
+			"allOf": [ { "$ref": "#/definitions/Request" }, {
+				"type": "object",
+				"description": "Creates an identical copy of the process.\nClients should only call this request if the corresponding capability `supportsCheckpointRequests` is true.",
+				"properties": {
+					"command": {
+						"type": "string",
+						"enum": [ "createCheckpoint" ]
+					}
+				},
+				"required": [ "command" ]
+			}]
+		},
+		"CreateCheckpointResponse": {
+			"allOf": [ { "$ref": "#/definitions/Response" }, {
+				"type": "object",
+				"description": "Response to `createCheckpoint` request.",
+				"properties": {
+					"body": {
+						"type": "object",
+						"properties": {
+							"checkpointId": {
+								"type": "integer",
+								"description": "The newly created checkpoint ID."
+							}
+						},
+						"required": [ "checkpointId" ]
+					}
+				}
+			}]
+		},
+		"DeleteCheckpointRequest": {
+			"allOf": [ { "$ref": "#/definitions/Request" }, {
+				"type": "object",
+				"description": "Deletes the checkpoint with the ID provided.\nClients should only call this request if the corresponding capability `supportsCheckpointRequests` is true.",
+				"properties": {
+					"command": {
+						"type": "string",
+						"enum": [ "deleteCheckpoint" ]
+					},
+					"arguments": {
+						"$ref": "#/definitions/CheckpointArguments"
+					}
+				},
+				"required": [ "command", "arguments" ]
+			}]
+		},
+		"DeleteCheckpointResponse": {
+			"allOf": [ { "$ref": "#/definitions/Response" }, {
+				"type": "object",
+				"description": "Response to `deleteCheckpoint` request.",
+				"properties": {
+					"body": {
+						"type": "object",
+						"properties": {
+							"success": {
+								"type": "boolean",
+								"description": "True if the ID of the checkpoint requested for deletion existed and was successfully deleted, False otherwise."
+							}
+						},
+						"required": [ "success" ]
+					}
+				}
+			}]
+		},
+		"LoadCheckpointRequest": {
+			"allOf": [ { "$ref": "#/definitions/Request" }, {
+				"type": "object",
+				"description": "Loads the checkpoint with the ID provided.\nClients should only call this request if the corresponding capability `supportsCheckpointRequests` is true.",
+				"properties": {
+					"command": {
+						"type": "string",
+						"enum": [ "loadCheckpoint" ]
+					},
+					"arguments": {
+						"$ref": "#/definitions/CheckpointArguments"
+					}
+				},
+				"required": [ "command", "arguments" ]
+			}]
+		},
+		"LoadCheckpointResponse": {
+			"allOf": [ { "$ref": "#/definitions/Response" }, {
+				"type": "object",
+				"description": "Response to `loadCheckpoint` request.",
+				"properties": {
+					"body": {
+						"type": "object",
+						"properties": {
+							"success": {
+								"type": "boolean",
+								"description": "True if the ID of the checkpoint requested for deletion existed and was successfully loaded, False otherwise."
+							}
+						},
+						"required": [ "success" ]
+					}
+				}
+			}]
+		},
+		"CheckpointArguments": {
+			"type": "object",
+			"description": "Arguments for `deleteCheckpoint` and `loadCheckpoint` requests.",
+			"properties": {
+				"checkpointId": {
+					"type": "integer",
+					"description": "ID of the checkpoint refered to by the request."
+				}
+			},
+			"required": [ "checkpointId" ]
+		},
+
 		"Capabilities": {
 			"type": "object",
 			"title": "Types",
@@ -3223,6 +3334,10 @@
 				"supportsSingleThreadExecutionRequests": {
 					"type": "boolean",
 					"description": "The debug adapter supports the `singleThread` property on the execution requests (`continue`, `next`, `stepIn`, `stepOut`, `reverseContinue`, `stepBack`)."
+				},
+				"supportsCheckpointRequests": {
+					"type": "boolean",
+					"description": "The debug adapter supports the checkpoint-type requests (`CreateCheckpointRequest`, `DeleteCheckpointRequest` and `LoadCheckpointRequest`)."
 				}
 			}
 		},
