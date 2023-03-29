@@ -17,6 +17,7 @@ html {
 body {
 	letter-spacing: .25px;
 	text-rendering: optimizeLegibility;
+	color: #242628;
 }
 
 .single-page {
@@ -445,16 +446,12 @@ pre[class=highlight] {
     margin: 0;
 }
 
-.nav .nav-link {
-	color: #2753e3 !important;
-  }
-
 .nav .nav-link:hover {
 	color: #1034a8 !important;
 }
 
 a {
-	color: #2753e3;
+	color: #216fc9;
 }
 
 a h3 {
@@ -462,12 +459,8 @@ a h3 {
 	padding-bottom: 2px;
 }
 
-a:hover {
-	color: #1034a8
-}
-
 .navbar-dark .navbar-nav .nav-link:hover {
-    color: rgba(255,255,255,0.5);
+    color: rgba(255, 255, 255, 0.75);
 }
 
 .navbar-dark .navbar-nav .nav-link {
