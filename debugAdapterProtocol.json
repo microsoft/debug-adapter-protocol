@@ -3376,20 +3376,6 @@
 			"required": [ "attributeName", "label"]
 		},
 
-		"ModulesViewDescriptor": {
-			"type": "object",
-			"description": "The ModulesViewDescriptor is the container for all declarative configuration options of a module view.\nFor now it only specifies the columns to be shown in the modules view.",
-			"properties": {
-				"columns": {
-					"type": "array",
-					"items": {
-						"$ref": "#/definitions/ColumnDescriptor"
-					}
-				}
-			},
-			"required": [ "columns" ]
-		},
-
 		"Thread": {
 			"type": "object",
 			"description": "A Thread",

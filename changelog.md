@@ -6,6 +6,9 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.61.x
+  * Removed unused `ModulesViewDescriptor` interface
+
 * 1.60.x
   * Clarify the usage of `hitCondition` and `logMessage` in `SetBreakpointsRequest`
 
