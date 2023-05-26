@@ -9,6 +9,7 @@ sectionid: changelog
 * 1.61.x
   * Removed unused `ModulesViewDescriptor` interface
   * Clarify the applicability of `supportsVariablePaging`
+  * Fix mention of non-existent `hitCondition` in `SetExceptionBreakpointsResponse`
 
 * 1.60.x
   * Clarify the usage of `hitCondition` and `logMessage` in `SetBreakpointsRequest`
