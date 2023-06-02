@@ -2272,12 +2272,16 @@ interface VariablesArguments {
 
   /**
    * The index of the first variable to return; if omitted children start at 0.
+   * The attribute is only honored by a debug adapter if the corresponding
+   * capability `supportsVariablePaging` is true.
    */
   start?: number;
 
   /**
    * The number of variables to return. If count is missing or 0, all variables
    * are returned.
+   * The attribute is only honored by a debug adapter if the corresponding
+   * capability `supportsVariablePaging` is true.
    */
   count?: number;
 
@@ -3646,18 +3650,6 @@ interface ColumnDescriptor {
    * Width of this column in characters (hint only).
    */
   width?: number;
-}
-```
-
-### <a name="Types_ModulesViewDescriptor" class="anchor"></a>ModulesViewDescriptor
-
-The ModulesViewDescriptor is the container for all declarative configuration options of a module view.
-
-For now it only specifies the columns to be shown in the modules view.
-
-```typescript
-interface ModulesViewDescriptor {
-  columns: ColumnDescriptor[];
 }
 ```
 
