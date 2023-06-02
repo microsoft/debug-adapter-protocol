@@ -193,8 +193,6 @@
       anchor: Types_Message
     - title: Module
       anchor: Types_Module
-    - title: ModulesViewDescriptor
-      anchor: Types_ModulesViewDescriptor
     - title: Scope
       anchor: Types_Scope
     - title: Source
