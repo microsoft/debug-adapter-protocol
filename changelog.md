@@ -6,6 +6,9 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.62.x
+  * Clarify lifetime of `DataBreakpoint.dataId`
+
 * 1.61.x
   * Removed unused `ModulesViewDescriptor` interface
   * Clarify the applicability of `supportsVariablePaging`
