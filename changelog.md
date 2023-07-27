@@ -6,6 +6,9 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.63.x
+  * Add `memoryReference` support to the `SetVariableResponse`/`SetExpressionResponse`
+
 * 1.62.x
   * Clarify lifetime of `DataBreakpoint.dataId`
 
