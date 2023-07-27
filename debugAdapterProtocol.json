@@ -2545,7 +2545,7 @@
 							},
 							"memoryReference": {
 								"type": "string",
-								"description": "A memory reference to a location appropriate for this result.\nFor pointer type eval results, this is generally a reference to the memory address contained in the pointer.\nThis attribute should be returned by a debug adapter if corresponding capability `supportsMemoryReferences` is true."
+								"description": "A memory reference to a location appropriate for this result.\nFor pointer type eval results, this is generally a reference to the memory address contained in the pointer.\nThis attribute may be returned by a debug adapter if corresponding capability `supportsMemoryReferences` is true."
 							}
 						},
 						"required": [ "result", "variablesReference" ]
@@ -3587,7 +3587,7 @@
 				},
 				"memoryReference": {
 					"type": "string",
-					"description": "The memory reference for the variable if the variable represents executable code, such as a function pointer.\nThis attribute is only required if the corresponding capability `supportsMemoryReferences` is true."
+					"description": "A memory reference associated with this variable.\nFor pointer type variables, this is generally a reference to the memory address contained in the pointer.\nFor executable data, this reference may later be used in a `disassemble` request.\nThis attribute may be returned by a debug adapter if corresponding capability `supportsMemoryReferences` is true."
 				}
 			},
 			"required": [ "name", "value", "variablesReference" ]
