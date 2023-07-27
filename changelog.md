@@ -6,6 +6,9 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.63.x
+  * Fix a typo in the description of `BreakpointLocationsArguments`
+
 * 1.62.x
   * Clarify lifetime of `DataBreakpoint.dataId`
 
