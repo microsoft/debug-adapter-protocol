@@ -9,6 +9,7 @@ sectionid: changelog
 * 1.63.x
   * Fix a typo in the description of `BreakpointLocationsArguments`
   * Fix missing line break in `CancelRequest`
+  * Clarify state of "object ID"s in `VariablePresentationHint`
 
 * 1.62.x
   * Clarify lifetime of `DataBreakpoint.dataId`

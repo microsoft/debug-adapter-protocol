@@ -3626,8 +3626,8 @@
 							"Indicates that the object is a constant.",
 							"Indicates that the object is read only.",
 							"Indicates that the object is a raw string.",
-							"Indicates that the object can have an Object ID created for it.",
-							"Indicates that the object has an Object ID associated with it.",
+							"Indicates that the object can have an Object ID created for it. This is a vestigial attribute that is used by some clients; 'Object ID's are not specified in the protocol.",
+							"Indicates that the object has an Object ID associated with it. This is a vestigial attribute that is used by some clients; 'Object ID's are not specified in the protocol.",
 							"Indicates that the evaluation had side effects.",
 							"Indicates that the object has its value tracked by a data breakpoint."
 						]
