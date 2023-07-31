@@ -8,6 +8,10 @@ sectionid: changelog
 
 * 1.63.x
   * Add `memoryReference` support to the `SetVariableResponse`/`SetExpressionResponse`
+  * Fix a typo in the description of `BreakpointLocationsArguments`
+  * Fix missing line break in `CancelRequest`
+  * Clarify `memoryReference` in `Variable` type
+  * Clarify state of "object ID"s in `VariablePresentationHint`
 
 * 1.62.x
   * Clarify lifetime of `DataBreakpoint.dataId`
@@ -22,6 +26,7 @@ sectionid: changelog
 
 * 1.59.x:
   * Add an optional `frameId` to the `DataBreakpointInfoRequest`
+  * Add `notStopped` as a well-known reason in `Response`
   * Clarify the lifetime of `variablesReference`.
   * Clarify the default behavior when `kind` is omitted from the `RunInTerminalRequest`.
   * Clarify end of file behavior for `readMemory`.
