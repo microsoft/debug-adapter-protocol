@@ -59,7 +59,7 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [Mono Debug](https://github.com/Microsoft/vscode-mono-debug)|[@akoeplinger](https://github.com/akoeplinger)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.mono-debug)
 [NativeScript](https://github.com/NativeScript/nativescript-vscode-extension/)|[@ivanbuhov](https://github.com/ivanbuhov)|[VS Code](https://marketplace.visualstudio.com/items?itemName=Telerik.nativescript)
 [Node Debug](https://github.com/Microsoft/vscode-node-debug)|[@weinand](https://github.com/weinand)|
-[OCaml Earlybird](https://github.com/hackwaly/ocamlearlybird)|[@hackwaly](https://github.com/hackwaly)|[VS Code](https://marketplace.visualstudio.com/items?itemName=hackwaly.ocamlearlybird)
+[OCaml Earlybird](https://github.com/hackwaly/ocamlearlybird)|[@sim642](https://github.com/sim642)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ocamllabs.ocaml-platform)
 [OneScript Debug](https://github.com/EvilBeaver/OneScript)|[@EvilBeaver](https://github.com/EvilBeaver)|[VS Code](https://marketplace.visualstudio.com/items?itemName=EvilBeaver.oscript-debug)
 [Papyrus](https://github.com/joelday/papyrus-debug-server)|[@joelday](https://github.com/joelday)|[VS Code](https://marketplace.visualstudio.com/items?itemName=joelday.papyrus-lang-vscode)
 [Perl Debug](https://github.com/Nihilus118/vscode-perl-debug)|[@Nihilus118](https://github.com/Nihilus118)|[VS Code](https://marketplace.visualstudio.com/items?itemName=Nihilus118.perl-debugger)
