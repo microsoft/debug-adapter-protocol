@@ -62,7 +62,7 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [OCaml Earlybird](https://github.com/hackwaly/ocamlearlybird)|[@hackwaly](https://github.com/hackwaly)|[VS Code](https://marketplace.visualstudio.com/items?itemName=hackwaly.ocamlearlybird)
 [OneScript Debug](https://github.com/EvilBeaver/OneScript)|[@EvilBeaver](https://github.com/EvilBeaver)|[VS Code](https://marketplace.visualstudio.com/items?itemName=EvilBeaver.oscript-debug)
 [Papyrus](https://github.com/joelday/papyrus-debug-server)|[@joelday](https://github.com/joelday)|[VS Code](https://marketplace.visualstudio.com/items?itemName=joelday.papyrus-lang-vscode)
-[Perl Debug](https://github.com/raix/vscode-perl-debug)|[@raix](https://github.com/raix)|[VS Code](https://marketplace.visualstudio.com/items?itemName=mortenhenriksen.perl-debug)
+[Perl Debug](https://github.com/Nihilus118/vscode-perl-debug)|[@Nihilus118](https://github.com/Nihilus118)|[VS Code](https://marketplace.visualstudio.com/items?itemName=Nihilus118.perl-debugger)
 [Perl::LanguageServer](https://github.com/richterger/Perl-LanguageServer)|[@richterger](https://github.com/richterger)|[VS Code](https://marketplace.visualstudio.com/items?itemName=richterger.perl)
 [Php](https://github.com/xdebug/vscode-php-debug)|[@zobo](https://github.com/zobo)|[VS Code](https://marketplace.visualstudio.com/items?itemName=xdebug.php-debug)
 [PowerShell](https://github.com/PowerShell/vscode-powershell)|[@daviwil](https://github.com/daviwil) [@rkeithhill](https://github.com/rkeithhill)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.PowerShell)
