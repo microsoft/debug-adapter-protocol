@@ -149,7 +149,9 @@ interface ErrorResponse extends Response {
 
 The `cancel` request is used by the client in two situations:
 - to indicate that it is no longer interested in the result produced by a specific request issued earlier
-- to cancel a progress sequence. Clients should only call this request if the corresponding capability `supportsCancelRequest` is true.
+- to cancel a progress sequence.
+
+Clients should only call this request if the corresponding capability `supportsCancelRequest` is true.
 
 This request has a hint characteristic: a debug adapter can only be expected to make a 'best effort' in honoring this request but there are no guarantees.
 
@@ -1306,7 +1308,7 @@ Arguments for `breakpointLocations` request.
 interface BreakpointLocationsArguments {
   /**
    * The source location of the breakpoints; either `source.path` or
-   * `source.reference` must be specified.
+   * `source.sourceReference` must be specified.
    */
   source: Source;
 
@@ -2396,6 +2398,15 @@ interface SetVariableResponse extends Response {
      * The value should be less than or equal to 2147483647 (2^31-1).
      */
     indexedVariables?: number;
+
+    /**
+     * A memory reference to a location appropriate for this result.
+     * For pointer type eval results, this is generally a reference to the
+     * memory address contained in the pointer.
+     * This attribute may be returned by a debug adapter if corresponding
+     * capability `supportsMemoryReferences` is true.
+     */
+    memoryReference?: string;
   };
 }
 ```
@@ -2703,7 +2714,7 @@ interface EvaluateResponse extends Response {
      * A memory reference to a location appropriate for this result.
      * For pointer type eval results, this is generally a reference to the
      * memory address contained in the pointer.
-     * This attribute should be returned by a debug adapter if corresponding
+     * This attribute may be returned by a debug adapter if corresponding
      * capability `supportsMemoryReferences` is true.
      */
     memoryReference?: string;
@@ -2804,6 +2815,15 @@ interface SetExpressionResponse extends Response {
      * The value should be less than or equal to 2147483647 (2^31-1).
      */
     indexedVariables?: number;
+
+    /**
+     * A memory reference to a location appropriate for this result.
+     * For pointer type eval results, this is generally a reference to the
+     * memory address contained in the pointer.
+     * This attribute may be returned by a debug adapter if corresponding
+     * capability `supportsMemoryReferences` is true.
+     */
+    memoryReference?: string;
   };
 }
 ```
@@ -3978,10 +3998,13 @@ interface Variable {
   indexedVariables?: number;
 
   /**
-   * The memory reference for the variable if the variable represents executable
-   * code, such as a function pointer.
-   * This attribute is only required if the corresponding capability
-   * `supportsMemoryReferences` is true.
+   * A memory reference associated with this variable.
+   * For pointer type variables, this is generally a reference to the memory
+   * address contained in the pointer.
+   * For executable data, this reference may later be used in a `disassemble`
+   * request.
+   * This attribute may be returned by a debug adapter if corresponding
+   * capability `supportsMemoryReferences` is true.
    */
   memoryReference?: string;
 }
@@ -4027,9 +4050,11 @@ interface VariablePresentationHint {
    * 'readOnly': Indicates that the object is read only.
    * 'rawString': Indicates that the object is a raw string.
    * 'hasObjectId': Indicates that the object can have an Object ID created for
-   * it.
+   * it. This is a vestigial attribute that is used by some clients; 'Object
+   * ID's are not specified in the protocol.
    * 'canHaveObjectId': Indicates that the object has an Object ID associated
-   * with it.
+   * with it. This is a vestigial attribute that is used by some clients;
+   * 'Object ID's are not specified in the protocol.
    * 'hasSideEffects': Indicates that the evaluation had side effects.
    * 'hasDataBreakpoint': Indicates that the object has its value tracked by a
    * data breakpoint.
