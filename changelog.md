@@ -6,6 +6,10 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.65.x
+  * Clarify that the `offset` in the `InstructionBreakpoint` is given in bytes
+  * Add a `presentationHint` to the `DisassembledInstruction`
+
 * 1.63.x
   * Add `memoryReference` support to the `SetVariableResponse`/`SetExpressionResponse`
   * Fix a typo in the description of `BreakpointLocationsArguments`
