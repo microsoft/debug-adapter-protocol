@@ -3765,7 +3765,7 @@
 				},
 				"offset": {
 					"type": "integer",
-					"description": "The offset from the instruction reference.\nThis can be negative."
+					"description": "The offset from the instruction reference in bytes.\nThis can be negative."
 				},
 				"condition": {
 					"type": "string",
@@ -4159,7 +4159,12 @@
 				"endColumn": {
 					"type": "integer",
 					"description": "The end column of the range that corresponds to this instruction, if any."
-				}
+				},
+				"presentationHint": {
+					"type": "string",
+					"description": "A hint for how to present the instruction in the UI.\n\nA value of `invalid` may be used to indicate this instruction is 'filler' and cannot be reached by the program. For example, unreadable memory addresses may be presented is 'invalid.'",
+					"enum": [ "normal", "invalid" ]
+				},
 			},
 			"required": [ "address", "instruction" ]
 		},
