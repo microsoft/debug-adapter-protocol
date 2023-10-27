@@ -6,7 +6,7 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
-* 1.65.x
+* 1.64.x
   * Clarify that the `offset` in the `InstructionBreakpoint` is given in bytes
   * Add a `presentationHint` to the `DisassembledInstruction`
   * Add a `reason` to the `Breakpoint` to indicate why verification may have failed
