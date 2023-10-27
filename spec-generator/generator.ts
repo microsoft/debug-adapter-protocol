@@ -277,7 +277,7 @@ function comment(c: P.Commentable): string {
 function breakLines(s: string, breakPat: string, lineStart: string): string {
 	s = s.replace(/\n/g, `${breakPat}@@@${breakPat}`);	// preserve newlines as a special word
 	let ind = `${indent()}${lineStart}`;
-	let result = [];
+	const result: string[] = [];
 	const words= s.split(breakPat);
 	let line = '';
 	for (let w of words) {
@@ -303,7 +303,7 @@ function breakLines(s: string, breakPat: string, lineStart: string): string {
 	if (line.length > 0) {
 		result.push(line);
 	}
-	return result.join(`\n${ind}`);
+	return result.map(l => l.trimEnd()).join(`\n${ind}`);
 }
 
 function openBlock(str: string, openChar?: string, indent?: boolean): string {
