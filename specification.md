@@ -114,7 +114,7 @@ interface Response extends ProtocolMessage {
    * This raw error might be interpreted by the client and is not shown in the
    * UI.
    * Some predefined values exist.
-   * Values: 
+   * Values:
    * 'cancelled': the request was cancelled.
    * 'notStopped': the request may be retried once the adapter is in a 'stopped'
    * state.
@@ -393,7 +393,7 @@ interface OutputEvent extends Event {
     /**
      * The output category. If not specified or if the category is not
      * understood by the client, `console` is assumed.
-     * Values: 
+     * Values:
      * 'console': Show the output in the client's default message UI, e.g. a
      * 'debug console'. This category should only be used for informational
      * output from the debugger (as opposed to the debuggee).
@@ -418,7 +418,7 @@ interface OutputEvent extends Event {
 
     /**
      * Support for keeping an output log organized by grouping related messages.
-     * Values: 
+     * Values:
      * 'start': Start a new group in expanded mode. Subsequent output events are
      * members of the group and should be shown indented.
      * The `output` attribute becomes the name of the group and is not indented.
@@ -568,7 +568,7 @@ interface ProcessEvent extends Event {
 
     /**
      * Describes how the debug engine started debugging this process.
-     * Values: 
+     * Values:
      * 'launch': Process was launched under the debugger.
      * 'attach': Debugger attached to an existing process.
      * 'attachForSuspendedLaunch': A project launcher component has launched a
@@ -2639,7 +2639,7 @@ interface EvaluateArguments {
 
   /**
    * The context in which the evaluate request is used.
-   * Values: 
+   * Values:
    * 'watch': evaluate is called from a watch view context.
    * 'repl': evaluate is called from a REPL context.
    * 'hover': evaluate is called to generate the debug hover contents.
@@ -3855,7 +3855,7 @@ interface Scope {
   /**
    * A hint for how to present this scope in the UI. If this attribute is
    * missing, the scope is shown with a generic UI.
-   * Values: 
+   * Values:
    * 'arguments': Scope contains method arguments.
    * 'locals': Scope contains local variables.
    * 'registers': Scope contains registers. Only a single `registers` scope
@@ -4019,7 +4019,7 @@ interface VariablePresentationHint {
   /**
    * The kind of variable. Before introducing additional values, try to use the
    * listed values.
-   * Values: 
+   * Values:
    * 'property': Indicates that the object is a property.
    * 'method': Indicates that the object is a method.
    * 'class': Indicates that the object is a class.
@@ -4044,7 +4044,7 @@ interface VariablePresentationHint {
   /**
    * Set of attributes represented as an array of strings. Before introducing
    * additional values, try to use the listed values.
-   * Values: 
+   * Values:
    * 'static': Indicates that the object is static.
    * 'constant': Indicates that the object is a constant.
    * 'readOnly': Indicates that the object is read only.
@@ -4248,7 +4248,7 @@ interface InstructionBreakpoint {
   instructionReference: string;
 
   /**
-   * The offset from the instruction reference.
+   * The offset from the instruction reference in bytes.
    * This can be negative.
    */
   offset?: number;
@@ -4336,6 +4336,19 @@ interface Breakpoint {
    * This can be negative.
    */
   offset?: number;
+
+  /**
+   * A machine-readable explanation of why a breakpoint may not be verified. If
+   * a breakpoint is verified or a specific reason is not known, the adapter
+   * should omit this property. Possible values include:
+   * 
+   * - `pending`: Indicates a breakpoint might be verified in the future, but
+   * the adapter cannot verify it in the current state.
+   * - `failed`: Indicates a breakpoint was not able to be verified, and the
+   * adapter does not believe it can be verified without intervention.
+   * Values: 'pending', 'failed'
+   */
+  reason?: 'pending' | 'failed';
 }
 ```
 
@@ -4786,6 +4799,16 @@ interface DisassembledInstruction {
    * The end column of the range that corresponds to this instruction, if any.
    */
   endColumn?: number;
+
+  /**
+   * A hint for how to present the instruction in the UI.
+   * 
+   * A value of `invalid` may be used to indicate this instruction is 'filler'
+   * and cannot be reached by the program. For example, unreadable memory
+   * addresses may be presented is 'invalid.'
+   * Values: 'normal', 'invalid'
+   */
+  presentationHint?: 'normal' | 'invalid';
 }
 ```
 
