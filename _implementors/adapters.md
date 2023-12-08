@@ -57,6 +57,7 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [Lua Debug](https://github.com/actboy168/lua-debug)|[@actboy168](https://github.com/actboy168)|[VS Code](https://marketplace.visualstudio.com/items?itemName=actboy168.lua-debug)
 [Mock Debug](https://github.com/Microsoft/vscode-mock-debug)|[@roblourens](https://github.com/roblourens)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.mock-debug)
 [Mono Debug](https://github.com/Microsoft/vscode-mono-debug)|[@akoeplinger](https://github.com/akoeplinger)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.mono-debug)
+[NAME](https://github.com/utdscheld/name)|[John Cole](https://personal.utdallas.edu/~John.Cole/)|
 [NativeScript](https://github.com/NativeScript/nativescript-vscode-extension/)|[@ivanbuhov](https://github.com/ivanbuhov)|[VS Code](https://marketplace.visualstudio.com/items?itemName=Telerik.nativescript)
 [Node Debug](https://github.com/Microsoft/vscode-node-debug)|[@weinand](https://github.com/weinand)|
 [OCaml Earlybird](https://github.com/hackwaly/ocamlearlybird)|[@sim642](https://github.com/sim642)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ocamllabs.ocaml-platform)
