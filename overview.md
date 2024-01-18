@@ -161,6 +161,8 @@ The *setBreakpoints* request registers all breakpoints that exist for a single s
 A simple implementation of these semantics in the debug adapter is to clear all previous breakpoints for the source and then set the breakpoints specified in the request.
 *setBreakpoints* and *setFunctionBreakpoints* are expected to return the 'actual' breakpoints and the generic debugger updates the UI dynamically if a breakpoint could not be set at the requested position or was moved by the debugger.
 
+If a debug adapter is unable to apply a breakpoint at the time when it's first sent, it should mark the breakpoint as unverified using `verified: false` in the `SetBreakpointsResponse`. If the breakpoint changes its state at a later point in time, the debug adapter should use the [**breakpoint**](./specification#Events_Breakpoint) event to notify the client.
+
 The following sequence diagram summarizes the sequence of requests and events for a hypothetical _gdb_ debug adapter:
 
 ![init-launch](./img/init-launch.png)
