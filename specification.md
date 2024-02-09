@@ -1476,9 +1476,7 @@ interface SetFunctionBreakpointsResponse extends Response {
 
 ### <a name="Requests_SetExceptionBreakpoints" class="anchor"></a>:leftwards_arrow_with_hook: SetExceptionBreakpoints Request
 
-The request configures the debugger's response to thrown exceptions.
-
-If an exception is configured to break, a `stopped` event is fired (with reason `exception`).
+The request configures the debugger's response to thrown exceptions. Each of the `filters`, `filterOptions`, and `exceptionOptions` in the request are independent configurations to a debug adapter indicating a kind of exception to catch. An exception thrown in a program should result in a `stopped` event from the debug adapter (with reason `exception`) if any of the configured filters match.
 
 Clients should only call this request if the corresponding capability `exceptionBreakpointFilters` returns one or more filters.
 
@@ -3468,6 +3466,16 @@ interface Capabilities {
    * `stepBack`).
    */
   supportsSingleThreadExecutionRequests?: boolean;
+
+  /**
+   * Modes of breakpoints supported by the debug adapter, such as 'hardware' or
+   * 'software'. If present, the client may allow the user to select a mode and
+   * include it in its `setBreakpoints` request.
+   * 
+   * Clients may present the first mode in this array as the 'default' mode in
+   * gestures that set breakpoints.
+   */
+  breakpointModes?: ChecksumAlgorithm[];
 }
 ```
 
@@ -4163,6 +4171,12 @@ interface SourceBreakpoint {
    * should only be logged if those conditions are met.
    */
   logMessage?: string;
+
+  /**
+   * The mode of this breakpoint. If defined, this must be one of the
+   * `breakpointModes` the debug adapter advertised in its `Capabilities`.
+   */
+  mode?: string;
 }
 ```
 
@@ -4267,6 +4281,12 @@ interface InstructionBreakpoint {
    * capability `supportsHitConditionalBreakpoints` is true.
    */
   hitCondition?: string;
+
+  /**
+   * The mode of this breakpoint. If defined, this must be one of the
+   * `breakpointModes` the debug adapter advertised in its `Capabilities`.
+   */
+  mode?: string;
 }
 ```
 
@@ -4825,5 +4845,30 @@ etc.
 ```typescript
 export type InvalidatedAreas = 'all' | 'stacks' | 'threads' | 'variables'
     | string;
+```
+
+### <a name="Types_BreakpointMode" class="anchor"></a>BreakpointMode
+
+A `BreakpointMode` is provided as a option when setting breakpoints on sources or instructions.
+
+```typescript
+interface BreakpointMode {
+  /**
+   * The internal ID of the mode. This value is passed to the `setBreakpoints`
+   * request.
+   */
+  mode?: string;
+
+  /**
+   * The name of the breakpoint mode. This is shown in the UI.
+   */
+  label?: string;
+
+  /**
+   * A help text providing additional information about the breakpoint mode.
+   * This string is typically shown as a hover and can be translated.
+   */
+  description?: string;
+}
 ```
 

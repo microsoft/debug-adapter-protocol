@@ -3231,6 +3231,13 @@
 				"supportsSingleThreadExecutionRequests": {
 					"type": "boolean",
 					"description": "The debug adapter supports the `singleThread` property on the execution requests (`continue`, `next`, `stepIn`, `stepOut`, `reverseContinue`, `stepBack`)."
+				},
+				"breakpointModes": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/ChecksumAlgorithm"
+					},
+					"description": "Modes of breakpoints supported by the debug adapter, such as 'hardware' or 'software'. If present, the client may allow the user to select a mode and include it in its `setBreakpoints` request.\n\nClients may present the first mode in this array as the 'default' mode in gestures that set breakpoints."
 				}
 			}
 		},
@@ -3700,6 +3707,10 @@
 				"logMessage": {
 					"type": "string",
 					"description": "If this attribute exists and is non-empty, the debug adapter must not 'break' (stop)\nbut log the message instead. Expressions within `{}` are interpolated.\nThe attribute is only honored by a debug adapter if the corresponding capability `supportsLogPoints` is true.\nIf either `hitCondition` or `condition` is specified, then the message should only be logged if those conditions are met."
+				},
+				"mode": {
+					"type": "string",
+					"description": "The mode of this breakpoint. If defined, this must be one of the `breakpointModes` the debug adapter advertised in its `Capabilities`."
 				}
 			},
 			"required": [ "line" ]
@@ -3774,6 +3785,10 @@
 				"hitCondition": {
 					"type": "string",
 					"description": "An expression that controls how many hits of the breakpoint are ignored.\nThe debug adapter is expected to interpret the expression as needed.\nThe attribute is only honored by a debug adapter if the corresponding capability `supportsHitConditionalBreakpoints` is true."
+				},
+				"mode": {
+					"type": "string",
+					"description": "The mode of this breakpoint. If defined, this must be one of the `breakpointModes` the debug adapter advertised in its `Capabilities`."
 				}
 			},
 			"required": [ "instructionReference" ]
@@ -4184,7 +4199,24 @@
 				"Previously fetched thread related data has become invalid and needs to be refetched.",
 				"Previously fetched variable data has become invalid and needs to be refetched."
 			]
+		},
+		"BreakpointMode": {
+			"type": "object",
+			"description": "A `BreakpointMode` is provided as a option when setting breakpoints on sources or instructions.",
+			"properties": {
+				"mode": {
+					"type": "string",
+					"description": "The internal ID of the mode. This value is passed to the `setBreakpoints` request."
+				},
+				"label": {
+					"type": "string",
+					"description": "The name of the breakpoint mode. This is shown in the UI."
+				},
+				"description": {
+					"type": "string",
+					"description": "A help text providing additional information about the breakpoint mode. This string is typically shown as a hover and can be translated."
+				}
+			}
 		}
-
 	}
 }
