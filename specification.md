@@ -3475,7 +3475,7 @@ interface Capabilities {
    * Clients may present the first mode in this array as the 'default' mode in
    * gestures that set breakpoints.
    */
-  breakpointModes?: ChecksumAlgorithm[];
+  breakpointModes?: BreakpointMode[];
 }
 ```
 

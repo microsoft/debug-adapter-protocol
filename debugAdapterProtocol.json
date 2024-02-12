@@ -3235,7 +3235,7 @@
 				"breakpointModes": {
 					"type": "array",
 					"items": {
-						"$ref": "#/definitions/ChecksumAlgorithm"
+						"$ref": "#/definitions/BreakpointMode"
 					},
 					"description": "Modes of breakpoints supported by the debug adapter, such as 'hardware' or 'software'. If present, the client may allow the user to select a mode and include it in its `setBreakpoints` request.\n\nClients may present the first mode in this array as the 'default' mode in gestures that set breakpoints."
 				}
