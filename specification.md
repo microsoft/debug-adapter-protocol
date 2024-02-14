@@ -1476,9 +1476,7 @@ interface SetFunctionBreakpointsResponse extends Response {
 
 ### <a name="Requests_SetExceptionBreakpoints" class="anchor"></a>:leftwards_arrow_with_hook: SetExceptionBreakpoints Request
 
-The request configures the debugger's response to thrown exceptions.
-
-If an exception is configured to break, a `stopped` event is fired (with reason `exception`).
+The request configures the debugger's response to thrown exceptions. Each of the `filters`, `filterOptions`, and `exceptionOptions` in the request are independent configurations to a debug adapter indicating a kind of exception to catch. An exception thrown in a program should result in a `stopped` event from the debug adapter (with reason `exception`) if any of the configured filters match.
 
 Clients should only call this request if the corresponding capability `exceptionBreakpointFilters` returns one or more filters.
 
@@ -1584,6 +1582,12 @@ interface DataBreakpointInfoArguments {
    * `variablesReference` is specified, this property has no effect.
    */
   frameId?: number;
+
+  /**
+   * The mode of the desired breakpoint. If defined, this must be one of the
+   * `breakpointModes` the debug adapter advertised in its `Capabilities`.
+   */
+  mode?: string;
 }
 ```
 
@@ -3246,6 +3250,84 @@ interface DisassembleResponse extends Response {
 }
 ```
 
+### <a name="Requests_DataAddressBreakpointInfo" class="anchor"></a>:leftwards_arrow_with_hook: DataAddressBreakpointInfo Request
+
+Obtains information on a possible data breakpoint that could be set on a memory address or memory address range.
+
+
+
+Clients should only call this request if the corresponding capability `supportsDataAddressInfo` is true.
+
+```typescript
+interface DataAddressBreakpointInfoRequest extends Request {
+  command: 'DataAddressBreakpointInfo';
+
+  arguments: DataAddressBreakpointInfoArguments;
+}
+```
+
+Arguments for `dataAddressBreakpointInfo` request.
+
+<a name="Types_DataAddressBreakpointInfoArguments" class="anchor"></a>
+```typescript
+interface DataAddressBreakpointInfoArguments {
+  /**
+   * The address of the data for which to obtain breakpoint information.
+   * Treated as a hex value if prefixed with `0x`, or as a decimal value
+   * otherwise.
+   */
+  address?: string;
+
+  /**
+   * If passed, requests breakpoint information for an exclusive byte range
+   * rather than a single address. The range extends the given number of `bytes`
+   * from the start `address`.
+   * Treated as a hex value if prefixed with `0x`, or as a decimal value
+   * otherwise.
+   */
+  bytes?: string;
+}
+```
+
+Response to `dataAddressBreakpointInfo` request.
+
+<a name="Types_DataAddressBreakpointInfoResponse" class="anchor"></a>
+```typescript
+interface DataAddressBreakpointInfoResponse extends Response {
+  body: {
+    /**
+     * An identifier for the data on which a data breakpoint can be registered
+     * with the `setDataBreakpoints` request or null if no data breakpoint is
+     * available. If a `variablesReference` or `frameId` is passed, the `dataId`
+     * is valid in the current suspended state, otherwise it's valid
+     * indefinitely. See 'Lifetime of Object References' in the Overview section
+     * for details. Breakpoints set using the `dataId` in the
+     * `setDataBreakpoints` request may outlive the lifetime of the associated
+     * `dataId`.
+     */
+    dataId: string | null;
+
+    /**
+     * UI string that describes on what data the breakpoint is set on or why a
+     * data breakpoint is not available.
+     */
+    description: string;
+
+    /**
+     * Attribute lists the available access types for a potential data
+     * breakpoint. A UI client could surface this information.
+     */
+    accessTypes?: DataBreakpointAccessType[];
+
+    /**
+     * Attribute indicates that a potential data breakpoint could be persisted
+     * across sessions.
+     */
+    canPersist?: boolean;
+  };
+}
+```
+
 ## <a name="Types" class="anchor"></a>Types
 
 ### <a name="Types_Capabilities" class="anchor"></a>Capabilities
@@ -3445,6 +3527,11 @@ interface Capabilities {
   supportsClipboardContext?: boolean;
 
   /**
+   * The debug adapter supports the `dataAddressBreakpointInfo` request.
+   */
+  supportsDataAddressInfo?: boolean;
+
+  /**
    * The debug adapter supports stepping granularities (argument `granularity`)
    * for the stepping requests.
    */
@@ -3468,6 +3555,16 @@ interface Capabilities {
    * `stepBack`).
    */
   supportsSingleThreadExecutionRequests?: boolean;
+
+  /**
+   * Modes of breakpoints supported by the debug adapter, such as 'hardware' or
+   * 'software'. If present, the client may allow the user to select a mode and
+   * include it in its `setBreakpoints` request.
+   * 
+   * Clients may present the first applicable mode in this array as the
+   * 'default' mode in gestures that set breakpoints.
+   */
+  breakpointModes?: BreakpointMode[];
 }
 ```
 
@@ -4163,6 +4260,12 @@ interface SourceBreakpoint {
    * should only be logged if those conditions are met.
    */
   logMessage?: string;
+
+  /**
+   * The mode of this breakpoint. If defined, this must be one of the
+   * `breakpointModes` the debug adapter advertised in its `Capabilities`.
+   */
+  mode?: string;
 }
 ```
 
@@ -4267,6 +4370,12 @@ interface InstructionBreakpoint {
    * capability `supportsHitConditionalBreakpoints` is true.
    */
   hitCondition?: string;
+
+  /**
+   * The mode of this breakpoint. If defined, this must be one of the
+   * `breakpointModes` the debug adapter advertised in its `Capabilities`.
+   */
+  mode?: string;
 }
 ```
 
@@ -4638,6 +4747,12 @@ interface ExceptionFilterOptions {
    * true.
    */
   condition?: string;
+
+  /**
+   * The mode of this exception breakpoint. If defined, this must be one of the
+   * `breakpointModes` the debug adapter advertised in its `Capabilities`.
+   */
+  mode?: string;
 }
 ```
 
@@ -4825,5 +4940,50 @@ etc.
 ```typescript
 export type InvalidatedAreas = 'all' | 'stacks' | 'threads' | 'variables'
     | string;
+```
+
+### <a name="Types_BreakpointMode" class="anchor"></a>BreakpointMode
+
+A `BreakpointMode` is provided as a option when setting breakpoints on sources or instructions.
+
+```typescript
+interface BreakpointMode {
+  /**
+   * The internal ID of the mode. This value is passed to the `setBreakpoints`
+   * request.
+   */
+  mode: string;
+
+  /**
+   * The name of the breakpoint mode. This is shown in the UI.
+   */
+  label: string;
+
+  /**
+   * A help text providing additional information about the breakpoint mode.
+   * This string is typically shown as a hover and can be translated.
+   */
+  description?: string;
+
+  /**
+   * Describes one or more type of breakpoint this mode applies to.
+   */
+  appliesTo: BreakpointModeApplicability[];
+}
+```
+
+### <a name="Types_BreakpointModeApplicability" class="anchor"></a>BreakpointModeApplicability
+
+Describes one or more type of breakpoint a `BreakpointMode` applies to. This is a non-exhaustive enumeration and may expand as future breakpoint types are added.
+Values: 
+- 'source': In `SourceBreakpoint`s
+- 'exception': In exception breakpoints applied in the `ExceptionFilterOptions`
+- 'data': In data breakpoints requested in the the `DataBreakpointInfo` request
+- 'instruction': In `InstructionBreakpoint`s
+etc.
+
+```typescript
+export type BreakpointModeApplicability = 'source' | 'exception' | 'data'
+    | 'instruction' | string;
 ```
 

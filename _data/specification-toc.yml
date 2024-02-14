@@ -65,6 +65,8 @@
       anchor: Requests_ConfigurationDone
     - title: Continue
       anchor: Requests_Continue
+    - title: DataAddressBreakpointInfo
+      anchor: Requests_DataAddressBreakpointInfo
     - title: DataBreakpointInfo
       anchor: Requests_DataBreakpointInfo
     - title: Disassemble
@@ -151,6 +153,10 @@
       anchor: Types_Breakpoint
     - title: BreakpointLocation
       anchor: Types_BreakpointLocation
+    - title: BreakpointMode
+      anchor: Types_BreakpointMode
+    - title: BreakpointModeApplicability
+      anchor: Types_BreakpointModeApplicability
     - title: Capabilities
       anchor: Types_Capabilities
     - title: Checksum

@@ -1463,6 +1463,10 @@
 				"frameId": {
 					"type": "integer",
 					"description": "When `name` is an expression, evaluate it in the scope of this stack frame. If not specified, the expression is evaluated in the global scope. When `variablesReference` is specified, this property has no effect."
+				},
+				"mode": {
+					"type": "string",
+					"description": "The mode of the desired breakpoint. If defined, this must be one of the `breakpointModes` the debug adapter advertised in its `Capabilities`."
 				}
 			},
 			"required": [ "name" ]
@@ -3059,6 +3063,72 @@
 			}]
 		},
 
+		"DataAddressBreakpointInfoRequest": {
+			"allOf": [ { "$ref": "#/definitions/Request" }, {
+				"type": "object",
+				"description": "Obtains information on a possible data breakpoint that could be set on a memory address or memory address range.\n\nClients should only call this request if the corresponding capability `supportsDataAddressInfo` is true.",
+				"properties": {
+					"command": {
+						"type": "string",
+						"enum": [ "DataAddressBreakpointInfo" ]
+					},
+					"arguments": {
+						"$ref": "#/definitions/DataAddressBreakpointInfoArguments"
+					}
+				},
+				"required": [ "command", "arguments"  ]
+			}]
+		},
+		"DataAddressBreakpointInfoArguments": {
+			"type": "object",
+			"description": "Arguments for `dataAddressBreakpointInfo` request.",
+			"properties": {
+				"address": {
+					"type": "string",
+					"description": "The address of the data for which to obtain breakpoint information.\nTreated as a hex value if prefixed with `0x`, or as a decimal value otherwise."
+				},
+				"bytes": {
+					"type": "string",
+					"description": "If passed, requests breakpoint information for an exclusive byte range rather than a single address. The range extends the given number of `bytes` from the start `address`.\nTreated as a hex value if prefixed with `0x`, or as a decimal value otherwise."
+				}
+			},
+			"required": [ "threadId" ]
+		},
+		"DataAddressBreakpointInfoResponse": {
+			"allOf": [ { "$ref": "#/definitions/Response" }, {
+				"type": "object",
+				"description": "Response to `dataAddressBreakpointInfo` request.",
+				"properties": {
+					"body": {
+						"type": "object",
+						"properties": {
+							"dataId": {
+								"type": [ "string", "null" ],
+								"description": "An identifier for the data on which a data breakpoint can be registered with the `setDataBreakpoints` request or null if no data breakpoint is available. If a `variablesReference` or `frameId` is passed, the `dataId` is valid in the current suspended state, otherwise it's valid indefinitely. See 'Lifetime of Object References' in the Overview section for details. Breakpoints set using the `dataId` in the `setDataBreakpoints` request may outlive the lifetime of the associated `dataId`."
+							},
+							"description": {
+								"type": "string",
+								"description": "UI string that describes on what data the breakpoint is set on or why a data breakpoint is not available."
+							},
+							"accessTypes": {
+								"type": "array",
+								"items": {
+									"$ref": "#/definitions/DataBreakpointAccessType"
+								},
+								"description": "Attribute lists the available access types for a potential data breakpoint. A UI client could surface this information."
+							},
+							"canPersist": {
+								"type": "boolean",
+								"description": "Attribute indicates that a potential data breakpoint could be persisted across sessions."
+							}
+						},
+						"required": [ "dataId", "description" ]
+					}
+				},
+				"required": [ "body" ]
+			}]
+		},
+
 		"Capabilities": {
 			"type": "object",
 			"title": "Types",
@@ -3216,6 +3286,10 @@
 					"type": "boolean",
 					"description": "The debug adapter supports the `clipboard` context value in the `evaluate` request."
 				},
+				"supportsDataAddressInfo": {
+					"type": "boolean",
+					"description": "The debug adapter supports the `dataAddressBreakpointInfo` request."
+				},
 				"supportsSteppingGranularity": {
 					"type": "boolean",
 					"description": "The debug adapter supports stepping granularities (argument `granularity`) for the stepping requests."
@@ -3231,6 +3305,13 @@
 				"supportsSingleThreadExecutionRequests": {
 					"type": "boolean",
 					"description": "The debug adapter supports the `singleThread` property on the execution requests (`continue`, `next`, `stepIn`, `stepOut`, `reverseContinue`, `stepBack`)."
+				},
+				"breakpointModes": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/BreakpointMode"
+					},
+					"description": "Modes of breakpoints supported by the debug adapter, such as 'hardware' or 'software'. If present, the client may allow the user to select a mode and include it in its `setBreakpoints` request.\n\nClients may present the first applicable mode in this array as the 'default' mode in gestures that set breakpoints."
 				}
 			}
 		},
@@ -3700,6 +3781,10 @@
 				"logMessage": {
 					"type": "string",
 					"description": "If this attribute exists and is non-empty, the debug adapter must not 'break' (stop)\nbut log the message instead. Expressions within `{}` are interpolated.\nThe attribute is only honored by a debug adapter if the corresponding capability `supportsLogPoints` is true.\nIf either `hitCondition` or `condition` is specified, then the message should only be logged if those conditions are met."
+				},
+				"mode": {
+					"type": "string",
+					"description": "The mode of this breakpoint. If defined, this must be one of the `breakpointModes` the debug adapter advertised in its `Capabilities`."
 				}
 			},
 			"required": [ "line" ]
@@ -3774,6 +3859,10 @@
 				"hitCondition": {
 					"type": "string",
 					"description": "An expression that controls how many hits of the breakpoint are ignored.\nThe debug adapter is expected to interpret the expression as needed.\nThe attribute is only honored by a debug adapter if the corresponding capability `supportsHitConditionalBreakpoints` is true."
+				},
+				"mode": {
+					"type": "string",
+					"description": "The mode of this breakpoint. If defined, this must be one of the `breakpointModes` the debug adapter advertised in its `Capabilities`."
 				}
 			},
 			"required": [ "instructionReference" ]
@@ -4042,6 +4131,10 @@
 				"condition": {
 					"type": "string",
 					"description": "An expression for conditional exceptions.\nThe exception breaks into the debugger if the result of the condition is true."
+				},
+				"mode": {
+					"type": "string",
+					"description": "The mode of this exception breakpoint. If defined, this must be one of the `breakpointModes` the debug adapter advertised in its `Capabilities`."
 				}
 			},
 			"required": [ "filterId" ]
@@ -4184,7 +4277,43 @@
 				"Previously fetched thread related data has become invalid and needs to be refetched.",
 				"Previously fetched variable data has become invalid and needs to be refetched."
 			]
+		},
+		"BreakpointMode": {
+			"type": "object",
+			"description": "A `BreakpointMode` is provided as a option when setting breakpoints on sources or instructions.",
+			"required": ["mode", "label", "appliesTo"],
+			"properties": {
+				"mode": {
+					"type": "string",
+					"description": "The internal ID of the mode. This value is passed to the `setBreakpoints` request."
+				},
+				"label": {
+					"type": "string",
+					"description": "The name of the breakpoint mode. This is shown in the UI."
+				},
+				"description": {
+					"type": "string",
+					"description": "A help text providing additional information about the breakpoint mode. This string is typically shown as a hover and can be translated."
+				},
+				"appliesTo": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/BreakpointModeApplicability"
+					},
+					"description": "Describes one or more type of breakpoint this mode applies to."
+				}
+			}
+		},
+		"BreakpointModeApplicability": {
+			"type": "string",
+			"_enum": ["source", "exception", "data", "instruction"],
+			"enumDescriptions": [
+				"In `SourceBreakpoint`s",
+				"In exception breakpoints applied in the `ExceptionFilterOptions`",
+				"In data breakpoints requested in the the `DataBreakpointInfo` request",
+				"In `InstructionBreakpoint`s"
+			],
+			"description": "Describes one or more type of breakpoint a `BreakpointMode` applies to. This is a non-exhaustive enumeration and may expand as future breakpoint types are added."
 		}
-
 	}
 }
