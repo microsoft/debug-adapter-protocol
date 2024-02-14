@@ -194,6 +194,8 @@ Some complex structural objects such as [`scopes`](./specification#Types_Scope) 
 
 To simplify the management of object references in debug adapters, their lifetime is limited to the current suspended state. Once execution resumes, object references become invalid and DAP clients must not use them. When execution is paused again, object references no longer refer to the same objects. This means that a debug adapter can easily use sequentially assigned integers for different objects and reset the counter to 1 when execution resumes.
 
+Variable references not related to the current suspended state, such as those from `evaluate` requests or in `output` events, should be preserved as long as feasible for the debug adapter so that the client may later inspect them.
+
 Please note that other object references like `threadId` do not have limited lifetime because that would prevent something like the `pause` request from working in the running state.
 
 ### Supporting threads

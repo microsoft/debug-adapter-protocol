@@ -8,6 +8,7 @@ sectionid: changelog
 
 * 1.65.x
   * Clarify handling of multiple filters in the `SetExceptionBreakpoints` request
+  * Clarify lifetimes of objects created outside of suspended states
 
 * 1.64.x
   * Clarify that the `offset` in the `InstructionBreakpoint` is given in bytes
