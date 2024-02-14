@@ -3059,6 +3059,72 @@
 			}]
 		},
 
+		"DataAddressBreakpointInfoRequest": {
+			"allOf": [ { "$ref": "#/definitions/Request" }, {
+				"type": "object",
+				"description": "Obtains information on a possible data breakpoint that could be set on a memory address or memory address range.\n\nClients should only call this request if the corresponding capability `supportsDataAddressInfo` is true.",
+				"properties": {
+					"command": {
+						"type": "string",
+						"enum": [ "DataAddressBreakpointInfo" ]
+					},
+					"arguments": {
+						"$ref": "#/definitions/DataAddressBreakpointInfoArguments"
+					}
+				},
+				"required": [ "command", "arguments"  ]
+			}]
+		},
+		"DataAddressBreakpointInfoArguments": {
+			"type": "object",
+			"description": "Arguments for `dataAddressBreakpointInfo` request.",
+			"properties": {
+				"address": {
+					"type": "string",
+					"description": "The address of the data for which to obtain breakpoint information.\nTreated as a hex value if prefixed with `0x`, or as a decimal value otherwise."
+				},
+				"bytes": {
+					"type": "string",
+					"description": "If passed, requests breakpoint information for an exclusive byte range rather than a single address. The range extends the given number of `bytes` from the start `address`.\nTreated as a hex value if prefixed with `0x`, or as a decimal value otherwise."
+				}
+			},
+			"required": [ "threadId" ]
+		},
+		"DataAddressBreakpointInfoResponse": {
+			"allOf": [ { "$ref": "#/definitions/Response" }, {
+				"type": "object",
+				"description": "Response to `dataAddressBreakpointInfo` request.",
+				"properties": {
+					"body": {
+						"type": "object",
+						"properties": {
+							"dataId": {
+								"type": [ "string", "null" ],
+								"description": "An identifier for the data on which a data breakpoint can be registered with the `setDataBreakpoints` request or null if no data breakpoint is available. If a `variablesReference` or `frameId` is passed, the `dataId` is valid in the current suspended state, otherwise it's valid indefinitely. See 'Lifetime of Object References' in the Overview section for details. Breakpoints set using the `dataId` in the `setDataBreakpoints` request may outlive the lifetime of the associated `dataId`."
+							},
+							"description": {
+								"type": "string",
+								"description": "UI string that describes on what data the breakpoint is set on or why a data breakpoint is not available."
+							},
+							"accessTypes": {
+								"type": "array",
+								"items": {
+									"$ref": "#/definitions/DataBreakpointAccessType"
+								},
+								"description": "Attribute lists the available access types for a potential data breakpoint. A UI client could surface this information."
+							},
+							"canPersist": {
+								"type": "boolean",
+								"description": "Attribute indicates that a potential data breakpoint could be persisted across sessions."
+							}
+						},
+						"required": [ "dataId", "description" ]
+					}
+				},
+				"required": [ "body" ]
+			}]
+		},
+
 		"Capabilities": {
 			"type": "object",
 			"title": "Types",
@@ -3215,6 +3281,10 @@
 				"supportsClipboardContext": {
 					"type": "boolean",
 					"description": "The debug adapter supports the `clipboard` context value in the `evaluate` request."
+				},
+				"supportsDataAddressInfo": {
+					"type": "boolean",
+					"description": "The debug adapter supports the `dataAddressBreakpointInfo` request."
 				},
 				"supportsSteppingGranularity": {
 					"type": "boolean",

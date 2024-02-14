@@ -65,6 +65,8 @@
       anchor: Requests_ConfigurationDone
     - title: Continue
       anchor: Requests_Continue
+    - title: DataAddressBreakpointInfo
+      anchor: Requests_DataAddressBreakpointInfo
     - title: DataBreakpointInfo
       anchor: Requests_DataBreakpointInfo
     - title: Disassemble
