@@ -9,6 +9,7 @@ sectionid: changelog
 * 1.65.x
   * Add a new `DataAddressBreakpointInfo` request to allow setting data breakpoints based on memory address
   * Clarify handling of multiple filters in the `SetExceptionBreakpoints` request
+  * Clarify lifetimes of objects created outside of suspended states
   * Add a `BreakpointMode` for setting different types of breakpoints
 
 * 1.64.x
