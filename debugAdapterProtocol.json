@@ -1463,6 +1463,10 @@
 				"frameId": {
 					"type": "integer",
 					"description": "When `name` is an expression, evaluate it in the scope of this stack frame. If not specified, the expression is evaluated in the global scope. When `variablesReference` is specified, this property has no effect."
+				},
+				"mode": {
+					"type": "string",
+					"description": "The mode of the desired breakpoint. If defined, this must be one of the `breakpointModes` the debug adapter advertised in its `Capabilities`."
 				}
 			},
 			"required": [ "name" ]
@@ -3237,7 +3241,7 @@
 					"items": {
 						"$ref": "#/definitions/BreakpointMode"
 					},
-					"description": "Modes of breakpoints supported by the debug adapter, such as 'hardware' or 'software'. If present, the client may allow the user to select a mode and include it in its `setBreakpoints` request.\n\nClients may present the first mode in this array as the 'default' mode in gestures that set breakpoints."
+					"description": "Modes of breakpoints supported by the debug adapter, such as 'hardware' or 'software'. If present, the client may allow the user to select a mode and include it in its `setBreakpoints` request.\n\nClients may present the first applicable mode in this array as the 'default' mode in gestures that set breakpoints."
 				}
 			}
 		},
@@ -4057,6 +4061,10 @@
 				"condition": {
 					"type": "string",
 					"description": "An expression for conditional exceptions.\nThe exception breaks into the debugger if the result of the condition is true."
+				},
+				"mode": {
+					"type": "string",
+					"description": "The mode of this exception breakpoint. If defined, this must be one of the `breakpointModes` the debug adapter advertised in its `Capabilities`."
 				}
 			},
 			"required": [ "filterId" ]
@@ -4203,6 +4211,7 @@
 		"BreakpointMode": {
 			"type": "object",
 			"description": "A `BreakpointMode` is provided as a option when setting breakpoints on sources or instructions.",
+			"required": ["mode", "label", "appliesTo"],
 			"properties": {
 				"mode": {
 					"type": "string",
@@ -4215,8 +4224,26 @@
 				"description": {
 					"type": "string",
 					"description": "A help text providing additional information about the breakpoint mode. This string is typically shown as a hover and can be translated."
+				},
+				"appliesTo": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/BreakpointModeApplicability"
+					},
+					"description": "Describes one or more type of breakpoint this mode applies to."
 				}
 			}
+		},
+		"BreakpointModeApplicability": {
+			"type": "string",
+			"_enum": ["source", "exception", "data", "instruction"],
+			"enumDescriptions": [
+				"In `SourceBreakpoint`s",
+				"In exception breakpoints applied in the `ExceptionFilterOptions`",
+				"In data breakpoints requested in the the `DataBreakpointInfo` request",
+				"In `InstructionBreakpoint`s"
+			],
+			"description": "Describes one or more type of breakpoint a `BreakpointMode` applies to. This is a non-exhaustive enumeration and may expand as future breakpoint types are added."
 		}
 	}
 }

@@ -153,6 +153,8 @@
       anchor: Types_BreakpointLocation
     - title: BreakpointMode
       anchor: Types_BreakpointMode
+    - title: BreakpointModeApplicability
+      anchor: Types_BreakpointModeApplicability
     - title: Capabilities
       anchor: Types_Capabilities
     - title: Checksum
