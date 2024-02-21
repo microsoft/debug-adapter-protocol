@@ -3573,8 +3573,8 @@
 				},
 				"presentationHint": {
 					"type": "string",
-					"enum": [ "normal", "label", "subtle" ],
-					"description": "A hint for how to present this frame in the UI.\nA value of `label` can be used to indicate that the frame is an artificial frame that is used as a visual label or separator. A value of `subtle` can be used to change the appearance of a frame in a 'subtle' way."
+					"enum": [ "normal", "label", "subtle", "deemphasize" ],
+					"description": "A hint for how to present this frame in the UI.\nA value of `label` can be used to indicate that the frame is an artificial frame that is used as a visual label or separator. A value of `subtle` can be used to change the appearance of a frame in a 'subtle' way.\nA value of `deemphasize` can be used to indicate that the frame is skipped on stepping."
 				}
 			},
 			"required": [ "id", "name", "line", "column" ]
