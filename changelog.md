@@ -6,6 +6,11 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.65.x
+  * Clarify handling of multiple filters in the `SetExceptionBreakpoints` request
+  * Clarify lifetimes of objects created outside of suspended states
+  * Add a `BreakpointMode` for setting different types of breakpoints
+
 * 1.64.x
   * Clarify that the `offset` in the `InstructionBreakpoint` is given in bytes
   * Add a `presentationHint` to the `DisassembledInstruction`
