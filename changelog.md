@@ -6,6 +6,9 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.66.x
+ * Add `bytes` and `asAddress` properties to the `DataBreakpointInfo` request
+
 * 1.65.x
   * Clarify handling of multiple filters in the `SetExceptionBreakpoints` request
   * Clarify lifetimes of objects created outside of suspended states
