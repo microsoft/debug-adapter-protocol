@@ -3250,84 +3250,6 @@ interface DisassembleResponse extends Response {
 }
 ```
 
-### <a name="Requests_DataAddressBreakpointInfo" class="anchor"></a>:leftwards_arrow_with_hook: DataAddressBreakpointInfo Request
-
-Obtains information on a possible data breakpoint that could be set on a memory address or memory address range.
-
-
-
-Clients should only call this request if the corresponding capability `supportsDataAddressInfo` is true.
-
-```typescript
-interface DataAddressBreakpointInfoRequest extends Request {
-  command: 'DataAddressBreakpointInfo';
-
-  arguments: DataAddressBreakpointInfoArguments;
-}
-```
-
-Arguments for `dataAddressBreakpointInfo` request.
-
-<a name="Types_DataAddressBreakpointInfoArguments" class="anchor"></a>
-```typescript
-interface DataAddressBreakpointInfoArguments {
-  /**
-   * The address of the data for which to obtain breakpoint information.
-   * Treated as a hex value if prefixed with `0x`, or as a decimal value
-   * otherwise.
-   */
-  address?: string;
-
-  /**
-   * If passed, requests breakpoint information for an exclusive byte range
-   * rather than a single address. The range extends the given number of `bytes`
-   * from the start `address`.
-   * Treated as a hex value if prefixed with `0x`, or as a decimal value
-   * otherwise.
-   */
-  bytes?: string;
-}
-```
-
-Response to `dataAddressBreakpointInfo` request.
-
-<a name="Types_DataAddressBreakpointInfoResponse" class="anchor"></a>
-```typescript
-interface DataAddressBreakpointInfoResponse extends Response {
-  body: {
-    /**
-     * An identifier for the data on which a data breakpoint can be registered
-     * with the `setDataBreakpoints` request or null if no data breakpoint is
-     * available. If a `variablesReference` or `frameId` is passed, the `dataId`
-     * is valid in the current suspended state, otherwise it's valid
-     * indefinitely. See 'Lifetime of Object References' in the Overview section
-     * for details. Breakpoints set using the `dataId` in the
-     * `setDataBreakpoints` request may outlive the lifetime of the associated
-     * `dataId`.
-     */
-    dataId: string | null;
-
-    /**
-     * UI string that describes on what data the breakpoint is set on or why a
-     * data breakpoint is not available.
-     */
-    description: string;
-
-    /**
-     * Attribute lists the available access types for a potential data
-     * breakpoint. A UI client could surface this information.
-     */
-    accessTypes?: DataBreakpointAccessType[];
-
-    /**
-     * Attribute indicates that a potential data breakpoint could be persisted
-     * across sessions.
-     */
-    canPersist?: boolean;
-  };
-}
-```
-
 ## <a name="Types" class="anchor"></a>Types
 
 ### <a name="Types_Capabilities" class="anchor"></a>Capabilities
@@ -3525,11 +3447,6 @@ interface Capabilities {
    * request.
    */
   supportsClipboardContext?: boolean;
-
-  /**
-   * The debug adapter supports the `dataAddressBreakpointInfo` request.
-   */
-  supportsDataAddressInfo?: boolean;
 
   /**
    * The debug adapter supports stepping granularities (argument `granularity`)
