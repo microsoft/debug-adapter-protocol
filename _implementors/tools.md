@@ -15,6 +15,7 @@ The following table lists the known development tools (IDEs) that implement the 
 | Visual Studio for Mac         | vsformac     | Microsoft  |
 | Eclipse IDE (LSP4E connector) | lsp4e.debug  | Eclipse    | [Eclipse community](https://projects.eclipse.org/projects/technology.lsp4e/who), [Eclipse LSP4E](https://projects.eclipse.org/projects/technology.lsp4e)
 | Emacs                         | emacs.dap-mode | [@yyoncho](https://github.com/yyoncho) | [dap-mode](https://github.com/yyoncho/dap-mode)
+| Emacs                         | dape | [@svaante](https://github.com/svaante) | [dape](https://github.com/svaante/dape)
 | Theia                         | Theia        | Eclipse    | [theia](https://github.com/theia-ide/theia/)
 | Vim, Neovim                   | vimspector   | [Ben Jackson](https://github.com/puremourning) | [vimspector](https://github.com/puremourning/vimspector), [vim](https://github.com/vim/vim), [neovim](https://github.com/neovim/neovim)
 | Neovim                        | neovim       | [@mfussenegger](https://github.com/mfussenegger) | [nvim-dap](https://github.com/mfussenegger/nvim-dap), [neovim](https://github.com/neovim/neovim)
