@@ -1572,7 +1572,8 @@ interface DataBreakpointInfoArguments {
 
   /**
    * The name of the variable's child to obtain data breakpoint information for.
-   * If `variablesReference` isn't specified, this can be an expression.
+   * If `variablesReference` isn't specified, this can be an expression, or an
+   * address if `asAddress` is also true.
    */
   name: string;
 
@@ -1582,6 +1583,26 @@ interface DataBreakpointInfoArguments {
    * `variablesReference` is specified, this property has no effect.
    */
   frameId?: number;
+
+  /**
+   * Clients may set this property only if the `supportsDataBreakpointBytes`
+   * capability is true.
+   * 
+   * Clients may pass this to request a reference to a range of memory rather
+   * than a single address. Data breakpoints set using the resulting data ID
+   * request that the debugger pause within the range of memory extending
+   * `bytes` from the address or variable specified by `name`.
+   */
+  bytes?: number;
+
+  /**
+   * If `true`, the `name` is a memory address and the debugger should interpret
+   * it as a decimal value, or hex value if it is prefixed with `0x`.
+   * 
+   * Clients may set this property only if the `supportsDataBreakpointBytes`
+   * capability is true.
+   */
+  asAddress?: boolean;
 
   /**
    * The mode of the desired breakpoint. If defined, this must be one of the
@@ -3472,6 +3493,12 @@ interface Capabilities {
    * `stepBack`).
    */
   supportsSingleThreadExecutionRequests?: boolean;
+
+  /**
+   * The debug adapter supports the `asAddress` field in the
+   * `dataBreakpointInfo` request.
+   */
+  supportsDataBreakpointBytes?: boolean;
 
   /**
    * Modes of breakpoints supported by the debug adapter, such as 'hardware' or
