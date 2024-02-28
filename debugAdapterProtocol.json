@@ -1466,7 +1466,7 @@
 				},
 				"bytes": {
 					"type": "integer",
-					"description": "If specified, a the debug adapter should return information for the range of memory extending `bytes` number of bytes from the address or variable specified by `name`. Breakpoints set using the resulting data ID should pause on data access anywhere within that range.\n\nClients may set this property only if the `supportsDataBreakpointBytes` capability is true."
+					"description": "If specified, a debug adapter should return information for the range of memory extending `bytes` number of bytes from the address or variable specified by `name`. Breakpoints set using the resulting data ID should pause on data access anywhere within that range.\n\nClients may set this property only if the `supportsDataBreakpointBytes` capability is true."
 				},
 				"asAddress": {
 					"type": "boolean",
