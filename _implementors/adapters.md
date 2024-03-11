@@ -70,7 +70,7 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [Python](https://github.com/Microsoft/vscode-python)|[@DonJayamanne](https://github.com/DonJayamanne)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
 [R Debugger](https://github.com/ManuelHentschel/VSCode-R-Debugger)|[@ManuelHentschel](https://github.com/ManuelHentschel)|[VS Code](https://marketplace.visualstudio.com/items?itemName=RDebugger.r-debugger)
 [React Native Tools](https://github.com/Microsoft/vscode-react-native/issues)|[@MSLaguana](https://github.com/MSLaguana)|[VS Code](https://marketplace.visualstudio.com/items?itemName=vsmobile.vscode-react-native)
-[Ruby](https://github.com/rubyide/vscode-ruby)|[@rebornix](https://github.com/rebornix)|[VS Code](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby)
+[Ruby LSP](https://github.com/Shopify/ruby-lsp)|[@Shopify](https://github.com/Shopify)|[VS Code](https://marketplace.visualstudio.com/items?itemName=Shopify.ruby-lsp)
 [Ruby Byebug](https://rubygems.org/gems/byebug-dap)|[Ethan Reesor](https://gitlab.com/firelizzard)|
 [Ruby Byebug (VSCode)](https://gitlab.com/firelizzard/vscode-byebug)|[Ethan Reesor](https://gitlab.com/firelizzard)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ethan-reesor.vscode-byebug)
 [Rust (for embedded)](https://github.com/probe-rs/vscode)|[probe.rs community](https://github.com/probe-rs)|[VS Code](https://probe.rs/docs/tools/vscode/), [Eclipse](https://marketplace.eclipse.org/content/eclipse-corrosion-rust-editing-and-debugging)
