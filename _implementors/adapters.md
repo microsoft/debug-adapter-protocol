@@ -81,4 +81,4 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [VSCode rdbg Ruby Debugger](https://github.com/ruby/vscode-rdbg)|[@ko1](https://github.com/ko1)|[VS Code](https://marketplace.visualstudio.com/items?itemName=KoichiSasada.vscode-rdbg)
 {: .table .table-bordered .table-responsive}
 
-*If you are missing a debug adapter implementation please create a pull request in GitHub against this markdown [document](https://github.com/Microsoft/debug-adapter-protocol/blob/gh-pages/_implementors/adapters.md)*
+*If you are missing a debug adapter implementation please create a pull request in GitHub against this markdown [document](https://github.com/Microsoft/debug-adapter-protocol/blob/main/_implementors/adapters.md)*
