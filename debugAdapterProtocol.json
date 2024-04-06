@@ -4252,7 +4252,7 @@
 			"enumDescriptions": [
 				"In `SourceBreakpoint`s",
 				"In exception breakpoints applied in the `ExceptionFilterOptions`",
-				"In data breakpoints requested in the the `DataBreakpointInfo` request",
+				"In data breakpoints requested in the `DataBreakpointInfo` request",
 				"In `InstructionBreakpoint`s"
 			],
 			"description": "Describes one or more type of breakpoint a `BreakpointMode` applies to. This is a non-exhaustive enumeration and may expand as future breakpoint types are added."
