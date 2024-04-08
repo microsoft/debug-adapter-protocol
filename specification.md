@@ -4922,7 +4922,7 @@ Describes one or more type of breakpoint a `BreakpointMode` applies to. This is 
 Values: 
 - 'source': In `SourceBreakpoint`s
 - 'exception': In exception breakpoints applied in the `ExceptionFilterOptions`
-- 'data': In data breakpoints requested in the the `DataBreakpointInfo` request
+- 'data': In data breakpoints requested in the `DataBreakpointInfo` request
 - 'instruction': In `InstructionBreakpoint`s
 etc.
 
