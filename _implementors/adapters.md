@@ -19,7 +19,7 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [C/C++](https://github.com/Microsoft/vscode-cpptools)|[@WardenGnaw](https://github.com/WardenGnaw)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
 [C/C++/Rust](https://github.com/Marus/cortex-debug)|[@Marus](https://github.com/Marus)|[VS Code](https://marketplace.visualstudio.com/items?itemName=marus25.cortex-debug)
 [C#](https://github.com/OmniSharp/omnisharp-vscode)|[@gregg-miskelly](https://github.com/gregg-miskelly)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp)
-|[Cobol](https://github.com/RechInformatica/rech-cobol-debugger)|[@RechInformatica](https://github.com/RechInformatica)|[VS Code](https://marketplace.visualstudio.com/items?itemName=rechinformatica.rech-cobol-debugger)|
+[Cobol](https://github.com/RechInformatica/rech-cobol-debugger)|[@RechInformatica](https://github.com/RechInformatica)|[VS Code](https://marketplace.visualstudio.com/items?itemName=rechinformatica.rech-cobol-debugger)
 [Cordova Tools](https://github.com/Microsoft/vscode-cordova)|[@MSLaguana](https://github.com/MSLaguana)|[VS Code](https://marketplace.visualstudio.com/items?itemName=vsmobile.cordova-tools)
 [Dart](https://github.com/dart-lang/sdk)|[@DanTup](https://github.com/DanTup) [@devoncarew](https://github.com/devoncarew)|[DAP Server](https://github.com/dart-lang/sdk/blob/master/pkg/dds/tool/dap/README.md), [VS Code](https://marketplace.visualstudio.com/items?itemName=Dart-Code.dart-code)
 [Debug](https://github.com/WebFreak001/code-debug)|[@WebFreak001](https://github.com/WebFreak001)|[VS Code](https://marketplace.visualstudio.com/items?itemName=webfreak.debug)
@@ -82,7 +82,7 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [TLA+](https://github.com/tlaplus/vscode-tlaplus)|[@lemmy](https://github.com/lemmy)|[VS Code](https://marketplace.visualstudio.com/items?itemName=alygin.vscode-tlaplus-nightly)
 [VDM-SL, VDM++, VDM-RT](https://github.com/nickbattle/vdmj/tree/master/lsp)|[@nickbattle](https://github.com/nickbattle)|[VS Code](https://marketplace.visualstudio.com/items?itemName=jonaskrask.vdm-vscode)
 [VSCode rdbg Ruby Debugger](https://github.com/ruby/vscode-rdbg)|[@ko1](https://github.com/ko1)|[VS Code](https://marketplace.visualstudio.com/items?itemName=KoichiSasada.vscode-rdbg)
-|[Wolfram Language](https://github.com/kenkangxgwe/lsp-wl?tab=readme-ov-file#debug-adapter-features)|[@kenkangxgwe](https://github.com/kenkangxgwe/lsp-wl)|[VS Code](https://marketplace.visualstudio.com/items?itemName=lsp-wl.lsp-wl-client)|
+[Wolfram Language](https://github.com/kenkangxgwe/lsp-wl?tab=readme-ov-file#debug-adapter-features)|[@kenkangxgwe](https://github.com/kenkangxgwe/lsp-wl)|[VS Code](https://marketplace.visualstudio.com/items?itemName=lsp-wl.lsp-wl-client)
 {: .table .table-bordered .table-responsive}
 
 *If you are missing a debug adapter implementation please create a pull request in GitHub against this markdown [document](https://github.com/Microsoft/debug-adapter-protocol/blob/gh-pages/_implementors/adapters.md)*
