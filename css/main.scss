@@ -378,10 +378,6 @@ pre[class=highlight] {
 		padding: 0;
 	}
 
-	.github-button-container {
-		vertical-align: middle;
-	}
-
 	.message {
 		display: inline-block;
 		padding-right: 10px;
@@ -399,7 +395,7 @@ pre[class=highlight] {
 			padding-bottom: 10px;
 
 			@media (min-width: 576px) {
-				display: inline-flex;
+				display: inline-block;
 				padding: 0;
 			}
 		}
