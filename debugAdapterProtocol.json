@@ -2508,6 +2508,18 @@
 					"type": "integer",
 					"description": "Evaluate the expression in the scope of this stack frame. If not specified, the expression is evaluated in the global scope."
 				},
+				"line": {
+					"type": "integer",
+					"description": "The contextual line where the expression should be evaluated. In the 'hover' context, this should be set to the start of the expression being hovered."
+				},
+				"column": {
+					"type": "integer",
+					"description": "The contextual column where the expression should be evaluated. This may be provided if `line` is also provided.\n\nIt is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
+				},
+				"source": {
+					"$ref": "#/definitions/Source",
+					"description": "The contextual source in which the `line` is found. This must be provided if `line` is provided."
+				},
 				"context": {
 					"type": "string",
 					"_enum": [ "watch", "repl", "hover", "clipboard", "variables" ],
