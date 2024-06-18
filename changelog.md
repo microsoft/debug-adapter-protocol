@@ -6,6 +6,9 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.67.x
+  * Add `line`, `column`, and `source` location attributions to `EvaluateArguments`
+
 * 1.66.x
  * Add `bytes` and `asAddress` properties to the `DataBreakpointInfo` request
 

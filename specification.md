@@ -1585,13 +1585,13 @@ interface DataBreakpointInfoArguments {
   frameId?: number;
 
   /**
+   * If specified, a debug adapter should return information for the range of
+   * memory extending `bytes` number of bytes from the address or variable
+   * specified by `name`. Breakpoints set using the resulting data ID should
+   * pause on data access anywhere within that range.
+   * 
    * Clients may set this property only if the `supportsDataBreakpointBytes`
    * capability is true.
-   * 
-   * Clients may pass this to request a reference to a range of memory rather
-   * than a single address. Data breakpoints set using the resulting data ID
-   * request that the debugger pause within the range of memory extending
-   * `bytes` from the address or variable specified by `name`.
    */
   bytes?: number;
 
@@ -2663,6 +2663,28 @@ interface EvaluateArguments {
   frameId?: number;
 
   /**
+   * The contextual line where the expression should be evaluated. In the
+   * 'hover' context, this should be set to the start of the expression being
+   * hovered.
+   */
+  line?: number;
+
+  /**
+   * The contextual column where the expression should be evaluated. This may be
+   * provided if `line` is also provided.
+   * 
+   * It is measured in UTF-16 code units and the client capability
+   * `columnsStartAt1` determines whether it is 0- or 1-based.
+   */
+  column?: number;
+
+  /**
+   * The contextual source in which the `line` is found. This must be provided
+   * if `line` is provided.
+   */
+  source?: Source;
+
+  /**
    * The context in which the evaluate request is used.
    * Values:
    * 'watch': evaluate is called from a watch view context.
@@ -3495,7 +3517,7 @@ interface Capabilities {
   supportsSingleThreadExecutionRequests?: boolean;
 
   /**
-   * The debug adapter supports the `asAddress` field in the
+   * The debug adapter supports the `asAddress` and `bytes` fields in the
    * `dataBreakpointInfo` request.
    */
   supportsDataBreakpointBytes?: boolean;
