@@ -3545,11 +3545,12 @@
 				"presentationHint": {
 					"type": "string",
 					"description": "A hint for how to present this scope in the UI. If this attribute is missing, the scope is shown with a generic UI.",
-					"_enum": [ "arguments", "locals", "registers" ],
+					"_enum": [ "arguments", "locals", "registers", "returnValue" ],
 					"enumDescriptions": [
 						"Scope contains method arguments.",
 						"Scope contains local variables.",
-						"Scope contains registers. Only a single `registers` scope should be returned from a `scopes` request."
+						"Scope contains registers. Only a single `registers` scope should be returned from a `scopes` request.",
+						"Scope contains a return value. A scope of this kind should have a single child variable."
 					]
 				},
 				"variablesReference": {

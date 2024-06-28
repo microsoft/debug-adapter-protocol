@@ -8,6 +8,7 @@ sectionid: changelog
 
 * 1.67.x
   * Add `line`, `column`, and `source` location attributions to `EvaluateArguments`
+  * Add `returnValue` as a well-known `Scope.presentationHint`
 
 * 1.66.x
  * Add `bytes` and `asAddress` properties to the `DataBreakpointInfo` request
