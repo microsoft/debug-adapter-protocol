@@ -3550,7 +3550,7 @@
 						"Scope contains method arguments.",
 						"Scope contains local variables.",
 						"Scope contains registers. Only a single `registers` scope should be returned from a `scopes` request.",
-						"Scope contains a return value. A scope of this kind should have a single child variable."
+						"Scope contains one or more return values."
 					]
 				},
 				"variablesReference": {
