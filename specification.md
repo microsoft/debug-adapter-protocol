@@ -3923,8 +3923,7 @@ interface Scope {
    * 'locals': Scope contains local variables.
    * 'registers': Scope contains registers. Only a single `registers` scope
    * should be returned from a `scopes` request.
-   * 'returnValue': Scope contains a return value. A scope of this kind should
-   * have a single child variable.
+   * 'returnValue': Scope contains one or more return values.
    * etc.
    */
   presentationHint?: 'arguments' | 'locals' | 'registers' | 'returnValue' | string;
