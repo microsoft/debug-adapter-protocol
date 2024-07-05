@@ -1,0 +1,22 @@
+name: Branch Policy
+
+on:
+  pull_request:
+    branches:
+      - gh-pages
+
+jobs:
+  check_author:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Protected gh-pages
+        run: |
+          PR_AUTHOR="${{ github.actor }}"
+          ALLOWED_AUTHORS=("connor4312" "roblourens")
+
+          if [[ " ${ALLOWED_AUTHORS[@]} " =~ " ${PR_AUTHOR} " ]]; then
+            echo "'${PR_AUTHOR}' is allowed to make PRs to gh-pages"
+          else
+            echo "'${PR_AUTHOR}' is not allowed to make PRs to 'gh-pages', please target the 'main' branch instead"
+            exit 1
+          fi

@@ -21,4 +21,4 @@ The following table lists the known SDKs or libraries that support the Debug Ada
 | A Rust implementation of the Debug Adapter Protocol | Rust | [Tamás Szelei](https://github.com/sztomi) | [sztomi/dap-rs](https://github.com/sztomi/dap-rs)
 {: .table .table-bordered .table-responsive}
 
-*If you are missing a SDK please create a pull request in GitHub against this markdown [document](https://github.com/Microsoft/debug-adapter-protocol/blob/gh-pages/_implementors/sdks.md)*
+*If you are missing a SDK please create a pull request in GitHub against this markdown [document](https://github.com/Microsoft/debug-adapter-protocol/blob/main/_implementors/sdks.md)*

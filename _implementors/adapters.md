@@ -62,6 +62,7 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [Node Debug](https://github.com/Microsoft/vscode-node-debug)|[@weinand](https://github.com/weinand)|
 [OCaml Earlybird](https://github.com/hackwaly/ocamlearlybird)|[@sim642](https://github.com/sim642)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ocamllabs.ocaml-platform)
 [OneScript Debug](https://github.com/EvilBeaver/OneScript)|[@EvilBeaver](https://github.com/EvilBeaver)|[VS Code](https://marketplace.visualstudio.com/items?itemName=EvilBeaver.oscript-debug)
+[OpenQASM](https://github.com/quantag/qasm-adapter-vscode)|[@quantag](https://github.com/quantag)|
 [Papyrus](https://github.com/joelday/papyrus-debug-server)|[@joelday](https://github.com/joelday)|[VS Code](https://marketplace.visualstudio.com/items?itemName=joelday.papyrus-lang-vscode)
 [Perl Debug](https://github.com/Nihilus118/vscode-perl-debug)|[@Nihilus118](https://github.com/Nihilus118)|[VS Code](https://marketplace.visualstudio.com/items?itemName=Nihilus118.perl-debugger)
 [Perl::LanguageServer](https://github.com/richterger/Perl-LanguageServer)|[@richterger](https://github.com/richterger)|[VS Code](https://marketplace.visualstudio.com/items?itemName=richterger.perl)
@@ -71,7 +72,7 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [Python](https://github.com/Microsoft/vscode-python)|[@DonJayamanne](https://github.com/DonJayamanne)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
 [R Debugger](https://github.com/ManuelHentschel/VSCode-R-Debugger)|[@ManuelHentschel](https://github.com/ManuelHentschel)|[VS Code](https://marketplace.visualstudio.com/items?itemName=RDebugger.r-debugger)
 [React Native Tools](https://github.com/Microsoft/vscode-react-native/issues)|[@MSLaguana](https://github.com/MSLaguana)|[VS Code](https://marketplace.visualstudio.com/items?itemName=vsmobile.vscode-react-native)
-[Ruby](https://github.com/rubyide/vscode-ruby)|[@rebornix](https://github.com/rebornix)|[VS Code](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby)
+[Ruby LSP](https://github.com/Shopify/ruby-lsp)|[@Shopify](https://github.com/Shopify)|[VS Code](https://marketplace.visualstudio.com/items?itemName=Shopify.ruby-lsp)
 [Ruby Byebug](https://rubygems.org/gems/byebug-dap)|[Ethan Reesor](https://gitlab.com/firelizzard)|
 [Ruby Byebug (VSCode)](https://gitlab.com/firelizzard/vscode-byebug)|[Ethan Reesor](https://gitlab.com/firelizzard)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ethan-reesor.vscode-byebug)
 [Rust (for embedded)](https://github.com/probe-rs/vscode)|[probe.rs community](https://github.com/probe-rs)|[VS Code](https://probe.rs/docs/tools/vscode/), [Eclipse](https://marketplace.eclipse.org/content/eclipse-corrosion-rust-editing-and-debugging)
@@ -83,4 +84,4 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [VSCode rdbg Ruby Debugger](https://github.com/ruby/vscode-rdbg)|[@ko1](https://github.com/ko1)|[VS Code](https://marketplace.visualstudio.com/items?itemName=KoichiSasada.vscode-rdbg)
 {: .table .table-bordered .table-responsive}
 
-*If you are missing a debug adapter implementation please create a pull request in GitHub against this markdown [document](https://github.com/Microsoft/debug-adapter-protocol/blob/gh-pages/_implementors/adapters.md)*
+*If you are missing a debug adapter implementation please create a pull request in GitHub against this markdown [document](https://github.com/Microsoft/debug-adapter-protocol/blob/main/_implementors/adapters.md)*
