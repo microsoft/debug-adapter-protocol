@@ -2405,6 +2405,10 @@ interface SetVariableResponse extends Response {
      * children can be retrieved by passing `variablesReference` to the
      * `variables` request as long as execution remains suspended. See 'Lifetime
      * of Object References' in the Overview section for details.
+     * 
+     * If this property is included in the response, any `variablesReference`
+     * previously associated with the updated variable, and those of its
+     * children, are no longer valid.
      */
     variablesReference?: number;
 
