@@ -2483,7 +2483,7 @@
 		"EvaluateRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "Evaluates the given expression in the context of the topmost stack frame.\nThe expression has access to any variables and arguments that are in scope.",
+				"description": "Evaluates the given expression in the context of the a stack frame.\nThe expression has access to any variables and arguments that are in scope.",
 				"properties": {
 					"command": {
 						"type": "string",

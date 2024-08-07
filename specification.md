@@ -2634,7 +2634,7 @@ interface LoadedSourcesResponse extends Response {
 
 ### <a name="Requests_Evaluate" class="anchor"></a>:leftwards_arrow_with_hook: Evaluate Request
 
-Evaluates the given expression in the context of the topmost stack frame.
+Evaluates the given expression in the context of the a stack frame.
 
 The expression has access to any variables and arguments that are in scope.
 
