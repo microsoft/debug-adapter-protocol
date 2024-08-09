@@ -3879,11 +3879,11 @@ interface StackFrame {
   endColumn?: number;
 
   /**
-   * Indicates whether this frame can be restarted with the `restart` request.
-   * Clients should only use this if the debug adapter supports the `restart`
-   * request and the corresponding capability `supportsRestartRequest` is true.
-   * If a debug adapter has this capability, then `canRestart` defaults to
-   * `true` if the property is absent.
+   * Indicates whether this frame can be restarted with the `restartFrame`
+   * request. Clients should only use this if the debug adapter supports the
+   * `restart` request and the corresponding capability `supportsRestartFrame`
+   * is true. If a debug adapter has this capability, then `canRestart` defaults
+   * to `true` if the property is absent.
    */
   canRestart?: boolean;
 
