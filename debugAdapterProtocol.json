@@ -394,7 +394,7 @@
 								"description": "Additional data to report. For the `telemetry` category the data is sent to telemetry, for the other categories the data is shown in JSON format."
 							},
 							"locationReference": {
-								"type": "string",
+								"type": "integer",
 								"description": "A reference that allows the client to request the location where the new value is declared. For example, if the logged value is function pointer, the adapter may be able to look up the function's location. This should be present only if the adapter is likely to be able to resolve the location.\n\nThis reference shares the same lifetime as the `variablesReference`. See 'Lifetime of Object References' in the Overview section for details."
 							}
 						},
@@ -2250,7 +2250,7 @@
 								"description": "A memory reference to a location appropriate for this result.\nFor pointer type eval results, this is generally a reference to the memory address contained in the pointer.\nThis attribute may be returned by a debug adapter if corresponding capability `supportsMemoryReferences` is true."
 							},
 							"valueLocationReference": {
-								"type": "string",
+								"type": "integer",
 								"description": "A reference that allows the client to request the location where the new value is declared. For example, if the new value is function pointer, the adapter may be able to look up the function's location. This should be present only if the adapter is likely to be able to resolve the location.\n\nThis reference shares the same lifetime as the `variablesReference`. See 'Lifetime of Object References' in the Overview section for details."
 							}
 						},
@@ -2584,7 +2584,7 @@
 								"description": "A memory reference to a location appropriate for this result.\nFor pointer type eval results, this is generally a reference to the memory address contained in the pointer.\nThis attribute may be returned by a debug adapter if corresponding capability `supportsMemoryReferences` is true."
 							},
 							"valueLocationReference": {
-								"type": "string",
+								"type": "integer",
 								"description": "A reference that allows the client to request the location where the returned value is declared. For example, if a function pointer is returned, the adapter may be able to look up the function's location. This should be present only if the adapter is likely to be able to resolve the location.\n\nThis reference shares the same lifetime as the `variablesReference`. See 'Lifetime of Object References' in the Overview section for details."
 							}
 						},
@@ -2671,7 +2671,7 @@
 								"description": "A memory reference to a location appropriate for this result.\nFor pointer type eval results, this is generally a reference to the memory address contained in the pointer.\nThis attribute may be returned by a debug adapter if corresponding capability `supportsMemoryReferences` is true."
 							},
 							"valueLocationReference": {
-								"type": "string",
+								"type": "integer",
 								"description": "A reference that allows the client to request the location where the new value is declared. For example, if the new value is function pointer, the adapter may be able to look up the function's location. This should be present only if the adapter is likely to be able to resolve the location.\n\nThis reference shares the same lifetime as the `variablesReference`. See 'Lifetime of Object References' in the Overview section for details."
 							}
 						},
@@ -3120,7 +3120,7 @@
 			"description": "Arguments for `locations` request.",
 			"properties": {
 				"locationReference": {
-					"type": "string",
+					"type": "integer",
 					"description": "Location reference to resolve."
 				}
 			},
@@ -3712,11 +3712,11 @@
 					"description": "A memory reference associated with this variable.\nFor pointer type variables, this is generally a reference to the memory address contained in the pointer.\nFor executable data, this reference may later be used in a `disassemble` request.\nThis attribute may be returned by a debug adapter if corresponding capability `supportsMemoryReferences` is true."
 				},
 				"declarationLocationReference": {
-					"type": "string",
+					"type": "integer",
 					"description": "A reference that allows the client to request the location where the variable is declared. This should be present only if the adapter is likely to be able to resolve the location.\n\nThis reference shares the same lifetime as the `variablesReference`. See 'Lifetime of Object References' in the Overview section for details."
 				},
 				"valueLocationReference": {
-					"type": "string",
+					"type": "integer",
 					"description": "A reference that allows the client to request the location where the variable's value is declared. For example, if the variable contains a function pointer, the adapter may be able to look up the function's location. This should be present only if the adapter is likely to be able to resolve the location.\n\nThis reference shares the same lifetime as the `variablesReference`. See 'Lifetime of Object References' in the Overview section for details."
 				}
 			},
