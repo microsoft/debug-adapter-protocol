@@ -2583,7 +2583,7 @@
 								"type": "string",
 								"description": "A memory reference to a location appropriate for this result.\nFor pointer type eval results, this is generally a reference to the memory address contained in the pointer.\nThis attribute may be returned by a debug adapter if corresponding capability `supportsMemoryReferences` is true."
 							},
-							"locationReference": {
+							"valueLocationReference": {
 								"type": "string",
 								"description": "A reference that allows the client to request the location where the returned value is declared. For example, if a function pointer is returned, the adapter may be able to look up the function's location. This should be present only if the adapter is likely to be able to resolve the location.\n\nThis reference shares the same lifetime as the `variablesReference`. See 'Lifetime of Object References' in the Overview section for details."
 							}
@@ -3148,11 +3148,11 @@
 							},
 							"endLine": {
 								"type": "integer",
-								"description": "End line of the location. If no end line is given, then the end line is assumed to be the start line. The client capability `linesStartAt1` determines whether it is 0- or 1-based."
+								"description": "End line of the location, present if the location refers to a range.  The client capability `linesStartAt1` determines whether it is 0- or 1-based."
 							},
 							"endColumn": {
 								"type": "integer",
-								"description": "End position of the location within `endLine`. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based. If no end column is given, the last position in the end line is assumed."
+								"description": "End position of the location within `endLine`, present if the location refers to a range. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 							}
 						},
 						"required": [ "source", "line" ]
