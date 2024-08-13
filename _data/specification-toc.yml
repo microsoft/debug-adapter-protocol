@@ -85,6 +85,8 @@
       anchor: Requests_Launch
     - title: LoadedSources
       anchor: Requests_LoadedSources
+    - title: Locations
+      anchor: Requests_Locations
     - title: Modules
       anchor: Requests_Modules
     - title: Next

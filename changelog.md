@@ -6,6 +6,12 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.68.x
+  * Add `locationReference`s to Variable-related data types to allow navigation to declarations, and a corresponding `locations` request.
+  * Clarify the meaning of "system process"
+  * Clarify the lifetime of `variableReference`s after a `setVariable` call
+  * Fix typographic errors in `StackFrame.canRestart`
+
 * 1.67.x
   * Add `line`, `column`, and `source` location attributions to `EvaluateArguments`
   * Add `returnValue` as a well-known `Scope.presentationHint`
