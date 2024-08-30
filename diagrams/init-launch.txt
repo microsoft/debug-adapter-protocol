@@ -1,40 +1,40 @@
-participant User
-participant Development Tool as Host
-participant Debug Adapter as DA
-participant Debugger
+sequenceDiagram
+    participant User
+    participant Host as Client
 
-User->Host: start debugging
-activate Host
+    User->>Host: start debugging
+    activate Host
 
-Host->*DA: start debug adapter
-Host->DA: initialize request
-activate DA
-DA->*Debugger: start gdb
-DA->Host: response: capabilities
-DA-->Host: initialized event
-deactivate DA
+    create participant DA as Debug Adapter
+    Host->>DA: start debug adapter
+    Host->>DA: initialize request
+    activate DA
+    create participant Debugger
+    DA->>Debugger: start gdb
+    DA->>Host: response: capabilities
+    deactivate DA
 
-activate Host
 
-Host->DA: setBreakpoints request
-activate DA
-DA->Debugger: break 'hello.c:main:4'
-DA->Host: response: breakpoints
-deactivate DA
+    par Client configures the adapter after `initialized`
+        DA-->>+Host: initialized event
+        Host->>+DA: setBreakpoints request
+        DA->>Debugger: break 'hello.c:main:4'
+        DA->>-Host: response: breakpoints
 
-Host->DA: setExceptionBreakpoints request
-activate DA
-DA->Debugger: catch
-DA->Host: response: status
-deactivate DA
+        Host->>+DA: setExceptionBreakpoints request
+        DA->>Debugger: catch
+        DA->>-Host: response: status
 
-Host->DA: configurationDone request
-activate DA
-DA->Host: response: status
-deactivate DA
-deactivate Host
+        Host->>+DA: configurationDone request
+        DA->>-Host: response: status
+        deactivate Host
+    and Client issues a launch request after receiving capabilities
+        Host->>DA: launch request
+        activate DA
+    end
 
-Host->+DA: launch request
-DA->Debugger: file 'a.out'
-DA->Debugger: run
-DA->-Host: response: status
+
+    DA->>Debugger: file 'a.out'
+    DA->>Debugger: run
+    DA->>Host: response: status
+    deactivate DA
