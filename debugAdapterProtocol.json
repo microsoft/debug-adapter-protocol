@@ -392,6 +392,10 @@
 							"data": {
 								"type": [ "array", "boolean", "integer", "null", "number" , "object", "string" ],
 								"description": "Additional data to report. For the `telemetry` category the data is sent to telemetry, for the other categories the data is shown in JSON format."
+							},
+							"locationReference": {
+								"type": "integer",
+								"description": "A reference that allows the client to request the location where the new value is declared. For example, if the logged value is function pointer, the adapter may be able to look up the function's location. This should be present only if the adapter is likely to be able to resolve the location.\n\nThis reference shares the same lifetime as the `variablesReference`. See 'Lifetime of Object References' in the Overview section for details."
 							}
 						},
 						"required": ["output"]
@@ -508,7 +512,7 @@
 								},
 								"systemProcessId": {
 									"type": "integer",
-									"description": "The system process id of the debugged process. This property is missing for non-system processes."
+									"description": "The process ID of the debugged process, as assigned by the operating system. This property should be omitted for logical processes that do not map to operating system processes on the machine."
 								},
 								"isLocalProcess": {
 									"type": "boolean",
@@ -2231,7 +2235,7 @@
 							},
 							"variablesReference": {
 								"type": "integer",
-								"description": "If `variablesReference` is > 0, the new value is structured and its children can be retrieved by passing `variablesReference` to the `variables` request as long as execution remains suspended. See 'Lifetime of Object References' in the Overview section for details."
+								"description": "If `variablesReference` is > 0, the new value is structured and its children can be retrieved by passing `variablesReference` to the `variables` request as long as execution remains suspended. See 'Lifetime of Object References' in the Overview section for details.\n\nIf this property is included in the response, any `variablesReference` previously associated with the updated variable, and those of its children, are no longer valid."
 							},
 							"namedVariables": {
 								"type": "integer",
@@ -2244,6 +2248,10 @@
 							"memoryReference": {
 								"type": "string",
 								"description": "A memory reference to a location appropriate for this result.\nFor pointer type eval results, this is generally a reference to the memory address contained in the pointer.\nThis attribute may be returned by a debug adapter if corresponding capability `supportsMemoryReferences` is true."
+							},
+							"valueLocationReference": {
+								"type": "integer",
+								"description": "A reference that allows the client to request the location where the new value is declared. For example, if the new value is function pointer, the adapter may be able to look up the function's location. This should be present only if the adapter is likely to be able to resolve the location.\n\nThis reference shares the same lifetime as the `variablesReference`. See 'Lifetime of Object References' in the Overview section for details."
 							}
 						},
 						"required": [ "value" ]
@@ -2483,7 +2491,7 @@
 		"EvaluateRequest": {
 			"allOf": [ { "$ref": "#/definitions/Request" }, {
 				"type": "object",
-				"description": "Evaluates the given expression in the context of the topmost stack frame.\nThe expression has access to any variables and arguments that are in scope.",
+				"description": "Evaluates the given expression in the context of a stack frame.\nThe expression has access to any variables and arguments that are in scope.",
 				"properties": {
 					"command": {
 						"type": "string",
@@ -2574,6 +2582,10 @@
 							"memoryReference": {
 								"type": "string",
 								"description": "A memory reference to a location appropriate for this result.\nFor pointer type eval results, this is generally a reference to the memory address contained in the pointer.\nThis attribute may be returned by a debug adapter if corresponding capability `supportsMemoryReferences` is true."
+							},
+							"valueLocationReference": {
+								"type": "integer",
+								"description": "A reference that allows the client to request the location where the returned value is declared. For example, if a function pointer is returned, the adapter may be able to look up the function's location. This should be present only if the adapter is likely to be able to resolve the location.\n\nThis reference shares the same lifetime as the `variablesReference`. See 'Lifetime of Object References' in the Overview section for details."
 							}
 						},
 						"required": [ "result", "variablesReference" ]
@@ -2657,6 +2669,10 @@
 							"memoryReference": {
 								"type": "string",
 								"description": "A memory reference to a location appropriate for this result.\nFor pointer type eval results, this is generally a reference to the memory address contained in the pointer.\nThis attribute may be returned by a debug adapter if corresponding capability `supportsMemoryReferences` is true."
+							},
+							"valueLocationReference": {
+								"type": "integer",
+								"description": "A reference that allows the client to request the location where the new value is declared. For example, if the new value is function pointer, the adapter may be able to look up the function's location. This should be present only if the adapter is likely to be able to resolve the location.\n\nThis reference shares the same lifetime as the `variablesReference`. See 'Lifetime of Object References' in the Overview section for details."
 							}
 						},
 						"required": [ "value" ]
@@ -3078,6 +3094,68 @@
 							}
 						},
 						"required": [ "instructions" ]
+					}
+				}
+			}]
+		},
+
+		"LocationsRequest": {
+			"allOf": [ { "$ref": "#/definitions/Request" }, {
+				"type": "object",
+				"description": "Looks up information about a location reference previously returned by the debug adapter.",
+				"properties": {
+					"command": {
+						"type": "string",
+						"enum": [ "locations" ]
+					},
+					"arguments": {
+						"$ref": "#/definitions/LocationsArguments"
+					}
+				},
+				"required": [ "command", "arguments" ]
+			}]
+		},
+		"LocationsArguments": {
+			"type": "object",
+			"description": "Arguments for `locations` request.",
+			"properties": {
+				"locationReference": {
+					"type": "integer",
+					"description": "Location reference to resolve."
+				}
+			},
+			"required": [ "locationReference" ]
+		},
+		"LocationsResponse": {
+			"allOf": [ { "$ref": "#/definitions/Response" }, {
+				"type": "object",
+				"description": "Response to `locations` request.",
+				"properties": {
+					"body": {
+						"type": "object",
+						"properties": {
+							"source": {
+								"$ref": "#/definitions/Source",
+								"description": "The source containing the location; either `source.path` or `source.sourceReference` must be specified."
+							},
+							"line": {
+								"type": "integer",
+								"description": "The line number of the location. The client capability `linesStartAt1` determines whether it is 0- or 1-based."
+							},
+							"column": {
+								"type": "integer",
+								"description": "Position of the location within the `line`. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based. If no column is given, the first position in the start line is assumed."
+							},
+							"endLine": {
+								"type": "integer",
+								"description": "End line of the location, present if the location refers to a range.  The client capability `linesStartAt1` determines whether it is 0- or 1-based."
+							},
+							"endColumn": {
+								"type": "integer",
+								"description": "End position of the location within `endLine`, present if the location refers to a range. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
+							}
+						},
+						"required": [ "source", "line" ]
 					}
 				}
 			}]
@@ -3515,7 +3593,7 @@
 				},
 				"canRestart": {
 					"type": "boolean",
-					"description": "Indicates whether this frame can be restarted with the `restart` request. Clients should only use this if the debug adapter supports the `restart` request and the corresponding capability `supportsRestartRequest` is true. If a debug adapter has this capability, then `canRestart` defaults to `true` if the property is absent."
+					"description": "Indicates whether this frame can be restarted with the `restartFrame` request. Clients should only use this if the debug adapter supports the `restart` request and the corresponding capability `supportsRestartFrame` is true. If a debug adapter has this capability, then `canRestart` defaults to `true` if the property is absent."
 				},
 				"instructionPointerReference": {
 					"type": "string",
@@ -3632,6 +3710,14 @@
 				"memoryReference": {
 					"type": "string",
 					"description": "A memory reference associated with this variable.\nFor pointer type variables, this is generally a reference to the memory address contained in the pointer.\nFor executable data, this reference may later be used in a `disassemble` request.\nThis attribute may be returned by a debug adapter if corresponding capability `supportsMemoryReferences` is true."
+				},
+				"declarationLocationReference": {
+					"type": "integer",
+					"description": "A reference that allows the client to request the location where the variable is declared. This should be present only if the adapter is likely to be able to resolve the location.\n\nThis reference shares the same lifetime as the `variablesReference`. See 'Lifetime of Object References' in the Overview section for details."
+				},
+				"valueLocationReference": {
+					"type": "integer",
+					"description": "A reference that allows the client to request the location where the variable's value is declared. For example, if the variable contains a function pointer, the adapter may be able to look up the function's location. This should be present only if the adapter is likely to be able to resolve the location.\n\nThis reference shares the same lifetime as the `variablesReference`. See 'Lifetime of Object References' in the Overview section for details."
 				}
 			},
 			"required": [ "name", "value", "variablesReference" ]

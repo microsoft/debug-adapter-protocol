@@ -464,6 +464,18 @@ interface OutputEvent extends Event {
      * to telemetry, for the other categories the data is shown in JSON format.
      */
     data?: any;
+
+    /**
+     * A reference that allows the client to request the location where the new
+     * value is declared. For example, if the logged value is function pointer,
+     * the adapter may be able to look up the function's location. This should
+     * be present only if the adapter is likely to be able to resolve the
+     * location.
+     * 
+     * This reference shares the same lifetime as the `variablesReference`. See
+     * 'Lifetime of Object References' in the Overview section for details.
+     */
+    locationReference?: string;
   };
 }
 ```
@@ -555,8 +567,9 @@ interface ProcessEvent extends Event {
     name: string;
 
     /**
-     * The system process id of the debugged process. This property is missing
-     * for non-system processes.
+     * The process ID of the debugged process, as assigned by the operating
+     * system. This property should be omitted for logical processes that do not
+     * map to operating system processes on the machine.
      */
     systemProcessId?: number;
 
@@ -2405,6 +2418,10 @@ interface SetVariableResponse extends Response {
      * children can be retrieved by passing `variablesReference` to the
      * `variables` request as long as execution remains suspended. See 'Lifetime
      * of Object References' in the Overview section for details.
+     * 
+     * If this property is included in the response, any `variablesReference`
+     * previously associated with the updated variable, and those of its
+     * children, are no longer valid.
      */
     variablesReference?: number;
 
@@ -2432,6 +2449,17 @@ interface SetVariableResponse extends Response {
      * capability `supportsMemoryReferences` is true.
      */
     memoryReference?: string;
+
+    /**
+     * A reference that allows the client to request the location where the new
+     * value is declared. For example, if the new value is function pointer, the
+     * adapter may be able to look up the function's location. This should be
+     * present only if the adapter is likely to be able to resolve the location.
+     * 
+     * This reference shares the same lifetime as the `variablesReference`. See
+     * 'Lifetime of Object References' in the Overview section for details.
+     */
+    valueLocationReference?: string;
   };
 }
 ```
@@ -2634,7 +2662,7 @@ interface LoadedSourcesResponse extends Response {
 
 ### <a name="Requests_Evaluate" class="anchor"></a>:leftwards_arrow_with_hook: Evaluate Request
 
-Evaluates the given expression in the context of the topmost stack frame.
+Evaluates the given expression in the context of the a stack frame.
 
 The expression has access to any variables and arguments that are in scope.
 
@@ -2765,6 +2793,18 @@ interface EvaluateResponse extends Response {
      * capability `supportsMemoryReferences` is true.
      */
     memoryReference?: string;
+
+    /**
+     * A reference that allows the client to request the location where the
+     * returned value is declared. For example, if a function pointer is
+     * returned, the adapter may be able to look up the function's location.
+     * This should be present only if the adapter is likely to be able to
+     * resolve the location.
+     * 
+     * This reference shares the same lifetime as the `variablesReference`. See
+     * 'Lifetime of Object References' in the Overview section for details.
+     */
+    locationReference?: string;
   };
 }
 ```
@@ -2871,6 +2911,17 @@ interface SetExpressionResponse extends Response {
      * capability `supportsMemoryReferences` is true.
      */
     memoryReference?: string;
+
+    /**
+     * A reference that allows the client to request the location where the new
+     * value is declared. For example, if the new value is function pointer, the
+     * adapter may be able to look up the function's location. This should be
+     * present only if the adapter is likely to be able to resolve the location.
+     * 
+     * This reference shares the same lifetime as the `variablesReference`. See
+     * 'Lifetime of Object References' in the Overview section for details.
+     */
+    valueLocationReference?: string;
   };
 }
 ```
@@ -3289,6 +3340,74 @@ interface DisassembleResponse extends Response {
      * The list of disassembled instructions.
      */
     instructions: DisassembledInstruction[];
+  };
+}
+```
+
+### <a name="Requests_Locations" class="anchor"></a>:leftwards_arrow_with_hook: Locations Request
+
+Looks up information about a location reference previously returned by the debug adapter.
+
+```typescript
+interface LocationsRequest extends Request {
+  command: 'locations';
+
+  arguments: LocationsArguments;
+}
+```
+
+Arguments for `locations` request.
+
+<a name="Types_LocationsArguments" class="anchor"></a>
+```typescript
+interface LocationsArguments {
+  /**
+   * Location reference to resolve.
+   */
+  locationReference: string;
+}
+```
+
+Response to `locations` request.
+
+<a name="Types_LocationsResponse" class="anchor"></a>
+```typescript
+interface LocationsResponse extends Response {
+  body?: {
+    /**
+     * The source containing the location; either `source.path` or
+     * `source.sourceReference` must be specified.
+     */
+    source: Source;
+
+    /**
+     * The line number of the location. The client capability `linesStartAt1`
+     * determines whether it is 0- or 1-based.
+     */
+    line: number;
+
+    /**
+     * Position of the location within the `line`. It is measured in UTF-16 code
+     * units and the client capability `columnsStartAt1` determines whether it
+     * is 0- or 1-based. If no column is given, the first position in the start
+     * line is assumed.
+     */
+    column?: number;
+
+    /**
+     * End line of the location. If no end line is given, then the end line is
+     * assumed to be the start line. The client capability `linesStartAt1`
+     * determines whether it is 0- or 1-based.
+     */
+    endLine?: number;
+
+    /**
+     * End position of the location within `endLine`. It is measured in UTF-16
+     * code units and the client capability `columnsStartAt1` determines whether
+     * it is 0- or 1-based. If no end column is given, the last position in the
+     * end line is assumed.
+     */
+    endColumn?: number;
   };
 }
 ```
@@ -3874,11 +3993,11 @@ interface StackFrame {
   endColumn?: number;
 
   /**
-   * Indicates whether this frame can be restarted with the `restart` request.
-   * Clients should only use this if the debug adapter supports the `restart`
-   * request and the corresponding capability `supportsRestartRequest` is true.
-   * If a debug adapter has this capability, then `canRestart` defaults to
-   * `true` if the property is absent.
+   * Indicates whether this frame can be restarted with the `restartFrame`
+   * request. Clients should only use this if the debug adapter supports the
+   * `restart` request and the corresponding capability `supportsRestartFrame`
+   * is true. If a debug adapter has this capability, then `canRestart` defaults
+   * to `true` if the property is absent.
    */
   canRestart?: boolean;
 
@@ -4071,6 +4190,28 @@ interface Variable {
    * capability `supportsMemoryReferences` is true.
    */
   memoryReference?: string;
+
+  /**
+   * A reference that allows the client to request the location where the
+   * variable is declared. This should be present only if the adapter is likely
+   * to be able to resolve the location.
+   * 
+   * This reference shares the same lifetime as the `variablesReference`. See
+   * 'Lifetime of Object References' in the Overview section for details.
+   */
+  declarationLocationReference?: string;
+
+  /**
+   * A reference that allows the client to request the location where the
+   * variable's value is declared. For example, if the variable contains a
+   * function pointer, the adapter may be able to look up the function's
+   * location. This should be present only if the adapter is likely to be able
+   * to resolve the location.
+   * 
+   * This reference shares the same lifetime as the `variablesReference`. See
+   * 'Lifetime of Object References' in the Overview section for details.
+   */
+  valueLocationReference?: string;
 }
 ```
 

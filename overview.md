@@ -224,4 +224,4 @@ This diagram summarizes the sequence of request and events for a hypothetical de
 
 To simplify the implementation of debug adapters, there are libraries or SDKs:
 
-- *Debug Adapter SDKs* for the different implementation languages there is an SDK to implement a debug adapter in a particular language. For example, to implement a debug adapter using Node.js there is the [debug adapter npm module](https://www.npmjs.com/package/vscode-debugadapter).
+- *Debug Adapter SDKs* for the different implementation languages there is an SDK to implement a debug adapter in a particular language. For example, to implement a debug adapter using Node.js there is the [debug adapter npm module](https://www.npmjs.com/package/@vscode/debugadapter).
