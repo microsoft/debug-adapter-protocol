@@ -7,9 +7,9 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 const files = await fs.readdir(dirname);
 const outDir = path.resolve(dirname, '../img');
 for (const file of files) {
-  if (file.endsWith('.txt')) {
+  if (file.endsWith('.mmd')) {
     console.log(`==== Processing ${file}`);
-    const result = spawnSync('mmdc', ['-i', file, '-o', path.join(outDir, path.basename(file, '.txt') + '.svg')], {
+    const result = spawnSync('mmdc', ['-i', file, '-o', path.join(outDir, path.basename(file, '.mmd') + '.svg')], {
       stdio: 'inherit',
       shell: true,
       env: {
