@@ -361,7 +361,7 @@
 							},
 							"output": {
 								"type": "string",
-								"description": "The output to report."
+								"description": "The output to report.\n\nANSI escape sequences may be used to inflience text color and styling if `supportsANSIStyling` is present in both the adapter's `Capabilities` and the client's `InitializeRequestArguments`. A client may strip any unrecognized ANSI sequences.\n\nIf the `supportsANSIStyling` capabilities are not both true, then the client should display the output literally."
 							},
 							"group": {
 								"type": "string",
@@ -959,6 +959,10 @@
 				"supportsStartDebuggingRequest": {
 					"type": "boolean",
 					"description": "Client supports the `startDebugging` request."
+				},
+				"supportsANSIStyling":  {
+					"type": "boolean",
+					"description": "The client will interpret ANSI escape sequences in the display of `OutputEvent.output` and `Variable.value` fields when `Capabilities.supportsANSIStyling` is also enabled."
 				}
 			},
 			"required": [ "adapterID" ]
@@ -3344,6 +3348,10 @@
 						"$ref": "#/definitions/BreakpointMode"
 					},
 					"description": "Modes of breakpoints supported by the debug adapter, such as 'hardware' or 'software'. If present, the client may allow the user to select a mode and include it in its `setBreakpoints` request.\n\nClients may present the first applicable mode in this array as the 'default' mode in gestures that set breakpoints."
+				},
+				"supportsANSIStyling": {
+					"type": "boolean",
+					"description": "The debug adapter supports ANSI escape sequences in styling of `OutputEvent.output` and `Variable.value` fields."
 				}
 			}
 		},
