@@ -2,3 +2,5 @@ npm-debug.log
 _site
 **/node_modules
 spec-generator/out
+.gitignore
+.jekyll-metadata
