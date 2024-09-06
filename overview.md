@@ -163,9 +163,23 @@ A simple implementation of these semantics in the debug adapter is to clear all 
 
 If a debug adapter is unable to apply a breakpoint at the time when it's first sent, it should mark the breakpoint as unverified using `verified: false` in the `SetBreakpointsResponse`. If the breakpoint changes its state at a later point in time, the debug adapter should use the [**breakpoint**](./specification#Events_Breakpoint) event to notify the client.
 
+### Launch Sequencing
+
+There are three main building blocks we've discussed to create a debugging session:
+
+- Initialization, via the `initialize` request,
+- Configuration of breakpoints and exceptions during the configuration stage, and
+- Starting the debugger, via a launch or attach request.
+
+Initialization happens first, and the debug adapter must respond to the `initialize` request with any capabilities before any further communication can take place. At any point after the client receives the capabilities, it sends a `launch` or `attach` request.
+
+Once the debug adapter is ready to receive configuration from the client, it sends an `initialized` event to the client. As described above, the client sends zero or more configuration-related requests before sending a `configurationDone` request.
+
+After the response to `configurationDone` is sent, the debug adapter may respond to the `launch` or `attach` request, and then the debug session has started.
+
 The following sequence diagram summarizes the sequence of requests and events for a hypothetical _gdb_ debug adapter:
 
-![init-launch](./img/init-launch.png)
+<img src="./img/init-launch.svg" width="100%">
 
 ### Stopping and accessing debuggee state
 
@@ -218,7 +232,8 @@ In all situations where a debug adapter wants to end the debug session, a [**ter
 If the debuggee has ended (and the debug adapter is able to detect this), an optional [**exited**](./specification#Events_Exited) event can be issued to return the exit code to the development tool.
 
 This diagram summarizes the sequence of request and events for a hypothetical debug adapter for _gdb_:
-![stop-continue-terminate](./img/stop-continue-terminate.png)
+
+<img src="./img/stop-continue-terminate.svg" width="100%" />
 
 ## Libraries (SDKs) for DAP providers and consumers
 

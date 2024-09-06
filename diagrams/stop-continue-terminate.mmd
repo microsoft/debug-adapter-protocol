@@ -1,0 +1,53 @@
+sequenceDiagram
+  participant Host as Development Tool
+  participant DA as Debug Adapter
+  participant Debugger
+
+  Debugger-->>DA: stopped 'hello.c:main:4'
+  activate DA
+  DA-->>Host: stopped event
+  deactivate DA
+  activate Host
+
+  Host->>DA: threads request
+  activate DA
+  DA->>Debugger: threads
+  DA->>Host: response: threads
+  deactivate DA
+
+  Host->>DA: stacktrace request
+  activate DA
+  DA->>Debugger: backtrace
+  DA->>Host: response: stack frames
+  deactivate DA
+
+  Host->>DA: scopes request
+  activate DA
+  DA->>Host: response: scopes
+  deactivate DA
+
+  Host->>DA: variables request
+  activate DA
+  DA->>Debugger: select-frame 1
+  DA->>Debugger: info variables
+  DA->>Host: response: variables
+  deactivate DA
+  deactivate Host
+
+  Host->>DA: continue request
+  activate Host
+  activate DA
+  DA->>Debugger: c
+  DA->>Host: response: status
+  deactivate DA
+  deactivate Host
+
+  destroy Debugger
+  Debugger->>DA: exited
+  activate DA
+  DA-->>+Host: terminated event
+  activate Host
+  destroy DA
+  deactivate DA
+  DA-->>Host: exited event
+  deactivate Host

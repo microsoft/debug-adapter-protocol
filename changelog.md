@@ -6,6 +6,9 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.69.x
+  * Clarify the flow diagram to start a debug session
+
 * 1.68.x
   * Add `locationReference`s to Variable-related data types to allow navigation to declarations, and a corresponding `locations` request.
   * Clarify the meaning of "system process"
