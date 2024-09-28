@@ -3,6 +3,6 @@
     "build": "node build.mjs"
   },
   "dependencies": {
-    "@mermaid-js/mermaid-cli": "^10.9.1"
+    "@mermaid-js/mermaid-cli": "^11.2.0"
   }
 }
