@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "dependencies": {
+    "@mermaid-js/mermaid-cli": "^11.2.0"
+  }
+}

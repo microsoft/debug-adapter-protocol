@@ -24,6 +24,8 @@ exclude:
   - .gitignore
   - README.md
   - resources
+  - diagrams
+  - spec-generator
 
 timezone: Europe/Zurich
 
