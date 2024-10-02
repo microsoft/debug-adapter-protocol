@@ -413,6 +413,14 @@ interface OutputEvent extends Event {
 
     /**
      * The output to report.
+     * 
+     * ANSI escape sequences may be used to influence text color and styling if
+     * `supportsANSIStyling` is present in both the adapter's `Capabilities` and
+     * the client's `InitializeRequestArguments`. A client may strip any
+     * unrecognized ANSI sequences.
+     * 
+     * If the `supportsANSIStyling` capabilities are not both true, then the
+     * client should display the output literally.
      */
     output: string;
 
@@ -475,7 +483,7 @@ interface OutputEvent extends Event {
      * This reference shares the same lifetime as the `variablesReference`. See
      * 'Lifetime of Object References' in the Overview section for details.
      */
-    locationReference?: string;
+    locationReference?: number;
   };
 }
 ```
@@ -1047,6 +1055,13 @@ interface InitializeRequestArguments {
    * Client supports the `startDebugging` request.
    */
   supportsStartDebuggingRequest?: boolean;
+
+  /**
+   * The client will interpret ANSI escape sequences in the display of
+   * `OutputEvent.output` and `Variable.value` fields when
+   * `Capabilities.supportsANSIStyling` is also enabled.
+   */
+  supportsANSIStyling?: boolean;
 }
 ```
 
@@ -2459,7 +2474,7 @@ interface SetVariableResponse extends Response {
      * This reference shares the same lifetime as the `variablesReference`. See
      * 'Lifetime of Object References' in the Overview section for details.
      */
-    valueLocationReference?: string;
+    valueLocationReference?: number;
   };
 }
 ```
@@ -2662,7 +2677,7 @@ interface LoadedSourcesResponse extends Response {
 
 ### <a name="Requests_Evaluate" class="anchor"></a>:leftwards_arrow_with_hook: Evaluate Request
 
-Evaluates the given expression in the context of the a stack frame.
+Evaluates the given expression in the context of a stack frame.
 
 The expression has access to any variables and arguments that are in scope.
 
@@ -2804,7 +2819,7 @@ interface EvaluateResponse extends Response {
      * This reference shares the same lifetime as the `variablesReference`. See
      * 'Lifetime of Object References' in the Overview section for details.
      */
-    locationReference?: string;
+    valueLocationReference?: number;
   };
 }
 ```
@@ -2921,7 +2936,7 @@ interface SetExpressionResponse extends Response {
      * This reference shares the same lifetime as the `variablesReference`. See
      * 'Lifetime of Object References' in the Overview section for details.
      */
-    valueLocationReference?: string;
+    valueLocationReference?: number;
   };
 }
 ```
@@ -3364,7 +3379,7 @@ interface LocationsArguments {
   /**
    * Location reference to resolve.
    */
-  locationReference: string;
+  locationReference: number;
 }
 ```
 
@@ -3395,17 +3410,15 @@ interface LocationsResponse extends Response {
     column?: number;
 
     /**
-     * End line of the location. If no end line is given, then the end line is
-     * assumed to be the start line. The client capability `linesStartAt1`
-     * determines whether it is 0- or 1-based.
+     * End line of the location, present if the location refers to a range.  The
+     * client capability `linesStartAt1` determines whether it is 0- or 1-based.
      */
     endLine?: number;
 
     /**
-     * End position of the location within `endLine`. It is measured in UTF-16
-     * code units and the client capability `columnsStartAt1` determines whether
-     * it is 0- or 1-based. If no end column is given, the last position in the
-     * end line is assumed.
+     * End position of the location within `endLine`, present if the location
+     * refers to a range. It is measured in UTF-16 code units and the client
+     * capability `columnsStartAt1` determines whether it is 0- or 1-based.
      */
     endColumn?: number;
   };
@@ -3650,6 +3663,12 @@ interface Capabilities {
    * 'default' mode in gestures that set breakpoints.
    */
   breakpointModes?: BreakpointMode[];
+
+  /**
+   * The debug adapter supports ANSI escape sequences in styling of
+   * `OutputEvent.output` and `Variable.value` fields.
+   */
+  supportsANSIStyling?: boolean;
 }
 ```
 
@@ -4199,7 +4218,7 @@ interface Variable {
    * This reference shares the same lifetime as the `variablesReference`. See
    * 'Lifetime of Object References' in the Overview section for details.
    */
-  declarationLocationReference?: string;
+  declarationLocationReference?: number;
 
   /**
    * A reference that allows the client to request the location where the
@@ -4211,7 +4230,7 @@ interface Variable {
    * This reference shares the same lifetime as the `variablesReference`. See
    * 'Lifetime of Object References' in the Overview section for details.
    */
-  valueLocationReference?: string;
+  valueLocationReference?: number;
 }
 ```
 

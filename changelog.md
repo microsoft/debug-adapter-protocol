@@ -8,6 +8,7 @@ sectionid: changelog
 
 * 1.69.x
   * Clarify the flow diagram to start a debug session
+  * Add `supportsANSIStyling` capabilities to allow colorization of text from debug adapters
 
 * 1.68.x
   * Add `locationReference`s to Variable-related data types to allow navigation to declarations, and a corresponding `locations` request.
