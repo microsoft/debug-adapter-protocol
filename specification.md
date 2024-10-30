@@ -2222,7 +2222,9 @@ interface StackTraceArguments {
   levels?: number;
 
   /**
-   * Specifies details on how to format the stack frames.
+   * Specifies details on how to format the returned `StackFrame.name`. The
+   * debug adapter may format requested details in any way that would make sense
+   * to the developer.
    * The attribute is only honored by a debug adapter if the corresponding
    * capability `supportsValueFormattingOptions` is true.
    */
