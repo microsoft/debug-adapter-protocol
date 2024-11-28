@@ -313,8 +313,9 @@ interface ContinuedEvent extends Event {
     threadId: number;
 
     /**
-     * If `allThreadsContinued` is true, a debug adapter can announce that all
-     * threads have continued.
+     * If omitted or set to `true`, this event signals to the client that all
+     * threads have been resumed. The value `false` indicates that not all
+     * threads were resumed.
      */
     allThreadsContinued?: boolean;
   };
