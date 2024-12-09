@@ -56,6 +56,7 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [LLDB Debugger](https://github.com/vadimcn/vscode-lldb)|[@vadimcn](https://github.com/vadimcn)|[VS Code](https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb)
 [Lua and Ravi 5.3 Debugger](https://github.com/dibyendumajumdar/ravi-vscode-debugger)|[@dibyendumajumdar](https://github.com/dibyendumajumdar)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ravilang.ravi-debug)
 [Lua Debug](https://github.com/actboy168/lua-debug)|[@actboy168](https://github.com/actboy168)|[VS Code](https://marketplace.visualstudio.com/items?itemName=actboy168.lua-debug)
+[Luau Debugger](https://github.com/sssooonnnggg/luau-debugger)|[@sssooonnnggg](https://github.com/sssooonnnggg)|[VS Code](https://marketplace.visualstudio.com/items?itemName=sssooonnnggg.luau-debugger)
 [Mock Debug](https://github.com/Microsoft/vscode-mock-debug)|[@roblourens](https://github.com/roblourens)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.mock-debug)
 [Mono Debug](https://github.com/Microsoft/vscode-mono-debug)|[@akoeplinger](https://github.com/akoeplinger)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.mono-debug)
 [NAME](https://github.com/utdscheld/name)|[John Cole](https://personal.utdallas.edu/~John.Cole/)|
