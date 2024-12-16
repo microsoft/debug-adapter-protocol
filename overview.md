@@ -179,7 +179,7 @@ After the response to `configurationDone` is sent, the debug adapter may respond
 
 The following sequence diagram summarizes the sequence of requests and events for a hypothetical _gdb_ debug adapter:
 
-<img src="./img/init-launch.svg" width="100%">
+<img src="./img/init-launch.svg" width="100%" alt="Sequence diagram of the launch flow">
 
 ### Stopping and accessing debuggee state
 
@@ -233,7 +233,7 @@ If the debuggee has ended (and the debug adapter is able to detect this), an opt
 
 This diagram summarizes the sequence of request and events for a hypothetical debug adapter for _gdb_:
 
-<img src="./img/stop-continue-terminate.svg" width="100%" />
+<img src="./img/stop-continue-terminate.svg" width="100%" alt="Sequence diagram of the termination flow" />
 
 ## Libraries (SDKs) for DAP providers and consumers
 
