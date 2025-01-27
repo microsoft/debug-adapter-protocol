@@ -313,8 +313,9 @@ interface ContinuedEvent extends Event {
     threadId: number;
 
     /**
-     * If `allThreadsContinued` is true, a debug adapter can announce that all
-     * threads have continued.
+     * If omitted or set to `true`, this event signals to the client that all
+     * threads have been resumed. The value `false` indicates that not all
+     * threads were resumed.
      */
     allThreadsContinued?: boolean;
   };
@@ -1811,9 +1812,9 @@ Response to `continue` request.
 interface ContinueResponse extends Response {
   body: {
     /**
-     * The value true (or a missing property) signals to the client that all
-     * threads have been resumed. The value false indicates that not all threads
-     * were resumed.
+     * If omitted or set to `true`, this response signals to the client that all
+     * threads have been resumed. The value `false` indicates that not all
+     * threads were resumed.
      */
     allThreadsContinued?: boolean;
   };
@@ -2222,7 +2223,9 @@ interface StackTraceArguments {
   levels?: number;
 
   /**
-   * Specifies details on how to format the stack frames.
+   * Specifies details on how to format the returned `StackFrame.name`. The
+   * debug adapter may format requested details in any way that would make sense
+   * to a developer.
    * The attribute is only honored by a debug adapter if the corresponding
    * capability `supportsValueFormattingOptions` is true.
    */

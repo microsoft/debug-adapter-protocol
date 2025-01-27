@@ -6,6 +6,10 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.70.x
+  * Clarify how `StackTraceArguments.format` applies
+  * Clarify the default behavior of `ContinuedEvent.allThreadsContinued`
+
 * 1.69.x
   * Clarify the flow diagram to start a debug session
   * Add `supportsANSIStyling` capabilities to allow colorization of text from debug adapters
