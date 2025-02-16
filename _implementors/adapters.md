@@ -18,6 +18,7 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [Ballerina](https://github.com/ballerina-platform/ballerina-lang/)|[Ballerina.io](https://ballerina.io/)|[VS Code](https://marketplace.visualstudio.com/items?itemName=wso2.ballerina) |
 [C/C++](https://github.com/Microsoft/vscode-cpptools)|[@WardenGnaw](https://github.com/WardenGnaw)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
 [C/C++/Rust](https://github.com/Marus/cortex-debug)|[@Marus](https://github.com/Marus)|[VS Code](https://marketplace.visualstudio.com/items?itemName=marus25.cortex-debug)
+[C/C++/Rust - Midas: gdb & rr](https://github.com/farre/midas)|[@theIDinside](https://github.com/theIDinside)|[VS Code](https://marketplace.visualstudio.com/items?itemName=farrese.midas)
 [C#](https://github.com/OmniSharp/omnisharp-vscode)|[@gregg-miskelly](https://github.com/gregg-miskelly)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp)
 [Cobol](https://github.com/RechInformatica/rech-cobol-debugger)|[@RechInformatica](https://github.com/RechInformatica)|[VS Code](https://marketplace.visualstudio.com/items?itemName=rechinformatica.rech-cobol-debugger)
 [Cordova Tools](https://github.com/Microsoft/vscode-cordova)|[@MSLaguana](https://github.com/MSLaguana)|[VS Code](https://marketplace.visualstudio.com/items?itemName=vsmobile.cordova-tools)
