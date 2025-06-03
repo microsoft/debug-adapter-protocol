@@ -9,7 +9,7 @@ index: 2
 The following table lists the known development tools (IDEs) that implement the Debug Adapter Protocol as a client.
 
 | Development Tool              | Client ID    | Maintainer | Repository                                |
-|-------------------------------|--------------|--------------------------------------------------------|
+|-------------------------------|--------------|------------|-------------------------------------------|
 | Visual Studio Code            | vscode       | Microsoft  | [vscode](https://github.com/Microsoft/vscode)
 | Visual Studio                 | visualstudio | Microsoft  | [Visual Studio Debug Adapter Host](https://github.com/Microsoft/VSDebugAdapterHost)
 | Visual Studio for Mac         | vsformac     | Microsoft  |

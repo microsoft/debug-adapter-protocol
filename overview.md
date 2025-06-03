@@ -46,7 +46,7 @@ The _Debug Adapter Protocol_ is a win for both debugger/runtime providers and to
 
 ## <a name="How_it_works" class="anchor"></a>How it works
 
-The following sections explains the interaction between a development tool (e.g. IDE or editor) and a debug adapter.
+The following sections explain the interaction between a development tool (e.g. IDE or editor) and a debug adapter.
 This should not only help when implementing the Debug Adapter Protocol in a debug adapter, but also when _hosting_ the protocol in a development tool (sometimes also called "host" or "client").
 
 ### Debug Session Start
@@ -133,7 +133,7 @@ After the debug adapter has been initialized, it is ready to accept requests for
 Two requests exist for this:
 - [**launch**](./specification#Requests_Launch) request: the debug adapter launches the program ("debuggee") in debug mode and then starts to communicate with it.
 Since the debug adapter is responsible for launching the debuggee, it should provide a mechanism for the end user to configure the debuggee. For example, passing arguments or specifying a working directory.
-   - Debug adapters are free to launch the debuggee however they choose. Typically the debuggee is launched as a child process and its output channels are connected to a client's debug console via [**output**](./specification.md#Events_Output) events. However, this has certain limitations, such as not being able to write to the terminal device directly and not being able to accept standard input. For those cases, launching the debuggee in a terminal is preferable. A debug adapter can use the the [**runInTerminal**](./specification#Reverse_Requests_RunInTerminal) request to ask the client to launch the debuggee in a terminal that is integrated into the client or in a terminal that runs outside of the client (but still configured and managed from the client).
+   - Debug adapters are free to launch the debuggee however they choose. Typically the debuggee is launched as a child process and its output channels are connected to a client's debug console via [**output**](./specification.md#Events_Output) events. However, this has certain limitations, such as not being able to write to the terminal device directly and not being able to accept standard input. For those cases, launching the debuggee in a terminal is preferable. A debug adapter can use the [**runInTerminal**](./specification#Reverse_Requests_RunInTerminal) request to ask the client to launch the debuggee in a terminal that is integrated into the client or in a terminal that runs outside of the client (but still configured and managed from the client).
 - [**attach**](./specification#Requests_Attach) request: the debug adapter connects to an already running program. Here the end user is responsible for launching and terminating the program.
 
 Since arguments for both requests are highly dependent on a specific debugger and debug adapter implementation, the Debug Adapter Protocol does not specify any arguments for these requests.
