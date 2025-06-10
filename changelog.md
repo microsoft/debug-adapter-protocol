@@ -9,6 +9,7 @@ sectionid: changelog
 * 1.70.x
   * Clarify how `StackTraceArguments.format` applies
   * Clarify the default behavior of `ContinuedEvent.allThreadsContinued`
+  * Clarify representation of breakpoints after a `changed` event
 
 * 1.69.x
   * Clarify the flow diagram to start a debug session
