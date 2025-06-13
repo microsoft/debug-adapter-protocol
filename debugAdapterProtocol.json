@@ -408,7 +408,7 @@
 		"BreakpointEvent": {
 			"allOf": [ { "$ref": "#/definitions/Event" }, {
 				"type": "object",
-				"description": "The event indicates that some information about a breakpoint has changed.",
+				"description": "The event indicates that some information about a breakpoint has changed. While debug adapters may notify the clients of `changed` breakpoints using this event, clients should continue to use the breakpoint's original properties when updating a source's breakpoints in the `breakpoint` request.",
 				"properties": {
 					"event": {
 						"type": "string",
