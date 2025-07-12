@@ -24,6 +24,7 @@ The following table lists the known development tools (IDEs) that implement the 
 | JCIDE                         | JCIDE        | [JavaCardOS](https://www.javacardos.com/)   | [JCIDE](https://www.javacardos.com/tools)
 | OpenSumi                      | OpenSumi     | [OpenSumi](https://github.com/opensumi)   | [opensumi/core](https://github.com/opensumi/core)
 | IntelliJ (LSP4IJ DAP support) | lsp4ij.debug | Red Hat    | [IntelliJ LSP4IJ](https://github.com/redhat-developer/lsp4ij/blob/main/docs/dap/UserGuide.md) |
+| Zed                           | zed          | Zed Industries | [zed](https://github.com/zed-industries/zed) |
 {: .table .table-bordered .table-responsive}
 
 The "client ID" is the identifier that a development tool sends to the debug adapter as part of the [**initialize**](../../specification#Requests_Initialize) request.
