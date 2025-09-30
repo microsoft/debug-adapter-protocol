@@ -47,6 +47,7 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [Go Delve Debugger](https://github.com/go-delve/delve/tree/master/service/dap)| [@polinasok](https://github.com/polinasok) and [Delve](https://github.com/go-delve)| [DAP Server](https://github.com/go-delve/delve/tree/master/Documentation/api/dap), [VS Code](https://github.com/golang/vscode-go/blob/master/docs/debugging.md)
 [Harbour](https://github.com/APerricone/harbourCodeExtension)|[@APerricone](https://github.com/APerricone)|[VS Code](https://marketplace.visualstudio.com/items?itemName=aperricone.harbour)
 [HashLink](https://github.com/vshaxe/hashlink-debugger)|[@vshaxe](https://github.com/vshaxe/)|[VS Code](https://marketplace.visualstudio.com/items?itemName=HaxeFoundation.haxe-hl)
+[Haskell Debugger](https://well-typed.github.io/haskell-debugger/)|[@alt-romes](https://github.com/alt-romes) [@dmjio](https://github.com/dmjio)|[DAP Server](https://github.com/well-typed/haskell-debugger)
 [Haskell GHCi debug viewer Phoityne](https://github.com/phoityne/phoityne-vscode)|[@phoityne](https://github.com/phoityne)|[VS Code](https://marketplace.visualstudio.com/items?itemName=phoityne.phoityne-vscode)
 [Haxe Eval](https://github.com/vshaxe/eval-debugger)|[@vshaxe](https://github.com/vshaxe/)|[VS Code](https://marketplace.visualstudio.com/items?itemName=nadako.vshaxe)
 [HXCPP](https://github.com/vshaxe/hxcpp-debugger)|[@vshaxe](https://github.com/vshaxe/)|[VS Code](https://marketplace.visualstudio.com/items?itemName=vshaxe.hxcpp-debugger)
