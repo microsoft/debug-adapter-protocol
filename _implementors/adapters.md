@@ -13,11 +13,13 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 | Adapter | Maintainer | Usage |
 |---------|------------|-------|
 [Android](https://github.com/adelphes/android-dev-ext)|[@adelphes](https://github.com/adelphes)|[VS Code](https://marketplace.visualstudio.com/items?itemName=adelphes.android-dev-ext)
+[Ansible](https://github.com/jborean93/ansibug)|[@jborean93](https://github.com/jborean93)|[VS Code](https://github.com/jborean93/vscode-ansibug)
 [Apache Camel](https://github.com/camel-tooling/camel-debug-adapter)|[contributors](https://github.com/camel-tooling/camel-debug-adapter/graphs/contributors)|[VS Code](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-debug-adapter-apache-camel), [Eclipse](https://marketplace.eclipse.org/content/textual-debugging-apache-camel)
 [Apex](https://github.com/forcedotcom/salesforcedx-vscode)|[@ntotten](https://github.com/ntotten)|[VS Code](https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-vscode-apex-debugger)
 [Ballerina](https://github.com/ballerina-platform/ballerina-lang/)|[Ballerina.io](https://ballerina.io/)|[VS Code](https://marketplace.visualstudio.com/items?itemName=wso2.ballerina) |
 [C/C++](https://github.com/Microsoft/vscode-cpptools)|[@WardenGnaw](https://github.com/WardenGnaw)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
 [C/C++/Rust](https://github.com/Marus/cortex-debug)|[@Marus](https://github.com/Marus)|[VS Code](https://marketplace.visualstudio.com/items?itemName=marus25.cortex-debug)
+[C/C++/Rust - Midas: gdb & rr](https://github.com/farre/midas)|[@theIDinside](https://github.com/theIDinside)|[VS Code](https://marketplace.visualstudio.com/items?itemName=farrese.midas)
 [C#](https://github.com/OmniSharp/omnisharp-vscode)|[@gregg-miskelly](https://github.com/gregg-miskelly)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp)
 [Cobol](https://github.com/RechInformatica/rech-cobol-debugger)|[@RechInformatica](https://github.com/RechInformatica)|[VS Code](https://marketplace.visualstudio.com/items?itemName=rechinformatica.rech-cobol-debugger)
 [Cordova Tools](https://github.com/Microsoft/vscode-cordova)|[@MSLaguana](https://github.com/MSLaguana)|[VS Code](https://marketplace.visualstudio.com/items?itemName=vsmobile.cordova-tools)
@@ -36,7 +38,8 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [Duktape Debugger](https://github.com/svaarala/duktape)|[@svaarala](https://github.com/svaarala)|[VS Code](https://marketplace.visualstudio.com/items?itemName=HaroldBrenes.duk-debug)
 [Elixir](https://github.com/elixir-lsp/elixir-ls)|[Elixir LSP](https://github.com/elixir-lsp)|[VS Code](https://marketplace.visualstudio.com/items?itemName=JakeBecker.elixir-ls)
 [Emulicious Debugger](https://github.com/Calindro/emulicious-debugger)|[@Calindro](https://github.com/Calindro)|[VS Code](https://marketplace.visualstudio.com/items?itemName=emulicious.emulicious-debugger)
-[Erlang](https://github.com/erlang-ls/erlang_ls)|[@robertoaloi](https://github.com/robertoaloi) and [Contributors](https://github.com/erlang-ls/erlang_ls/graphs/contributors)|[VS Code](https://marketplace.visualstudio.com/items?itemName=erlang-ls.erlang-ls)
+[Erlang EDB](https://github.com/whatsapp/edb)|[@WhatsApp](https://github.com/WhatsApp)|[VS Code](https://marketplace.visualstudio.com/items?itemName=erlang-language-platform.erlang-language-platform)
+[Erlang LS Debugger](https://github.com/erlang-ls/erlang_ls)|[@robertoaloi](https://github.com/robertoaloi) and [Contributors](https://github.com/erlang-ls/erlang_ls/graphs/contributors)|[VS Code](https://marketplace.visualstudio.com/items?itemName=erlang-ls.erlang-ls)
 [ESP32 Debugger](https://github.com/espressif/esp-debug-adapter)|[@espressif](https://github.com/espressif)|[DAP Server](https://github.com/espressif/esp-debug-adapter#usage)
 [Firefox Remote Debug](https://github.com/yurydelendik/vscode-ff-debug)|[@yurydelendik](https://github.com/yurydelendik)|[VS Code](https://marketplace.visualstudio.com/items?itemName=yurydelendik.firefox-debug)
 [Flash](https://github.com/vshaxe/flash-debugger)|[@vshaxe](https://github.com/vshaxe/)|[VS Code](https://marketplace.visualstudio.com/items?itemName=vshaxe.haxe-debug)
@@ -44,6 +47,7 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [Go Delve Debugger](https://github.com/go-delve/delve/tree/master/service/dap)| [@polinasok](https://github.com/polinasok) and [Delve](https://github.com/go-delve)| [DAP Server](https://github.com/go-delve/delve/tree/master/Documentation/api/dap), [VS Code](https://github.com/golang/vscode-go/blob/master/docs/debugging.md)
 [Harbour](https://github.com/APerricone/harbourCodeExtension)|[@APerricone](https://github.com/APerricone)|[VS Code](https://marketplace.visualstudio.com/items?itemName=aperricone.harbour)
 [HashLink](https://github.com/vshaxe/hashlink-debugger)|[@vshaxe](https://github.com/vshaxe/)|[VS Code](https://marketplace.visualstudio.com/items?itemName=HaxeFoundation.haxe-hl)
+[Haskell Debugger](https://well-typed.github.io/haskell-debugger/)|[@alt-romes](https://github.com/alt-romes) [@dmjio](https://github.com/dmjio)|[DAP Server](https://github.com/well-typed/haskell-debugger)
 [Haskell GHCi debug viewer Phoityne](https://github.com/phoityne/phoityne-vscode)|[@phoityne](https://github.com/phoityne)|[VS Code](https://marketplace.visualstudio.com/items?itemName=phoityne.phoityne-vscode)
 [Haxe Eval](https://github.com/vshaxe/eval-debugger)|[@vshaxe](https://github.com/vshaxe/)|[VS Code](https://marketplace.visualstudio.com/items?itemName=nadako.vshaxe)
 [HXCPP](https://github.com/vshaxe/hxcpp-debugger)|[@vshaxe](https://github.com/vshaxe/)|[VS Code](https://marketplace.visualstudio.com/items?itemName=vshaxe.hxcpp-debugger)
@@ -54,6 +58,7 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [Karate](https://github.com/intuit/karate/tree/develop/karate-core/src/main/java/com/intuit/karate/debug)|[@kirk_slota](https://twitter.com/kirk_slota) [@ptrthomas](https://twitter.com/ptrthomas)|[VS Code](https://marketplace.visualstudio.com/items?itemName=kirkslota.karate-runner)
 [Kotlin](https://github.com/fwcd/kotlin-debug-adapter)|[@fwcd](https://github.com/fwcd)|[VS Code](https://marketplace.visualstudio.com/items?itemName=fwcd.kotlin)
 [LLDB Debugger](https://github.com/vadimcn/vscode-lldb)|[@vadimcn](https://github.com/vadimcn)|[VS Code](https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb)
+[lldb-dap](https://github.com/llvm/llvm-project/tree/main/lldb/tools/lldb-dap)|[@llvm](https://github.com/llvm)|[DAP Server](https://github.com/llvm/llvm-project/tree/main/lldb/tools/lldb-dap), [VS Code](https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.lldb-dap)
 [Lua and Ravi 5.3 Debugger](https://github.com/dibyendumajumdar/ravi-vscode-debugger)|[@dibyendumajumdar](https://github.com/dibyendumajumdar)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ravilang.ravi-debug)
 [Lua Debug](https://github.com/actboy168/lua-debug)|[@actboy168](https://github.com/actboy168)|[VS Code](https://marketplace.visualstudio.com/items?itemName=actboy168.lua-debug)
 [Luau Debugger](https://github.com/sssooonnnggg/luau-debugger)|[@sssooonnnggg](https://github.com/sssooonnnggg)|[VS Code](https://marketplace.visualstudio.com/items?itemName=sssooonnnggg.luau-debugger)
@@ -79,6 +84,7 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [Ruby Byebug (VSCode)](https://gitlab.com/firelizzard/vscode-byebug)|[Ethan Reesor](https://gitlab.com/firelizzard)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ethan-reesor.vscode-byebug)
 [Rust (for embedded)](https://github.com/probe-rs/vscode)|[probe.rs community](https://github.com/probe-rs)|[VS Code](https://probe.rs/docs/tools/vscode/), [Eclipse](https://marketplace.eclipse.org/content/eclipse-corrosion-rust-editing-and-debugging)
 [Scala](https://github.com/scalacenter/scala-debug-adapter)|[@adpi2](https://github.com/adpi2)|[SBT](https://index.scala-lang.org/scalacenter/scala-debug-adapter)
+[Squirrel](https://github.com/samisalreadytaken/sqdbg)|[@samisalreadytaken](https://github.com/samisalreadytaken)|
 [SWI-Prolog](https://github.com/eshelyaron/debug_adapter)|[@eshelyaron](https://github.com/eshelyaron)|[SWI and Emacs](https://github.com/eshelyaron/debug_adapter#installation)
 [SWF](https://github.com/BowlerHatLLC/vscode-nextgenas)|[@joshtynjala](https://github.com/joshtynjala)|[VS Code](https://marketplace.visualstudio.com/items?itemName=bowlerhatllc.vscode-nextgenas)
 [TLA+](https://github.com/tlaplus/vscode-tlaplus)|[@lemmy](https://github.com/lemmy)|[VS Code](https://marketplace.visualstudio.com/items?itemName=alygin.vscode-tlaplus-nightly)
@@ -88,3 +94,4 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 {: .table .table-bordered .table-responsive}
 
 *If you are missing a debug adapter implementation please create a pull request in GitHub against this markdown [document](https://github.com/Microsoft/debug-adapter-protocol/blob/main/_implementors/adapters.md)*
+

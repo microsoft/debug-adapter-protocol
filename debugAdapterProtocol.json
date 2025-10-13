@@ -408,7 +408,7 @@
 		"BreakpointEvent": {
 			"allOf": [ { "$ref": "#/definitions/Event" }, {
 				"type": "object",
-				"description": "The event indicates that some information about a breakpoint has changed.",
+				"description": "The event indicates that some information about a breakpoint has changed. While debug adapters may notify the clients of `changed` breakpoints using this event, clients should continue to use the breakpoint's original properties when updating a source's breakpoints in the `breakpoint` request.",
 				"properties": {
 					"event": {
 						"type": "string",
@@ -3226,7 +3226,7 @@
 					"items": {
 						"type": "string"
 					},
-					"description": "The set of characters that should trigger completion in a REPL. If not specified, the UI should assume the `.` character."
+					"description": "The set of characters that should automatically trigger a completion request in a REPL. If not specified, the client should assume the `.` character. The client may trigger additional completion requests on characters such as ones that make up common identifiers, or as otherwise requested by a user."
 				},
 				"supportsModulesRequest": {
 					"type": "boolean",

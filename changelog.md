@@ -9,6 +9,7 @@ sectionid: changelog
 * 1.70.x
   * Clarify how `StackTraceArguments.format` applies
   * Clarify the default behavior of `ContinuedEvent.allThreadsContinued`
+  * Clarify representation of breakpoints after a `changed` event
 
 * 1.69.x
   * Clarify the flow diagram to start a debug session
@@ -25,7 +26,7 @@ sectionid: changelog
   * Add `returnValue` as a well-known `Scope.presentationHint`
 
 * 1.66.x
- * Add `bytes` and `asAddress` properties to the `DataBreakpointInfo` request
+  * Add `bytes` and `asAddress` properties to the `DataBreakpointInfo` request
 
 * 1.65.x
   * Clarify handling of multiple filters in the `SetExceptionBreakpoints` request
@@ -133,11 +134,11 @@ sectionid: changelog
 * 1.40.x:
   * New value `clipboard` for `context` argument of `evaluate` request.
   * Add support for reporting progress via `progressStart`, `progressUpdate`, and `progressEnd` events and a corresponding **client** capability `supportsProgressReporting`. Progress can be cancelled via a new `progressId` argument for the `cancel` request.
-  * Clarifed descriptions of all optional requests, events, and attributes to make clear what is the corresponding capability.
+  * Clarified descriptions of all optional requests, events, and attributes to make clear what is the corresponding capability.
 
 * 1.39.x:
-  * add optional `selectionStart` and `selectionLength` attributes to completion item. With these attributes the selection range or position can be controlled after the completion text has been inserted.
-  * add optional `group` attribute to `output` event in order to keep an output log organized by grouping related messages.
+  * Add optional `selectionStart` and `selectionLength` attributes to completion item. With these attributes the selection range or position can be controlled after the completion text has been inserted.
+  * Add optional `group` attribute to `output` event in order to keep an output log organized by grouping related messages.
 
 * 1.38.x:
   * Fixes some typos and improves some comments.
