@@ -20,6 +20,10 @@
 					"type": "string",
 					"description": "Message type.",
 					"_enum": [ "request", "response", "event" ]
+				},
+				"sessionId": {
+					"type": "string",
+					"description": "Optional unique identifier indicating for which debugging session this protocol message is bound"
 				}
 			},
 			"required": [ "seq", "type" ]
