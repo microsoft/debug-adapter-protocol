@@ -848,6 +848,14 @@
 					"additionalProperties": true,
 					"description": "Arguments passed to the new debug session. The arguments must only contain properties understood by the `launch` or `attach` requests of the debug adapter and they must not contain any client-specific properties (e.g. `type`) or client-specific features (e.g. substitutable 'variables')."
 				},
+				"debugConsoleMode": {
+					"type": "string",
+					"enum": [
+						"separate",
+						"mergeWithParent"
+					],
+					"description": "Specifies if a new debug console window should be created or the output should be merged with the parent session's console."
+				},
 				"request": {
 					"type": "string",
 					"enum": [
