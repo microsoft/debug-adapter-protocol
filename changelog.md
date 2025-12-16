@@ -10,6 +10,7 @@ sectionid: changelog
   * Clarify how `StackTraceArguments.format` applies
   * Clarify the default behavior of `ContinuedEvent.allThreadsContinued`
   * Clarify representation of breakpoints after a `changed` event
+  * Add optional `instructionReference` and `offset` properties to the `gotoTargets` request
 
 * 1.69.x
   * Clarify the flow diagram to start a debug session
