@@ -137,6 +137,7 @@
 						"enum": [ "cancel" ]
 					},
 					"arguments": {
+						"description": "Arguments must be passed to form a valid request. Debug adapters may reject requests that lack arguments with an error. These `arguments` are marked as optional for historical reasons.",
 						"$ref": "#/definitions/CancelArguments"
 					}
 				},
@@ -1197,6 +1198,7 @@
 						"enum": [ "breakpointLocations" ]
 					},
 					"arguments": {
+						"description": "Arguments must be passed to form a valid request. Debug adapters may reject requests that lack arguments with an error. These `arguments` are marked as optional for historical reasons.",
 						"$ref": "#/definitions/BreakpointLocationsArguments"
 					}
 				},
