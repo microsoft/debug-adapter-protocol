@@ -14,6 +14,8 @@
 			"properties": {
 				"seq": {
 					"type": "integer",
+					"format": "int32",
+					"minimum": 1,
 					"description": "Sequence number of the message (also known as message ID). The `seq` for the first message sent by a client or debug adapter is 1, and for each subsequent message is 1 greater than the previous message sent by that actor. `seq` can be used to order requests, responses, and events, and to associate requests with their corresponding responses. For protocol messages of type `request` the sequence number can be used to cancel the request."
 				},
 				"type": {
@@ -80,6 +82,8 @@
 					},
 					"request_seq": {
 						"type": "integer",
+						"format": "int32",
+						"minimum": 1,
 						"description": "Sequence number of the corresponding request."
 					},
 					"success": {
@@ -150,6 +154,8 @@
 			"properties": {
 				"requestId": {
 					"type": "integer",
+					"format": "int32",
+					"minimum": 1,
 					"description": "The ID (attribute `seq`) of the request to cancel. If missing no request is cancelled.\nBoth a `requestId` and a `progressId` can be specified in one request."
 				},
 				"progressId": {
@@ -203,6 +209,7 @@
 							},
 							"threadId": {
 								"type": "integer",
+								"format": "int32",
 								"description": "The thread which was stopped."
 							},
 							"preserveFocusHint": {
@@ -220,7 +227,8 @@
 							"hitBreakpointIds": {
 								"type": "array",
 								"items": {
-									"type": "integer"
+									"type": "integer",
+									"format": "int32"
 								},
 								"description": "Ids of the breakpoints that triggered the event. In most cases there is only a single breakpoint but here are some examples for multiple breakpoints:\n- Different types of breakpoints map to the same location.\n- Multiple source breakpoints get collapsed to the same instruction by the compiler/runtime.\n- Multiple function breakpoints with different function names map to the same location."
 							}
@@ -246,6 +254,7 @@
 						"properties": {
 							"threadId": {
 								"type": "integer",
+								"format": "int32",
 								"description": "The thread which was continued."
 							},
 							"allThreadsContinued": {
@@ -274,6 +283,7 @@
 						"properties": {
 							"exitCode": {
 								"type": "integer",
+								"format": "int32",
 								"description": "The exit code returned from the debuggee."
 							}
 						},
@@ -326,6 +336,7 @@
 							},
 							"threadId": {
 								"type": "integer",
+								"format": "int32",
 								"description": "The identifier of the thread."
 							}
 						},
@@ -376,6 +387,7 @@
 							},
 							"variablesReference": {
 								"type": "integer",
+								"format": "uint32",
 								"description": "If an attribute `variablesReference` exists and its value is > 0, the output contains objects which can be retrieved by passing `variablesReference` to the `variables` request as long as execution remains suspended. See 'Lifetime of Object References' in the Overview section for details."
 							},
 							"source": {
@@ -384,10 +396,14 @@
 							},
 							"line": {
 								"type": "integer",
+								"format": "uint64",
+								"maximum": 9007199254740991,
 								"description": "The source location's line where the output was produced."
 							},
 							"column": {
 								"type": "integer",
+								"format": "uint64",
+								"maximum": 9007199254740991,
 								"description": "The position in `line` where the output was produced. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 							},
 							"data": {
@@ -396,6 +412,7 @@
 							},
 							"locationReference": {
 								"type": "integer",
+								"format": "int32",
 								"description": "A reference that allows the client to request the location where the new value is declared. For example, if the logged value is function pointer, the adapter may be able to look up the function's location. This should be present only if the adapter is likely to be able to resolve the location.\n\nThis reference shares the same lifetime as the `variablesReference`. See 'Lifetime of Object References' in the Overview section for details."
 							}
 						},
@@ -513,6 +530,7 @@
 								},
 								"systemProcessId": {
 									"type": "integer",
+									"format": "int32",
 									"description": "The process ID of the debugged process, as assigned by the operating system. This property should be omitted for logical processes that do not map to operating system processes on the machine."
 								},
 								"isLocalProcess": {
@@ -531,6 +549,7 @@
 								},
 								"pointerSize": {
 									"type": "integer",
+									"format": "uint32",
 									"description": "The size of a pointer or address for this process, in bits. This value may be used by clients when formatting addresses for display."
 								}
 							},
@@ -588,6 +607,8 @@
 							},
 							"requestId": {
 								"type": "integer",
+								"format": "int32",
+								"minimum": 1,
 								"description": "The request ID that this progress report is related to. If specified a debug adapter is expected to emit progress events for the long running request until the request has been either completed or cancelled.\nIf the request ID is omitted, the progress report is assumed to be related to some general activity of the debug adapter."
 							},
 							"cancellable": {
@@ -600,7 +621,9 @@
 							},
 							"percentage": {
 								"type": "number",
-								"description": "Progress percentage to display (value range: 0 to 100). If omitted no percentage is shown."
+								"minimum": 0,
+								"maximum": 100,
+								"description": "Progress percentage to display. If omitted no percentage is shown."
 							}
 						},
 						"required": [ "progressId", "title" ]
@@ -632,7 +655,9 @@
 							},
 							"percentage": {
 								"type": "number",
-								"description": "Progress percentage to display (value range: 0 to 100). If omitted no percentage is shown."
+								"minimum": 0,
+								"maximum": 100,
+								"description": "Progress percentage to display. If omitted no percentage is shown."
 							}
 						},
 						"required": [ "progressId" ]
@@ -691,10 +716,12 @@
 							},
 							"threadId": {
 								"type": "integer",
+								"format": "int32",
 								"description": "If specified, the client only needs to refetch data related to this thread."
 							},
 							"stackFrameId": {
 								"type": "integer",
+								"format": "int32",
 								"description": "If specified, the client only needs to refetch data related to this stack frame (and the `threadId` is ignored)."
 							}
 						}
@@ -722,10 +749,15 @@
 							},
 							"offset": {
 								"type": "integer",
+								"format": "int64",
+								"maximum": 9007199254740991,
+								"minimum": -9007199254740991,
 								"description": "Starting offset in bytes where memory has been updated. Can be negative."
 							},
 							"count": {
 								"type": "integer",
+								"format": "uint64",
+								"maximum": 9007199254740991,
 								"description": "Number of bytes updated."
 							}
 						},
@@ -802,11 +834,13 @@
 						"properties": {
 							"processId": {
 								"type": "integer",
-								"description": "The process ID. The value should be less than or equal to 2147483647 (2^31-1)."
+								"format": "int32",
+								"description": "The process ID."
 							},
 							"shellProcessId": {
 								"type": "integer",
-								"description": "The process ID of the terminal shell. The value should be less than or equal to 2147483647 (2^31-1)."
+								"format": "int32",
+								"description": "The process ID of the terminal shell."
 							}
 						}
 					}
@@ -1216,18 +1250,26 @@
 				},
 				"line": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "Start line of range to search possible breakpoint locations in. If only the line is specified, the request returns all possible locations in that line."
 				},
 				"column": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "Start position within `line` to search possible breakpoint locations in. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based. If no column is given, the first position in the start line is assumed."
 				},
 				"endLine": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "End line of range to search possible breakpoint locations in. If no end line is given, then the end line is assumed to be the start line."
 				},
 				"endColumn": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "End position within `endLine` to search possible breakpoint locations in. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based. If no end column is given, the last position in the end line is assumed."
 				}
 			},
@@ -1290,7 +1332,9 @@
 				"lines": {
 					"type": "array",
 					"items": {
-						"type": "integer"
+						"type": "integer",
+						"format": "uint64",
+						"maximum": 9007199254740991
 					},
 					"description": "Deprecated: The code locations of the breakpoints."
 				},
@@ -1464,6 +1508,7 @@
 			"properties": {
 				"variablesReference": {
 					"type": "integer",
+					"format": "uint32",
 					"description": "Reference to the variable container if the data breakpoint is requested for a child of the container. The `variablesReference` must have been obtained in the current suspended state. See 'Lifetime of Object References' in the Overview section for details."
 				},
 				"name": {
@@ -1472,10 +1517,12 @@
 				},
 				"frameId": {
 					"type": "integer",
+					"format": "int32",
 					"description": "When `name` is an expression, evaluate it in the scope of this stack frame. If not specified, the expression is evaluated in the global scope. When `variablesReference` is specified, this property has no effect."
 				},
 				"bytes": {
 					"type": "integer",
+					"format": "uint32",
 					"description": "If specified, a debug adapter should return information for the range of memory extending `bytes` number of bytes from the address or variable specified by `name`. Breakpoints set using the resulting data ID should pause on data access anywhere within that range.\n\nClients may set this property only if the `supportsDataBreakpointBytes` capability is true."
 				},
 				"asAddress": {
@@ -1656,6 +1703,7 @@
 			"properties": {
 				"threadId": {
 					"type": "integer",
+					"format": "int32",
 					"description": "Specifies the active thread. If the debug adapter supports single thread execution (see `supportsSingleThreadExecutionRequests`) and the argument `singleThread` is true, only the thread with this ID is resumed."
 				},
 				"singleThread": {
@@ -1706,6 +1754,7 @@
 			"properties": {
 				"threadId": {
 					"type": "integer",
+					"format": "int32",
 					"description": "Specifies the thread for which to resume execution for one step (of the given granularity)."
 				},
 				"singleThread": {
@@ -1748,6 +1797,7 @@
 			"properties": {
 				"threadId": {
 					"type": "integer",
+					"format": "int32",
 					"description": "Specifies the thread for which to resume execution for one step-into (of the given granularity)."
 				},
 				"singleThread": {
@@ -1756,6 +1806,7 @@
 				},
 				"targetId": {
 					"type": "integer",
+					"format": "int32",
 					"description": "Id of the target to step into."
 				},
 				"granularity": {
@@ -1794,6 +1845,7 @@
 			"properties": {
 				"threadId": {
 					"type": "integer",
+					"format": "int32",
 					"description": "Specifies the thread for which to resume execution for one step-out (of the given granularity)."
 				},
 				"singleThread": {
@@ -1836,6 +1888,7 @@
 			"properties": {
 				"threadId": {
 					"type": "integer",
+					"format": "int32",
 					"description": "Specifies the thread for which to resume execution for one step backwards (of the given granularity)."
 				},
 				"singleThread": {
@@ -1878,6 +1931,7 @@
 			"properties": {
 				"threadId": {
 					"type": "integer",
+					"format": "int32",
 					"description": "Specifies the active thread. If the debug adapter supports single thread execution (see `supportsSingleThreadExecutionRequests`) and the `singleThread` argument is true, only the thread with this ID is resumed."
 				},
 				"singleThread": {
@@ -1917,6 +1971,7 @@
 			"properties": {
 				"frameId": {
 					"type": "integer",
+					"format": "int32",
 					"description": "Restart the stack frame identified by `frameId`. The `frameId` must have been obtained in the current suspended state. See 'Lifetime of Object References' in the Overview section for details."
 				}
 			},
@@ -1951,10 +2006,12 @@
 			"properties": {
 				"threadId": {
 					"type": "integer",
+					"format": "int32",
 					"description": "Set the goto target for this thread."
 				},
 				"targetId": {
 					"type": "integer",
+					"format": "int32",
 					"description": "The location where the debuggee will continue to run."
 				}
 			},
@@ -1989,6 +2046,7 @@
 			"properties": {
 				"threadId": {
 					"type": "integer",
+					"format": "int32",
 					"description": "Pause execution for this thread."
 				}
 			},
@@ -2023,14 +2081,17 @@
 			"properties": {
 				"threadId": {
 					"type": "integer",
+					"format": "int32",
 					"description": "Retrieve the stacktrace for this thread."
 				},
 				"startFrame": {
 					"type": "integer",
+					"format": "uint32",
 					"description": "The index of the first frame to return; if omitted frames start at 0."
 				},
 				"levels": {
 					"type": "integer",
+					"format": "uint32",
 					"description": "The maximum number of frames to return. If levels is not specified or 0, all frames are returned."
 				},
 				"format": {
@@ -2057,6 +2118,7 @@
 							},
 							"totalFrames": {
 								"type": "integer",
+								"format": "uint32",
 								"description": "The total number of frames available in the stack. If omitted or if `totalFrames` is larger than the available frames, a client is expected to request frames until a request returns less frames than requested (which indicates the end of the stack). Returning monotonically increasing `totalFrames` values for subsequent requests can be used to enforce paging in the client."
 							}
 						},
@@ -2089,6 +2151,7 @@
 			"properties": {
 				"frameId": {
 					"type": "integer",
+					"format": "int32",
 					"description": "Retrieve the scopes for the stack frame identified by `frameId`. The `frameId` must have been obtained in the current suspended state. See 'Lifetime of Object References' in the Overview section for details."
 				}
 			},
@@ -2139,6 +2202,7 @@
 			"properties": {
 				"variablesReference": {
 					"type": "integer",
+					"format": "uint32",
 					"description": "The variable for which to retrieve its children. The `variablesReference` must have been obtained in the current suspended state. See 'Lifetime of Object References' in the Overview section for details."
 				},
 				"filter": {
@@ -2148,10 +2212,12 @@
 				},
 				"start": {
 					"type": "integer",
+					"format": "uint32",
 					"description": "The index of the first variable to return; if omitted children start at 0. If the value of `start` exceeeds the number of available variables, the debug adapter should return an empty array.\nThe attribute is only honored by a debug adapter if the corresponding capability `supportsVariablePaging` is true."
 				},
 				"count": {
 					"type": "integer",
+					"format": "uint32",
 					"description": "The number of variables to return. If count is missing or 0, all variables are returned. If fewer than `count` variables are returned, the client should assume no further variables are available.\nThe attribute is only honored by a debug adapter if the corresponding capability `supportsVariablePaging` is true."
 				},
 				"format": {
@@ -2206,6 +2272,7 @@
 			"properties": {
 				"variablesReference": {
 					"type": "integer",
+					"format": "uint32",
 					"description": "The reference of the variable container. The `variablesReference` must have been obtained in the current suspended state. See 'Lifetime of Object References' in the Overview section for details."
 				},
 				"name": {
@@ -2241,14 +2308,19 @@
 							},
 							"variablesReference": {
 								"type": "integer",
+								"format": "uint32",
 								"description": "If `variablesReference` is > 0, the new value is structured and its children can be retrieved by passing `variablesReference` to the `variables` request as long as execution remains suspended. See 'Lifetime of Object References' in the Overview section for details.\n\nIf this property is included in the response, any `variablesReference` previously associated with the updated variable, and those of its children, are no longer valid."
 							},
 							"namedVariables": {
 								"type": "integer",
+								"format": "int32",
+								"minimum": 0,
 								"description": "The number of named child variables.\nThe client can use this information to present the variables in a paged UI and fetch them in chunks.\nThe value should be less than or equal to 2147483647 (2^31-1)."
 							},
 							"indexedVariables": {
 								"type": "integer",
+								"format": "int32",
+								"minimum": 0,
 								"description": "The number of indexed child variables.\nThe client can use this information to present the variables in a paged UI and fetch them in chunks.\nThe value should be less than or equal to 2147483647 (2^31-1)."
 							},
 							"memoryReference": {
@@ -2257,6 +2329,7 @@
 							},
 							"valueLocationReference": {
 								"type": "integer",
+								"format": "int32",
 								"description": "A reference that allows the client to request the location where the new value is declared. For example, if the new value is function pointer, the adapter may be able to look up the function's location. This should be present only if the adapter is likely to be able to resolve the location.\n\nThis reference shares the same lifetime as the `variablesReference`. See 'Lifetime of Object References' in the Overview section for details."
 							}
 						},
@@ -2293,6 +2366,8 @@
 				},
 				"sourceReference": {
 					"type": "integer",
+					"format": "int32",
+					"minimum": 0,
 					"description": "The reference to the source. This is the same as `source.sourceReference`.\nThis is provided for backward compatibility since old clients do not understand the `source` attribute."
 				}
 			},
@@ -2381,7 +2456,8 @@
 				"threadIds": {
 					"type": "array",
 					"items": {
-						"type": "integer"
+						"type": "integer",
+						"format": "int32"
 					},
 					"description": "Ids of threads to be terminated."
 				}
@@ -2416,10 +2492,12 @@
 			"properties": {
 				"startModule": {
 					"type": "integer",
+					"format": "int32",
 					"description": "The index of the first module to return; if omitted modules start at 0."
 				},
 				"moduleCount": {
 					"type": "integer",
+					"format": "uint32",
 					"description": "The number of modules to return. If `moduleCount` is not specified or 0, all modules are returned."
 				}
 			}
@@ -2441,6 +2519,8 @@
 							},
 							"totalModules": {
 								"type": "integer",
+								"format": "uint64",
+								"maximum": 9007199254740991,
 								"description": "The total number of modules available."
 							}
 						},
@@ -2520,14 +2600,19 @@
 				},
 				"frameId": {
 					"type": "integer",
+					"format": "int32",
 					"description": "Evaluate the expression in the scope of this stack frame. If not specified, the expression is evaluated in the global scope."
 				},
 				"line": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The contextual line where the expression should be evaluated. In the 'hover' context, this should be set to the start of the expression being hovered."
 				},
 				"column": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The contextual column where the expression should be evaluated. This may be provided if `line` is also provided.\n\nIt is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 				},
 				"source": {
@@ -2575,14 +2660,19 @@
 							},
 							"variablesReference": {
 								"type": "integer",
+								"format": "uint32",
 								"description": "If `variablesReference` is > 0, the evaluate result is structured and its children can be retrieved by passing `variablesReference` to the `variables` request as long as execution remains suspended. See 'Lifetime of Object References' in the Overview section for details."
 							},
 							"namedVariables": {
 								"type": "integer",
+								"format": "int32",
+								"minimum": 0,
 								"description": "The number of named child variables.\nThe client can use this information to present the variables in a paged UI and fetch them in chunks.\nThe value should be less than or equal to 2147483647 (2^31-1)."
 							},
 							"indexedVariables": {
 								"type": "integer",
+								"format": "int32",
+								"minimum": 0,
 								"description": "The number of indexed child variables.\nThe client can use this information to present the variables in a paged UI and fetch them in chunks.\nThe value should be less than or equal to 2147483647 (2^31-1)."
 							},
 							"memoryReference": {
@@ -2591,6 +2681,7 @@
 							},
 							"valueLocationReference": {
 								"type": "integer",
+								"format": "int32",
 								"description": "A reference that allows the client to request the location where the returned value is declared. For example, if a function pointer is returned, the adapter may be able to look up the function's location. This should be present only if the adapter is likely to be able to resolve the location.\n\nThis reference shares the same lifetime as the `variablesReference`. See 'Lifetime of Object References' in the Overview section for details."
 							}
 						},
@@ -2631,6 +2722,7 @@
 				},
 				"frameId": {
 					"type": "integer",
+					"format": "int32",
 					"description": "Evaluate the expressions in the scope of this stack frame. If not specified, the expressions are evaluated in the global scope."
 				},
 				"format": {
@@ -2662,14 +2754,19 @@
 							},
 							"variablesReference": {
 								"type": "integer",
+								"format": "uint32",
 								"description": "If `variablesReference` is > 0, the evaluate result is structured and its children can be retrieved by passing `variablesReference` to the `variables` request as long as execution remains suspended. See 'Lifetime of Object References' in the Overview section for details."
 							},
 							"namedVariables": {
 								"type": "integer",
+								"format": "int32",
+								"minimum": 0,
 								"description": "The number of named child variables.\nThe client can use this information to present the variables in a paged UI and fetch them in chunks.\nThe value should be less than or equal to 2147483647 (2^31-1)."
 							},
 							"indexedVariables": {
 								"type": "integer",
+								"format": "int32",
+								"minimum": 0,
 								"description": "The number of indexed child variables.\nThe client can use this information to present the variables in a paged UI and fetch them in chunks.\nThe value should be less than or equal to 2147483647 (2^31-1)."
 							},
 							"memoryReference": {
@@ -2678,6 +2775,7 @@
 							},
 							"valueLocationReference": {
 								"type": "integer",
+								"format": "int32",
 								"description": "A reference that allows the client to request the location where the new value is declared. For example, if the new value is function pointer, the adapter may be able to look up the function's location. This should be present only if the adapter is likely to be able to resolve the location.\n\nThis reference shares the same lifetime as the `variablesReference`. See 'Lifetime of Object References' in the Overview section for details."
 							}
 						},
@@ -2710,6 +2808,7 @@
 			"properties": {
 				"frameId": {
 					"type": "integer",
+					"format": "int32",
 					"description": "The stack frame for which to retrieve the possible step-in targets."
 				}
 			},
@@ -2764,10 +2863,14 @@
 				},
 				"line": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The line location for which the goto targets are determined."
 				},
 				"column": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The position within `line` for which the goto targets are determined. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 				}
 			},
@@ -2818,6 +2921,7 @@
 			"properties": {
 				"frameId": {
 					"type": "integer",
+					"format": "int32",
 					"description": "Returns completions in the scope of this stack frame. If not specified, the completions are returned for the global scope."
 				},
 				"text": {
@@ -2826,10 +2930,14 @@
 				},
 				"column": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The position within `text` for which to determine the completion proposals. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 				},
 				"line": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "A line for which to determine the completion proposals. If missing the first line of the text is assumed."
 				}
 			},
@@ -2880,6 +2988,7 @@
 			"properties": {
 				"threadId": {
 					"type": "integer",
+					"format": "int32",
 					"description": "Thread for which exception information should be retrieved."
 				}
 			},
@@ -2943,10 +3052,15 @@
 				},
 				"offset": {
 					"type": "integer",
+					"format": "int64",
+					"maximum": 9007199254740991,
+					"minimum": -9007199254740991,
 					"description": "Offset (in bytes) to be applied to the reference location before reading data. Can be negative."
 				},
 				"count": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "Number of bytes to read at the specified location and offset."
 				}
 			},
@@ -2966,6 +3080,8 @@
 							},
 							"unreadableBytes": {
 								"type": "integer",
+								"format": "uint64",
+								"maximum": 9007199254740991,
 								"description": "The number of unreadable bytes encountered after the last successfully read byte.\nThis can be used to determine the number of bytes that should be skipped before a subsequent `readMemory` request succeeds."
 							},
 							"data": {
@@ -3005,6 +3121,9 @@
 				},
 				"offset": {
 					"type": "integer",
+					"format": "int64",
+					"maximum": 9007199254740991,
+					"minimum": -9007199254740991,
 					"description": "Offset (in bytes) to be applied to the reference location before writing data. Can be negative."
 				},
 				"allowPartial": {
@@ -3028,10 +3147,14 @@
 						"properties": {
 							"offset": {
 								"type": "integer",
+								"format": "int64",
+								"maximum": 9007199254740991,
+								"minimum": -9007199254740991,
 								"description": "Property that should be returned when `allowPartial` is true to indicate the offset of the first byte of data successfully written. Can be negative."
 							},
 							"bytesWritten": {
 								"type": "integer",
+								"format": "uint32",
 								"description": "Property that should be returned when `allowPartial` is true to indicate the number of bytes starting from address that were successfully written."
 							}
 						}
@@ -3066,14 +3189,21 @@
 				},
 				"offset": {
 					"type": "integer",
+					"format": "int64",
+					"maximum": 9007199254740991,
+					"minimum": -9007199254740991,
 					"description": "Offset (in bytes) to be applied to the reference location before disassembling. Can be negative."
 				},
 				"instructionOffset": {
 					"type": "integer",
+					"format": "int64",
+					"maximum": 9007199254740991,
+					"minimum": -9007199254740991,
 					"description": "Offset (in instructions) to be applied after the byte offset (if any) before disassembling. Can be negative."
 				},
 				"instructionCount": {
 					"type": "integer",
+					"format": "uint32",
 					"description": "Number of instructions to disassemble starting at the specified location and offset.\nAn adapter must return exactly this number of instructions - any unavailable instructions should be replaced with an implementation-defined 'invalid instruction' value."
 				},
 				"resolveSymbols": {
@@ -3127,6 +3257,7 @@
 			"properties": {
 				"locationReference": {
 					"type": "integer",
+					"format": "int32",
 					"description": "Location reference to resolve."
 				}
 			},
@@ -3146,18 +3277,26 @@
 							},
 							"line": {
 								"type": "integer",
+								"format": "uint64",
+								"maximum": 9007199254740991,
 								"description": "The line number of the location. The client capability `linesStartAt1` determines whether it is 0- or 1-based."
 							},
 							"column": {
 								"type": "integer",
+								"format": "uint64",
+								"maximum": 9007199254740991,
 								"description": "Position of the location within the `line`. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based. If no column is given, the first position in the start line is assumed."
 							},
 							"endLine": {
 								"type": "integer",
+								"format": "uint64",
+								"maximum": 9007199254740991,
 								"description": "End line of the location, present if the location refers to a range.  The client capability `linesStartAt1` determines whether it is 0- or 1-based."
 							},
 							"endColumn": {
 								"type": "integer",
+								"format": "uint64",
+								"maximum": 9007199254740991,
 								"description": "End position of the location within `endLine`, present if the location refers to a range. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 							}
 						},
@@ -3396,6 +3535,8 @@
 			"properties": {
 				"id": {
 					"type": "integer",
+					"format": "int32",
+					"minimum": 1,
 					"description": "Unique (within a debug adapter implementation) identifier for the message. The purpose of these error IDs is to help extension authors that have the requirement that every user visible error message needs a corresponding error number, so that users or customer support can find information about the specific error more easily."
 				},
 				"format": {
@@ -3501,6 +3642,7 @@
 				},
 				"width": {
 					"type": "integer",
+					"format": "uint32",
 					"description": "Width of this column in characters (hint only)."
 				}
 			},
@@ -3513,6 +3655,7 @@
 			"properties": {
 				"id": {
 					"type": "integer",
+					"format": "int32",
 					"description": "Unique identifier for the thread."
 				},
 				"name": {
@@ -3537,6 +3680,8 @@
 				},
 				"sourceReference": {
 					"type": "integer",
+					"format": "int32",
+					"minimum": 0,
 					"description": "If the value > 0 the contents of the source must be retrieved through the `source` request (even if a path is specified).\nSince a `sourceReference` is only valid for a session, it can not be used to persist a source.\nThe value should be less than or equal to 2147483647 (2^31-1)."
 				},
 				"presentationHint": {
@@ -3575,6 +3720,7 @@
 			"properties": {
 				"id": {
 					"type": "integer",
+					"format": "int32",
 					"description": "An identifier for the stack frame. It must be unique across all threads.\nThis id can be used to retrieve the scopes of the frame with the `scopes` request or to restart the execution of a stack frame."
 				},
 				"name": {
@@ -3587,18 +3733,26 @@
 				},
 				"line": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The line within the source of the frame. If the source attribute is missing or doesn't exist, `line` is 0 and should be ignored by the client."
 				},
 				"column": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "Start position of the range covered by the stack frame. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based. If attribute `source` is missing or doesn't exist, `column` is 0 and should be ignored by the client."
 				},
 				"endLine": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The end line of the range covered by the stack frame."
 				},
 				"endColumn": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "End position of the range covered by the stack frame. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 				},
 				"canRestart": {
@@ -3643,14 +3797,19 @@
 				},
 				"variablesReference": {
 					"type": "integer",
+					"format": "uint32",
 					"description": "The variables of this scope can be retrieved by passing the value of `variablesReference` to the `variables` request as long as execution remains suspended. See 'Lifetime of Object References' in the Overview section for details."
 				},
 				"namedVariables": {
 					"type": "integer",
+					"format": "int32",
+					"minimum": 0,
 					"description": "The number of named variables in this scope.\nThe client can use this information to present the variables in a paged UI and fetch them in chunks."
 				},
 				"indexedVariables": {
 					"type": "integer",
+					"format": "int32",
+					"minimum": 0,
 					"description": "The number of indexed variables in this scope.\nThe client can use this information to present the variables in a paged UI and fetch them in chunks."
 				},
 				"expensive": {
@@ -3663,18 +3822,26 @@
 				},
 				"line": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The start line of the range covered by this scope."
 				},
 				"column": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "Start position of the range covered by the scope. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 				},
 				"endLine": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The end line of the range covered by this scope."
 				},
 				"endColumn": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "End position of the range covered by the scope. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 				}
 			},
@@ -3707,14 +3874,19 @@
 				},
 				"variablesReference": {
 					"type": "integer",
+					"format": "uint32",
 					"description": "If `variablesReference` is > 0, the variable is structured and its children can be retrieved by passing `variablesReference` to the `variables` request as long as execution remains suspended. See 'Lifetime of Object References' in the Overview section for details."
 				},
 				"namedVariables": {
 					"type": "integer",
+					"format": "int32",
+					"minimum": 0,
 					"description": "The number of named child variables.\nThe client can use this information to present the children in a paged UI and fetch them in chunks."
 				},
 				"indexedVariables": {
 					"type": "integer",
+					"format": "int32",
+					"minimum": 0,
 					"description": "The number of indexed child variables.\nThe client can use this information to present the children in a paged UI and fetch them in chunks."
 				},
 				"memoryReference": {
@@ -3723,10 +3895,12 @@
 				},
 				"declarationLocationReference": {
 					"type": "integer",
+					"format": "int32",
 					"description": "A reference that allows the client to request the location where the variable is declared. This should be present only if the adapter is likely to be able to resolve the location.\n\nThis reference shares the same lifetime as the `variablesReference`. See 'Lifetime of Object References' in the Overview section for details."
 				},
 				"valueLocationReference": {
 					"type": "integer",
+					"format": "int32",
 					"description": "A reference that allows the client to request the location where the variable's value is declared. For example, if the variable contains a function pointer, the adapter may be able to look up the function's location. This should be present only if the adapter is likely to be able to resolve the location.\n\nThis reference shares the same lifetime as the `variablesReference`. See 'Lifetime of Object References' in the Overview section for details."
 				}
 			},
@@ -3791,18 +3965,26 @@
 			"properties": {
 				"line": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "Start line of breakpoint location."
 				},
 				"column": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The start position of a breakpoint location. Position is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 				},
 				"endLine": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The end line of breakpoint location if the location covers a range."
 				},
 				"endColumn": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The end position of a breakpoint location (if the location covers a range). Position is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 				}
 			},
@@ -3815,10 +3997,14 @@
 			"properties": {
 				"line": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The source line of the breakpoint or logpoint."
 				},
 				"column": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "Start position within source line of the breakpoint or logpoint. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 				},
 				"condition": {
@@ -3901,6 +4087,9 @@
 				},
 				"offset": {
 					"type": "integer",
+					"format": "int64",
+					"maximum": 9007199254740991,
+					"minimum": -9007199254740991,
 					"description": "The offset from the instruction reference in bytes.\nThis can be negative."
 				},
 				"condition": {
@@ -3925,6 +4114,7 @@
 			"properties": {
 				"id": {
 					"type": "integer",
+					"format": "int32",
 					"description": "The identifier for the breakpoint. It is needed if breakpoint events are used to update or remove breakpoints."
 				},
 				"verified": {
@@ -3941,18 +4131,26 @@
 				},
 				"line": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The start line of the actual range covered by the breakpoint."
 				},
 				"column": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "Start position of the source range covered by the breakpoint. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 				},
 				"endLine": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The end line of the actual range covered by the breakpoint."
 				},
 				"endColumn": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "End position of the source range covered by the breakpoint. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based.\nIf no end line is given, then the end column is assumed to be in the start line."
 				},
 				"instructionReference": {
@@ -3961,6 +4159,9 @@
 				},
 				"offset": {
 					"type": "integer",
+					"format": "int64",
+					"maximum": 9007199254740991,
+					"minimum": -9007199254740991,
 					"description": "The offset from the instruction reference.\nThis can be negative."
 				},
 				"reason": {
@@ -3989,6 +4190,7 @@
 			"properties": {
 				"id": {
 					"type": "integer",
+					"format": "int32",
 					"description": "Unique identifier for a step-in target."
 				},
 				"label": {
@@ -3997,18 +4199,26 @@
 				},
 				"line": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The line of the step-in target."
 				},
 				"column": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "Start position of the range covered by the step in target. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 				},
 				"endLine": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The end line of the range covered by the step-in target."
 				},
 				"endColumn": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "End position of the range covered by the step in target. It is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based."
 				}
 			},
@@ -4021,6 +4231,7 @@
 			"properties": {
 				"id": {
 					"type": "integer",
+					"format": "int32",
 					"description": "Unique identifier for a goto target. This is used in the `goto` request."
 				},
 				"label": {
@@ -4029,18 +4240,26 @@
 				},
 				"line": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The line of the goto target."
 				},
 				"column": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The column of the goto target."
 				},
 				"endLine": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The end line of the range covered by the goto target."
 				},
 				"endColumn": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The end column of the range covered by the goto target."
 				},
 				"instructionPointerReference": {
@@ -4077,18 +4296,22 @@
 				},
 				"start": {
 					"type": "integer",
+					"format": "uint32",
 					"description": "Start position (within the `text` attribute of the `completions` request) where the completion text is added. The position is measured in UTF-16 code units and the client capability `columnsStartAt1` determines whether it is 0- or 1-based. If the start position is omitted the text is added at the location specified by the `column` attribute of the `completions` request."
 				},
 				"length": {
 					"type": "integer",
+					"format": "uint32",
 					"description": "Length determines how many characters are overwritten by the completion text and it is measured in UTF-16 code units. If missing the value 0 is assumed which results in the completion text being inserted."
 				},
 				"selectionStart": {
 					"type": "integer",
+					"format": "uint32",
 					"description": "Determines the start of the new selection after the text has been inserted (or replaced). `selectionStart` is measured in UTF-16 code units and must be in the range 0 and length of the completion text. If omitted the selection starts at the end of the completion text."
 				},
 				"selectionLength": {
 					"type": "integer",
+					"format": "uint32",
 					"description": "Determines the length of the new selection after the text has been inserted (or replaced) and it is measured in UTF-16 code units. The selection can not extend beyond the bounds of the completion text. If omitted the length is assumed to be 0."
 				}
 			},
@@ -4295,18 +4518,26 @@
 				},
 				"line": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The line within the source location that corresponds to this instruction, if any."
 				},
 				"column": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The column within the line that corresponds to this instruction, if any."
 				},
 				"endLine": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The end line of the range that corresponds to this instruction, if any."
 				},
 				"endColumn": {
 					"type": "integer",
+					"format": "uint64",
+					"maximum": 9007199254740991,
 					"description": "The end column of the range that corresponds to this instruction, if any."
 				},
 				"presentationHint": {

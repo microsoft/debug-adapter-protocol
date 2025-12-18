@@ -246,13 +246,37 @@ function enumDescriptions(c: P.Commentable, markdown: boolean) {
 	return description;
 }
 
-function comment(c: P.Commentable): string {
+function comment(c: P.PropertyType): string {
 
 	let description = c.description || '';
 
 	// array
 	if ((<any>c).items) {
 		c = (<any>c).items;
+	}
+
+	if (c.type === 'integer') {
+		if (!c.format) {
+			throw new Error('missing format on integer: ' + JSON.stringify(c));
+		}
+		if (c.format.endsWith('64')) {
+			if (!c.minimum && !c.format.startsWith('u')) {
+				throw new Error('missing minimum on 64 bit integer: ' + JSON.stringify(c));
+			}
+			if (!c.maximum) {
+				throw new Error('missing maximum on 64 bit integer: ' + JSON.stringify(c));
+			}
+		}
+	}
+
+	if (c.type === 'number' || c.type === 'integer') {
+		description += '\n@format ' + c.format;
+		if (c.minimum !== undefined) {
+			description += `\n@minimum ${c.minimum}`;
+		}
+		if (c.maximum !== undefined) {
+			description += `\n@maximum ${c.maximum}`;
+		}
 	}
 
 	if (description) {
@@ -436,8 +460,8 @@ function line(str?: string, newline?: boolean, indnt?: boolean): string {
 
 /// Main
 
-const debugProtocolSchema = JSON.parse(fs.readFileSync('./debugAdapterProtocol.json').toString());
+const debugProtocolSchema = JSON.parse(fs.readFileSync(__dirname + '/../debugAdapterProtocol.json').toString());
 
-fs.writeFileSync(`specification.md`, MarkDown(debugProtocolSchema), { encoding: 'utf-8'});
+fs.writeFileSync(`${__dirname}/../specification.md`, MarkDown(debugProtocolSchema), { encoding: 'utf-8'});
 
-fs.writeFileSync(`_data/specification-toc.yml`, outline.dump(), { encoding: 'utf-8'});
+fs.writeFileSync(`${__dirname}/../_data/specification-toc.yml`, outline.dump(), { encoding: 'utf-8'});
