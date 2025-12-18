@@ -2148,11 +2148,11 @@
 				},
 				"start": {
 					"type": "integer",
-					"description": "The index of the first variable to return; if omitted children start at 0.\nThe attribute is only honored by a debug adapter if the corresponding capability `supportsVariablePaging` is true."
+					"description": "The index of the first variable to return; if omitted children start at 0. If the value of `start` exceeeds the number of available variables, the debug adapter should return an empty array.\nThe attribute is only honored by a debug adapter if the corresponding capability `supportsVariablePaging` is true."
 				},
 				"count": {
 					"type": "integer",
-					"description": "The number of variables to return. If count is missing or 0, all variables are returned.\nThe attribute is only honored by a debug adapter if the corresponding capability `supportsVariablePaging` is true."
+					"description": "The number of variables to return. If count is missing or 0, all variables are returned. If fewer than `count` variables are returned, the client should assume no further variables are available.\nThe attribute is only honored by a debug adapter if the corresponding capability `supportsVariablePaging` is true."
 				},
 				"format": {
 					"$ref": "#/definitions/ValueFormat",
