@@ -387,7 +387,8 @@
 							},
 							"variablesReference": {
 								"type": "integer",
-								"format": "uint32",
+								"format": "int32",
+								"minimum": 0,
 								"description": "If an attribute `variablesReference` exists and its value is > 0, the output contains objects which can be retrieved by passing `variablesReference` to the `variables` request as long as execution remains suspended. See 'Lifetime of Object References' in the Overview section for details."
 							},
 							"source": {
@@ -1508,7 +1509,8 @@
 			"properties": {
 				"variablesReference": {
 					"type": "integer",
-					"format": "uint32",
+					"format": "int32",
+					"minimum": 0,
 					"description": "Reference to the variable container if the data breakpoint is requested for a child of the container. The `variablesReference` must have been obtained in the current suspended state. See 'Lifetime of Object References' in the Overview section for details."
 				},
 				"name": {
@@ -2202,7 +2204,8 @@
 			"properties": {
 				"variablesReference": {
 					"type": "integer",
-					"format": "uint32",
+					"format": "int32",
+					"minimum": 0,
 					"description": "The variable for which to retrieve its children. The `variablesReference` must have been obtained in the current suspended state. See 'Lifetime of Object References' in the Overview section for details."
 				},
 				"filter": {
@@ -2272,7 +2275,8 @@
 			"properties": {
 				"variablesReference": {
 					"type": "integer",
-					"format": "uint32",
+					"format": "int32",
+					"minimum": 0,
 					"description": "The reference of the variable container. The `variablesReference` must have been obtained in the current suspended state. See 'Lifetime of Object References' in the Overview section for details."
 				},
 				"name": {
@@ -2308,7 +2312,8 @@
 							},
 							"variablesReference": {
 								"type": "integer",
-								"format": "uint32",
+								"format": "int32",
+								"minimum": 0,
 								"description": "If `variablesReference` is > 0, the new value is structured and its children can be retrieved by passing `variablesReference` to the `variables` request as long as execution remains suspended. See 'Lifetime of Object References' in the Overview section for details.\n\nIf this property is included in the response, any `variablesReference` previously associated with the updated variable, and those of its children, are no longer valid."
 							},
 							"namedVariables": {
@@ -2660,7 +2665,8 @@
 							},
 							"variablesReference": {
 								"type": "integer",
-								"format": "uint32",
+								"format": "int32",
+								"minimum": 0,
 								"description": "If `variablesReference` is > 0, the evaluate result is structured and its children can be retrieved by passing `variablesReference` to the `variables` request as long as execution remains suspended. See 'Lifetime of Object References' in the Overview section for details."
 							},
 							"namedVariables": {
@@ -2754,7 +2760,8 @@
 							},
 							"variablesReference": {
 								"type": "integer",
-								"format": "uint32",
+								"format": "int32",
+								"minimum": 0,
 								"description": "If `variablesReference` is > 0, the evaluate result is structured and its children can be retrieved by passing `variablesReference` to the `variables` request as long as execution remains suspended. See 'Lifetime of Object References' in the Overview section for details."
 							},
 							"namedVariables": {
@@ -3797,7 +3804,8 @@
 				},
 				"variablesReference": {
 					"type": "integer",
-					"format": "uint32",
+					"format": "int32",
+					"minimum": 0,
 					"description": "The variables of this scope can be retrieved by passing the value of `variablesReference` to the `variables` request as long as execution remains suspended. See 'Lifetime of Object References' in the Overview section for details."
 				},
 				"namedVariables": {
@@ -3874,7 +3882,8 @@
 				},
 				"variablesReference": {
 					"type": "integer",
-					"format": "uint32",
+					"format": "int32",
+					"minimum": 0,
 					"description": "If `variablesReference` is > 0, the variable is structured and its children can be retrieved by passing `variablesReference` to the `variables` request as long as execution remains suspended. See 'Lifetime of Object References' in the Overview section for details."
 				},
 				"namedVariables": {
