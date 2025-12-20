@@ -6,7 +6,6 @@
 		"name": "Microsoft Corporation",
 		"email": "aweinand@microsoft.com"
 	},
-	"main": "out/generator.js",
 	"private": true,
 	"repository": {
 		"type": "git",
@@ -17,10 +16,9 @@
 	},
 	"devDependencies": {
 		"@types/node": "^16.0.0",
-		"typescript": "^4.5.5"
+		"tsx": "^4.21.0"
 	},
 	"scripts": {
-		"compile": "tsc -p .",
-		"watch": "tsc -w -p ."
+		"compile": "tsx generator.ts"
 	}
 }
