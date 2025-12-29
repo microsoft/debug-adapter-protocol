@@ -89,6 +89,7 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [SWI-Prolog](https://github.com/eshelyaron/debug_adapter)|[@eshelyaron](https://github.com/eshelyaron)|[SWI and Emacs](https://github.com/eshelyaron/debug_adapter#installation)
 [SWF](https://github.com/BowlerHatLLC/vscode-nextgenas)|[@joshtynjala](https://github.com/joshtynjala)|[VS Code](https://marketplace.visualstudio.com/items?itemName=bowlerhatllc.vscode-nextgenas)
 [TLA+](https://github.com/tlaplus/vscode-tlaplus)|[@lemmy](https://github.com/lemmy)|[VS Code](https://marketplace.visualstudio.com/items?itemName=alygin.vscode-tlaplus-nightly)
+[Varphi](https://github.com/varphi-lang/varphi-python-dap)|[@hassanelsheikha](https://github.com/hassanelsheikha)|[VS Code](https://marketplace.visualstudio.com/items?itemName=varphi-lang.varphi)
 [VDM-SL, VDM++, VDM-RT](https://github.com/nickbattle/vdmj/tree/master/lsp)|[@nickbattle](https://github.com/nickbattle)|[VS Code](https://marketplace.visualstudio.com/items?itemName=jonaskrask.vdm-vscode)
 [VSCode rdbg Ruby Debugger](https://github.com/ruby/vscode-rdbg)|[@ko1](https://github.com/ko1)|[VS Code](https://marketplace.visualstudio.com/items?itemName=KoichiSasada.vscode-rdbg)
 [Wolfram Language](https://github.com/kenkangxgwe/lsp-wl?tab=readme-ov-file#debug-adapter-features)|[@kenkangxgwe](https://github.com/kenkangxgwe/lsp-wl)|[VS Code](https://marketplace.visualstudio.com/items?itemName=lsp-wl.lsp-wl-client)
