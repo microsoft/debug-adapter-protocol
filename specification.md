@@ -491,7 +491,7 @@ interface OutputEvent extends Event {
 
 ### <a name="Events_Breakpoint" class="anchor"></a>:arrow_left: Breakpoint Event
 
-The event indicates that some information about a breakpoint has changed.
+The event indicates that some information about a breakpoint has changed. While debug adapters may notify the clients of `changed` breakpoints using this event, clients should continue to use the breakpoint's original properties when updating a source's breakpoints in the `breakpoint` request.
 
 ```typescript
 interface BreakpointEvent extends Event {
@@ -3023,6 +3023,24 @@ interface GotoTargetsArguments {
    * determines whether it is 0- or 1-based.
    */
   column?: number;
+
+  /**
+   * The instruction reference for which the goto targets are determined.
+   * This should be a memory or instruction pointer reference from an
+   * `EvaluateResponse`, `Variable`, `StackFrame`, `GotoTarget`, or
+   * `Breakpoint`. Clients may set this property only if the
+   * `supportsGotoInstructionTargets ` is true. If `instructionReference` is
+   * set, the debug adapter should ignore the `line`, `column`, and `source` on
+   * the request and clients may set them to zero or empty values.
+   */
+  instructionReference?: string;
+
+  /**
+   * The offset from the instruction reference in bytes.
+   * This can be negative. This may only be provided when an
+   * `instructionReference` is included in the request.
+   */
+  offset?: number;
 }
 ```
 
@@ -3501,8 +3519,11 @@ interface Capabilities {
   supportsCompletionsRequest?: boolean;
 
   /**
-   * The set of characters that should trigger completion in a REPL. If not
-   * specified, the UI should assume the `.` character.
+   * The set of characters that should automatically trigger a completion
+   * request in a REPL. If not specified, the client should assume the `.`
+   * character. The client may trigger additional completion requests on
+   * characters such as ones that make up common identifiers, or as otherwise
+   * requested by a user.
    */
   completionTriggerCharacters?: string[];
 
@@ -3672,6 +3693,12 @@ interface Capabilities {
    * `OutputEvent.output` and `Variable.value` fields.
    */
   supportsANSIStyling?: boolean;
+
+  /**
+   * The debug adapter supports the `instructionReference` and `offset` fields
+   * in the `gotoTargets` request.
+   */
+  supportsGotoInstructionTargets?: boolean;
 }
 ```
 
