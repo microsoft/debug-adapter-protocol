@@ -768,7 +768,7 @@
 				},
 				"cwd": {
 					"type": "string",
-					"description": "Working directory for the command. For non-empty, valid paths this typically results in execution of a change directory command. If `pathFormat` is set to `uri` in the `InitializeRequestArguments`, this should be a file URI."
+					"description": "Working directory for the command. For non-empty, valid paths this typically results in execution of a change directory command. If `pathFormat` is set to `uri` in the `InitializeRequestArguments`, this must be a file URI."
 				},
 				"args": {
 					"type": "array",
