@@ -6,6 +6,14 @@ sectionid: changelog
 
 #### All notable changes to the specification will be documented in this file.
 
+* 1.71.x
+  * Specify sizes and ranges of DAP integers by adding `format`, `minimum`, and `maximum` attributes to integer properties throughout the protocol
+  * Add `debugConsoleMode` property to `StartDebuggingRequestArguments`
+  * Clarify behavior of `start` and `count` in `VariablesArguments`: when `start` exceeds available variables, return an empty array; when fewer than `count` variables are returned, the client should assume no further variables are available
+  * Clarify that `cancelArguments` and `breakpointLocationsArguments` require their respective properties
+  * Clarify the description of `completionTriggerCharacters` to indicate that clients may trigger completion on additional characters beyond those specified
+  * Clarify that `cwd` in `RunInTerminalRequest` can be a URI in addition to a file path
+
 * 1.70.x
   * Clarify how `StackTraceArguments.format` applies
   * Clarify the default behavior of `ContinuedEvent.allThreadsContinued`
