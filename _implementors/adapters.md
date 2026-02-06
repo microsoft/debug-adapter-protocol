@@ -44,6 +44,7 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [Firefox Remote Debug](https://github.com/yurydelendik/vscode-ff-debug)|[@yurydelendik](https://github.com/yurydelendik)|[VS Code](https://marketplace.visualstudio.com/items?itemName=yurydelendik.firefox-debug)
 [Flash](https://github.com/vshaxe/flash-debugger)|[@vshaxe](https://github.com/vshaxe/)|[VS Code](https://marketplace.visualstudio.com/items?itemName=vshaxe.haxe-debug)
 [Flutter](https://github.com/flutter/flutter)|[@DanTup](https://github.com/DanTup) [@devoncarew](https://github.com/devoncarew)|[DAP Server](https://github.com/flutter/flutter/blob/master/packages/flutter_tools/lib/src/debug_adapters/README.md), [VS Code](https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter)
+[Godot](https://github.com/godotengine/godot)|[@godotengine](https://github.com/godotengine)|[DAP Server](https://docs.godotengine.org/en/stable/tutorials/editor/external_editor.html#lsp-dap-support), [Rider](https://www.jetbrains.com/lp/rider-godot/), [VS Code](https://github.com/godotengine/godot-vscode-plugin)
 [Go Delve Debugger](https://github.com/go-delve/delve/tree/master/service/dap)| [@polinasok](https://github.com/polinasok) and [Delve](https://github.com/go-delve)| [DAP Server](https://github.com/go-delve/delve/tree/master/Documentation/api/dap), [VS Code](https://github.com/golang/vscode-go/blob/master/docs/debugging.md)
 [Harbour](https://github.com/APerricone/harbourCodeExtension)|[@APerricone](https://github.com/APerricone)|[VS Code](https://marketplace.visualstudio.com/items?itemName=aperricone.harbour)
 [HashLink](https://github.com/vshaxe/hashlink-debugger)|[@vshaxe](https://github.com/vshaxe/)|[VS Code](https://marketplace.visualstudio.com/items?itemName=HaxeFoundation.haxe-hl)
@@ -88,9 +89,11 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [SWI-Prolog](https://github.com/eshelyaron/debug_adapter)|[@eshelyaron](https://github.com/eshelyaron)|[SWI and Emacs](https://github.com/eshelyaron/debug_adapter#installation)
 [SWF](https://github.com/BowlerHatLLC/vscode-nextgenas)|[@joshtynjala](https://github.com/joshtynjala)|[VS Code](https://marketplace.visualstudio.com/items?itemName=bowlerhatllc.vscode-nextgenas)
 [TLA+](https://github.com/tlaplus/vscode-tlaplus)|[@lemmy](https://github.com/lemmy)|[VS Code](https://marketplace.visualstudio.com/items?itemName=alygin.vscode-tlaplus-nightly)
+[Varphi](https://github.com/varphi-lang/varphi-python-dap)|[@hassanelsheikha](https://github.com/hassanelsheikha)|[VS Code](https://marketplace.visualstudio.com/items?itemName=varphi-lang.varphi)
 [VDM-SL, VDM++, VDM-RT](https://github.com/nickbattle/vdmj/tree/master/lsp)|[@nickbattle](https://github.com/nickbattle)|[VS Code](https://marketplace.visualstudio.com/items?itemName=jonaskrask.vdm-vscode)
 [VSCode rdbg Ruby Debugger](https://github.com/ruby/vscode-rdbg)|[@ko1](https://github.com/ko1)|[VS Code](https://marketplace.visualstudio.com/items?itemName=KoichiSasada.vscode-rdbg)
 [Wolfram Language](https://github.com/kenkangxgwe/lsp-wl?tab=readme-ov-file#debug-adapter-features)|[@kenkangxgwe](https://github.com/kenkangxgwe/lsp-wl)|[VS Code](https://marketplace.visualstudio.com/items?itemName=lsp-wl.lsp-wl-client)
+[ZIL](https://foss.heptapod.net/zilf/vscode-zil-language)|[@taradinoc](https://github.com/taradinoc)|[VS Code](https://marketplace.visualstudio.com/items?itemName=zilf.zil-language)
 {: .table .table-bordered .table-responsive}
 
 *If you are missing a debug adapter implementation please create a pull request in GitHub against this markdown [document](https://github.com/Microsoft/debug-adapter-protocol/blob/main/_implementors/adapters.md)*

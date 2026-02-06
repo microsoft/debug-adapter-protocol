@@ -22,10 +22,10 @@ export module Protocol {
 	}
 
 	export type Definition2 = Definition | AllOf | StringType;
-	type PropertyType = PrimitiveType | StringType | ObjectType | ArrayType;
+	export type PropertyType = PrimitiveType | StringType | ObjectType | ArrayType | NumericType;
 
 	export interface PrimitiveType extends BaseType {
-		type: "number" | "integer" | "boolean"
+		type: "boolean"
 	}
 
 	export interface Commentable {
@@ -37,6 +37,13 @@ export module Protocol {
 		enumDescriptions?: string[]
 		/** Possible values of a string. */
 		_enum?: string[]
+	}
+
+	export interface NumericType extends BaseType, Commentable {
+		type: "number" | "integer"
+		minimum?: number
+		maximum?: number
+		format?: string
 	}
 
 	export interface StringType extends BaseType, Commentable {
