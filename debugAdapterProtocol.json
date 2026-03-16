@@ -4058,6 +4058,10 @@
 				"hitCondition": {
 					"type": "string",
 					"description": "An expression that controls how many hits of the breakpoint are ignored.\nThe debug adapter is expected to interpret the expression as needed.\nThe attribute is only honored by a debug adapter if the corresponding capability `supportsHitConditionalBreakpoints` is true."
+				},
+				"mode": {
+					"type": "string",
+					"description": "The mode of this breakpoint. If defined, this must be one of the `breakpointModes` the debug adapter advertised in its `Capabilities`."
 				}
 			},
 			"required": [ "name" ]
@@ -4604,12 +4608,13 @@
 		},
 		"BreakpointModeApplicability": {
 			"type": "string",
-			"_enum": ["source", "exception", "data", "instruction"],
+			"_enum": ["source", "exception", "data", "instruction", "function"],
 			"enumDescriptions": [
 				"In `SourceBreakpoint`s",
 				"In exception breakpoints applied in the `ExceptionFilterOptions`",
 				"In data breakpoints requested in the `DataBreakpointInfo` request",
-				"In `InstructionBreakpoint`s"
+				"In `InstructionBreakpoint`s",
+				"In `FunctionBreakpoint`s"
 			],
 			"description": "Describes one or more type of breakpoint a `BreakpointMode` applies to. This is a non-exhaustive enumeration and may expand as future breakpoint types are added."
 		}
