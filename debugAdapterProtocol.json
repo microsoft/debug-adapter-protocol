@@ -4369,6 +4369,14 @@
 				"hex": {
 					"type": "boolean",
 					"description": "Display the value in hex."
+				},
+				"binary": {
+					"type": "boolean",
+					"description": "Display the value in binary."
+				},
+				"octal": {
+					"type": "boolean",
+					"description": "Display the value in octal."
 				}
 			}
 		},
