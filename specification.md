@@ -30,6 +30,8 @@ interface ProtocolMessage {
    * associate requests with their corresponding responses. For protocol
    * messages of type `request` the sequence number can be used to cancel the
    * request.
+   * @format int32
+   * @minimum 1
    */
   seq: number;
 
@@ -91,6 +93,8 @@ interface Response extends ProtocolMessage {
 
   /**
    * Sequence number of the corresponding request.
+   * @format int32
+   * @minimum 1
    */
   request_seq: number;
 
@@ -169,6 +173,11 @@ The progress that got cancelled still needs to send a `progressEnd` event back.
 interface CancelRequest extends Request {
   command: 'cancel';
 
+  /**
+   * Arguments must be passed to form a valid request. Debug adapters may reject
+   * requests that lack arguments with an error. These `arguments` are marked as
+   * optional for historical reasons.
+   */
   arguments?: CancelArguments;
 }
 ```
@@ -182,6 +191,8 @@ interface CancelArguments {
    * The ID (attribute `seq`) of the request to cancel. If missing no request is
    * cancelled.
    * Both a `requestId` and a `progressId` can be specified in one request.
+   * @format int32
+   * @minimum 1
    */
   requestId?: number;
 
@@ -254,6 +265,7 @@ interface StoppedEvent extends Event {
 
     /**
      * The thread which was stopped.
+     * @format int32
      */
     threadId?: number;
 
@@ -288,6 +300,7 @@ interface StoppedEvent extends Event {
      * the compiler/runtime.
      * - Multiple function breakpoints with different function names map to the
      * same location.
+     * @format int32
      */
     hitBreakpointIds?: number[];
   };
@@ -309,6 +322,7 @@ interface ContinuedEvent extends Event {
   body: {
     /**
      * The thread which was continued.
+     * @format int32
      */
     threadId: number;
 
@@ -333,6 +347,7 @@ interface ExitedEvent extends Event {
   body: {
     /**
      * The exit code returned from the debuggee.
+     * @format int32
      */
     exitCode: number;
   };
@@ -376,6 +391,7 @@ interface ThreadEvent extends Event {
 
     /**
      * The identifier of the thread.
+     * @format int32
      */
     threadId: number;
   };
@@ -448,6 +464,8 @@ interface OutputEvent extends Event {
      * `variablesReference` to the `variables` request as long as execution
      * remains suspended. See 'Lifetime of Object References' in the Overview
      * section for details.
+     * @format int32
+     * @minimum 0
      */
     variablesReference?: number;
 
@@ -458,6 +476,8 @@ interface OutputEvent extends Event {
 
     /**
      * The source location's line where the output was produced.
+     * @format uint64
+     * @maximum 9007199254740991
      */
     line?: number;
 
@@ -465,6 +485,8 @@ interface OutputEvent extends Event {
      * The position in `line` where the output was produced. It is measured in
      * UTF-16 code units and the client capability `columnsStartAt1` determines
      * whether it is 0- or 1-based.
+     * @format uint64
+     * @maximum 9007199254740991
      */
     column?: number;
 
@@ -483,6 +505,7 @@ interface OutputEvent extends Event {
      * 
      * This reference shares the same lifetime as the `variablesReference`. See
      * 'Lifetime of Object References' in the Overview section for details.
+     * @format int32
      */
     locationReference?: number;
   };
@@ -491,7 +514,7 @@ interface OutputEvent extends Event {
 
 ### <a name="Events_Breakpoint" class="anchor"></a>:arrow_left: Breakpoint Event
 
-The event indicates that some information about a breakpoint has changed.
+The event indicates that some information about a breakpoint has changed. While debug adapters may notify the clients of `changed` breakpoints using this event, clients should continue to use the breakpoint's original properties when updating a source's breakpoints in the `breakpoint` request.
 
 ```typescript
 interface BreakpointEvent extends Event {
@@ -579,6 +602,7 @@ interface ProcessEvent extends Event {
      * The process ID of the debugged process, as assigned by the operating
      * system. This property should be omitted for logical processes that do not
      * map to operating system processes on the machine.
+     * @format int32
      */
     systemProcessId?: number;
 
@@ -601,6 +625,7 @@ interface ProcessEvent extends Event {
     /**
      * The size of a pointer or address for this process, in bits. This value
      * may be used by clients when formatting addresses for display.
+     * @format uint32
      */
     pointerSize?: number;
   };
@@ -662,6 +687,8 @@ interface ProgressStartEvent extends Event {
      * request until the request has been either completed or cancelled.
      * If the request ID is omitted, the progress report is assumed to be
      * related to some general activity of the debug adapter.
+     * @format int32
+     * @minimum 1
      */
     requestId?: number;
 
@@ -681,8 +708,10 @@ interface ProgressStartEvent extends Event {
     message?: string;
 
     /**
-     * Progress percentage to display (value range: 0 to 100). If omitted no
-     * percentage is shown.
+     * Progress percentage to display. If omitted no percentage is shown.
+     * @format undefined
+     * @minimum 0
+     * @maximum 100
      */
     percentage?: number;
   };
@@ -714,8 +743,10 @@ interface ProgressUpdateEvent extends Event {
     message?: string;
 
     /**
-     * Progress percentage to display (value range: 0 to 100). If omitted no
-     * percentage is shown.
+     * Progress percentage to display. If omitted no percentage is shown.
+     * @format undefined
+     * @minimum 0
+     * @maximum 100
      */
     percentage?: number;
   };
@@ -772,12 +803,14 @@ interface InvalidatedEvent extends Event {
     /**
      * If specified, the client only needs to refetch data related to this
      * thread.
+     * @format int32
      */
     threadId?: number;
 
     /**
      * If specified, the client only needs to refetch data related to this stack
      * frame (and the `threadId` is ignored).
+     * @format int32
      */
     stackFrameId?: number;
   };
@@ -804,11 +837,16 @@ interface MemoryEvent extends Event {
 
     /**
      * Starting offset in bytes where memory has been updated. Can be negative.
+     * @format int64
+     * @minimum -9007199254740991
+     * @maximum 9007199254740991
      */
     offset: number;
 
     /**
      * Number of bytes updated.
+     * @format uint64
+     * @maximum 9007199254740991
      */
     count: number;
   };
@@ -855,7 +893,9 @@ interface RunInTerminalRequestArguments {
 
   /**
    * Working directory for the command. For non-empty, valid paths this
-   * typically results in execution of a change directory command.
+   * typically results in execution of a change directory command. If
+   * `pathFormat` is set to `uri` in the `InitializeRequestArguments`, this must
+   * be a file URI.
    */
   cwd: string;
 
@@ -889,14 +929,14 @@ Response to `runInTerminal` request.
 interface RunInTerminalResponse extends Response {
   body: {
     /**
-     * The process ID. The value should be less than or equal to 2147483647
-     * (2^31-1).
+     * The process ID.
+     * @format int32
      */
     processId?: number;
 
     /**
-     * The process ID of the terminal shell. The value should be less than or
-     * equal to 2147483647 (2^31-1).
+     * The process ID of the terminal shell.
+     * @format int32
      */
     shellProcessId?: number;
   };
@@ -931,6 +971,13 @@ interface StartDebuggingRequestArguments {
    * `type`) or client-specific features (e.g. substitutable 'variables').
    */
   configuration: { [key: string]: any; };
+
+  /**
+   * Hints whether output of the child sessions should be presented separately
+   * or merged with that of the parent session's.
+   * Values: 'separate', 'mergeWithParent'
+   */
+  outputPresentation?: 'separate' | 'mergeWithParent';
 
   /**
    * Indicates whether the new debug session should be started with a `launch`
@@ -1326,6 +1373,11 @@ Clients should only call this request if the corresponding capability `supportsB
 interface BreakpointLocationsRequest extends Request {
   command: 'breakpointLocations';
 
+  /**
+   * Arguments must be passed to form a valid request. Debug adapters may reject
+   * requests that lack arguments with an error. These `arguments` are marked as
+   * optional for historical reasons.
+   */
   arguments?: BreakpointLocationsArguments;
 }
 ```
@@ -1344,6 +1396,8 @@ interface BreakpointLocationsArguments {
   /**
    * Start line of range to search possible breakpoint locations in. If only the
    * line is specified, the request returns all possible locations in that line.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   line: number;
 
@@ -1352,12 +1406,16 @@ interface BreakpointLocationsArguments {
    * is measured in UTF-16 code units and the client capability
    * `columnsStartAt1` determines whether it is 0- or 1-based. If no column is
    * given, the first position in the start line is assumed.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   column?: number;
 
   /**
    * End line of range to search possible breakpoint locations in. If no end
    * line is given, then the end line is assumed to be the start line.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   endLine?: number;
 
@@ -1366,6 +1424,8 @@ interface BreakpointLocationsArguments {
    * It is measured in UTF-16 code units and the client capability
    * `columnsStartAt1` determines whether it is 0- or 1-based. If no end column
    * is given, the last position in the end line is assumed.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   endColumn?: number;
 }
@@ -1421,6 +1481,8 @@ interface SetBreakpointsArguments {
 
   /**
    * Deprecated: The code locations of the breakpoints.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   lines?: number[];
 
@@ -1596,6 +1658,8 @@ interface DataBreakpointInfoArguments {
    * a child of the container. The `variablesReference` must have been obtained
    * in the current suspended state. See 'Lifetime of Object References' in the
    * Overview section for details.
+   * @format int32
+   * @minimum 0
    */
   variablesReference?: number;
 
@@ -1610,6 +1674,7 @@ interface DataBreakpointInfoArguments {
    * When `name` is an expression, evaluate it in the scope of this stack frame.
    * If not specified, the expression is evaluated in the global scope. When
    * `variablesReference` is specified, this property has no effect.
+   * @format int32
    */
   frameId?: number;
 
@@ -1621,6 +1686,7 @@ interface DataBreakpointInfoArguments {
    * 
    * Clients may set this property only if the `supportsDataBreakpointBytes`
    * capability is true.
+   * @format uint32
    */
   bytes?: number;
 
@@ -1794,6 +1860,7 @@ interface ContinueArguments {
    * Specifies the active thread. If the debug adapter supports single thread
    * execution (see `supportsSingleThreadExecutionRequests`) and the argument
    * `singleThread` is true, only the thread with this ID is resumed.
+   * @format int32
    */
   threadId: number;
 
@@ -1845,6 +1912,7 @@ interface NextArguments {
   /**
    * Specifies the thread for which to resume execution for one step (of the
    * given granularity).
+   * @format int32
    */
   threadId: number;
 
@@ -1901,6 +1969,7 @@ interface StepInArguments {
   /**
    * Specifies the thread for which to resume execution for one step-into (of
    * the given granularity).
+   * @format int32
    */
   threadId: number;
 
@@ -1911,6 +1980,7 @@ interface StepInArguments {
 
   /**
    * Id of the target to step into.
+   * @format int32
    */
   targetId?: number;
 
@@ -1954,6 +2024,7 @@ interface StepOutArguments {
   /**
    * Specifies the thread for which to resume execution for one step-out (of the
    * given granularity).
+   * @format int32
    */
   threadId: number;
 
@@ -2004,6 +2075,7 @@ interface StepBackArguments {
   /**
    * Specifies the thread for which to resume execution for one step backwards
    * (of the given granularity).
+   * @format int32
    */
   threadId: number;
 
@@ -2051,6 +2123,7 @@ interface ReverseContinueArguments {
    * Specifies the active thread. If the debug adapter supports single thread
    * execution (see `supportsSingleThreadExecutionRequests`) and the
    * `singleThread` argument is true, only the thread with this ID is resumed.
+   * @format int32
    */
   threadId: number;
 
@@ -2095,6 +2168,7 @@ interface RestartFrameArguments {
    * Restart the stack frame identified by `frameId`. The `frameId` must have
    * been obtained in the current suspended state. See 'Lifetime of Object
    * References' in the Overview section for details.
+   * @format int32
    */
   frameId: number;
 }
@@ -2135,11 +2209,13 @@ Arguments for `goto` request.
 interface GotoArguments {
   /**
    * Set the goto target for this thread.
+   * @format int32
    */
   threadId: number;
 
   /**
    * The location where the debuggee will continue to run.
+   * @format int32
    */
   targetId: number;
 }
@@ -2174,6 +2250,7 @@ Arguments for `pause` request.
 interface PauseArguments {
   /**
    * Pause execution for this thread.
+   * @format int32
    */
   threadId: number;
 }
@@ -2208,17 +2285,20 @@ Arguments for `stackTrace` request.
 interface StackTraceArguments {
   /**
    * Retrieve the stacktrace for this thread.
+   * @format int32
    */
   threadId: number;
 
   /**
    * The index of the first frame to return; if omitted frames start at 0.
+   * @format uint32
    */
   startFrame?: number;
 
   /**
    * The maximum number of frames to return. If levels is not specified or 0,
    * all frames are returned.
+   * @format uint32
    */
   levels?: number;
 
@@ -2253,6 +2333,7 @@ interface StackTraceResponse extends Response {
      * (which indicates the end of the stack). Returning monotonically
      * increasing `totalFrames` values for subsequent requests can be used to
      * enforce paging in the client.
+     * @format uint32
      */
     totalFrames?: number;
   };
@@ -2280,6 +2361,7 @@ interface ScopesArguments {
    * Retrieve the scopes for the stack frame identified by `frameId`. The
    * `frameId` must have been obtained in the current suspended state. See
    * 'Lifetime of Object References' in the Overview section for details.
+   * @format int32
    */
   frameId: number;
 }
@@ -2323,6 +2405,8 @@ interface VariablesArguments {
    * The variable for which to retrieve its children. The `variablesReference`
    * must have been obtained in the current suspended state. See 'Lifetime of
    * Object References' in the Overview section for details.
+   * @format int32
+   * @minimum 0
    */
   variablesReference: number;
 
@@ -2335,16 +2419,21 @@ interface VariablesArguments {
 
   /**
    * The index of the first variable to return; if omitted children start at 0.
+   * If the value of `start` exceeeds the number of available variables, the
+   * debug adapter should return an empty array.
    * The attribute is only honored by a debug adapter if the corresponding
    * capability `supportsVariablePaging` is true.
+   * @format uint32
    */
   start?: number;
 
   /**
    * The number of variables to return. If count is missing or 0, all variables
-   * are returned.
+   * are returned. If fewer than `count` variables are returned, the client
+   * should assume no further variables are available.
    * The attribute is only honored by a debug adapter if the corresponding
    * capability `supportsVariablePaging` is true.
+   * @format uint32
    */
   count?: number;
 
@@ -2394,6 +2483,8 @@ interface SetVariableArguments {
    * The reference of the variable container. The `variablesReference` must have
    * been obtained in the current suspended state. See 'Lifetime of Object
    * References' in the Overview section for details.
+   * @format int32
+   * @minimum 0
    */
   variablesReference: number;
 
@@ -2440,6 +2531,8 @@ interface SetVariableResponse extends Response {
      * If this property is included in the response, any `variablesReference`
      * previously associated with the updated variable, and those of its
      * children, are no longer valid.
+     * @format int32
+     * @minimum 0
      */
     variablesReference?: number;
 
@@ -2448,6 +2541,8 @@ interface SetVariableResponse extends Response {
      * The client can use this information to present the variables in a paged
      * UI and fetch them in chunks.
      * The value should be less than or equal to 2147483647 (2^31-1).
+     * @format int32
+     * @minimum 0
      */
     namedVariables?: number;
 
@@ -2456,6 +2551,8 @@ interface SetVariableResponse extends Response {
      * The client can use this information to present the variables in a paged
      * UI and fetch them in chunks.
      * The value should be less than or equal to 2147483647 (2^31-1).
+     * @format int32
+     * @minimum 0
      */
     indexedVariables?: number;
 
@@ -2476,6 +2573,7 @@ interface SetVariableResponse extends Response {
      * 
      * This reference shares the same lifetime as the `variablesReference`. See
      * 'Lifetime of Object References' in the Overview section for details.
+     * @format int32
      */
     valueLocationReference?: number;
   };
@@ -2509,6 +2607,8 @@ interface SourceArguments {
    * The reference to the source. This is the same as `source.sourceReference`.
    * This is provided for backward compatibility since old clients do not
    * understand the `source` attribute.
+   * @format int32
+   * @minimum 0
    */
   sourceReference: number;
 }
@@ -2578,6 +2678,7 @@ Arguments for `terminateThreads` request.
 interface TerminateThreadsArguments {
   /**
    * Ids of threads to be terminated.
+   * @format int32
    */
   threadIds?: number[];
 }
@@ -2612,12 +2713,14 @@ Arguments for `modules` request.
 interface ModulesArguments {
   /**
    * The index of the first module to return; if omitted modules start at 0.
+   * @format int32
    */
   startModule?: number;
 
   /**
    * The number of modules to return. If `moduleCount` is not specified or 0,
    * all modules are returned.
+   * @format uint32
    */
   moduleCount?: number;
 }
@@ -2636,6 +2739,8 @@ interface ModulesResponse extends Response {
 
     /**
      * The total number of modules available.
+     * @format uint64
+     * @maximum 9007199254740991
      */
     totalModules?: number;
   };
@@ -2705,6 +2810,7 @@ interface EvaluateArguments {
   /**
    * Evaluate the expression in the scope of this stack frame. If not specified,
    * the expression is evaluated in the global scope.
+   * @format int32
    */
   frameId?: number;
 
@@ -2712,6 +2818,8 @@ interface EvaluateArguments {
    * The contextual line where the expression should be evaluated. In the
    * 'hover' context, this should be set to the start of the expression being
    * hovered.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   line?: number;
 
@@ -2721,6 +2829,8 @@ interface EvaluateArguments {
    * 
    * It is measured in UTF-16 code units and the client capability
    * `columnsStartAt1` determines whether it is 0- or 1-based.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   column?: number;
 
@@ -2784,6 +2894,8 @@ interface EvaluateResponse extends Response {
      * children can be retrieved by passing `variablesReference` to the
      * `variables` request as long as execution remains suspended. See 'Lifetime
      * of Object References' in the Overview section for details.
+     * @format int32
+     * @minimum 0
      */
     variablesReference: number;
 
@@ -2792,6 +2904,8 @@ interface EvaluateResponse extends Response {
      * The client can use this information to present the variables in a paged
      * UI and fetch them in chunks.
      * The value should be less than or equal to 2147483647 (2^31-1).
+     * @format int32
+     * @minimum 0
      */
     namedVariables?: number;
 
@@ -2800,6 +2914,8 @@ interface EvaluateResponse extends Response {
      * The client can use this information to present the variables in a paged
      * UI and fetch them in chunks.
      * The value should be less than or equal to 2147483647 (2^31-1).
+     * @format int32
+     * @minimum 0
      */
     indexedVariables?: number;
 
@@ -2821,6 +2937,7 @@ interface EvaluateResponse extends Response {
      * 
      * This reference shares the same lifetime as the `variablesReference`. See
      * 'Lifetime of Object References' in the Overview section for details.
+     * @format int32
      */
     valueLocationReference?: number;
   };
@@ -2863,6 +2980,7 @@ interface SetExpressionArguments {
   /**
    * Evaluate the expressions in the scope of this stack frame. If not
    * specified, the expressions are evaluated in the global scope.
+   * @format int32
    */
   frameId?: number;
 
@@ -2902,6 +3020,8 @@ interface SetExpressionResponse extends Response {
      * children can be retrieved by passing `variablesReference` to the
      * `variables` request as long as execution remains suspended. See 'Lifetime
      * of Object References' in the Overview section for details.
+     * @format int32
+     * @minimum 0
      */
     variablesReference?: number;
 
@@ -2910,6 +3030,8 @@ interface SetExpressionResponse extends Response {
      * The client can use this information to present the variables in a paged
      * UI and fetch them in chunks.
      * The value should be less than or equal to 2147483647 (2^31-1).
+     * @format int32
+     * @minimum 0
      */
     namedVariables?: number;
 
@@ -2918,6 +3040,8 @@ interface SetExpressionResponse extends Response {
      * The client can use this information to present the variables in a paged
      * UI and fetch them in chunks.
      * The value should be less than or equal to 2147483647 (2^31-1).
+     * @format int32
+     * @minimum 0
      */
     indexedVariables?: number;
 
@@ -2938,6 +3062,7 @@ interface SetExpressionResponse extends Response {
      * 
      * This reference shares the same lifetime as the `variablesReference`. See
      * 'Lifetime of Object References' in the Overview section for details.
+     * @format int32
      */
     valueLocationReference?: number;
   };
@@ -2967,6 +3092,7 @@ Arguments for `stepInTargets` request.
 interface StepInTargetsArguments {
   /**
    * The stack frame for which to retrieve the possible step-in targets.
+   * @format int32
    */
   frameId: number;
 }
@@ -3014,6 +3140,8 @@ interface GotoTargetsArguments {
 
   /**
    * The line location for which the goto targets are determined.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   line: number;
 
@@ -3021,6 +3149,8 @@ interface GotoTargetsArguments {
    * The position within `line` for which the goto targets are determined. It is
    * measured in UTF-16 code units and the client capability `columnsStartAt1`
    * determines whether it is 0- or 1-based.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   column?: number;
 }
@@ -3062,6 +3192,7 @@ interface CompletionsArguments {
   /**
    * Returns completions in the scope of this stack frame. If not specified, the
    * completions are returned for the global scope.
+   * @format int32
    */
   frameId?: number;
 
@@ -3075,12 +3206,16 @@ interface CompletionsArguments {
    * The position within `text` for which to determine the completion proposals.
    * It is measured in UTF-16 code units and the client capability
    * `columnsStartAt1` determines whether it is 0- or 1-based.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   column: number;
 
   /**
    * A line for which to determine the completion proposals. If missing the
    * first line of the text is assumed.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   line?: number;
 }
@@ -3121,6 +3256,7 @@ Arguments for `exceptionInfo` request.
 interface ExceptionInfoArguments {
   /**
    * Thread for which exception information should be retrieved.
+   * @format int32
    */
   threadId: number;
 }
@@ -3182,11 +3318,16 @@ interface ReadMemoryArguments {
   /**
    * Offset (in bytes) to be applied to the reference location before reading
    * data. Can be negative.
+   * @format int64
+   * @minimum -9007199254740991
+   * @maximum 9007199254740991
    */
   offset?: number;
 
   /**
    * Number of bytes to read at the specified location and offset.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   count: number;
 }
@@ -3210,6 +3351,8 @@ interface ReadMemoryResponse extends Response {
      * read byte.
      * This can be used to determine the number of bytes that should be skipped
      * before a subsequent `readMemory` request succeeds.
+     * @format uint64
+     * @maximum 9007199254740991
      */
     unreadableBytes?: number;
 
@@ -3251,6 +3394,9 @@ interface WriteMemoryArguments {
   /**
    * Offset (in bytes) to be applied to the reference location before writing
    * data. Can be negative.
+   * @format int64
+   * @minimum -9007199254740991
+   * @maximum 9007199254740991
    */
   offset?: number;
 
@@ -3282,12 +3428,16 @@ interface WriteMemoryResponse extends Response {
      * Property that should be returned when `allowPartial` is true to indicate
      * the offset of the first byte of data successfully written. Can be
      * negative.
+     * @format int64
+     * @minimum -9007199254740991
+     * @maximum 9007199254740991
      */
     offset?: number;
 
     /**
      * Property that should be returned when `allowPartial` is true to indicate
      * the number of bytes starting from address that were successfully written.
+     * @format uint32
      */
     bytesWritten?: number;
   };
@@ -3322,12 +3472,18 @@ interface DisassembleArguments {
   /**
    * Offset (in bytes) to be applied to the reference location before
    * disassembling. Can be negative.
+   * @format int64
+   * @minimum -9007199254740991
+   * @maximum 9007199254740991
    */
   offset?: number;
 
   /**
    * Offset (in instructions) to be applied after the byte offset (if any)
    * before disassembling. Can be negative.
+   * @format int64
+   * @minimum -9007199254740991
+   * @maximum 9007199254740991
    */
   instructionOffset?: number;
 
@@ -3337,6 +3493,7 @@ interface DisassembleArguments {
    * An adapter must return exactly this number of instructions - any
    * unavailable instructions should be replaced with an implementation-defined
    * 'invalid instruction' value.
+   * @format uint32
    */
   instructionCount: number;
 
@@ -3381,6 +3538,7 @@ Arguments for `locations` request.
 interface LocationsArguments {
   /**
    * Location reference to resolve.
+   * @format int32
    */
   locationReference: number;
 }
@@ -3401,6 +3559,8 @@ interface LocationsResponse extends Response {
     /**
      * The line number of the location. The client capability `linesStartAt1`
      * determines whether it is 0- or 1-based.
+     * @format uint64
+     * @maximum 9007199254740991
      */
     line: number;
 
@@ -3409,12 +3569,16 @@ interface LocationsResponse extends Response {
      * units and the client capability `columnsStartAt1` determines whether it
      * is 0- or 1-based. If no column is given, the first position in the start
      * line is assumed.
+     * @format uint64
+     * @maximum 9007199254740991
      */
     column?: number;
 
     /**
      * End line of the location, present if the location refers to a range.  The
      * client capability `linesStartAt1` determines whether it is 0- or 1-based.
+     * @format uint64
+     * @maximum 9007199254740991
      */
     endLine?: number;
 
@@ -3422,6 +3586,8 @@ interface LocationsResponse extends Response {
      * End position of the location within `endLine`, present if the location
      * refers to a range. It is measured in UTF-16 code units and the client
      * capability `columnsStartAt1` determines whether it is 0- or 1-based.
+     * @format uint64
+     * @maximum 9007199254740991
      */
     endColumn?: number;
   };
@@ -3501,8 +3667,11 @@ interface Capabilities {
   supportsCompletionsRequest?: boolean;
 
   /**
-   * The set of characters that should trigger completion in a REPL. If not
-   * specified, the UI should assume the `.` character.
+   * The set of characters that should automatically trigger a completion
+   * request in a REPL. If not specified, the client should assume the `.`
+   * character. The client may trigger additional completion requests on
+   * characters such as ones that make up common identifiers, or as otherwise
+   * requested by a user.
    */
   completionTriggerCharacters?: string[];
 
@@ -3730,6 +3899,7 @@ interface Message {
    * requirement that every user visible error message needs a corresponding
    * error number, so that users or customer support can find information about
    * the specific error more easily.
+   * @format int32
    */
   id: number;
 
@@ -3877,6 +4047,7 @@ interface ColumnDescriptor {
 
   /**
    * Width of this column in characters (hint only).
+   * @format uint32
    */
   width?: number;
 }
@@ -3890,6 +4061,7 @@ A Thread
 interface Thread {
   /**
    * Unique identifier for the thread.
+   * @format int32
    */
   id: number;
 
@@ -3928,6 +4100,8 @@ interface Source {
    * Since a `sourceReference` is only valid for a session, it can not be used
    * to persist a source.
    * The value should be less than or equal to 2147483647 (2^31-1).
+   * @format int32
+   * @minimum 0
    */
   sourceReference?: number;
 
@@ -3975,6 +4149,7 @@ interface StackFrame {
    * An identifier for the stack frame. It must be unique across all threads.
    * This id can be used to retrieve the scopes of the frame with the `scopes`
    * request or to restart the execution of a stack frame.
+   * @format int32
    */
   id: number;
 
@@ -3991,6 +4166,8 @@ interface StackFrame {
   /**
    * The line within the source of the frame. If the source attribute is missing
    * or doesn't exist, `line` is 0 and should be ignored by the client.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   line: number;
 
@@ -3999,11 +4176,15 @@ interface StackFrame {
    * UTF-16 code units and the client capability `columnsStartAt1` determines
    * whether it is 0- or 1-based. If attribute `source` is missing or doesn't
    * exist, `column` is 0 and should be ignored by the client.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   column: number;
 
   /**
    * The end line of the range covered by the stack frame.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   endLine?: number;
 
@@ -4011,6 +4192,8 @@ interface StackFrame {
    * End position of the range covered by the stack frame. It is measured in
    * UTF-16 code units and the client capability `columnsStartAt1` determines
    * whether it is 0- or 1-based.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   endColumn?: number;
 
@@ -4074,6 +4257,8 @@ interface Scope {
    * `variablesReference` to the `variables` request as long as execution
    * remains suspended. See 'Lifetime of Object References' in the Overview
    * section for details.
+   * @format int32
+   * @minimum 0
    */
   variablesReference: number;
 
@@ -4081,6 +4266,8 @@ interface Scope {
    * The number of named variables in this scope.
    * The client can use this information to present the variables in a paged UI
    * and fetch them in chunks.
+   * @format int32
+   * @minimum 0
    */
   namedVariables?: number;
 
@@ -4088,6 +4275,8 @@ interface Scope {
    * The number of indexed variables in this scope.
    * The client can use this information to present the variables in a paged UI
    * and fetch them in chunks.
+   * @format int32
+   * @minimum 0
    */
   indexedVariables?: number;
 
@@ -4104,6 +4293,8 @@ interface Scope {
 
   /**
    * The start line of the range covered by this scope.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   line?: number;
 
@@ -4111,11 +4302,15 @@ interface Scope {
    * Start position of the range covered by the scope. It is measured in UTF-16
    * code units and the client capability `columnsStartAt1` determines whether
    * it is 0- or 1-based.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   column?: number;
 
   /**
    * The end line of the range covered by this scope.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   endLine?: number;
 
@@ -4123,6 +4318,8 @@ interface Scope {
    * End position of the range covered by the scope. It is measured in UTF-16
    * code units and the client capability `columnsStartAt1` determines whether
    * it is 0- or 1-based.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   endColumn?: number;
 }
@@ -4185,6 +4382,8 @@ interface Variable {
    * can be retrieved by passing `variablesReference` to the `variables` request
    * as long as execution remains suspended. See 'Lifetime of Object References'
    * in the Overview section for details.
+   * @format int32
+   * @minimum 0
    */
   variablesReference: number;
 
@@ -4192,6 +4391,8 @@ interface Variable {
    * The number of named child variables.
    * The client can use this information to present the children in a paged UI
    * and fetch them in chunks.
+   * @format int32
+   * @minimum 0
    */
   namedVariables?: number;
 
@@ -4199,6 +4400,8 @@ interface Variable {
    * The number of indexed child variables.
    * The client can use this information to present the children in a paged UI
    * and fetch them in chunks.
+   * @format int32
+   * @minimum 0
    */
   indexedVariables?: number;
 
@@ -4220,6 +4423,7 @@ interface Variable {
    * 
    * This reference shares the same lifetime as the `variablesReference`. See
    * 'Lifetime of Object References' in the Overview section for details.
+   * @format int32
    */
   declarationLocationReference?: number;
 
@@ -4232,6 +4436,7 @@ interface Variable {
    * 
    * This reference shares the same lifetime as the `variablesReference`. See
    * 'Lifetime of Object References' in the Overview section for details.
+   * @format int32
    */
   valueLocationReference?: number;
 }
@@ -4320,6 +4525,8 @@ Properties of a breakpoint location returned from the `breakpointLocations` requ
 interface BreakpointLocation {
   /**
    * Start line of breakpoint location.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   line: number;
 
@@ -4327,11 +4534,15 @@ interface BreakpointLocation {
    * The start position of a breakpoint location. Position is measured in UTF-16
    * code units and the client capability `columnsStartAt1` determines whether
    * it is 0- or 1-based.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   column?: number;
 
   /**
    * The end line of breakpoint location if the location covers a range.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   endLine?: number;
 
@@ -4339,6 +4550,8 @@ interface BreakpointLocation {
    * The end position of a breakpoint location (if the location covers a range).
    * Position is measured in UTF-16 code units and the client capability
    * `columnsStartAt1` determines whether it is 0- or 1-based.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   endColumn?: number;
 }
@@ -4352,6 +4565,8 @@ Properties of a breakpoint or logpoint passed to the `setBreakpoints` request.
 interface SourceBreakpoint {
   /**
    * The source line of the breakpoint or logpoint.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   line: number;
 
@@ -4359,6 +4574,8 @@ interface SourceBreakpoint {
    * Start position within source line of the breakpoint or logpoint. It is
    * measured in UTF-16 code units and the client capability `columnsStartAt1`
    * determines whether it is 0- or 1-based.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   column?: number;
 
@@ -4483,6 +4700,9 @@ interface InstructionBreakpoint {
   /**
    * The offset from the instruction reference in bytes.
    * This can be negative.
+   * @format int64
+   * @minimum -9007199254740991
+   * @maximum 9007199254740991
    */
   offset?: number;
 
@@ -4518,6 +4738,7 @@ interface Breakpoint {
   /**
    * The identifier for the breakpoint. It is needed if breakpoint events are
    * used to update or remove breakpoints.
+   * @format int32
    */
   id?: number;
 
@@ -4541,6 +4762,8 @@ interface Breakpoint {
 
   /**
    * The start line of the actual range covered by the breakpoint.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   line?: number;
 
@@ -4548,11 +4771,15 @@ interface Breakpoint {
    * Start position of the source range covered by the breakpoint. It is
    * measured in UTF-16 code units and the client capability `columnsStartAt1`
    * determines whether it is 0- or 1-based.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   column?: number;
 
   /**
    * The end line of the actual range covered by the breakpoint.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   endLine?: number;
 
@@ -4562,6 +4789,8 @@ interface Breakpoint {
    * whether it is 0- or 1-based.
    * If no end line is given, then the end column is assumed to be in the start
    * line.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   endColumn?: number;
 
@@ -4573,6 +4802,9 @@ interface Breakpoint {
   /**
    * The offset from the instruction reference.
    * This can be negative.
+   * @format int64
+   * @minimum -9007199254740991
+   * @maximum 9007199254740991
    */
   offset?: number;
 
@@ -4613,6 +4845,7 @@ A `StepInTarget` can be used in the `stepIn` request and determines into which s
 interface StepInTarget {
   /**
    * Unique identifier for a step-in target.
+   * @format int32
    */
   id: number;
 
@@ -4623,6 +4856,8 @@ interface StepInTarget {
 
   /**
    * The line of the step-in target.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   line?: number;
 
@@ -4630,11 +4865,15 @@ interface StepInTarget {
    * Start position of the range covered by the step in target. It is measured
    * in UTF-16 code units and the client capability `columnsStartAt1` determines
    * whether it is 0- or 1-based.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   column?: number;
 
   /**
    * The end line of the range covered by the step-in target.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   endLine?: number;
 
@@ -4642,6 +4881,8 @@ interface StepInTarget {
    * End position of the range covered by the step in target. It is measured in
    * UTF-16 code units and the client capability `columnsStartAt1` determines
    * whether it is 0- or 1-based.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   endColumn?: number;
 }
@@ -4657,6 +4898,7 @@ The possible goto targets can be determined via the `gotoTargets` request.
 interface GotoTarget {
   /**
    * Unique identifier for a goto target. This is used in the `goto` request.
+   * @format int32
    */
   id: number;
 
@@ -4667,21 +4909,29 @@ interface GotoTarget {
 
   /**
    * The line of the goto target.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   line: number;
 
   /**
    * The column of the goto target.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   column?: number;
 
   /**
    * The end line of the range covered by the goto target.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   endLine?: number;
 
   /**
    * The end column of the range covered by the goto target.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   endColumn?: number;
 
@@ -4735,6 +4985,7 @@ interface CompletionItem {
    * units and the client capability `columnsStartAt1` determines whether it is
    * 0- or 1-based. If the start position is omitted the text is added at the
    * location specified by the `column` attribute of the `completions` request.
+   * @format uint32
    */
   start?: number;
 
@@ -4742,6 +4993,7 @@ interface CompletionItem {
    * Length determines how many characters are overwritten by the completion
    * text and it is measured in UTF-16 code units. If missing the value 0 is
    * assumed which results in the completion text being inserted.
+   * @format uint32
    */
   length?: number;
 
@@ -4750,6 +5002,7 @@ interface CompletionItem {
    * (or replaced). `selectionStart` is measured in UTF-16 code units and must
    * be in the range 0 and length of the completion text. If omitted the
    * selection starts at the end of the completion text.
+   * @format uint32
    */
   selectionStart?: number;
 
@@ -4758,6 +5011,7 @@ interface CompletionItem {
    * (or replaced) and it is measured in UTF-16 code units. The selection can
    * not extend beyond the bounds of the completion text. If omitted the length
    * is assumed to be 0.
+   * @format uint32
    */
   selectionLength?: number;
 }
@@ -5027,21 +5281,29 @@ interface DisassembledInstruction {
   /**
    * The line within the source location that corresponds to this instruction,
    * if any.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   line?: number;
 
   /**
    * The column within the line that corresponds to this instruction, if any.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   column?: number;
 
   /**
    * The end line of the range that corresponds to this instruction, if any.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   endLine?: number;
 
   /**
    * The end column of the range that corresponds to this instruction, if any.
+   * @format uint64
+   * @maximum 9007199254740991
    */
   endColumn?: number;
 
