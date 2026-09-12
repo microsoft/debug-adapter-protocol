@@ -63,6 +63,7 @@ Many adapters publish releases tailored for specific editors, such as VS Code, a
 [Lua and Ravi 5.3 Debugger](https://github.com/dibyendumajumdar/ravi-vscode-debugger)|[@dibyendumajumdar](https://github.com/dibyendumajumdar)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ravilang.ravi-debug)
 [Lua Debug](https://github.com/actboy168/lua-debug)|[@actboy168](https://github.com/actboy168)|[VS Code](https://marketplace.visualstudio.com/items?itemName=actboy168.lua-debug)
 [Luau Debugger](https://github.com/sssooonnnggg/luau-debugger)|[@sssooonnnggg](https://github.com/sssooonnnggg)|[VS Code](https://marketplace.visualstudio.com/items?itemName=sssooonnnggg.luau-debugger)
+[Lute Debugger for Luau](https://github.com/luau-lang/lute/blob/primary/lute/cli/commands/debug)|[@lute](https://github.com/luau-lang/lute)|[VS Code](https://marketplace.visualstudio.com/items?itemName=RobloxCorporation.mandolin)
 [Mock Debug](https://github.com/Microsoft/vscode-mock-debug)|[@roblourens](https://github.com/roblourens)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.mock-debug)
 [Mono Debug](https://github.com/Microsoft/vscode-mono-debug)|[@akoeplinger](https://github.com/akoeplinger)|[VS Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.mono-debug)
 [NAME](https://github.com/utdscheld/name)|[John Cole](https://personal.utdallas.edu/~John.Cole/)|
