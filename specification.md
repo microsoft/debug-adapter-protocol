@@ -2419,7 +2419,7 @@ interface VariablesArguments {
 
   /**
    * The index of the first variable to return; if omitted children start at 0.
-   * If the value of `start` exceeeds the number of available variables, the
+   * If the value of `start` exceeds the number of available variables, the
    * debug adapter should return an empty array.
    * The attribute is only honored by a debug adapter if the corresponding
    * capability `supportsVariablePaging` is true.
@@ -5181,7 +5181,7 @@ type ExceptionBreakMode = 'never' | 'always' | 'unhandled'
 
 ### <a name="Types_ExceptionPathSegment" class="anchor"></a>ExceptionPathSegment
 
-An `ExceptionPathSegment` represents a segment in a path that is used to match leafs or nodes in a tree of exceptions.
+An `ExceptionPathSegment` represents a segment in a path that is used to match leaves or nodes in a tree of exceptions.
 
 If a segment consists of more than one name, it matches the names provided if `negate` is false or missing, or it matches anything except the names provided if `negate` is true.
 
