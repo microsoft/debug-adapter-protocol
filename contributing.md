@@ -13,12 +13,12 @@ We also maintain npm packages containing the [DAP types](https://www.npmjs.com/p
 Detailed steps:
 
 1. After discussion on the Github issue has come to a conclusion (typically with an agreed upon API proposal in TypeScript), update `debugAdapterProtocol.json` with the corresponding schema changes.
-1. Add an entry in `changelog.md`. If this is the first change of the iteration, add a new new section header with the upcoming version number, e.g. `* 1.53.X:` and bump the version number in `index.html` to the same number. The version number can be found in the sentence: `The latest version of the protocol specification is version 1.53.0.`
+1. Add an entry in `changelog.md`. If this is the first change of the iteration, add a new section header with the upcoming version number, e.g. `* 1.53.X:` and bump the version number in `index.html` to the same number. The version number can be found in the sentence: `The latest version of the protocol specification is version 1.53.0.`
 1. Run `node spec-generator` (after `npm install && npm run compile` in the subdirectory) to automatically update the documentation. Commit it to the `main` branch.
 1. If this is a feature that VS Code would want to implement, open a corresponding issue in the VS Code repo.
 1. Updating the npm modules:
     1. Whenever there are worthwhile DAP changes, pull the updated DAP schema by running `npm run sync-dap` or `npm run sync-next-dap` and run the `Generate debugProtocol.ts` launch configuration to update the `DebugProtocol` TypeScript module.
-    1. Run `./bump-version.sh preminor --preid pre` in the repo, which will create a prerelease tag and a branch named `release/<version name>`rece.
+    1. Run `./bump-version.sh preminor --preid pre` in the repo, which will create a prerelease tag and a branch named `release/<version name>`.
     1. Create a PR for the release branch. Once merged, packages will get automatically published by CI.
     1. Adopt the three new npm modules in [Mock Debug](https://github.com/microsoft/vscode-mock-debug) to verify that they still work.
     1. Commit and push the version changes to Mock Debug.
