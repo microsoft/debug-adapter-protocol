@@ -3153,6 +3153,24 @@ interface GotoTargetsArguments {
    * @maximum 9007199254740991
    */
   column?: number;
+
+  /**
+   * The instruction reference for which the goto targets are determined.
+   * This should be a memory or instruction pointer reference from an
+   * `EvaluateResponse`, `Variable`, `StackFrame`, `GotoTarget`, or
+   * `Breakpoint`. Clients may set this property only if the
+   * `supportsGotoInstructionTargets ` is true. If `instructionReference` is
+   * set, the debug adapter should ignore the `line`, `column`, and `source` on
+   * the request and clients may set them to zero or empty values.
+   */
+  instructionReference?: string;
+
+  /**
+   * The offset from the instruction reference in bytes.
+   * This can be negative. This may only be provided when an
+   * `instructionReference` is included in the request.
+   */
+  offset?: number;
 }
 ```
 
@@ -3841,6 +3859,12 @@ interface Capabilities {
    * `OutputEvent.output` and `Variable.value` fields.
    */
   supportsANSIStyling?: boolean;
+
+  /**
+   * The debug adapter supports the `instructionReference` and `offset` fields
+   * in the `gotoTargets` request.
+   */
+  supportsGotoInstructionTargets?: boolean;
 }
 ```
 
