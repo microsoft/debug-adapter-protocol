@@ -5,6 +5,8 @@ on:
     branches:
       - gh-pages
 
+permissions: {}
+
 jobs:
   check_author:
     runs-on: ubuntu-latest
